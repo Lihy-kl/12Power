@@ -118,169 +118,1291 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lab_ClothType.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lab_CupCode.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="dt_Record_Start.CalendarFont" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="lab_ClothType.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="txt_FormulaName.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="txt_R.MaxLength" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="txt_CreateTime.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="txt_VatNumber.Enabled" type="System.Boolean, mscorlib">
+  <data name="txt_CupNum.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="label2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;Btn_Derive.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_CupNum.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="&gt;&gt;lab_ClothType.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="&gt;&gt;btn_Record_Select.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label13.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="label8.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label9.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dgv_DropRecord.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 246</value>
-  </data>
-  <data name="label2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;txt_Start.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="&gt;&gt;txt_CupNum.ZOrder" xml:space="preserve">
-    <value>34</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="label13.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="lab_ClothWeight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>305, 79</value>
-  </data>
-  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label11.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;txt_TotalTime.Name" xml:space="preserve">
-    <value>txt_TotalTime</value>
-  </data>
-  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1917, 980</value>
-  </data>
-  <data name="txt_Record_CupNum.TabIndex" type="System.Int32, mscorlib">
-    <value>50</value>
-  </data>
-  <data name="rdo_Record_condition.Font" type="System.Drawing.Font, System.Drawing">
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="txt_CupNum.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
   </data>
   <data name="txt_CupNum.Location" type="System.Drawing.Point, System.Drawing">
     <value>118, 123</value>
   </data>
-  <data name="txt_ClothWeight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>360, 74</value>
+  <data name="txt_CupNum.Size" type="System.Drawing.Size, System.Drawing">
+    <value>74, 29</value>
   </data>
-  <data name="lab_TotalWeight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>590, 79</value>
+  <data name="txt_CupNum.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
   </data>
-  <data name="lab_CupCode.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="txt_CupNum.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
   </data>
-  <data name="&gt;&gt;label14.Parent" xml:space="preserve">
+  <data name="&gt;&gt;txt_CupNum.Name" xml:space="preserve">
+    <value>txt_CupNum</value>
+  </data>
+  <data name="&gt;&gt;txt_CupNum.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_CupNum.Parent" xml:space="preserve">
     <value>grp_FormulaData</value>
   </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>起始日期:</value>
+  <data name="&gt;&gt;txt_CupNum.ZOrder" xml:space="preserve">
+    <value>34</value>
   </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>55</value>
+  <data name="txt_ClothType.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txt_ClothType.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="txt_ClothType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1207, 22</value>
+  </data>
+  <data name="txt_ClothType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>139, 29</value>
+  </data>
+  <data name="txt_ClothType.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="txt_ClothType.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_ClothType.Name" xml:space="preserve">
+    <value>txt_ClothType</value>
+  </data>
+  <data name="&gt;&gt;txt_ClothType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_ClothType.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;txt_ClothType.ZOrder" xml:space="preserve">
+    <value>37</value>
+  </data>
+  <data name="txt_Record_Operator.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txt_Record_Operator.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="txt_Record_Operator.Location" type="System.Drawing.Point, System.Drawing">
+    <value>105, 58</value>
+  </data>
+  <data name="txt_Record_Operator.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 27</value>
+  </data>
+  <data name="txt_Record_Operator.TabIndex" type="System.Int32, mscorlib">
+    <value>46</value>
+  </data>
+  <data name="&gt;&gt;txt_Record_Operator.Name" xml:space="preserve">
+    <value>txt_Record_Operator</value>
+  </data>
+  <data name="&gt;&gt;txt_Record_Operator.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_Record_Operator.Parent" xml:space="preserve">
+    <value>grp_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;txt_Record_Operator.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="Btn_PDF.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="Btn_PDF.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Btn_PDF.Location" type="System.Drawing.Point, System.Drawing">
+    <value>346, 150</value>
+  </data>
+  <data name="Btn_PDF.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 29</value>
+  </data>
+  <data name="Btn_PDF.TabIndex" type="System.Int32, mscorlib">
+    <value>52</value>
+  </data>
+  <data name="Btn_PDF.Text" xml:space="preserve">
+    <value>导出PDF</value>
+  </data>
+  <data name="&gt;&gt;Btn_PDF.Name" xml:space="preserve">
+    <value>Btn_PDF</value>
+  </data>
+  <data name="&gt;&gt;Btn_PDF.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Btn_PDF.Parent" xml:space="preserve">
+    <value>grp_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;Btn_PDF.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btn_Record_Print.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="btn_Record_Print.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btn_Record_Print.Location" type="System.Drawing.Point, System.Drawing">
+    <value>346, 121</value>
+  </data>
+  <data name="btn_Record_Print.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 29</value>
+  </data>
+  <data name="btn_Record_Print.TabIndex" type="System.Int32, mscorlib">
+    <value>51</value>
+  </data>
+  <data name="btn_Record_Print.Text" xml:space="preserve">
+    <value>打印</value>
+  </data>
+  <data name="&gt;&gt;btn_Record_Print.Name" xml:space="preserve">
+    <value>btn_Record_Print</value>
+  </data>
+  <data name="&gt;&gt;btn_Record_Print.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btn_Record_Print.Parent" xml:space="preserve">
+    <value>grp_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;btn_Record_Print.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="txt_Record_CupNum.Location" type="System.Drawing.Point, System.Drawing">
+    <value>105, 98</value>
+  </data>
+  <data name="txt_Record_CupNum.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 23</value>
+  </data>
+  <data name="txt_Record_CupNum.TabIndex" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="&gt;&gt;txt_Record_CupNum.Name" xml:space="preserve">
+    <value>txt_Record_CupNum</value>
+  </data>
+  <data name="&gt;&gt;txt_Record_CupNum.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_Record_CupNum.Parent" xml:space="preserve">
+    <value>grp_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;txt_Record_CupNum.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="label10.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label10.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 100</value>
+  </data>
+  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 19</value>
+  </data>
+  <data name="label10.TabIndex" type="System.Int32, mscorlib">
+    <value>49</value>
+  </data>
+  <data name="label10.Text" xml:space="preserve">
+    <value>杯号:</value>
+  </data>
+  <data name="&gt;&gt;label10.Name" xml:space="preserve">
+    <value>label10</value>
+  </data>
+  <data name="&gt;&gt;label10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
+    <value>grp_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="Btn_Derive.Location" type="System.Drawing.Point, System.Drawing">
+    <value>346, 179</value>
+  </data>
+  <data name="Btn_Derive.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 29</value>
+  </data>
+  <data name="Btn_Derive.TabIndex" type="System.Int32, mscorlib">
+    <value>48</value>
+  </data>
+  <data name="Btn_Derive.Text" xml:space="preserve">
+    <value>导出自检数据</value>
+  </data>
+  <data name="&gt;&gt;Btn_Derive.Name" xml:space="preserve">
+    <value>Btn_Derive</value>
+  </data>
+  <data name="&gt;&gt;Btn_Derive.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Btn_Derive.Parent" xml:space="preserve">
+    <value>grp_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;Btn_Derive.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="txt_R.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txt_R.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="txt_R.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 212</value>
+  </data>
+  <data name="txt_R.MaxLength" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="txt_R.Size" type="System.Drawing.Size, System.Drawing">
+    <value>548, 29</value>
+  </data>
+  <data name="txt_R.TabIndex" type="System.Int32, mscorlib">
+    <value>47</value>
+  </data>
+  <data name="txt_R.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_R.Name" xml:space="preserve">
+    <value>txt_R</value>
+  </data>
+  <data name="&gt;&gt;txt_R.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_R.Parent" xml:space="preserve">
+    <value>grp_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;txt_R.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="rdo_Record_condition.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rdo_Record_condition.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="rdo_Record_condition.Location" type="System.Drawing.Point, System.Drawing">
+    <value>428, 22</value>
+  </data>
+  <data name="rdo_Record_condition.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 23</value>
+  </data>
+  <data name="rdo_Record_condition.TabIndex" type="System.Int32, mscorlib">
+    <value>45</value>
+  </data>
+  <data name="rdo_Record_condition.Text" xml:space="preserve">
+    <value>条件查询</value>
+  </data>
+  <data name="&gt;&gt;rdo_Record_condition.Name" xml:space="preserve">
+    <value>rdo_Record_condition</value>
+  </data>
+  <data name="&gt;&gt;rdo_Record_condition.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rdo_Record_condition.Parent" xml:space="preserve">
+    <value>grp_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;rdo_Record_condition.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="dt_Record_End.CalendarFont" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="dt_Record_End.CustomFormat" xml:space="preserve">
+    <value>yyyy-MM-dd HH:mm:ss</value>
+  </data>
+  <data name="dt_Record_End.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="dt_Record_End.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="dt_Record_End.Location" type="System.Drawing.Point, System.Drawing">
+    <value>105, 176</value>
+  </data>
+  <data name="dt_Record_End.Size" type="System.Drawing.Size, System.Drawing">
+    <value>218, 29</value>
+  </data>
+  <data name="dt_Record_End.TabIndex" type="System.Int32, mscorlib">
+    <value>44</value>
+  </data>
+  <data name="&gt;&gt;dt_Record_End.Name" xml:space="preserve">
+    <value>dt_Record_End</value>
+  </data>
+  <data name="&gt;&gt;dt_Record_End.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DateTimePicker, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dt_Record_End.Parent" xml:space="preserve">
+    <value>grp_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;dt_Record_End.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="dt_Record_Start.CalendarFont" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="dt_Record_Start.CustomFormat" xml:space="preserve">
+    <value>yyyy-MM-dd HH:mm:ss</value>
+  </data>
+  <data name="dt_Record_Start.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="dt_Record_Start.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="dt_Record_Start.Location" type="System.Drawing.Point, System.Drawing">
+    <value>105, 134</value>
+  </data>
+  <data name="dt_Record_Start.Size" type="System.Drawing.Size, System.Drawing">
+    <value>219, 29</value>
+  </data>
+  <data name="dt_Record_Start.TabIndex" type="System.Int32, mscorlib">
+    <value>43</value>
+  </data>
+  <data name="&gt;&gt;dt_Record_Start.Name" xml:space="preserve">
+    <value>dt_Record_Start</value>
+  </data>
+  <data name="&gt;&gt;dt_Record_Start.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DateTimePicker, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dt_Record_Start.Parent" xml:space="preserve">
+    <value>grp_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;dt_Record_Start.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="txt_Record_Code.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txt_Record_Code.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="txt_Record_Code.Location" type="System.Drawing.Point, System.Drawing">
+    <value>371, 57</value>
+  </data>
+  <data name="txt_Record_Code.Size" type="System.Drawing.Size, System.Drawing">
+    <value>183, 29</value>
+  </data>
+  <data name="txt_Record_Code.TabIndex" type="System.Int32, mscorlib">
+    <value>42</value>
+  </data>
+  <data name="txt_Record_Code.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_Record_Code.Name" xml:space="preserve">
+    <value>txt_Record_Code</value>
+  </data>
+  <data name="&gt;&gt;txt_Record_Code.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_Record_Code.Parent" xml:space="preserve">
+    <value>grp_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;txt_Record_Code.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="btn_Record_Delete.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="btn_Record_Delete.Location" type="System.Drawing.Point, System.Drawing">
+    <value>275, 95</value>
   </data>
   <data name="btn_Record_Delete.Size" type="System.Drawing.Size, System.Drawing">
     <value>65, 29</value>
   </data>
-  <data name="lab_FormulaName.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="btn_Record_Delete.TabIndex" type="System.Int32, mscorlib">
+    <value>40</value>
   </data>
-  <data name="label14.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="btn_Record_Delete.Text" xml:space="preserve">
+    <value>删除</value>
   </data>
-  <data name="&gt;&gt;txt_Colorists.Name" xml:space="preserve">
-    <value>txt_Colorists</value>
+  <data name="btn_Record_Delete.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
-  <data name="&gt;&gt;btn_save.Type" xml:space="preserve">
+  <data name="&gt;&gt;btn_Record_Delete.Name" xml:space="preserve">
+    <value>btn_Record_Delete</value>
+  </data>
+  <data name="&gt;&gt;btn_Record_Delete.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="label8.Text" xml:space="preserve">
-    <value>总用时:</value>
+  <data name="&gt;&gt;btn_Record_Delete.Parent" xml:space="preserve">
+    <value>grp_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;btn_Record_Delete.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="btn_Record_Select.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="btn_Record_Select.Location" type="System.Drawing.Point, System.Drawing">
+    <value>346, 92</value>
+  </data>
+  <data name="btn_Record_Select.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 29</value>
+  </data>
+  <data name="btn_Record_Select.TabIndex" type="System.Int32, mscorlib">
+    <value>39</value>
+  </data>
+  <data name="btn_Record_Select.Text" xml:space="preserve">
+    <value>查询</value>
+  </data>
+  <data name="&gt;&gt;btn_Record_Select.Name" xml:space="preserve">
+    <value>btn_Record_Select</value>
+  </data>
+  <data name="&gt;&gt;btn_Record_Select.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btn_Record_Select.Parent" xml:space="preserve">
+    <value>grp_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;btn_Record_Select.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="rdo_Record_All.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rdo_Record_All.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="rdo_Record_All.Location" type="System.Drawing.Point, System.Drawing">
+    <value>217, 22</value>
+  </data>
+  <data name="rdo_Record_All.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 23</value>
+  </data>
+  <data name="rdo_Record_All.TabIndex" type="System.Int32, mscorlib">
+    <value>38</value>
+  </data>
+  <data name="rdo_Record_All.Text" xml:space="preserve">
+    <value>显示全部</value>
+  </data>
+  <data name="&gt;&gt;rdo_Record_All.Name" xml:space="preserve">
+    <value>rdo_Record_All</value>
+  </data>
+  <data name="&gt;&gt;rdo_Record_All.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rdo_Record_All.Parent" xml:space="preserve">
+    <value>grp_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;rdo_Record_All.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="rdo_Record_Now.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rdo_Record_Now.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="rdo_Record_Now.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 22</value>
+  </data>
+  <data name="rdo_Record_Now.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 23</value>
+  </data>
+  <data name="rdo_Record_Now.TabIndex" type="System.Int32, mscorlib">
+    <value>37</value>
+  </data>
+  <data name="rdo_Record_Now.Text" xml:space="preserve">
+    <value>显示当天</value>
+  </data>
+  <data name="&gt;&gt;rdo_Record_Now.Name" xml:space="preserve">
+    <value>rdo_Record_Now</value>
+  </data>
+  <data name="&gt;&gt;rdo_Record_Now.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rdo_Record_Now.Parent" xml:space="preserve">
+    <value>grp_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;rdo_Record_Now.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 181</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 19</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>36</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>结束日期:</value>
+  </data>
+  <data name="label2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>grp_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label3.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 139</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 19</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>起始日期:</value>
+  </data>
+  <data name="label3.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>grp_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label4.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>270, 62</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 19</value>
+  </data>
+  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>配方代码:</value>
+  </data>
+  <data name="label4.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>grp_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label5.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 62</value>
+  </data>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 19</value>
+  </data>
+  <data name="label5.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>操作员:</value>
+  </data>
+  <data name="label5.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;label5.Name" xml:space="preserve">
+    <value>label5</value>
+  </data>
+  <data name="&gt;&gt;label5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
+    <value>grp_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="dgv_DropRecord.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 246</value>
+  </data>
+  <data name="dgv_DropRecord.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>72</value>
+  </data>
+  <data name="dgv_DropRecord.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
+    <value>Vertical</value>
+  </data>
+  <data name="dgv_DropRecord.Size" type="System.Drawing.Size, System.Drawing">
+    <value>551, 730</value>
+  </data>
+  <data name="dgv_DropRecord.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;dgv_DropRecord.Name" xml:space="preserve">
+    <value>dgv_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;dgv_DropRecord.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dgv_DropRecord.Parent" xml:space="preserve">
+    <value>grp_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;dgv_DropRecord.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="grp_DropRecord.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 10.5pt</value>
+  </data>
+  <data name="grp_DropRecord.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 4</value>
+  </data>
+  <data name="grp_DropRecord.Size" type="System.Drawing.Size, System.Drawing">
+    <value>562, 989</value>
+  </data>
+  <data name="grp_DropRecord.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="grp_DropRecord.Text" xml:space="preserve">
+    <value>滴液记录</value>
+  </data>
+  <data name="&gt;&gt;grp_DropRecord.Name" xml:space="preserve">
+    <value>grp_DropRecord</value>
+  </data>
+  <data name="&gt;&gt;grp_DropRecord.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;grp_DropRecord.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;grp_DropRecord.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="txt_Operator.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txt_Operator.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="txt_Operator.Location" type="System.Drawing.Point, System.Drawing">
+    <value>277, 123</value>
+  </data>
+  <data name="txt_Operator.Size" type="System.Drawing.Size, System.Drawing">
+    <value>128, 29</value>
+  </data>
+  <data name="txt_Operator.TabIndex" type="System.Int32, mscorlib">
+    <value>36</value>
+  </data>
+  <data name="txt_Operator.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_Operator.Name" xml:space="preserve">
+    <value>txt_Operator</value>
+  </data>
+  <data name="&gt;&gt;txt_Operator.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_Operator.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;txt_Operator.ZOrder" xml:space="preserve">
+    <value>30</value>
+  </data>
+  <data name="txt_TotalWeight.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txt_TotalWeight.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="txt_TotalWeight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>665, 74</value>
+  </data>
+  <data name="txt_TotalWeight.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 29</value>
+  </data>
+  <data name="txt_TotalWeight.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="txt_TotalWeight.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_TotalWeight.Name" xml:space="preserve">
+    <value>txt_TotalWeight</value>
+  </data>
+  <data name="&gt;&gt;txt_TotalWeight.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_TotalWeight.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;txt_TotalWeight.ZOrder" xml:space="preserve">
+    <value>42</value>
+  </data>
+  <data name="txt_BathRatio.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txt_BathRatio.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
   </data>
   <data name="txt_BathRatio.Location" type="System.Drawing.Point, System.Drawing">
     <value>514, 74</value>
   </data>
-  <data name="btn_save.ToolTip" xml:space="preserve">
-    <value />
+  <data name="txt_BathRatio.Size" type="System.Drawing.Size, System.Drawing">
+    <value>71, 29</value>
   </data>
-  <data name="txt_HandleBathRatio.Size" type="System.Drawing.Size, System.Drawing">
-    <value>74, 29</value>
+  <data name="txt_BathRatio.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
   </data>
-  <data name="txt_State.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="txt_FormulaCode.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="txt_DyeingCodeRemark.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="txt_BathRatio.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_BathRatio.Name" xml:space="preserve">
+    <value>txt_BathRatio</value>
+  </data>
+  <data name="&gt;&gt;txt_BathRatio.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_BathRatio.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
   </data>
   <data name="&gt;&gt;txt_BathRatio.ZOrder" xml:space="preserve">
     <value>44</value>
   </data>
-  <data name="dgv_Details.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 243</value>
+  <data name="txt_ClothWeight.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
-  <data name="&gt;&gt;label7.Parent" xml:space="preserve">
+  <data name="txt_ClothWeight.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="txt_ClothWeight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>360, 74</value>
+  </data>
+  <data name="txt_ClothWeight.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 29</value>
+  </data>
+  <data name="txt_ClothWeight.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="txt_ClothWeight.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_ClothWeight.Name" xml:space="preserve">
+    <value>txt_ClothWeight</value>
+  </data>
+  <data name="&gt;&gt;txt_ClothWeight.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_ClothWeight.Parent" xml:space="preserve">
     <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;txt_ClothWeight.ZOrder" xml:space="preserve">
+    <value>47</value>
+  </data>
+  <data name="chk_AddWaterChoose.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chk_AddWaterChoose.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="chk_AddWaterChoose.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="chk_AddWaterChoose.Location" type="System.Drawing.Point, System.Drawing">
+    <value>751, 77</value>
+  </data>
+  <data name="chk_AddWaterChoose.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 23</value>
+  </data>
+  <data name="chk_AddWaterChoose.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="chk_AddWaterChoose.Text" xml:space="preserve">
+    <value>加水</value>
+  </data>
+  <data name="&gt;&gt;chk_AddWaterChoose.Name" xml:space="preserve">
+    <value>chk_AddWaterChoose</value>
+  </data>
+  <data name="&gt;&gt;chk_AddWaterChoose.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_AddWaterChoose.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;chk_AddWaterChoose.ZOrder" xml:space="preserve">
+    <value>50</value>
+  </data>
+  <data name="txt_Customer.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txt_Customer.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="txt_Customer.Location" type="System.Drawing.Point, System.Drawing">
+    <value>118, 74</value>
+  </data>
+  <data name="txt_Customer.Size" type="System.Drawing.Size, System.Drawing">
+    <value>176, 29</value>
+  </data>
+  <data name="txt_Customer.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="txt_Customer.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_Customer.Name" xml:space="preserve">
+    <value>txt_Customer</value>
+  </data>
+  <data name="&gt;&gt;txt_Customer.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_Customer.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;txt_Customer.ZOrder" xml:space="preserve">
+    <value>49</value>
+  </data>
+  <data name="txt_FormulaName.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txt_FormulaName.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="txt_FormulaName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>806, 25</value>
+  </data>
+  <data name="txt_FormulaName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>274, 29</value>
+  </data>
+  <data name="txt_FormulaName.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="txt_FormulaName.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_FormulaName.Name" xml:space="preserve">
+    <value>txt_FormulaName</value>
+  </data>
+  <data name="&gt;&gt;txt_FormulaName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_FormulaName.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;txt_FormulaName.ZOrder" xml:space="preserve">
+    <value>48</value>
+  </data>
+  <data name="txt_State.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txt_State.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="txt_State.Location" type="System.Drawing.Point, System.Drawing">
+    <value>560, 25</value>
+  </data>
+  <data name="txt_State.Size" type="System.Drawing.Size, System.Drawing">
+    <value>128, 29</value>
+  </data>
+  <data name="txt_State.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="txt_State.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_State.Name" xml:space="preserve">
+    <value>txt_State</value>
+  </data>
+  <data name="&gt;&gt;txt_State.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_State.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;txt_State.ZOrder" xml:space="preserve">
+    <value>46</value>
+  </data>
+  <data name="txt_VersionNum.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txt_VersionNum.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="txt_VersionNum.Location" type="System.Drawing.Point, System.Drawing">
+    <value>521, 25</value>
   </data>
   <data name="txt_VersionNum.Size" type="System.Drawing.Size, System.Drawing">
     <value>35, 29</value>
   </data>
-  <data name="&gt;&gt;rdo_Record_Now.Name" xml:space="preserve">
-    <value>rdo_Record_Now</value>
+  <data name="txt_VersionNum.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="txt_VersionNum.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_VersionNum.Name" xml:space="preserve">
+    <value>txt_VersionNum</value>
+  </data>
+  <data name="&gt;&gt;txt_VersionNum.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_VersionNum.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;txt_VersionNum.ZOrder" xml:space="preserve">
+    <value>45</value>
+  </data>
+  <data name="txt_FormulaCode.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txt_FormulaCode.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="txt_FormulaCode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>118, 25</value>
+  </data>
+  <data name="txt_FormulaCode.MaxLength" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="txt_FormulaCode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>397, 29</value>
+  </data>
+  <data name="txt_FormulaCode.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="txt_FormulaCode.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_FormulaCode.Name" xml:space="preserve">
+    <value>txt_FormulaCode</value>
+  </data>
+  <data name="&gt;&gt;txt_FormulaCode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_FormulaCode.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;txt_FormulaCode.ZOrder" xml:space="preserve">
+    <value>43</value>
+  </data>
+  <data name="lab_FormulaCode.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lab_FormulaCode.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="lab_FormulaCode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 30</value>
+  </data>
+  <data name="lab_FormulaCode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 19</value>
+  </data>
+  <data name="lab_FormulaCode.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="lab_FormulaCode.Text" xml:space="preserve">
+    <value>配方代码:</value>
+  </data>
+  <data name="lab_FormulaCode.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lab_FormulaCode.Name" xml:space="preserve">
+    <value>lab_FormulaCode</value>
+  </data>
+  <data name="&gt;&gt;lab_FormulaCode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_FormulaCode.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;lab_FormulaCode.ZOrder" xml:space="preserve">
+    <value>31</value>
+  </data>
+  <data name="lab_FormulaName.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lab_FormulaName.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="lab_FormulaName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>716, 30</value>
+  </data>
+  <data name="lab_FormulaName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 19</value>
+  </data>
+  <data name="lab_FormulaName.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="lab_FormulaName.Text" xml:space="preserve">
+    <value>配方名称:</value>
+  </data>
+  <data name="lab_FormulaName.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lab_FormulaName.Name" xml:space="preserve">
+    <value>lab_FormulaName</value>
+  </data>
+  <data name="&gt;&gt;lab_FormulaName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_FormulaName.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;lab_FormulaName.ZOrder" xml:space="preserve">
+    <value>41</value>
+  </data>
+  <data name="lab_CupCode.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lab_CupCode.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="lab_CupCode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 128</value>
+  </data>
+  <data name="lab_CupCode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 19</value>
+  </data>
+  <data name="lab_CupCode.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="lab_CupCode.Text" xml:space="preserve">
+    <value>杯号:</value>
+  </data>
+  <data name="lab_CupCode.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lab_CupCode.Name" xml:space="preserve">
+    <value>lab_CupCode</value>
+  </data>
+  <data name="&gt;&gt;lab_CupCode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_CupCode.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;lab_CupCode.ZOrder" xml:space="preserve">
+    <value>40</value>
+  </data>
+  <data name="lab_ClothType.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lab_ClothType.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="lab_ClothType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1099, 30</value>
+  </data>
+  <data name="lab_ClothType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>105, 19</value>
+  </data>
+  <data name="lab_ClothType.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="lab_ClothType.Text" xml:space="preserve">
+    <value>布种/基材:</value>
+  </data>
+  <data name="lab_ClothType.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lab_ClothType.Name" xml:space="preserve">
+    <value>lab_ClothType</value>
+  </data>
+  <data name="&gt;&gt;lab_ClothType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_ClothType.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;lab_ClothType.ZOrder" xml:space="preserve">
+    <value>39</value>
+  </data>
+  <data name="lab_Operator.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lab_Operator.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="lab_Operator.Location" type="System.Drawing.Point, System.Drawing">
+    <value>198, 128</value>
+  </data>
+  <data name="lab_Operator.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 19</value>
+  </data>
+  <data name="lab_Operator.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="lab_Operator.Text" xml:space="preserve">
+    <value>操作员:</value>
+  </data>
+  <data name="lab_Operator.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lab_Operator.Name" xml:space="preserve">
+    <value>lab_Operator</value>
+  </data>
+  <data name="&gt;&gt;lab_Operator.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_Operator.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;lab_Operator.ZOrder" xml:space="preserve">
+    <value>38</value>
+  </data>
+  <data name="lab_Customer.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lab_Customer.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="lab_Customer.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 79</value>
+  </data>
+  <data name="lab_Customer.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 19</value>
+  </data>
+  <data name="lab_Customer.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="lab_Customer.Text" xml:space="preserve">
+    <value>客户:</value>
+  </data>
+  <data name="lab_Customer.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lab_Customer.Name" xml:space="preserve">
+    <value>lab_Customer</value>
+  </data>
+  <data name="&gt;&gt;lab_Customer.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_Customer.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;lab_Customer.ZOrder" xml:space="preserve">
+    <value>36</value>
+  </data>
+  <data name="lab_TotalWeight.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lab_TotalWeight.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="lab_TotalWeight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>590, 79</value>
+  </data>
+  <data name="lab_TotalWeight.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 19</value>
+  </data>
+  <data name="lab_TotalWeight.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="lab_TotalWeight.Text" xml:space="preserve">
+    <value>总浴量:</value>
+  </data>
+  <data name="lab_TotalWeight.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lab_TotalWeight.Name" xml:space="preserve">
+    <value>lab_TotalWeight</value>
+  </data>
+  <data name="&gt;&gt;lab_TotalWeight.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_TotalWeight.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;lab_TotalWeight.ZOrder" xml:space="preserve">
+    <value>35</value>
+  </data>
+  <data name="lab_ClothWeight.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lab_ClothWeight.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="lab_ClothWeight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>305, 79</value>
+  </data>
+  <data name="lab_ClothWeight.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 19</value>
+  </data>
+  <data name="lab_ClothWeight.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="lab_ClothWeight.Text" xml:space="preserve">
+    <value>布重:</value>
+  </data>
+  <data name="lab_ClothWeight.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lab_ClothWeight.Name" xml:space="preserve">
+    <value>lab_ClothWeight</value>
+  </data>
+  <data name="&gt;&gt;lab_ClothWeight.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_ClothWeight.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;lab_ClothWeight.ZOrder" xml:space="preserve">
+    <value>33</value>
+  </data>
+  <data name="lab_BathRatio.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lab_BathRatio.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="lab_BathRatio.Location" type="System.Drawing.Point, System.Drawing">
+    <value>453, 79</value>
+  </data>
+  <data name="lab_BathRatio.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 19</value>
+  </data>
+  <data name="lab_BathRatio.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="lab_BathRatio.Text" xml:space="preserve">
+    <value>浴比:</value>
+  </data>
+  <data name="lab_BathRatio.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lab_BathRatio.Name" xml:space="preserve">
+    <value>lab_BathRatio</value>
+  </data>
+  <data name="&gt;&gt;lab_BathRatio.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_BathRatio.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
   </data>
   <data name="&gt;&gt;lab_BathRatio.ZOrder" xml:space="preserve">
     <value>32</value>
@@ -288,2339 +1410,968 @@
   <data name="txt_Colorists.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="&gt;&gt;timer2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="dt_Record_End.Location" type="System.Drawing.Point, System.Drawing">
-    <value>105, 176</value>
-  </data>
-  <data name="label14.Location" type="System.Drawing.Point, System.Drawing">
-    <value>411, 128</value>
-  </data>
-  <data name="dt_Record_End.TabIndex" type="System.Int32, mscorlib">
-    <value>44</value>
-  </data>
-  <data name="txt_Customer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>118, 74</value>
-  </data>
-  <data name="&gt;&gt;label2.Name" xml:space="preserve">
-    <value>label2</value>
-  </data>
-  <data name="txt_FormulaCode.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="txt_Colorists.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
-  </data>
-  <data name="txt_Record_Code.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>114, 19</value>
-  </data>
-  <data name="btn_save.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="lab_Operator.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;txt_DyeingCodeRemark.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="lab_AnhydrationWR.Text" xml:space="preserve">
-    <value>脱水水比:</value>
-  </data>
-  <data name="txt_TotalTime.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="label5.TabIndex" type="System.Int32, mscorlib">
-    <value>33</value>
-  </data>
-  <data name="label5.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="txt_Customer.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;txt_Non_AnhydrationWR.ZOrder" xml:space="preserve">
-    <value>26</value>
-  </data>
-  <data name="&gt;&gt;txt_Record_CupNum.Name" xml:space="preserve">
-    <value>txt_Record_CupNum</value>
-  </data>
-  <data name="label2.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="txt_DyeingCodeRemark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1151, 123</value>
-  </data>
-  <data name="txt_BathRatio.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="dt_Record_End.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 62</value>
-  </data>
-  <data name="&gt;&gt;btn_Record_Print.Name" xml:space="preserve">
-    <value>btn_Record_Print</value>
-  </data>
-  <data name="label12.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="txt_FormulaName.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="rdo_Record_All.Text" xml:space="preserve">
-    <value>显示全部</value>
-  </data>
-  <data name="txt_ObjectAddWaterWeight.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lab_CupCode.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="txt_FormulaCode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>118, 25</value>
-  </data>
-  <data name="&gt;&gt;txt_Record_Code.Parent" xml:space="preserve">
-    <value>grp_DropRecord</value>
-  </data>
-  <data name="&gt;&gt;txt_HandleBathRatio.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_DyeingCodeRemark.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="txt_Operator.TabIndex" type="System.Int32, mscorlib">
-    <value>36</value>
   </data>
   <data name="txt_Colorists.Location" type="System.Drawing.Point, System.Drawing">
     <value>490, 123</value>
   </data>
-  <data name="&gt;&gt;grp_FormulaData.Name" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="txt_CreateTime.Location" type="System.Drawing.Point, System.Drawing">
-    <value>559, 172</value>
-  </data>
-  <data name="label12.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="Btn_Derive.Text" xml:space="preserve">
-    <value>导出自检数据</value>
-  </data>
-  <data name="&gt;&gt;Btn_PDF.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="dt_Record_End.Size" type="System.Drawing.Size, System.Drawing">
-    <value>218, 29</value>
-  </data>
-  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;dgv_DropRecord.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label8.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="&gt;&gt;txt_FormulaCode.Name" xml:space="preserve">
-    <value>txt_FormulaCode</value>
-  </data>
-  <data name="txt_R.Size" type="System.Drawing.Size, System.Drawing">
-    <value>548, 29</value>
-  </data>
-  <data name="txt_ClothWeight.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
-  </data>
-  <data name="&gt;&gt;label11.Name" xml:space="preserve">
-    <value>label11</value>
-  </data>
-  <data name="&gt;&gt;label14.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lab_FormulaCode.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="txt_Non_AnhydrationWR.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="grp_FormulaData.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 10.5pt</value>
-  </data>
-  <data name="&gt;&gt;btn_Record_Delete.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="dt_Record_End.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="txt_CupNum.Size" type="System.Drawing.Size, System.Drawing">
-    <value>74, 29</value>
-  </data>
-  <data name="&gt;&gt;lab_ClothWeight.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="&gt;&gt;dgv_Details.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="lab_AnhydrationWR.TabIndex" type="System.Int32, mscorlib">
-    <value>48</value>
-  </data>
-  <data name="txt_Operator.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="txt_Colorists.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 29</value>
   </data>
-  <data name="&gt;&gt;txt_ClothType.ZOrder" xml:space="preserve">
-    <value>37</value>
-  </data>
-  <data name="label13.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="txt_RealAddWaterWeight.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="label10.Text" xml:space="preserve">
-    <value>杯号:</value>
-  </data>
-  <data name="label4.Text" xml:space="preserve">
-    <value>配方代码:</value>
-  </data>
-  <data name="txt_Non_AnhydrationWR.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="lab_ClothType.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="chk_AddWaterChoose.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;txt_CreateTime.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="txt_RealAddWaterWeight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>131, 29</value>
-  </data>
-  <data name="&gt;&gt;lab_AnhydrationWR.ZOrder" xml:space="preserve">
-    <value>25</value>
-  </data>
-  <data name="lab_FormulaName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>716, 30</value>
-  </data>
-  <data name="lab_HandleBathRatio.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="txt_CreateTime.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="rdo_Record_condition.Size" type="System.Drawing.Size, System.Drawing">
-    <value>103, 23</value>
-  </data>
-  <data name="lab_FormulaName.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="dt_Record_End.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;chk_AddWaterChoose.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lab_FormulaCode.Text" xml:space="preserve">
-    <value>配方代码:</value>
-  </data>
-  <data name="txt_VersionNum.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="lab_txt_Non_AnhydrationWR.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="txt_AnhydrationWR.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="label12.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txt_ObjectAddWaterWeight.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="&gt;&gt;Btn_PDF.Parent" xml:space="preserve">
-    <value>grp_DropRecord</value>
-  </data>
-  <data name="rdo_Record_Now.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label12.TabIndex" type="System.Int32, mscorlib">
-    <value>69</value>
-  </data>
-  <data name="&gt;&gt;grp_DropRecord.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="lab_HandleBathRatio.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="label1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>76, 19</value>
-  </data>
-  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="txt_ObjectAddWaterWeight.TabIndex" type="System.Int32, mscorlib">
-    <value>56</value>
-  </data>
-  <data name="rdo_Record_All.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lab_CupCode.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="rdo_Record_Now.Text" xml:space="preserve">
-    <value>显示当天</value>
-  </data>
-  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 19</value>
-  </data>
-  <data name="txt_VersionNum.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="label8.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="txt_DyeingCode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>210, 29</value>
-  </data>
-  <data name="&gt;&gt;grp_DropRecord.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_FormulaName.ZOrder" xml:space="preserve">
-    <value>48</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>HistoryData</value>
-  </data>
-  <data name="txt_BathRatio.Size" type="System.Drawing.Size, System.Drawing">
-    <value>71, 29</value>
-  </data>
-  <data name="&gt;&gt;dt_Record_End.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DateTimePicker, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>76, 19</value>
-  </data>
-  <data name="&gt;&gt;grp_DropRecord.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;label12.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="grp_FormulaData.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;txt_FormulaName.Name" xml:space="preserve">
-    <value>txt_FormulaName</value>
-  </data>
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 19</value>
-  </data>
-  <data name="lab_FormulaName.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lab_CreateTime.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 19</value>
-  </data>
-  <data name="rdo_Record_condition.TabIndex" type="System.Int32, mscorlib">
-    <value>45</value>
-  </data>
-  <data name="lab_txt_Non_AnhydrationWR.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1097, 79</value>
-  </data>
-  <data name="&gt;&gt;txt_Result.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="lab_ClothType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>105, 19</value>
-  </data>
-  <data name="rdo_Record_condition.Text" xml:space="preserve">
-    <value>条件查询</value>
-  </data>
-  <data name="Btn_PDF.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;label12.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="&gt;&gt;txt_Non_AnhydrationWR.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="&gt;&gt;lab_Customer.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="txt_BathRatio.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;lab_BathRatio.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 216</value>
-  </data>
-  <data name="&gt;&gt;txt_TotalWeight.ZOrder" xml:space="preserve">
-    <value>42</value>
-  </data>
-  <data name="dt_Record_Start.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="txt_ClothWeight.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="chk_AddWaterChoose.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="label1.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="btn_Record_Print.TabIndex" type="System.Int32, mscorlib">
-    <value>51</value>
-  </data>
-  <data name="label7.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="$this.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dgv_DropRecord.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="chk_AddWaterChoose.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="txt_ClothWeight.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1333, 384</value>
-  </data>
-  <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 100</value>
-  </data>
-  <data name="&gt;&gt;label6.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="txt_R.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="btn_Record_Select.Location" type="System.Drawing.Point, System.Drawing">
-    <value>346, 92</value>
-  </data>
-  <data name="btn_Record_Print.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 29</value>
-  </data>
-  <data name="&gt;&gt;Btn_PDF.Name" xml:space="preserve">
-    <value>Btn_PDF</value>
-  </data>
-  <data name="lab_CupCode.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="&gt;&gt;txt_RealAddWaterWeight.ZOrder" xml:space="preserve">
-    <value>17</value>
-  </data>
-  <data name="&gt;&gt;lab_Operator.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="txt_HandleBathRatio.TabIndex" type="System.Int32, mscorlib">
-    <value>51</value>
-  </data>
-  <data name="btn_Record_Print.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="txt_Record_CupNum.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 23</value>
-  </data>
-  <data name="&gt;&gt;txt_Customer.Name" xml:space="preserve">
-    <value>txt_Customer</value>
-  </data>
-  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
-    <value>61</value>
-  </data>
-  <data name="&gt;&gt;btn_save.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="label6.Text" xml:space="preserve">
-    <value>染固色工艺代码:</value>
-  </data>
-  <data name="&gt;&gt;label10.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_TotalWeight.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lab_BathRatio.Text" xml:space="preserve">
-    <value>浴比:</value>
-  </data>
-  <data name="&gt;&gt;label12.Name" xml:space="preserve">
-    <value>label12</value>
-  </data>
-  <data name="&gt;&gt;rdo_Record_condition.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="txt_Start.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txt_ClothWeight.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="txt_RealAddWaterWeight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>378, 211</value>
-  </data>
-  <data name="label13.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 139</value>
-  </data>
-  <data name="&gt;&gt;txt_Start.Name" xml:space="preserve">
-    <value>txt_Start</value>
-  </data>
-  <data name="label10.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="txt_RealAddWaterWeight.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="txt_Operator.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="btn_save.TabIndex" type="System.Int32, mscorlib">
-    <value>62</value>
-  </data>
-  <data name="&gt;&gt;timer2.Name" xml:space="preserve">
-    <value>timer2</value>
-  </data>
-  <data name="txt_Result.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="&gt;&gt;txt_VersionNum.Name" xml:space="preserve">
-    <value>txt_VersionNum</value>
-  </data>
-  <data name="label9.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="txt_ClothWeight.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="lab_TotalWeight.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="dgv_DropRecord.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;txt_ClothType.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_Start.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lab_HandleBathRatio.Text" xml:space="preserve">
-    <value>后处理浴比:</value>
-  </data>
-  <data name="button1.TabIndex" type="System.Int32, mscorlib">
-    <value>71</value>
-  </data>
-  <data name="grp_FormulaData.Text" xml:space="preserve">
-    <value>配方资料</value>
-  </data>
-  <data name="&gt;&gt;lab_FormulaName.Name" xml:space="preserve">
-    <value>lab_FormulaName</value>
-  </data>
-  <data name="lab_TotalWeight.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="txt_TotalTime.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="rdo_Record_All.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="txt_FormulaCode.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="lab_CreateTime.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lab_Customer.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label13.Location" type="System.Drawing.Point, System.Drawing">
-    <value>833, 216</value>
-  </data>
-  <data name="txt_VatNumber.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="lab_Customer.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;lab_txt_Non_AnhydrationWR.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="btn_save.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="&gt;&gt;txt_ClothType.Name" xml:space="preserve">
-    <value>txt_ClothType</value>
-  </data>
-  <data name="grp_FormulaData.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="lab_ClothWeight.Text" xml:space="preserve">
-    <value>布重:</value>
-  </data>
-  <data name="&gt;&gt;label7.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label12.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;lab_ClothWeight.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_State.Name" xml:space="preserve">
-    <value>txt_State</value>
-  </data>
-  <data name="&gt;&gt;txt_Colorists.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lab_Operator.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="txt_FormulaName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>806, 25</value>
-  </data>
-  <data name="label6.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txt_TotalTime.Size" type="System.Drawing.Size, System.Drawing">
-    <value>263, 29</value>
-  </data>
-  <data name="lab_Customer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 79</value>
-  </data>
-  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="&gt;&gt;lab_ClothType.ZOrder" xml:space="preserve">
-    <value>39</value>
-  </data>
-  <data name="txt_R.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txt_Start.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="lab_FormulaName.Text" xml:space="preserve">
-    <value>配方名称:</value>
-  </data>
-  <data name="&gt;&gt;dt_Record_End.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="lab_ClothWeight.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;txt_DyeingCodeRemark.Name" xml:space="preserve">
-    <value>txt_DyeingCodeRemark</value>
-  </data>
-  <data name="&gt;&gt;txt_FormulaCode.ZOrder" xml:space="preserve">
-    <value>43</value>
-  </data>
-  <data name="txt_CupNum.TabIndex" type="System.Int32, mscorlib">
-    <value>24</value>
-  </data>
-  <data name="rdo_Record_All.Size" type="System.Drawing.Size, System.Drawing">
-    <value>103, 23</value>
-  </data>
-  <data name="&gt;&gt;txt_Result.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_CreateTime.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="txt_AnhydrationWR.TabIndex" type="System.Int32, mscorlib">
-    <value>49</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 12</value>
-  </data>
-  <data name="&gt;&gt;txt_Record_CupNum.Parent" xml:space="preserve">
-    <value>grp_DropRecord</value>
-  </data>
-  <data name="lab_AnhydrationWR.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="txt_Non_AnhydrationWR.Size" type="System.Drawing.Size, System.Drawing">
-    <value>131, 29</value>
-  </data>
-  <data name="&gt;&gt;txt_Record_Operator.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="txt_DyeingCode.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="Btn_PDF.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lab_TotalWeight.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;rdo_Record_All.Parent" xml:space="preserve">
-    <value>grp_DropRecord</value>
-  </data>
-  <data name="label9.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="grp_DropRecord.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;dgv_DropRecord.Parent" xml:space="preserve">
-    <value>grp_DropRecord</value>
-  </data>
-  <data name="txt_TotalWeight.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;grp_FormulaData.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="chk_AddWaterChoose.Size" type="System.Drawing.Size, System.Drawing">
-    <value>66, 23</value>
-  </data>
-  <data name="grp_DropRecord.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 10.5pt</value>
-  </data>
-  <data name="txt_Record_CupNum.Location" type="System.Drawing.Point, System.Drawing">
-    <value>105, 98</value>
-  </data>
-  <data name="&gt;&gt;txt_R.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="dgv_DropRecord.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
-    <value>Vertical</value>
-  </data>
-  <data name="&gt;&gt;txt_ObjectAddWaterWeight.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lab_ClothWeight.Name" xml:space="preserve">
-    <value>lab_ClothWeight</value>
-  </data>
-  <data name="&gt;&gt;dt_Record_End.Parent" xml:space="preserve">
-    <value>grp_DropRecord</value>
-  </data>
-  <data name="lab_txt_Non_AnhydrationWR.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label6.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="txt_Record_Operator.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="Btn_PDF.TabIndex" type="System.Int32, mscorlib">
-    <value>52</value>
-  </data>
-  <data name="txt_AnhydrationWR.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txt_TotalTime.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="&gt;&gt;dt_Record_Start.Parent" xml:space="preserve">
-    <value>grp_DropRecord</value>
-  </data>
-  <data name="txt_AnhydrationWR.Location" type="System.Drawing.Point, System.Drawing">
-    <value>944, 74</value>
-  </data>
-  <data name="txt_Operator.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lab_CupCode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 19</value>
-  </data>
-  <data name="label9.TabIndex" type="System.Int32, mscorlib">
-    <value>63</value>
-  </data>
-  <data name="btn_Record_Delete.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="txt_CreateTime.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="lab_ClothType.Text" xml:space="preserve">
-    <value>布种/基材:</value>
-  </data>
-  <data name="Btn_Derive.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;dt_Record_End.Name" xml:space="preserve">
-    <value>dt_Record_End</value>
-  </data>
-  <data name="lab_Operator.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lab_ClothWeight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 19</value>
-  </data>
-  <data name="&gt;&gt;label14.Name" xml:space="preserve">
-    <value>label14</value>
-  </data>
-  <data name="&gt;&gt;txt_AnhydrationWR.ZOrder" xml:space="preserve">
-    <value>24</value>
-  </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 19</value>
-  </data>
-  <data name="txt_Record_CupNum.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;timer1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_ObjectAddWaterWeight.Name" xml:space="preserve">
-    <value>txt_ObjectAddWaterWeight</value>
-  </data>
-  <data name="&gt;&gt;txt_CupNum.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lab_HandleBathRatio.Size" type="System.Drawing.Size, System.Drawing">
-    <value>114, 19</value>
-  </data>
-  <data name="txt_State.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="txt_Record_Code.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="label14.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="txt_FormulaCode.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;dgv_DropRecord.ZOrder" xml:space="preserve">
-    <value>19</value>
-  </data>
-  <data name="txt_ClothType.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="&gt;&gt;lab_HandleBathRatio.ZOrder" xml:space="preserve">
-    <value>29</value>
-  </data>
-  <data name="&gt;&gt;dt_Record_Start.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="lab_FormulaName.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="txt_ObjectAddWaterWeight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>139, 29</value>
-  </data>
-  <data name="&gt;&gt;rdo_Record_Now.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chk_AddWaterChoose.Name" xml:space="preserve">
-    <value>chk_AddWaterChoose</value>
-  </data>
-  <data name="&gt;&gt;txt_VersionNum.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="txt_CupNum.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;txt_Colorists.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="rdo_Record_Now.TabIndex" type="System.Int32, mscorlib">
-    <value>37</value>
-  </data>
-  <data name="label12.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lab_CreateTime.Location" type="System.Drawing.Point, System.Drawing">
-    <value>453, 177</value>
-  </data>
-  <data name="&gt;&gt;txt_VatNumber.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="&gt;&gt;label3.Name" xml:space="preserve">
-    <value>label3</value>
-  </data>
-  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
-    <value>14</value>
-  </data>
-  <data name="lab_HandleBathRatio.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 177</value>
-  </data>
-  <data name="&gt;&gt;lab_CreateTime.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="&gt;&gt;grp_FormulaData.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="label9.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="dt_Record_Start.CustomFormat" xml:space="preserve">
-    <value>yyyy-MM-dd HH:mm:ss</value>
-  </data>
-  <data name="Btn_PDF.Location" type="System.Drawing.Point, System.Drawing">
-    <value>346, 150</value>
-  </data>
-  <data name="btn_Record_Delete.Location" type="System.Drawing.Point, System.Drawing">
-    <value>275, 95</value>
-  </data>
-  <data name="label7.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;txt_State.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="&gt;&gt;rdo_Record_All.Name" xml:space="preserve">
-    <value>rdo_Record_All</value>
-  </data>
-  <data name="&gt;&gt;txt_AnhydrationWR.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;button1.Name" xml:space="preserve">
-    <value>button1</value>
-  </data>
-  <data name="&gt;&gt;label13.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="txt_VatNumber.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
-    <value>76, 19</value>
-  </data>
-  <data name="&gt;&gt;txt_CupNum.Name" xml:space="preserve">
-    <value>txt_CupNum</value>
-  </data>
-  <data name="&gt;&gt;lab_TotalWeight.Name" xml:space="preserve">
-    <value>lab_TotalWeight</value>
-  </data>
-  <data name="txt_Operator.Location" type="System.Drawing.Point, System.Drawing">
-    <value>277, 123</value>
-  </data>
-  <data name="&gt;&gt;lab_FormulaName.ZOrder" xml:space="preserve">
-    <value>41</value>
-  </data>
-  <data name="&gt;&gt;txt_HandleBathRatio.Name" xml:space="preserve">
-    <value>txt_HandleBathRatio</value>
-  </data>
-  <data name="label6.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="txt_BathRatio.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
-  </data>
-  <data name="btn_save.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1213, 171</value>
-  </data>
-  <data name="&gt;&gt;lab_CupCode.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_DyeingCode.Name" xml:space="preserve">
-    <value>txt_DyeingCode</value>
-  </data>
-  <data name="btn_Record_Select.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="label4.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label5.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txt_HandleBathRatio.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;txt_Customer.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="button1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="&gt;&gt;label8.Name" xml:space="preserve">
-    <value>label8</value>
-  </data>
-  <data name="txt_Colorists.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="txt_DyeingCodeRemark.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="&gt;&gt;lab_Customer.ZOrder" xml:space="preserve">
-    <value>36</value>
-  </data>
-  <data name="txt_AnhydrationWR.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="label12.Text" xml:space="preserve">
-    <value>缸位:</value>
-  </data>
-  <data name="txt_TotalTime.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="grp_FormulaData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1365, 986</value>
-  </data>
-  <data name="&gt;&gt;txt_DyeingCode.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="&gt;&gt;txt_HandleBathRatio.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="&gt;&gt;txt_ClothWeight.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="lab_FormulaCode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 30</value>
-  </data>
-  <data name="label7.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="txt_VersionNum.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="txt_R.TabIndex" type="System.Int32, mscorlib">
-    <value>47</value>
-  </data>
-  <data name="lab_AnhydrationWR.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;txt_VersionNum.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="txt_CupNum.ToolTip" xml:space="preserve">
-    <value />
+  <data name="txt_Colorists.TabIndex" type="System.Int32, mscorlib">
+    <value>75</value>
   </data>
   <data name="txt_Colorists.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="txt_Start.Location" type="System.Drawing.Point, System.Drawing">
-    <value>297, 172</value>
+  <data name="&gt;&gt;txt_Colorists.Name" xml:space="preserve">
+    <value>txt_Colorists</value>
   </data>
-  <data name="txt_FormulaName.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="panel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
-    <value>18</value>
-  </data>
-  <data name="&gt;&gt;txt_Result.Name" xml:space="preserve">
-    <value>txt_Result</value>
-  </data>
-  <data name="dgv_DropRecord.RowHeadersWidth" type="System.Int32, mscorlib">
-    <value>72</value>
-  </data>
-  <data name="btn_Record_Delete.Text" xml:space="preserve">
-    <value>删除</value>
-  </data>
-  <data name="grp_DropRecord.Size" type="System.Drawing.Size, System.Drawing">
-    <value>562, 989</value>
-  </data>
-  <data name="lab_BathRatio.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="Btn_Derive.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 29</value>
-  </data>
-  <data name="txt_TotalWeight.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="Btn_PDF.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 29</value>
-  </data>
-  <data name="lab_Customer.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;txt_FormulaName.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="&gt;&gt;txt_ClothWeight.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>目标加水量:</value>
-  </data>
-  <data name="txt_VatNumber.TabIndex" type="System.Int32, mscorlib">
-    <value>70</value>
-  </data>
-  <data name="rdo_Record_All.TabIndex" type="System.Int32, mscorlib">
-    <value>38</value>
-  </data>
-  <data name="lab_txt_Non_AnhydrationWR.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="txt_DyeingCode.TabIndex" type="System.Int32, mscorlib">
-    <value>53</value>
-  </data>
-  <data name="dt_Record_Start.Location" type="System.Drawing.Point, System.Drawing">
-    <value>105, 134</value>
-  </data>
-  <data name="panel1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txt_Colorists.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 29</value>
-  </data>
-  <data name="txt_TotalTime.Location" type="System.Drawing.Point, System.Drawing">
-    <value>944, 172</value>
-  </data>
-  <data name="&gt;&gt;txt_State.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="rdo_Record_All.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="txt_Record_Code.Size" type="System.Drawing.Size, System.Drawing">
-    <value>183, 29</value>
-  </data>
-  <data name="&gt;&gt;label3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lab_ClothWeight.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;btn_Record_Print.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="txt_Record_Operator.TabIndex" type="System.Int32, mscorlib">
-    <value>46</value>
-  </data>
-  <data name="&gt;&gt;txt_DyeingCode.ZOrder" xml:space="preserve">
-    <value>22</value>
-  </data>
-  <data name="lab_AnhydrationWR.Location" type="System.Drawing.Point, System.Drawing">
-    <value>836, 79</value>
-  </data>
-  <data name="&gt;&gt;txt_ObjectAddWaterWeight.ZOrder" xml:space="preserve">
-    <value>19</value>
-  </data>
-  <data name="grp_DropRecord.Text" xml:space="preserve">
-    <value>滴液记录</value>
-  </data>
-  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
-    <value>grp_DropRecord</value>
-  </data>
-  <data name="label7.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="txt_FormulaName.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="lab_CreateTime.Text" xml:space="preserve">
-    <value>存档时间:</value>
-  </data>
-  <data name="txt_Record_Code.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="&gt;&gt;btn_Record_Delete.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_ClothWeight.Name" xml:space="preserve">
-    <value>txt_ClothWeight</value>
-  </data>
-  <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="Btn_PDF.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="&gt;&gt;label6.Name" xml:space="preserve">
-    <value>label6</value>
-  </data>
-  <data name="&gt;&gt;Btn_PDF.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="txt_State.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 29</value>
-  </data>
-  <data name="txt_Operator.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="grp_DropRecord.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="lab_Operator.Location" type="System.Drawing.Point, System.Drawing">
-    <value>198, 128</value>
-  </data>
-  <data name="dgv_Details.TabIndex" type="System.Int32, mscorlib">
-    <value>54</value>
-  </data>
-  <data name="txt_Result.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txt_Customer.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="rdo_Record_Now.Size" type="System.Drawing.Size, System.Drawing">
-    <value>103, 23</value>
-  </data>
-  <data name="txt_Record_Operator.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label5.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
-    <value>toolTip1</value>
-  </data>
-  <data name="lab_Operator.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;chk_AddWaterChoose.ZOrder" xml:space="preserve">
-    <value>50</value>
-  </data>
-  <data name="btn_Record_Select.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 29</value>
-  </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>结束日期:</value>
-  </data>
-  <data name="label9.Text" xml:space="preserve">
-    <value>滴液日期:</value>
-  </data>
-  <data name="lab_FormulaCode.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;rdo_Record_Now.Parent" xml:space="preserve">
-    <value>grp_DropRecord</value>
-  </data>
-  <data name="&gt;&gt;txt_Customer.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="lab_ClothWeight.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="rdo_Record_condition.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btn_save.Size" type="System.Drawing.Size, System.Drawing">
-    <value>123, 31</value>
-  </data>
-  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 62</value>
-  </data>
-  <data name="txt_State.Location" type="System.Drawing.Point, System.Drawing">
-    <value>560, 25</value>
-  </data>
-  <data name="&gt;&gt;btn_save.Name" xml:space="preserve">
-    <value>btn_save</value>
-  </data>
-  <data name="txt_CupNum.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="&gt;&gt;txt_Record_Code.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;lab_CreateTime.Name" xml:space="preserve">
-    <value>lab_CreateTime</value>
-  </data>
-  <data name="&gt;&gt;lab_TotalWeight.ZOrder" xml:space="preserve">
-    <value>35</value>
-  </data>
-  <data name="label14.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="txt_Non_AnhydrationWR.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;rdo_Record_Now.ZOrder" xml:space="preserve">
-    <value>14</value>
-  </data>
-  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
-    <value>grp_DropRecord</value>
-  </data>
-  <data name="&gt;&gt;txt_TotalWeight.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="txt_AnhydrationWR.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="&gt;&gt;txt_Record_CupNum.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 19</value>
-  </data>
-  <data name="txt_DyeingCodeRemark.TabIndex" type="System.Int32, mscorlib">
-    <value>68</value>
-  </data>
-  <data name="&gt;&gt;txt_DyeingCode.Type" xml:space="preserve">
+  <data name="&gt;&gt;txt_Colorists.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;txt_Colorists.Parent" xml:space="preserve">
     <value>grp_FormulaData</value>
   </data>
-  <data name="txt_Start.TabIndex" type="System.Int32, mscorlib">
-    <value>64</value>
+  <data name="&gt;&gt;txt_Colorists.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="label7.TabIndex" type="System.Int32, mscorlib">
-    <value>57</value>
+  <data name="label14.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="label4.TabIndex" type="System.Int32, mscorlib">
-    <value>34</value>
+  <data name="label14.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
   </data>
-  <data name="txt_DyeingCodeRemark.ToolTip" xml:space="preserve">
-    <value />
+  <data name="label14.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="lab_FormulaCode.ToolTip" xml:space="preserve">
-    <value />
+  <data name="label14.Location" type="System.Drawing.Point, System.Drawing">
+    <value>411, 128</value>
   </data>
-  <data name="&gt;&gt;Btn_Derive.ZOrder" xml:space="preserve">
-    <value>4</value>
+  <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 19</value>
   </data>
-  <data name="txt_State.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
+  <data name="label14.TabIndex" type="System.Int32, mscorlib">
+    <value>74</value>
   </data>
-  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
-    <value>panel1</value>
+  <data name="label14.Text" xml:space="preserve">
+    <value>配色员:</value>
   </data>
-  <data name="label12.Location" type="System.Drawing.Point, System.Drawing">
-    <value>535, 216</value>
+  <data name="label14.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
   </data>
-  <data name="&gt;&gt;lab_FormulaCode.Name" xml:space="preserve">
-    <value>lab_FormulaCode</value>
+  <data name="&gt;&gt;label14.Name" xml:space="preserve">
+    <value>label14</value>
   </data>
-  <data name="label11.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;label14.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="lab_CreateTime.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;label14.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
   </data>
-  <data name="&gt;&gt;rdo_Record_All.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
-  <data name="txt_VersionNum.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+  <data name="txt_Result.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
   </data>
-  <data name="dt_Record_Start.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="txt_Result.Location" type="System.Drawing.Point, System.Drawing">
+    <value>886, 211</value>
   </data>
-  <data name="label10.TabIndex" type="System.Int32, mscorlib">
-    <value>49</value>
+  <data name="txt_Result.Size" type="System.Drawing.Size, System.Drawing">
+    <value>325, 29</value>
+  </data>
+  <data name="txt_Result.TabIndex" type="System.Int32, mscorlib">
+    <value>73</value>
+  </data>
+  <data name="txt_Result.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_Result.Name" xml:space="preserve">
+    <value>txt_Result</value>
+  </data>
+  <data name="&gt;&gt;txt_Result.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_Result.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;txt_Result.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="label13.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label13.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="label13.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label13.Location" type="System.Drawing.Point, System.Drawing">
+    <value>833, 216</value>
+  </data>
+  <data name="label13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 19</value>
+  </data>
+  <data name="label13.TabIndex" type="System.Int32, mscorlib">
+    <value>72</value>
+  </data>
+  <data name="label13.Text" xml:space="preserve">
+    <value>结论:</value>
+  </data>
+  <data name="label13.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;label13.Name" xml:space="preserve">
+    <value>label13</value>
+  </data>
+  <data name="&gt;&gt;label13.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;label13.Parent" xml:space="preserve">
     <value>grp_FormulaData</value>
   </data>
-  <data name="txt_ClothType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>139, 29</value>
+  <data name="&gt;&gt;label13.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
-  <data name="btn_Record_Delete.Visible" type="System.Boolean, mscorlib">
+  <data name="button1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1213, 208</value>
+  </data>
+  <data name="button1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>123, 31</value>
+  </data>
+  <data name="button1.TabIndex" type="System.Int32, mscorlib">
+    <value>71</value>
+  </data>
+  <data name="button1.Text" xml:space="preserve">
+    <value>修改结论</value>
+  </data>
+  <data name="&gt;&gt;button1.Name" xml:space="preserve">
+    <value>button1</value>
+  </data>
+  <data name="&gt;&gt;button1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;button1.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;button1.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="txt_VatNumber.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="&gt;&gt;lab_BathRatio.Name" xml:space="preserve">
-    <value>lab_BathRatio</value>
+  <data name="txt_VatNumber.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
   </data>
-  <data name="label6.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="txt_VatNumber.Location" type="System.Drawing.Point, System.Drawing">
+    <value>591, 211</value>
+  </data>
+  <data name="txt_VatNumber.Size" type="System.Drawing.Size, System.Drawing">
+    <value>226, 29</value>
+  </data>
+  <data name="txt_VatNumber.TabIndex" type="System.Int32, mscorlib">
+    <value>70</value>
+  </data>
+  <data name="txt_VatNumber.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_VatNumber.Name" xml:space="preserve">
+    <value>txt_VatNumber</value>
+  </data>
+  <data name="&gt;&gt;txt_VatNumber.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_VatNumber.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;txt_VatNumber.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="label12.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label12.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="label12.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label12.Location" type="System.Drawing.Point, System.Drawing">
+    <value>535, 216</value>
+  </data>
+  <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 19</value>
+  </data>
+  <data name="label12.TabIndex" type="System.Int32, mscorlib">
+    <value>69</value>
+  </data>
+  <data name="label12.Text" xml:space="preserve">
+    <value>缸位:</value>
+  </data>
+  <data name="label12.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;label12.Name" xml:space="preserve">
+    <value>label12</value>
+  </data>
+  <data name="&gt;&gt;label12.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label12.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;label12.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="txt_DyeingCodeRemark.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txt_DyeingCodeRemark.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="txt_DyeingCodeRemark.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1151, 123</value>
+  </data>
+  <data name="txt_DyeingCodeRemark.Size" type="System.Drawing.Size, System.Drawing">
+    <value>188, 29</value>
+  </data>
+  <data name="txt_DyeingCodeRemark.TabIndex" type="System.Int32, mscorlib">
+    <value>68</value>
+  </data>
+  <data name="txt_DyeingCodeRemark.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_DyeingCodeRemark.Name" xml:space="preserve">
+    <value>txt_DyeingCodeRemark</value>
+  </data>
+  <data name="&gt;&gt;txt_DyeingCodeRemark.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_DyeingCodeRemark.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;txt_DyeingCodeRemark.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="label11.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label11.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="label11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>992, 128</value>
+  </data>
+  <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 19</value>
+  </data>
+  <data name="label11.TabIndex" type="System.Int32, mscorlib">
+    <value>67</value>
+  </data>
+  <data name="label11.Text" xml:space="preserve">
+    <value>染固色代码备注:</value>
+  </data>
+  <data name="label11.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;label11.Name" xml:space="preserve">
+    <value>label11</value>
+  </data>
+  <data name="&gt;&gt;label11.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="txt_CreateTime.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txt_CreateTime.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="txt_CreateTime.Location" type="System.Drawing.Point, System.Drawing">
+    <value>559, 172</value>
+  </data>
+  <data name="txt_CreateTime.Size" type="System.Drawing.Size, System.Drawing">
+    <value>258, 29</value>
+  </data>
+  <data name="txt_CreateTime.TabIndex" type="System.Int32, mscorlib">
+    <value>66</value>
+  </data>
+  <data name="txt_CreateTime.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_CreateTime.Name" xml:space="preserve">
+    <value>txt_CreateTime</value>
+  </data>
+  <data name="&gt;&gt;txt_CreateTime.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_CreateTime.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;txt_CreateTime.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="lab_CreateTime.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lab_CreateTime.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="lab_CreateTime.Location" type="System.Drawing.Point, System.Drawing">
+    <value>453, 177</value>
+  </data>
+  <data name="lab_CreateTime.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 19</value>
+  </data>
+  <data name="lab_CreateTime.TabIndex" type="System.Int32, mscorlib">
+    <value>65</value>
+  </data>
+  <data name="lab_CreateTime.Text" xml:space="preserve">
+    <value>存档时间:</value>
+  </data>
+  <data name="lab_CreateTime.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lab_CreateTime.Name" xml:space="preserve">
+    <value>lab_CreateTime</value>
+  </data>
+  <data name="&gt;&gt;lab_CreateTime.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_CreateTime.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;lab_CreateTime.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="txt_Start.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txt_Start.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="txt_Start.Location" type="System.Drawing.Point, System.Drawing">
+    <value>297, 172</value>
+  </data>
+  <data name="txt_Start.Size" type="System.Drawing.Size, System.Drawing">
+    <value>128, 29</value>
+  </data>
+  <data name="txt_Start.TabIndex" type="System.Int32, mscorlib">
+    <value>64</value>
+  </data>
+  <data name="txt_Start.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_Start.Name" xml:space="preserve">
+    <value>txt_Start</value>
+  </data>
+  <data name="&gt;&gt;txt_Start.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_Start.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;txt_Start.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="label9.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label9.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>196, 177</value>
+  </data>
+  <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 19</value>
+  </data>
+  <data name="label9.TabIndex" type="System.Int32, mscorlib">
+    <value>63</value>
+  </data>
+  <data name="label9.Text" xml:space="preserve">
+    <value>滴液日期:</value>
+  </data>
+  <data name="label9.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;label9.Name" xml:space="preserve">
+    <value>label9</value>
+  </data>
+  <data name="&gt;&gt;label9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label9.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="btn_save.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1213, 171</value>
+  </data>
+  <data name="btn_save.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="btn_save.Size" type="System.Drawing.Size, System.Drawing">
+    <value>123, 31</value>
+  </data>
+  <data name="btn_save.TabIndex" type="System.Int32, mscorlib">
+    <value>62</value>
+  </data>
+  <data name="btn_save.Text" xml:space="preserve">
+    <value>保存光谱</value>
+  </data>
+  <data name="btn_save.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;btn_save.Name" xml:space="preserve">
+    <value>btn_save</value>
+  </data>
+  <data name="&gt;&gt;btn_save.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btn_save.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;btn_save.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 589</value>
+  </data>
+  <data name="panel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1333, 384</value>
+  </data>
+  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
+    <value>61</value>
+  </data>
+  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="label8.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label8.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="label8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>836, 177</value>
+  </data>
+  <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 19</value>
+  </data>
+  <data name="label8.TabIndex" type="System.Int32, mscorlib">
+    <value>60</value>
+  </data>
+  <data name="label8.Text" xml:space="preserve">
+    <value>总用时:</value>
+  </data>
+  <data name="label8.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;label8.Name" xml:space="preserve">
+    <value>label8</value>
+  </data>
+  <data name="&gt;&gt;label8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label8.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="txt_TotalTime.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txt_TotalTime.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="txt_TotalTime.Location" type="System.Drawing.Point, System.Drawing">
+    <value>944, 172</value>
+  </data>
+  <data name="txt_TotalTime.Size" type="System.Drawing.Size, System.Drawing">
+    <value>263, 29</value>
+  </data>
+  <data name="txt_TotalTime.TabIndex" type="System.Int32, mscorlib">
+    <value>59</value>
+  </data>
+  <data name="txt_TotalTime.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_TotalTime.Name" xml:space="preserve">
+    <value>txt_TotalTime</value>
+  </data>
+  <data name="&gt;&gt;txt_TotalTime.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_TotalTime.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;txt_TotalTime.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="txt_RealAddWaterWeight.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txt_RealAddWaterWeight.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="txt_RealAddWaterWeight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>378, 211</value>
+  </data>
+  <data name="txt_RealAddWaterWeight.Size" type="System.Drawing.Size, System.Drawing">
+    <value>131, 29</value>
+  </data>
+  <data name="txt_RealAddWaterWeight.TabIndex" type="System.Int32, mscorlib">
+    <value>58</value>
+  </data>
+  <data name="txt_RealAddWaterWeight.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_RealAddWaterWeight.Name" xml:space="preserve">
+    <value>txt_RealAddWaterWeight</value>
+  </data>
+  <data name="&gt;&gt;txt_RealAddWaterWeight.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_RealAddWaterWeight.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;txt_RealAddWaterWeight.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="label7.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label7.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>270, 216</value>
+  </data>
+  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>114, 19</value>
+  </data>
+  <data name="label7.TabIndex" type="System.Int32, mscorlib">
+    <value>57</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>实际加水量:</value>
+  </data>
+  <data name="label7.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;label7.Name" xml:space="preserve">
+    <value>label7</value>
+  </data>
+  <data name="&gt;&gt;label7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label7.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="txt_ObjectAddWaterWeight.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txt_ObjectAddWaterWeight.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="txt_ObjectAddWaterWeight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>117, 211</value>
+  </data>
+  <data name="txt_ObjectAddWaterWeight.Size" type="System.Drawing.Size, System.Drawing">
+    <value>139, 29</value>
+  </data>
+  <data name="txt_ObjectAddWaterWeight.TabIndex" type="System.Int32, mscorlib">
+    <value>56</value>
+  </data>
+  <data name="txt_ObjectAddWaterWeight.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_ObjectAddWaterWeight.Name" xml:space="preserve">
+    <value>txt_ObjectAddWaterWeight</value>
+  </data>
+  <data name="&gt;&gt;txt_ObjectAddWaterWeight.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_ObjectAddWaterWeight.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;txt_ObjectAddWaterWeight.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
   </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 216</value>
   </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lab_FormulaName.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="lab_TotalWeight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>76, 19</value>
-  </data>
-  <data name="chk_AddWaterChoose.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="lab_Operator.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="txt_Customer.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="dgv_Details.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;txt_Record_Operator.Parent" xml:space="preserve">
-    <value>grp_DropRecord</value>
-  </data>
-  <data name="txt_Start.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 29</value>
-  </data>
-  <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1213, 208</value>
-  </data>
-  <data name="&gt;&gt;txt_ClothWeight.ZOrder" xml:space="preserve">
-    <value>47</value>
-  </data>
-  <data name="txt_Start.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="rdo_Record_Now.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="button1.Text" xml:space="preserve">
-    <value>修改结论</value>
-  </data>
-  <data name="&gt;&gt;lab_Customer.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lab_CupCode.ZOrder" xml:space="preserve">
-    <value>40</value>
-  </data>
-  <data name="label11.Text" xml:space="preserve">
-    <value>染固色代码备注:</value>
-  </data>
-  <data name="&gt;&gt;txt_Operator.ZOrder" xml:space="preserve">
-    <value>30</value>
-  </data>
-  <data name="&gt;&gt;lab_ClothType.Name" xml:space="preserve">
-    <value>lab_ClothType</value>
-  </data>
-  <data name="txt_Operator.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="txt_RealAddWaterWeight.TabIndex" type="System.Int32, mscorlib">
-    <value>58</value>
-  </data>
-  <data name="&gt;&gt;txt_BathRatio.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="txt_Customer.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="&gt;&gt;btn_Record_Delete.Parent" xml:space="preserve">
-    <value>grp_DropRecord</value>
-  </data>
-  <data name="label3.TabIndex" type="System.Int32, mscorlib">
-    <value>35</value>
-  </data>
-  <data name="lab_txt_Non_AnhydrationWR.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>114, 19</value>
   </data>
-  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>55</value>
   </data>
-  <data name="&gt;&gt;btn_Record_Select.Parent" xml:space="preserve">
-    <value>grp_DropRecord</value>
+  <data name="label1.Text" xml:space="preserve">
+    <value>目标加水量:</value>
   </data>
-  <data name="grp_FormulaData.Location" type="System.Drawing.Point, System.Drawing">
-    <value>578, 7</value>
-  </data>
-  <data name="&gt;&gt;Btn_Derive.Parent" xml:space="preserve">
-    <value>grp_DropRecord</value>
-  </data>
-  <data name="lab_txt_Non_AnhydrationWR.Text" xml:space="preserve">
-    <value>非脱水水比:</value>
-  </data>
-  <data name="&gt;&gt;lab_BathRatio.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="txt_Result.Location" type="System.Drawing.Point, System.Drawing">
-    <value>886, 211</value>
-  </data>
-  <data name="&gt;&gt;dgv_Details.ZOrder" xml:space="preserve">
-    <value>21</value>
-  </data>
-  <data name="label5.Text" xml:space="preserve">
-    <value>操作员:</value>
-  </data>
-  <data name="txt_Customer.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="grp_DropRecord.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 4</value>
-  </data>
-  <data name="label3.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="label1.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;rdo_Record_condition.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="dt_Record_End.CustomFormat" xml:space="preserve">
-    <value>yyyy-MM-dd HH:mm:ss</value>
-  </data>
-  <data name="txt_DyeingCode.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;txt_State.ZOrder" xml:space="preserve">
-    <value>46</value>
-  </data>
-  <data name="Btn_PDF.Text" xml:space="preserve">
-    <value>导出PDF</value>
-  </data>
-  <data name="lab_TotalWeight.Text" xml:space="preserve">
-    <value>总浴量:</value>
-  </data>
-  <data name="txt_ClothType.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;label9.Name" xml:space="preserve">
-    <value>label9</value>
-  </data>
-  <data name="txt_R.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="&gt;&gt;label4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="txt_TotalWeight.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="&gt;&gt;lab_txt_Non_AnhydrationWR.Name" xml:space="preserve">
-    <value>lab_txt_Non_AnhydrationWR</value>
-  </data>
-  <data name="&gt;&gt;txt_CreateTime.Name" xml:space="preserve">
-    <value>txt_CreateTime</value>
-  </data>
-  <data name="&gt;&gt;label9.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="txt_TotalWeight.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="dt_Record_Start.TabIndex" type="System.Int32, mscorlib">
-    <value>43</value>
-  </data>
-  <data name="lab_Operator.Text" xml:space="preserve">
-    <value>操作员:</value>
-  </data>
-  <data name="lab_BathRatio.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 19</value>
-  </data>
-  <data name="&gt;&gt;grp_DropRecord.Name" xml:space="preserve">
-    <value>grp_DropRecord</value>
-  </data>
-  <data name="txt_HandleBathRatio.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="txt_HandleBathRatio.Location" type="System.Drawing.Point, System.Drawing">
-    <value>118, 171</value>
-  </data>
-  <data name="label11.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="txt_TotalTime.TabIndex" type="System.Int32, mscorlib">
-    <value>59</value>
-  </data>
-  <data name="lab_HandleBathRatio.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="lab_BathRatio.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;rdo_Record_condition.Name" xml:space="preserve">
-    <value>rdo_Record_condition</value>
-  </data>
-  <data name="label11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;label8.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="btn_save.Text" xml:space="preserve">
-    <value>保存光谱</value>
-  </data>
-  <data name="&gt;&gt;lab_CupCode.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="chk_AddWaterChoose.Location" type="System.Drawing.Point, System.Drawing">
-    <value>751, 77</value>
-  </data>
-  <data name="txt_ClothType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1207, 22</value>
-  </data>
-  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
-    <value>grp_DropRecord</value>
-  </data>
-  <data name="txt_VersionNum.Location" type="System.Drawing.Point, System.Drawing">
-    <value>521, 25</value>
-  </data>
-  <data name="txt_Start.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="&gt;&gt;txt_FormulaName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_CreateTime.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 19</value>
-  </data>
-  <data name="&gt;&gt;lab_Customer.Name" xml:space="preserve">
-    <value>lab_Customer</value>
-  </data>
-  <data name="&gt;&gt;lab_txt_Non_AnhydrationWR.ZOrder" xml:space="preserve">
-    <value>27</value>
-  </data>
-  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 589</value>
-  </data>
-  <data name="btn_Record_Print.Location" type="System.Drawing.Point, System.Drawing">
-    <value>346, 121</value>
-  </data>
-  <data name="&gt;&gt;lab_Operator.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="&gt;&gt;lab_CreateTime.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lab_FormulaCode.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="txt_TotalWeight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 29</value>
-  </data>
-  <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 19</value>
-  </data>
-  <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>123, 31</value>
-  </data>
-  <data name="txt_HandleBathRatio.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;txt_Result.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="txt_ObjectAddWaterWeight.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="label10.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 19</value>
-  </data>
-  <data name="txt_VersionNum.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txt_Record_Operator.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 27</value>
-  </data>
-  <data name="btn_Record_Print.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="&gt;&gt;lab_Operator.Name" xml:space="preserve">
-    <value>lab_Operator</value>
-  </data>
-  <data name="rdo_Record_condition.Location" type="System.Drawing.Point, System.Drawing">
-    <value>428, 22</value>
-  </data>
-  <data name="&gt;&gt;txt_Non_AnhydrationWR.Name" xml:space="preserve">
-    <value>txt_Non_AnhydrationWR</value>
-  </data>
-  <data name="&gt;&gt;lab_ClothWeight.ZOrder" xml:space="preserve">
-    <value>33</value>
-  </data>
-  <data name="&gt;&gt;lab_HandleBathRatio.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lab_TotalWeight.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="lab_txt_Non_AnhydrationWR.TabIndex" type="System.Int32, mscorlib">
-    <value>46</value>
-  </data>
-  <data name="label13.Text" xml:space="preserve">
-    <value>结论:</value>
-  </data>
-  <data name="&gt;&gt;txt_Record_Code.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lab_Customer.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="label11.TabIndex" type="System.Int32, mscorlib">
-    <value>67</value>
-  </data>
-  <data name="&gt;&gt;label11.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lab_BathRatio.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;txt_AnhydrationWR.Name" xml:space="preserve">
-    <value>txt_AnhydrationWR</value>
-  </data>
-  <data name="txt_Record_Code.TabIndex" type="System.Int32, mscorlib">
-    <value>42</value>
-  </data>
-  <data name="&gt;&gt;btn_Record_Print.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="txt_ObjectAddWaterWeight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>117, 211</value>
-  </data>
-  <data name="txt_FormulaCode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>397, 29</value>
-  </data>
-  <data name="lab_AnhydrationWR.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 19</value>
-  </data>
-  <data name="lab_HandleBathRatio.TabIndex" type="System.Int32, mscorlib">
-    <value>50</value>
-  </data>
-  <data name="chk_AddWaterChoose.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 19</value>
   </data>
   <data name="&gt;&gt;label1.Name" xml:space="preserve">
     <value>label1</value>
   </data>
-  <data name="btn_Record_Print.Text" xml:space="preserve">
-    <value>打印</value>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;btn_Record_Select.Name" xml:space="preserve">
-    <value>btn_Record_Select</value>
-  </data>
-  <data name="txt_Non_AnhydrationWR.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1205, 74</value>
-  </data>
-  <data name="lab_ClothType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1099, 30</value>
-  </data>
-  <data name="lab_Customer.Text" xml:space="preserve">
-    <value>客户:</value>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>20</value>
   </data>
-  <data name="txt_Record_Operator.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
+  <data name="dgv_Details.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 243</value>
   </data>
-  <data name="label10.ToolTip" xml:space="preserve">
-    <value />
+  <data name="dgv_Details.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>72</value>
   </data>
-  <data name="txt_CreateTime.ToolTip" xml:space="preserve">
-    <value />
+  <data name="dgv_Details.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
+    <value>Vertical</value>
   </data>
-  <data name="&gt;&gt;txt_ObjectAddWaterWeight.Parent" xml:space="preserve">
+  <data name="dgv_Details.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1340, 339</value>
+  </data>
+  <data name="dgv_Details.TabIndex" type="System.Int32, mscorlib">
+    <value>54</value>
+  </data>
+  <data name="&gt;&gt;dgv_Details.Name" xml:space="preserve">
+    <value>dgv_Details</value>
+  </data>
+  <data name="&gt;&gt;dgv_Details.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dgv_Details.Parent" xml:space="preserve">
     <value>grp_FormulaData</value>
   </data>
-  <data name="&gt;&gt;txt_FormulaCode.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
+  <data name="&gt;&gt;dgv_Details.ZOrder" xml:space="preserve">
+    <value>21</value>
   </data>
-  <data name="&gt;&gt;btn_Record_Print.Parent" xml:space="preserve">
-    <value>grp_DropRecord</value>
-  </data>
-  <data name="lab_AnhydrationWR.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label8.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="lab_CreateTime.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="txt_RealAddWaterWeight.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="txt_CreateTime.TabIndex" type="System.Int32, mscorlib">
-    <value>66</value>
-  </data>
-  <data name="rdo_Record_condition.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;label10.Name" xml:space="preserve">
-    <value>label10</value>
-  </data>
-  <data name="txt_Customer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>176, 29</value>
-  </data>
-  <data name="txt_RealAddWaterWeight.Enabled" type="System.Boolean, mscorlib">
+  <data name="txt_DyeingCode.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>196, 177</value>
+  <data name="txt_DyeingCode.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
   </data>
-  <data name="lab_CupCode.Text" xml:space="preserve">
-    <value>杯号:</value>
+  <data name="txt_DyeingCode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>777, 123</value>
   </data>
-  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="txt_DyeingCode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>210, 29</value>
   </data>
-  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
-    <value>grp_DropRecord</value>
+  <data name="txt_DyeingCode.TabIndex" type="System.Int32, mscorlib">
+    <value>53</value>
   </data>
-  <data name="&gt;&gt;txt_AnhydrationWR.Parent" xml:space="preserve">
+  <data name="txt_DyeingCode.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_DyeingCode.Name" xml:space="preserve">
+    <value>txt_DyeingCode</value>
+  </data>
+  <data name="&gt;&gt;txt_DyeingCode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_DyeingCode.Parent" xml:space="preserve">
     <value>grp_FormulaData</value>
   </data>
-  <data name="&gt;&gt;txt_R.Parent" xml:space="preserve">
-    <value>grp_DropRecord</value>
+  <data name="&gt;&gt;txt_DyeingCode.ZOrder" xml:space="preserve">
+    <value>22</value>
+  </data>
+  <data name="label6.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label6.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>623, 128</value>
+  </data>
+  <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 19</value>
   </data>
   <data name="label6.TabIndex" type="System.Int32, mscorlib">
     <value>52</value>
   </data>
-  <data name="&gt;&gt;txt_Record_CupNum.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label6.Text" xml:space="preserve">
+    <value>染固色工艺代码:</value>
   </data>
-  <data name="label8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>836, 177</value>
+  <data name="label6.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
   </data>
-  <data name="&gt;&gt;txt_HandleBathRatio.ZOrder" xml:space="preserve">
-    <value>28</value>
+  <data name="&gt;&gt;label6.Name" xml:space="preserve">
+    <value>label6</value>
   </data>
-  <data name="&gt;&gt;button1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;label6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="txt_ObjectAddWaterWeight.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="&gt;&gt;label6.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
+    <value>23</value>
+  </data>
+  <data name="txt_AnhydrationWR.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txt_AnhydrationWR.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="txt_AnhydrationWR.Location" type="System.Drawing.Point, System.Drawing">
+    <value>944, 74</value>
+  </data>
+  <data name="txt_AnhydrationWR.Size" type="System.Drawing.Size, System.Drawing">
+    <value>139, 29</value>
+  </data>
+  <data name="txt_AnhydrationWR.TabIndex" type="System.Int32, mscorlib">
+    <value>49</value>
+  </data>
+  <data name="txt_AnhydrationWR.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="txt_FormulaName.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
+  <data name="&gt;&gt;txt_AnhydrationWR.Name" xml:space="preserve">
+    <value>txt_AnhydrationWR</value>
   </data>
-  <data name="label14.AutoSize" type="System.Boolean, mscorlib">
+  <data name="&gt;&gt;txt_AnhydrationWR.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_AnhydrationWR.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;txt_AnhydrationWR.ZOrder" xml:space="preserve">
+    <value>24</value>
+  </data>
+  <data name="lab_AnhydrationWR.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="txt_R.Enabled" type="System.Boolean, mscorlib">
+  <data name="lab_AnhydrationWR.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="lab_AnhydrationWR.Location" type="System.Drawing.Point, System.Drawing">
+    <value>836, 79</value>
+  </data>
+  <data name="lab_AnhydrationWR.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 19</value>
+  </data>
+  <data name="lab_AnhydrationWR.TabIndex" type="System.Int32, mscorlib">
+    <value>48</value>
+  </data>
+  <data name="lab_AnhydrationWR.Text" xml:space="preserve">
+    <value>脱水水比:</value>
+  </data>
+  <data name="lab_AnhydrationWR.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lab_AnhydrationWR.Name" xml:space="preserve">
+    <value>lab_AnhydrationWR</value>
+  </data>
+  <data name="&gt;&gt;lab_AnhydrationWR.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_AnhydrationWR.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;lab_AnhydrationWR.ZOrder" xml:space="preserve">
+    <value>25</value>
+  </data>
+  <data name="txt_Non_AnhydrationWR.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="txt_Non_AnhydrationWR.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="txt_Non_AnhydrationWR.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1205, 74</value>
+  </data>
+  <data name="txt_Non_AnhydrationWR.Size" type="System.Drawing.Size, System.Drawing">
+    <value>131, 29</value>
+  </data>
+  <data name="txt_Non_AnhydrationWR.TabIndex" type="System.Int32, mscorlib">
+    <value>47</value>
+  </data>
+  <data name="txt_Non_AnhydrationWR.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="&gt;&gt;txt_Non_AnhydrationWR.Name" xml:space="preserve">
+    <value>txt_Non_AnhydrationWR</value>
+  </data>
+  <data name="&gt;&gt;txt_Non_AnhydrationWR.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_Non_AnhydrationWR.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;txt_Non_AnhydrationWR.ZOrder" xml:space="preserve">
+    <value>26</value>
+  </data>
+  <data name="lab_txt_Non_AnhydrationWR.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lab_txt_Non_AnhydrationWR.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="lab_txt_Non_AnhydrationWR.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1097, 79</value>
+  </data>
+  <data name="lab_txt_Non_AnhydrationWR.Size" type="System.Drawing.Size, System.Drawing">
+    <value>114, 19</value>
+  </data>
+  <data name="lab_txt_Non_AnhydrationWR.TabIndex" type="System.Int32, mscorlib">
+    <value>46</value>
+  </data>
+  <data name="lab_txt_Non_AnhydrationWR.Text" xml:space="preserve">
+    <value>非脱水水比:</value>
+  </data>
+  <data name="lab_txt_Non_AnhydrationWR.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lab_txt_Non_AnhydrationWR.Name" xml:space="preserve">
+    <value>lab_txt_Non_AnhydrationWR</value>
+  </data>
+  <data name="&gt;&gt;lab_txt_Non_AnhydrationWR.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_txt_Non_AnhydrationWR.Parent" xml:space="preserve">
+    <value>grp_FormulaData</value>
+  </data>
+  <data name="&gt;&gt;lab_txt_Non_AnhydrationWR.ZOrder" xml:space="preserve">
+    <value>27</value>
+  </data>
+  <data name="txt_HandleBathRatio.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="txt_HandleBathRatio.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
   </data>
-  <data name="&gt;&gt;btn_Record_Delete.Name" xml:space="preserve">
-    <value>btn_Record_Delete</value>
+  <data name="txt_HandleBathRatio.Location" type="System.Drawing.Point, System.Drawing">
+    <value>118, 171</value>
   </data>
-  <data name="dt_Record_End.CalendarFont" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
+  <data name="txt_HandleBathRatio.Size" type="System.Drawing.Size, System.Drawing">
+    <value>74, 29</value>
   </data>
-  <data name="label13.TabIndex" type="System.Int32, mscorlib">
-    <value>72</value>
+  <data name="txt_HandleBathRatio.TabIndex" type="System.Int32, mscorlib">
+    <value>51</value>
   </data>
-  <data name="txt_ClothWeight.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 29</value>
+  <data name="txt_HandleBathRatio.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
   </data>
-  <data name="&gt;&gt;label5.Name" xml:space="preserve">
-    <value>label5</value>
+  <data name="&gt;&gt;txt_HandleBathRatio.Name" xml:space="preserve">
+    <value>txt_HandleBathRatio</value>
   </data>
-  <data name="btn_Record_Select.TabIndex" type="System.Int32, mscorlib">
-    <value>39</value>
-  </data>
-  <data name="txt_VatNumber.Size" type="System.Drawing.Size, System.Drawing">
-    <value>226, 29</value>
-  </data>
-  <data name="&gt;&gt;txt_Customer.ZOrder" xml:space="preserve">
-    <value>49</value>
-  </data>
-  <data name="lab_TotalWeight.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>623, 128</value>
-  </data>
-  <data name="txt_DyeingCode.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;txt_VatNumber.Type" xml:space="preserve">
+  <data name="&gt;&gt;txt_HandleBathRatio.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="btn_Record_Print.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;label5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lab_ClothType.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;txt_VatNumber.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="rdo_Record_Now.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 22</value>
-  </data>
-  <data name="txt_AnhydrationWR.Size" type="System.Drawing.Size, System.Drawing">
-    <value>139, 29</value>
-  </data>
-  <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
-    <value>23</value>
-  </data>
-  <data name="&gt;&gt;dgv_Details.Name" xml:space="preserve">
-    <value>dgv_Details</value>
-  </data>
-  <data name="&gt;&gt;dgv_DropRecord.Name" xml:space="preserve">
-    <value>dgv_DropRecord</value>
-  </data>
-  <data name="lab_FormulaName.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="txt_FormulaName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>274, 29</value>
-  </data>
-  <data name="label4.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="lab_Customer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 19</value>
-  </data>
-  <data name="lab_TotalWeight.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="&gt;&gt;rdo_Record_All.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;txt_TotalTime.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="dt_Record_Start.Size" type="System.Drawing.Size, System.Drawing">
-    <value>219, 29</value>
-  </data>
-  <data name="label2.TabIndex" type="System.Int32, mscorlib">
-    <value>36</value>
-  </data>
-  <data name="&gt;&gt;txt_DyeingCodeRemark.Parent" xml:space="preserve">
+  <data name="&gt;&gt;txt_HandleBathRatio.Parent" xml:space="preserve">
     <value>grp_FormulaData</value>
   </data>
-  <data name="&gt;&gt;lab_TotalWeight.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;txt_HandleBathRatio.ZOrder" xml:space="preserve">
+    <value>28</value>
   </data>
-  <data name="txt_BathRatio.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="lab_CreateTime.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;label9.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label14.TabIndex" type="System.Int32, mscorlib">
-    <value>74</value>
-  </data>
-  <data name="&gt;&gt;button1.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;txt_FormulaCode.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="rdo_Record_Now.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="&gt;&gt;rdo_Record_condition.Parent" xml:space="preserve">
-    <value>grp_DropRecord</value>
-  </data>
-  <data name="txt_VatNumber.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="Btn_Derive.TabIndex" type="System.Int32, mscorlib">
-    <value>48</value>
-  </data>
-  <data name="lab_CupCode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 128</value>
-  </data>
-  <data name="txt_ClothType.TabIndex" type="System.Int32, mscorlib">
-    <value>23</value>
-  </data>
-  <data name="label14.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;txt_R.Name" xml:space="preserve">
-    <value>txt_R</value>
-  </data>
-  <data name="lab_FormulaCode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 19</value>
-  </data>
-  <data name="lab_FormulaCode.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="label14.Text" xml:space="preserve">
-    <value>配色员:</value>
-  </data>
-  <data name="&gt;&gt;lab_FormulaCode.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_RealAddWaterWeight.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="btn_Record_Delete.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lab_BathRatio.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="txt_FormulaCode.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;label2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="txt_DyeingCodeRemark.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;dt_Record_Start.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DateTimePicker, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="txt_CupNum.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="&gt;&gt;label7.Name" xml:space="preserve">
-    <value>label7</value>
-  </data>
-  <data name="label8.TabIndex" type="System.Int32, mscorlib">
-    <value>60</value>
-  </data>
-  <data name="txt_Non_AnhydrationWR.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;lab_AnhydrationWR.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="&gt;&gt;grp_FormulaData.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>18</value>
-  </data>
-  <data name="label8.AutoSize" type="System.Boolean, mscorlib">
+  <data name="lab_HandleBathRatio.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;label13.Name" xml:space="preserve">
-    <value>label13</value>
+  <data name="lab_HandleBathRatio.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
   </data>
-  <data name="&gt;&gt;label6.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="lab_HandleBathRatio.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 177</value>
   </data>
-  <data name="&gt;&gt;txt_R.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;txt_ClothType.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lab_HandleBathRatio.Size" type="System.Drawing.Size, System.Drawing">
     <value>114, 19</value>
   </data>
-  <data name="txt_DyeingCode.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
+  <data name="lab_HandleBathRatio.TabIndex" type="System.Int32, mscorlib">
+    <value>50</value>
   </data>
-  <data name="&gt;&gt;txt_TotalTime.ZOrder" xml:space="preserve">
-    <value>16</value>
+  <data name="lab_HandleBathRatio.Text" xml:space="preserve">
+    <value>后处理浴比:</value>
   </data>
-  <data name="Btn_Derive.Location" type="System.Drawing.Point, System.Drawing">
-    <value>346, 179</value>
-  </data>
-  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 181</value>
-  </data>
-  <data name="txt_ClothType.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="&gt;&gt;chk_AddWaterChoose.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="button1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label11.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="chk_AddWaterChoose.Text" xml:space="preserve">
-    <value>加水</value>
-  </data>
-  <data name="txt_R.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 212</value>
-  </data>
-  <data name="txt_Non_AnhydrationWR.TabIndex" type="System.Int32, mscorlib">
-    <value>47</value>
-  </data>
-  <data name="&gt;&gt;dt_Record_Start.Name" xml:space="preserve">
-    <value>dt_Record_Start</value>
-  </data>
-  <data name="txt_ClothType.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lab_FormulaCode.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="lab_HandleBathRatio.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;txt_Operator.Name" xml:space="preserve">
-    <value>txt_Operator</value>
-  </data>
-  <data name="&gt;&gt;lab_AnhydrationWR.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lab_AnhydrationWR.Name" xml:space="preserve">
-    <value>lab_AnhydrationWR</value>
-  </data>
-  <data name="txt_Record_Operator.Location" type="System.Drawing.Point, System.Drawing">
-    <value>105, 58</value>
-  </data>
-  <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;dgv_Details.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_Operator.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="&gt;&gt;btn_Record_Select.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="lab_FormulaName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 19</value>
-  </data>
-  <data name="lab_HandleBathRatio.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;txt_TotalTime.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="&gt;&gt;lab_FormulaName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="txt_State.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;lab_ClothType.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="txt_Record_Code.Location" type="System.Drawing.Point, System.Drawing">
-    <value>371, 57</value>
-  </data>
-  <data name="&gt;&gt;txt_RealAddWaterWeight.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lab_AnhydrationWR.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="dgv_DropRecord.Size" type="System.Drawing.Size, System.Drawing">
-    <value>551, 730</value>
-  </data>
-  <data name="&gt;&gt;btn_save.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;lab_CupCode.Name" xml:space="preserve">
-    <value>lab_CupCode</value>
-  </data>
-  <data name="&gt;&gt;button1.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="rdo_Record_All.Location" type="System.Drawing.Point, System.Drawing">
-    <value>217, 22</value>
-  </data>
-  <data name="&gt;&gt;txt_BathRatio.Name" xml:space="preserve">
-    <value>txt_BathRatio</value>
-  </data>
-  <data name="txt_Result.TabIndex" type="System.Int32, mscorlib">
-    <value>73</value>
-  </data>
-  <data name="txt_Colorists.TabIndex" type="System.Int32, mscorlib">
-    <value>75</value>
-  </data>
-  <data name="lab_ClothWeight.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;lab_FormulaCode.ZOrder" xml:space="preserve">
-    <value>31</value>
-  </data>
-  <data name="txt_BathRatio.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>992, 128</value>
-  </data>
-  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>17</value>
-  </data>
-  <data name="btn_Record_Select.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;label12.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_Operator.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="&gt;&gt;txt_TotalWeight.Name" xml:space="preserve">
-    <value>txt_TotalWeight</value>
-  </data>
-  <data name="&gt;&gt;txt_Start.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="txt_CreateTime.Size" type="System.Drawing.Size, System.Drawing">
-    <value>258, 29</value>
-  </data>
-  <data name="label3.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btn_Record_Select.Text" xml:space="preserve">
-    <value>查询</value>
-  </data>
-  <data name="label3.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="dgv_Details.RowHeadersWidth" type="System.Int32, mscorlib">
-    <value>72</value>
-  </data>
-  <data name="&gt;&gt;lab_HandleBathRatio.Parent" xml:space="preserve">
-    <value>grp_FormulaData</value>
-  </data>
-  <data name="&gt;&gt;txt_BathRatio.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="btn_Record_Delete.TabIndex" type="System.Int32, mscorlib">
-    <value>40</value>
-  </data>
-  <data name="lab_ClothType.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="lab_BathRatio.Location" type="System.Drawing.Point, System.Drawing">
-    <value>453, 79</value>
-  </data>
-  <data name="lab_Operator.Size" type="System.Drawing.Size, System.Drawing">
-    <value>76, 19</value>
-  </data>
-  <data name="label13.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 19</value>
-  </data>
-  <data name="lab_ClothWeight.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 14.25pt</value>
-  </data>
-  <data name="dt_Record_Start.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;timer1.Name" xml:space="preserve">
-    <value>timer1</value>
-  </data>
-  <data name="txt_DyeingCode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>777, 123</value>
-  </data>
-  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>16</value>
-  </data>
-  <data name="txt_VatNumber.Location" type="System.Drawing.Point, System.Drawing">
-    <value>591, 211</value>
-  </data>
-  <data name="txt_Result.Size" type="System.Drawing.Size, System.Drawing">
-    <value>325, 29</value>
   </data>
   <data name="&gt;&gt;lab_HandleBathRatio.Name" xml:space="preserve">
     <value>lab_HandleBathRatio</value>
   </data>
-  <data name="&gt;&gt;lab_CreateTime.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lab_HandleBathRatio.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_HandleBathRatio.Parent" xml:space="preserve">
     <value>grp_FormulaData</value>
   </data>
-  <data name="lab_CreateTime.TabIndex" type="System.Int32, mscorlib">
-    <value>65</value>
+  <data name="&gt;&gt;lab_HandleBathRatio.ZOrder" xml:space="preserve">
+    <value>29</value>
   </data>
-  <data name="txt_Colorists.ToolTip" xml:space="preserve">
-    <value />
+  <data name="grp_FormulaData.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 10.5pt</value>
   </data>
-  <data name="txt_State.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
+  <data name="grp_FormulaData.Location" type="System.Drawing.Point, System.Drawing">
+    <value>578, 7</value>
   </data>
-  <data name="&gt;&gt;Btn_Derive.Name" xml:space="preserve">
-    <value>Btn_Derive</value>
+  <data name="grp_FormulaData.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1365, 986</value>
   </data>
-  <data name="txt_TotalWeight.ToolTip" xml:space="preserve">
-    <value />
+  <data name="grp_FormulaData.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
   </data>
-  <data name="lab_txt_Non_AnhydrationWR.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
+  <data name="grp_FormulaData.Text" xml:space="preserve">
+    <value>配方资料</value>
   </data>
-  <data name="txt_Record_Code.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;txt_Record_Code.Name" xml:space="preserve">
-    <value>txt_Record_Code</value>
-  </data>
-  <data name="txt_DyeingCodeRemark.Size" type="System.Drawing.Size, System.Drawing">
-    <value>188, 29</value>
-  </data>
-  <data name="&gt;&gt;lab_Operator.ZOrder" xml:space="preserve">
-    <value>38</value>
-  </data>
-  <data name="button1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;txt_RealAddWaterWeight.Name" xml:space="preserve">
-    <value>txt_RealAddWaterWeight</value>
-  </data>
-  <data name="lab_Customer.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label7.Text" xml:space="preserve">
-    <value>实际加水量:</value>
-  </data>
-  <data name="txt_FormulaCode.MaxLength" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="&gt;&gt;txt_Non_AnhydrationWR.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="txt_Result.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Center</value>
-  </data>
-  <data name="label13.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="txt_TotalWeight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>665, 74</value>
-  </data>
-  <data name="&gt;&gt;label4.Name" xml:space="preserve">
-    <value>label4</value>
-  </data>
-  <data name="&gt;&gt;txt_VersionNum.ZOrder" xml:space="preserve">
-    <value>45</value>
-  </data>
-  <data name="&gt;&gt;txt_VatNumber.Name" xml:space="preserve">
-    <value>txt_VatNumber</value>
-  </data>
-  <data name="&gt;&gt;txt_Record_Operator.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
-    <value>grp_DropRecord</value>
-  </data>
-  <data name="&gt;&gt;lab_txt_Non_AnhydrationWR.Parent" xml:space="preserve">
+  <data name="&gt;&gt;grp_FormulaData.Name" xml:space="preserve">
     <value>grp_FormulaData</value>
   </data>
-  <data name="label13.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;grp_FormulaData.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="lab_BathRatio.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+  <data name="&gt;&gt;grp_FormulaData.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="label4.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="&gt;&gt;txt_Record_Operator.Name" xml:space="preserve">
-    <value>txt_Record_Operator</value>
-  </data>
-  <data name="dgv_Details.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1340, 339</value>
+  <data name="&gt;&gt;grp_FormulaData.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -2634,4 +2385,34 @@
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 12</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1917, 980</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
+    <value>toolTip1</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;timer1.Name" xml:space="preserve">
+    <value>timer1</value>
+  </data>
+  <data name="&gt;&gt;timer1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;timer2.Name" xml:space="preserve">
+    <value>timer2</value>
+  </data>
+  <data name="&gt;&gt;timer2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>HistoryData</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

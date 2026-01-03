@@ -1,4 +1,6 @@
-﻿namespace SmartDyeing.FADM_Control
+﻿using SmartDyeing.FADM_Object;
+
+namespace SmartDyeing.FADM_Control
 {
     partial class AbsHMIMain
     {
@@ -17,6 +19,7 @@
             {
                 components.Dispose();
             }
+            Communal._b_IsABSOpen = false;
             base.Dispose(disposing);
         }
 
@@ -28,55 +31,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBox27 = new System.Windows.Forms.TextBox();
-            this.textBox28 = new System.Windows.Forms.TextBox();
-            this.textBox29 = new System.Windows.Forms.TextBox();
-            this.label35 = new System.Windows.Forms.Label();
-            this.label36 = new System.Windows.Forms.Label();
-            this.label37 = new System.Windows.Forms.Label();
-            this.textBox30 = new System.Windows.Forms.TextBox();
-            this.textBox31 = new System.Windows.Forms.TextBox();
-            this.textBox32 = new System.Windows.Forms.TextBox();
-            this.label38 = new System.Windows.Forms.Label();
-            this.label39 = new System.Windows.Forms.Label();
-            this.label40 = new System.Windows.Forms.Label();
-            this.textBox33 = new System.Windows.Forms.TextBox();
-            this.textBox34 = new System.Windows.Forms.TextBox();
-            this.label41 = new System.Windows.Forms.Label();
-            this.label42 = new System.Windows.Forms.Label();
-            this.textBox35 = new System.Windows.Forms.TextBox();
-            this.textBox36 = new System.Windows.Forms.TextBox();
-            this.label43 = new System.Windows.Forms.Label();
-            this.label44 = new System.Windows.Forms.Label();
-            this.textBox37 = new System.Windows.Forms.TextBox();
-            this.textBox38 = new System.Windows.Forms.TextBox();
-            this.textBox39 = new System.Windows.Forms.TextBox();
-            this.label45 = new System.Windows.Forms.Label();
-            this.label46 = new System.Windows.Forms.Label();
-            this.label47 = new System.Windows.Forms.Label();
-            this.textBox40 = new System.Windows.Forms.TextBox();
-            this.textBox41 = new System.Windows.Forms.TextBox();
-            this.textBox42 = new System.Windows.Forms.TextBox();
-            this.label48 = new System.Windows.Forms.Label();
-            this.label49 = new System.Windows.Forms.Label();
-            this.label50 = new System.Windows.Forms.Label();
-            this.textBox43 = new System.Windows.Forms.TextBox();
-            this.textBox44 = new System.Windows.Forms.TextBox();
-            this.label51 = new System.Windows.Forms.Label();
-            this.label52 = new System.Windows.Forms.Label();
-            this.textBox45 = new System.Windows.Forms.TextBox();
-            this.textBox46 = new System.Windows.Forms.TextBox();
-            this.textBox47 = new System.Windows.Forms.TextBox();
-            this.label53 = new System.Windows.Forms.Label();
-            this.label54 = new System.Windows.Forms.Label();
-            this.label55 = new System.Windows.Forms.Label();
-            this.textBox48 = new System.Windows.Forms.TextBox();
-            this.textBox49 = new System.Windows.Forms.TextBox();
-            this.textBox50 = new System.Windows.Forms.TextBox();
-            this.label56 = new System.Windows.Forms.Label();
-            this.label57 = new System.Windows.Forms.Label();
-            this.label58 = new System.Windows.Forms.Label();
             this.textBox51 = new System.Windows.Forms.TextBox();
             this.textBox52 = new System.Windows.Forms.TextBox();
             this.label59 = new System.Windows.Forms.Label();
@@ -93,7 +49,65 @@
             this.label64 = new System.Windows.Forms.Label();
             this.label65 = new System.Windows.Forms.Label();
             this.label66 = new System.Windows.Forms.Label();
+            this.textBox43 = new System.Windows.Forms.TextBox();
+            this.textBox44 = new System.Windows.Forms.TextBox();
+            this.label51 = new System.Windows.Forms.Label();
+            this.label52 = new System.Windows.Forms.Label();
+            this.textBox45 = new System.Windows.Forms.TextBox();
+            this.textBox46 = new System.Windows.Forms.TextBox();
+            this.textBox47 = new System.Windows.Forms.TextBox();
+            this.label53 = new System.Windows.Forms.Label();
+            this.label54 = new System.Windows.Forms.Label();
+            this.label55 = new System.Windows.Forms.Label();
+            this.textBox48 = new System.Windows.Forms.TextBox();
+            this.textBox49 = new System.Windows.Forms.TextBox();
+            this.textBox50 = new System.Windows.Forms.TextBox();
+            this.label56 = new System.Windows.Forms.Label();
+            this.label57 = new System.Windows.Forms.Label();
+            this.label58 = new System.Windows.Forms.Label();
+            this.textBox35 = new System.Windows.Forms.TextBox();
+            this.textBox36 = new System.Windows.Forms.TextBox();
+            this.label43 = new System.Windows.Forms.Label();
+            this.label44 = new System.Windows.Forms.Label();
+            this.textBox37 = new System.Windows.Forms.TextBox();
+            this.textBox38 = new System.Windows.Forms.TextBox();
+            this.textBox39 = new System.Windows.Forms.TextBox();
+            this.label45 = new System.Windows.Forms.Label();
+            this.label46 = new System.Windows.Forms.Label();
+            this.label47 = new System.Windows.Forms.Label();
+            this.textBox40 = new System.Windows.Forms.TextBox();
+            this.textBox41 = new System.Windows.Forms.TextBox();
+            this.textBox42 = new System.Windows.Forms.TextBox();
+            this.label48 = new System.Windows.Forms.Label();
+            this.label49 = new System.Windows.Forms.Label();
+            this.label50 = new System.Windows.Forms.Label();
+            this.textBox33 = new System.Windows.Forms.TextBox();
+            this.textBox34 = new System.Windows.Forms.TextBox();
+            this.label41 = new System.Windows.Forms.Label();
+            this.label42 = new System.Windows.Forms.Label();
+            this.textBox30 = new System.Windows.Forms.TextBox();
+            this.textBox31 = new System.Windows.Forms.TextBox();
+            this.textBox32 = new System.Windows.Forms.TextBox();
+            this.label38 = new System.Windows.Forms.Label();
+            this.label39 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.textBox27 = new System.Windows.Forms.TextBox();
+            this.textBox28 = new System.Windows.Forms.TextBox();
+            this.textBox29 = new System.Windows.Forms.TextBox();
+            this.label35 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chk_OutPut_Stir_4 = new System.Windows.Forms.CheckBox();
+            this.chk_OutPut_Stir_3 = new System.Windows.Forms.CheckBox();
+            this.chk_OutPut_Stir_2 = new System.Windows.Forms.CheckBox();
+            this.chk_OutPut_Stir_1 = new System.Windows.Forms.CheckBox();
+            this.chk_InPut_Two = new System.Windows.Forms.CheckBox();
+            this.chk_InPut_One = new System.Windows.Forms.CheckBox();
+            this.chk_OutPut_Two = new System.Windows.Forms.CheckBox();
+            this.chk_OutPut_One = new System.Windows.Forms.CheckBox();
+            this.label76 = new System.Windows.Forms.Label();
+            this.label75 = new System.Windows.Forms.Label();
             this.chk_OutPut_TotalDrainage = new System.Windows.Forms.CheckBox();
             this.chk_OutPut_Spray_4 = new System.Windows.Forms.CheckBox();
             this.chk_OutPut_Spray_3 = new System.Windows.Forms.CheckBox();
@@ -215,25 +229,6 @@
             this.Btn_reqBase_1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.txt_RecBaseResult_1 = new System.Windows.Forms.TextBox();
-            this.txt_RecExtraction_1 = new System.Windows.Forms.TextBox();
-            this.label67 = new System.Windows.Forms.Label();
-            this.label68 = new System.Windows.Forms.Label();
-            this.txt_RecBaseMark_1 = new System.Windows.Forms.TextBox();
-            this.txt_RecProcess_1 = new System.Windows.Forms.TextBox();
-            this.txt_RecStopTimes_1 = new System.Windows.Forms.TextBox();
-            this.label69 = new System.Windows.Forms.Label();
-            this.label70 = new System.Windows.Forms.Label();
-            this.label71 = new System.Windows.Forms.Label();
-            this.txt_RecSave_1 = new System.Windows.Forms.TextBox();
-            this.txt_RecFinish_1 = new System.Windows.Forms.TextBox();
-            this.txt_RecReady_1 = new System.Windows.Forms.TextBox();
-            this.label72 = new System.Windows.Forms.Label();
-            this.label73 = new System.Windows.Forms.Label();
-            this.label74 = new System.Windows.Forms.Label();
-            this.label75 = new System.Windows.Forms.Label();
-            this.label76 = new System.Windows.Forms.Label();
-            this.label77 = new System.Windows.Forms.Label();
             this.label78 = new System.Windows.Forms.Label();
             this.txt_SendHistory_1 = new System.Windows.Forms.TextBox();
             this.txt_SendCutMark_1 = new System.Windows.Forms.TextBox();
@@ -251,6 +246,23 @@
             this.label84 = new System.Windows.Forms.Label();
             this.label85 = new System.Windows.Forms.Label();
             this.label86 = new System.Windows.Forms.Label();
+            this.label77 = new System.Windows.Forms.Label();
+            this.txt_RecBaseResult_1 = new System.Windows.Forms.TextBox();
+            this.txt_RecExtraction_1 = new System.Windows.Forms.TextBox();
+            this.label67 = new System.Windows.Forms.Label();
+            this.label68 = new System.Windows.Forms.Label();
+            this.txt_RecBaseMark_1 = new System.Windows.Forms.TextBox();
+            this.txt_RecProcess_1 = new System.Windows.Forms.TextBox();
+            this.txt_RecStopTimes_1 = new System.Windows.Forms.TextBox();
+            this.label69 = new System.Windows.Forms.Label();
+            this.label70 = new System.Windows.Forms.Label();
+            this.label71 = new System.Windows.Forms.Label();
+            this.txt_RecSave_1 = new System.Windows.Forms.TextBox();
+            this.txt_RecFinish_1 = new System.Windows.Forms.TextBox();
+            this.txt_RecReady_1 = new System.Windows.Forms.TextBox();
+            this.label72 = new System.Windows.Forms.Label();
+            this.label73 = new System.Windows.Forms.Label();
+            this.label74 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.label87 = new System.Windows.Forms.Label();
             this.txt_SendHistory_3 = new System.Windows.Forms.TextBox();
@@ -356,6 +368,16 @@
             this.label138 = new System.Windows.Forms.Label();
             this.label139 = new System.Windows.Forms.Label();
             this.label140 = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.txt_4 = new System.Windows.Forms.TextBox();
+            this.txt_3 = new System.Windows.Forms.TextBox();
+            this.txt_2 = new System.Windows.Forms.TextBox();
+            this.txt_1 = new System.Windows.Forms.TextBox();
+            this.label141 = new System.Windows.Forms.Label();
+            this.label142 = new System.Windows.Forms.Label();
+            this.Btn_Extend2 = new System.Windows.Forms.Button();
+            this.Btn_Extend1 = new System.Windows.Forms.Button();
+            this.Btn_Total = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -439,414 +461,6 @@
             this.groupBox1.TabIndex = 119;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "工位参数";
-            // 
-            // textBox27
-            // 
-            this.textBox27.Location = new System.Drawing.Point(101, 77);
-            this.textBox27.Name = "textBox27";
-            this.textBox27.Size = new System.Drawing.Size(107, 26);
-            this.textBox27.TabIndex = 17;
-            // 
-            // textBox28
-            // 
-            this.textBox28.Location = new System.Drawing.Point(101, 51);
-            this.textBox28.Name = "textBox28";
-            this.textBox28.Size = new System.Drawing.Size(107, 26);
-            this.textBox28.TabIndex = 16;
-            // 
-            // textBox29
-            // 
-            this.textBox29.Location = new System.Drawing.Point(101, 25);
-            this.textBox29.Name = "textBox29";
-            this.textBox29.Size = new System.Drawing.Size(107, 26);
-            this.textBox29.TabIndex = 15;
-            // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.Font = new System.Drawing.Font("宋体", 12F);
-            this.label35.Location = new System.Drawing.Point(11, 78);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(87, 16);
-            this.label35.TabIndex = 14;
-            this.label35.Text = "1#采样间隔";
-            // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.Font = new System.Drawing.Font("宋体", 12F);
-            this.label36.Location = new System.Drawing.Point(11, 51);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(87, 16);
-            this.label36.TabIndex = 13;
-            this.label36.Text = "1#结束波长";
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Font = new System.Drawing.Font("宋体", 12F);
-            this.label37.Location = new System.Drawing.Point(11, 24);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(87, 16);
-            this.label37.TabIndex = 12;
-            this.label37.Text = "1#开始波长";
-            // 
-            // textBox30
-            // 
-            this.textBox30.Location = new System.Drawing.Point(101, 155);
-            this.textBox30.Name = "textBox30";
-            this.textBox30.Size = new System.Drawing.Size(107, 26);
-            this.textBox30.TabIndex = 23;
-            // 
-            // textBox31
-            // 
-            this.textBox31.Location = new System.Drawing.Point(101, 129);
-            this.textBox31.Name = "textBox31";
-            this.textBox31.Size = new System.Drawing.Size(107, 26);
-            this.textBox31.TabIndex = 22;
-            // 
-            // textBox32
-            // 
-            this.textBox32.Location = new System.Drawing.Point(101, 103);
-            this.textBox32.Name = "textBox32";
-            this.textBox32.Size = new System.Drawing.Size(107, 26);
-            this.textBox32.TabIndex = 21;
-            // 
-            // label38
-            // 
-            this.label38.AutoSize = true;
-            this.label38.Font = new System.Drawing.Font("宋体", 12F);
-            this.label38.Location = new System.Drawing.Point(11, 159);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(87, 16);
-            this.label38.TabIndex = 20;
-            this.label38.Text = "1#搅拌时间";
-            // 
-            // label39
-            // 
-            this.label39.AutoSize = true;
-            this.label39.Font = new System.Drawing.Font("宋体", 12F);
-            this.label39.Location = new System.Drawing.Point(11, 132);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(87, 16);
-            this.label39.TabIndex = 19;
-            this.label39.Text = "1#搅拌速度";
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Font = new System.Drawing.Font("宋体", 12F);
-            this.label40.Location = new System.Drawing.Point(11, 105);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(87, 16);
-            this.label40.TabIndex = 18;
-            this.label40.Text = "1#抽液时间";
-            // 
-            // textBox33
-            // 
-            this.textBox33.Location = new System.Drawing.Point(101, 207);
-            this.textBox33.Name = "textBox33";
-            this.textBox33.Size = new System.Drawing.Size(107, 26);
-            this.textBox33.TabIndex = 27;
-            // 
-            // textBox34
-            // 
-            this.textBox34.Location = new System.Drawing.Point(101, 181);
-            this.textBox34.Name = "textBox34";
-            this.textBox34.Size = new System.Drawing.Size(107, 26);
-            this.textBox34.TabIndex = 26;
-            // 
-            // label41
-            // 
-            this.label41.AutoSize = true;
-            this.label41.Font = new System.Drawing.Font("宋体", 12F);
-            this.label41.Location = new System.Drawing.Point(11, 213);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(87, 16);
-            this.label41.TabIndex = 25;
-            this.label41.Text = "1#排空色皿";
-            // 
-            // label42
-            // 
-            this.label42.AutoSize = true;
-            this.label42.Font = new System.Drawing.Font("宋体", 12F);
-            this.label42.Location = new System.Drawing.Point(11, 186);
-            this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(87, 16);
-            this.label42.TabIndex = 24;
-            this.label42.Text = "1#排空时间";
-            // 
-            // textBox35
-            // 
-            this.textBox35.Location = new System.Drawing.Point(314, 207);
-            this.textBox35.Name = "textBox35";
-            this.textBox35.Size = new System.Drawing.Size(107, 26);
-            this.textBox35.TabIndex = 43;
-            // 
-            // textBox36
-            // 
-            this.textBox36.Location = new System.Drawing.Point(314, 181);
-            this.textBox36.Name = "textBox36";
-            this.textBox36.Size = new System.Drawing.Size(107, 26);
-            this.textBox36.TabIndex = 42;
-            // 
-            // label43
-            // 
-            this.label43.AutoSize = true;
-            this.label43.Font = new System.Drawing.Font("宋体", 12F);
-            this.label43.Location = new System.Drawing.Point(224, 213);
-            this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(87, 16);
-            this.label43.TabIndex = 41;
-            this.label43.Text = "2#排空色皿";
-            // 
-            // label44
-            // 
-            this.label44.AutoSize = true;
-            this.label44.Font = new System.Drawing.Font("宋体", 12F);
-            this.label44.Location = new System.Drawing.Point(224, 186);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(87, 16);
-            this.label44.TabIndex = 40;
-            this.label44.Text = "2#排空时间";
-            // 
-            // textBox37
-            // 
-            this.textBox37.Location = new System.Drawing.Point(314, 155);
-            this.textBox37.Name = "textBox37";
-            this.textBox37.Size = new System.Drawing.Size(107, 26);
-            this.textBox37.TabIndex = 39;
-            // 
-            // textBox38
-            // 
-            this.textBox38.Location = new System.Drawing.Point(314, 129);
-            this.textBox38.Name = "textBox38";
-            this.textBox38.Size = new System.Drawing.Size(107, 26);
-            this.textBox38.TabIndex = 38;
-            // 
-            // textBox39
-            // 
-            this.textBox39.Location = new System.Drawing.Point(314, 103);
-            this.textBox39.Name = "textBox39";
-            this.textBox39.Size = new System.Drawing.Size(107, 26);
-            this.textBox39.TabIndex = 37;
-            // 
-            // label45
-            // 
-            this.label45.AutoSize = true;
-            this.label45.Font = new System.Drawing.Font("宋体", 12F);
-            this.label45.Location = new System.Drawing.Point(224, 159);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(87, 16);
-            this.label45.TabIndex = 36;
-            this.label45.Text = "2#搅拌时间";
-            // 
-            // label46
-            // 
-            this.label46.AutoSize = true;
-            this.label46.Font = new System.Drawing.Font("宋体", 12F);
-            this.label46.Location = new System.Drawing.Point(224, 132);
-            this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(87, 16);
-            this.label46.TabIndex = 35;
-            this.label46.Text = "2#搅拌速度";
-            // 
-            // label47
-            // 
-            this.label47.AutoSize = true;
-            this.label47.Font = new System.Drawing.Font("宋体", 12F);
-            this.label47.Location = new System.Drawing.Point(224, 105);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(87, 16);
-            this.label47.TabIndex = 34;
-            this.label47.Text = "2#抽液时间";
-            // 
-            // textBox40
-            // 
-            this.textBox40.Location = new System.Drawing.Point(314, 77);
-            this.textBox40.Name = "textBox40";
-            this.textBox40.Size = new System.Drawing.Size(107, 26);
-            this.textBox40.TabIndex = 33;
-            // 
-            // textBox41
-            // 
-            this.textBox41.Location = new System.Drawing.Point(314, 51);
-            this.textBox41.Name = "textBox41";
-            this.textBox41.Size = new System.Drawing.Size(107, 26);
-            this.textBox41.TabIndex = 32;
-            // 
-            // textBox42
-            // 
-            this.textBox42.Location = new System.Drawing.Point(314, 25);
-            this.textBox42.Name = "textBox42";
-            this.textBox42.Size = new System.Drawing.Size(107, 26);
-            this.textBox42.TabIndex = 31;
-            // 
-            // label48
-            // 
-            this.label48.AutoSize = true;
-            this.label48.Font = new System.Drawing.Font("宋体", 12F);
-            this.label48.Location = new System.Drawing.Point(224, 78);
-            this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(87, 16);
-            this.label48.TabIndex = 30;
-            this.label48.Text = "2#采样间隔";
-            // 
-            // label49
-            // 
-            this.label49.AutoSize = true;
-            this.label49.Font = new System.Drawing.Font("宋体", 12F);
-            this.label49.Location = new System.Drawing.Point(224, 51);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(87, 16);
-            this.label49.TabIndex = 29;
-            this.label49.Text = "2#结束波长";
-            // 
-            // label50
-            // 
-            this.label50.AutoSize = true;
-            this.label50.Font = new System.Drawing.Font("宋体", 12F);
-            this.label50.Location = new System.Drawing.Point(224, 24);
-            this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(87, 16);
-            this.label50.TabIndex = 28;
-            this.label50.Text = "2#开始波长";
-            // 
-            // textBox43
-            // 
-            this.textBox43.Location = new System.Drawing.Point(517, 207);
-            this.textBox43.Name = "textBox43";
-            this.textBox43.Size = new System.Drawing.Size(107, 26);
-            this.textBox43.TabIndex = 59;
-            // 
-            // textBox44
-            // 
-            this.textBox44.Location = new System.Drawing.Point(517, 181);
-            this.textBox44.Name = "textBox44";
-            this.textBox44.Size = new System.Drawing.Size(107, 26);
-            this.textBox44.TabIndex = 58;
-            // 
-            // label51
-            // 
-            this.label51.AutoSize = true;
-            this.label51.Font = new System.Drawing.Font("宋体", 12F);
-            this.label51.Location = new System.Drawing.Point(427, 213);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(87, 16);
-            this.label51.TabIndex = 57;
-            this.label51.Text = "3#排空色皿";
-            // 
-            // label52
-            // 
-            this.label52.AutoSize = true;
-            this.label52.Font = new System.Drawing.Font("宋体", 12F);
-            this.label52.Location = new System.Drawing.Point(427, 186);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(87, 16);
-            this.label52.TabIndex = 56;
-            this.label52.Text = "3#排空时间";
-            // 
-            // textBox45
-            // 
-            this.textBox45.Location = new System.Drawing.Point(517, 155);
-            this.textBox45.Name = "textBox45";
-            this.textBox45.Size = new System.Drawing.Size(107, 26);
-            this.textBox45.TabIndex = 55;
-            // 
-            // textBox46
-            // 
-            this.textBox46.Location = new System.Drawing.Point(517, 129);
-            this.textBox46.Name = "textBox46";
-            this.textBox46.Size = new System.Drawing.Size(107, 26);
-            this.textBox46.TabIndex = 54;
-            // 
-            // textBox47
-            // 
-            this.textBox47.Location = new System.Drawing.Point(517, 103);
-            this.textBox47.Name = "textBox47";
-            this.textBox47.Size = new System.Drawing.Size(107, 26);
-            this.textBox47.TabIndex = 53;
-            // 
-            // label53
-            // 
-            this.label53.AutoSize = true;
-            this.label53.Font = new System.Drawing.Font("宋体", 12F);
-            this.label53.Location = new System.Drawing.Point(427, 159);
-            this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(87, 16);
-            this.label53.TabIndex = 52;
-            this.label53.Text = "3#搅拌时间";
-            // 
-            // label54
-            // 
-            this.label54.AutoSize = true;
-            this.label54.Font = new System.Drawing.Font("宋体", 12F);
-            this.label54.Location = new System.Drawing.Point(427, 132);
-            this.label54.Name = "label54";
-            this.label54.Size = new System.Drawing.Size(87, 16);
-            this.label54.TabIndex = 51;
-            this.label54.Text = "3#搅拌速度";
-            // 
-            // label55
-            // 
-            this.label55.AutoSize = true;
-            this.label55.Font = new System.Drawing.Font("宋体", 12F);
-            this.label55.Location = new System.Drawing.Point(427, 105);
-            this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(87, 16);
-            this.label55.TabIndex = 50;
-            this.label55.Text = "3#抽液时间";
-            // 
-            // textBox48
-            // 
-            this.textBox48.Location = new System.Drawing.Point(517, 77);
-            this.textBox48.Name = "textBox48";
-            this.textBox48.Size = new System.Drawing.Size(107, 26);
-            this.textBox48.TabIndex = 49;
-            // 
-            // textBox49
-            // 
-            this.textBox49.Location = new System.Drawing.Point(517, 51);
-            this.textBox49.Name = "textBox49";
-            this.textBox49.Size = new System.Drawing.Size(107, 26);
-            this.textBox49.TabIndex = 48;
-            // 
-            // textBox50
-            // 
-            this.textBox50.Location = new System.Drawing.Point(517, 25);
-            this.textBox50.Name = "textBox50";
-            this.textBox50.Size = new System.Drawing.Size(107, 26);
-            this.textBox50.TabIndex = 47;
-            // 
-            // label56
-            // 
-            this.label56.AutoSize = true;
-            this.label56.Font = new System.Drawing.Font("宋体", 12F);
-            this.label56.Location = new System.Drawing.Point(427, 78);
-            this.label56.Name = "label56";
-            this.label56.Size = new System.Drawing.Size(87, 16);
-            this.label56.TabIndex = 46;
-            this.label56.Text = "3#采样间隔";
-            // 
-            // label57
-            // 
-            this.label57.AutoSize = true;
-            this.label57.Font = new System.Drawing.Font("宋体", 12F);
-            this.label57.Location = new System.Drawing.Point(427, 51);
-            this.label57.Name = "label57";
-            this.label57.Size = new System.Drawing.Size(87, 16);
-            this.label57.TabIndex = 45;
-            this.label57.Text = "3#结束波长";
-            // 
-            // label58
-            // 
-            this.label58.AutoSize = true;
-            this.label58.Font = new System.Drawing.Font("宋体", 12F);
-            this.label58.Location = new System.Drawing.Point(427, 24);
-            this.label58.Name = "label58";
-            this.label58.Size = new System.Drawing.Size(87, 16);
-            this.label58.TabIndex = 44;
-            this.label58.Text = "3#开始波长";
             // 
             // textBox51
             // 
@@ -984,8 +598,424 @@
             this.label66.TabIndex = 60;
             this.label66.Text = "4#开始波长";
             // 
+            // textBox43
+            // 
+            this.textBox43.Location = new System.Drawing.Point(517, 207);
+            this.textBox43.Name = "textBox43";
+            this.textBox43.Size = new System.Drawing.Size(107, 26);
+            this.textBox43.TabIndex = 59;
+            // 
+            // textBox44
+            // 
+            this.textBox44.Location = new System.Drawing.Point(517, 181);
+            this.textBox44.Name = "textBox44";
+            this.textBox44.Size = new System.Drawing.Size(107, 26);
+            this.textBox44.TabIndex = 58;
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.Font = new System.Drawing.Font("宋体", 12F);
+            this.label51.Location = new System.Drawing.Point(427, 213);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(87, 16);
+            this.label51.TabIndex = 57;
+            this.label51.Text = "3#排空色皿";
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Font = new System.Drawing.Font("宋体", 12F);
+            this.label52.Location = new System.Drawing.Point(427, 186);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(87, 16);
+            this.label52.TabIndex = 56;
+            this.label52.Text = "3#排空时间";
+            // 
+            // textBox45
+            // 
+            this.textBox45.Location = new System.Drawing.Point(517, 155);
+            this.textBox45.Name = "textBox45";
+            this.textBox45.Size = new System.Drawing.Size(107, 26);
+            this.textBox45.TabIndex = 55;
+            // 
+            // textBox46
+            // 
+            this.textBox46.Location = new System.Drawing.Point(517, 129);
+            this.textBox46.Name = "textBox46";
+            this.textBox46.Size = new System.Drawing.Size(107, 26);
+            this.textBox46.TabIndex = 54;
+            // 
+            // textBox47
+            // 
+            this.textBox47.Location = new System.Drawing.Point(517, 103);
+            this.textBox47.Name = "textBox47";
+            this.textBox47.Size = new System.Drawing.Size(107, 26);
+            this.textBox47.TabIndex = 53;
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.Font = new System.Drawing.Font("宋体", 12F);
+            this.label53.Location = new System.Drawing.Point(427, 159);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(87, 16);
+            this.label53.TabIndex = 52;
+            this.label53.Text = "3#搅拌时间";
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.Font = new System.Drawing.Font("宋体", 12F);
+            this.label54.Location = new System.Drawing.Point(427, 132);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(87, 16);
+            this.label54.TabIndex = 51;
+            this.label54.Text = "3#搅拌速度";
+            // 
+            // label55
+            // 
+            this.label55.AutoSize = true;
+            this.label55.Font = new System.Drawing.Font("宋体", 12F);
+            this.label55.Location = new System.Drawing.Point(427, 105);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(87, 16);
+            this.label55.TabIndex = 50;
+            this.label55.Text = "3#抽液时间";
+            // 
+            // textBox48
+            // 
+            this.textBox48.Location = new System.Drawing.Point(517, 77);
+            this.textBox48.Name = "textBox48";
+            this.textBox48.Size = new System.Drawing.Size(107, 26);
+            this.textBox48.TabIndex = 49;
+            // 
+            // textBox49
+            // 
+            this.textBox49.Location = new System.Drawing.Point(517, 51);
+            this.textBox49.Name = "textBox49";
+            this.textBox49.Size = new System.Drawing.Size(107, 26);
+            this.textBox49.TabIndex = 48;
+            // 
+            // textBox50
+            // 
+            this.textBox50.Location = new System.Drawing.Point(517, 25);
+            this.textBox50.Name = "textBox50";
+            this.textBox50.Size = new System.Drawing.Size(107, 26);
+            this.textBox50.TabIndex = 47;
+            // 
+            // label56
+            // 
+            this.label56.AutoSize = true;
+            this.label56.Font = new System.Drawing.Font("宋体", 12F);
+            this.label56.Location = new System.Drawing.Point(427, 78);
+            this.label56.Name = "label56";
+            this.label56.Size = new System.Drawing.Size(87, 16);
+            this.label56.TabIndex = 46;
+            this.label56.Text = "3#采样间隔";
+            // 
+            // label57
+            // 
+            this.label57.AutoSize = true;
+            this.label57.Font = new System.Drawing.Font("宋体", 12F);
+            this.label57.Location = new System.Drawing.Point(427, 51);
+            this.label57.Name = "label57";
+            this.label57.Size = new System.Drawing.Size(87, 16);
+            this.label57.TabIndex = 45;
+            this.label57.Text = "3#结束波长";
+            // 
+            // label58
+            // 
+            this.label58.AutoSize = true;
+            this.label58.Font = new System.Drawing.Font("宋体", 12F);
+            this.label58.Location = new System.Drawing.Point(427, 24);
+            this.label58.Name = "label58";
+            this.label58.Size = new System.Drawing.Size(87, 16);
+            this.label58.TabIndex = 44;
+            this.label58.Text = "3#开始波长";
+            // 
+            // textBox35
+            // 
+            this.textBox35.Location = new System.Drawing.Point(314, 207);
+            this.textBox35.Name = "textBox35";
+            this.textBox35.Size = new System.Drawing.Size(107, 26);
+            this.textBox35.TabIndex = 43;
+            // 
+            // textBox36
+            // 
+            this.textBox36.Location = new System.Drawing.Point(314, 181);
+            this.textBox36.Name = "textBox36";
+            this.textBox36.Size = new System.Drawing.Size(107, 26);
+            this.textBox36.TabIndex = 42;
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Font = new System.Drawing.Font("宋体", 12F);
+            this.label43.Location = new System.Drawing.Point(224, 213);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(87, 16);
+            this.label43.TabIndex = 41;
+            this.label43.Text = "2#排空色皿";
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Font = new System.Drawing.Font("宋体", 12F);
+            this.label44.Location = new System.Drawing.Point(224, 186);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(87, 16);
+            this.label44.TabIndex = 40;
+            this.label44.Text = "2#排空时间";
+            // 
+            // textBox37
+            // 
+            this.textBox37.Location = new System.Drawing.Point(314, 155);
+            this.textBox37.Name = "textBox37";
+            this.textBox37.Size = new System.Drawing.Size(107, 26);
+            this.textBox37.TabIndex = 39;
+            // 
+            // textBox38
+            // 
+            this.textBox38.Location = new System.Drawing.Point(314, 129);
+            this.textBox38.Name = "textBox38";
+            this.textBox38.Size = new System.Drawing.Size(107, 26);
+            this.textBox38.TabIndex = 38;
+            // 
+            // textBox39
+            // 
+            this.textBox39.Location = new System.Drawing.Point(314, 103);
+            this.textBox39.Name = "textBox39";
+            this.textBox39.Size = new System.Drawing.Size(107, 26);
+            this.textBox39.TabIndex = 37;
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Font = new System.Drawing.Font("宋体", 12F);
+            this.label45.Location = new System.Drawing.Point(224, 159);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(87, 16);
+            this.label45.TabIndex = 36;
+            this.label45.Text = "2#搅拌时间";
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Font = new System.Drawing.Font("宋体", 12F);
+            this.label46.Location = new System.Drawing.Point(224, 132);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(87, 16);
+            this.label46.TabIndex = 35;
+            this.label46.Text = "2#搅拌速度";
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Font = new System.Drawing.Font("宋体", 12F);
+            this.label47.Location = new System.Drawing.Point(224, 105);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(87, 16);
+            this.label47.TabIndex = 34;
+            this.label47.Text = "2#抽液时间";
+            // 
+            // textBox40
+            // 
+            this.textBox40.Location = new System.Drawing.Point(314, 77);
+            this.textBox40.Name = "textBox40";
+            this.textBox40.Size = new System.Drawing.Size(107, 26);
+            this.textBox40.TabIndex = 33;
+            // 
+            // textBox41
+            // 
+            this.textBox41.Location = new System.Drawing.Point(314, 51);
+            this.textBox41.Name = "textBox41";
+            this.textBox41.Size = new System.Drawing.Size(107, 26);
+            this.textBox41.TabIndex = 32;
+            // 
+            // textBox42
+            // 
+            this.textBox42.Location = new System.Drawing.Point(314, 25);
+            this.textBox42.Name = "textBox42";
+            this.textBox42.Size = new System.Drawing.Size(107, 26);
+            this.textBox42.TabIndex = 31;
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.Font = new System.Drawing.Font("宋体", 12F);
+            this.label48.Location = new System.Drawing.Point(224, 78);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(87, 16);
+            this.label48.TabIndex = 30;
+            this.label48.Text = "2#采样间隔";
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Font = new System.Drawing.Font("宋体", 12F);
+            this.label49.Location = new System.Drawing.Point(224, 51);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(87, 16);
+            this.label49.TabIndex = 29;
+            this.label49.Text = "2#结束波长";
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Font = new System.Drawing.Font("宋体", 12F);
+            this.label50.Location = new System.Drawing.Point(224, 24);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(87, 16);
+            this.label50.TabIndex = 28;
+            this.label50.Text = "2#开始波长";
+            // 
+            // textBox33
+            // 
+            this.textBox33.Location = new System.Drawing.Point(101, 207);
+            this.textBox33.Name = "textBox33";
+            this.textBox33.Size = new System.Drawing.Size(107, 26);
+            this.textBox33.TabIndex = 27;
+            // 
+            // textBox34
+            // 
+            this.textBox34.Location = new System.Drawing.Point(101, 181);
+            this.textBox34.Name = "textBox34";
+            this.textBox34.Size = new System.Drawing.Size(107, 26);
+            this.textBox34.TabIndex = 26;
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Font = new System.Drawing.Font("宋体", 12F);
+            this.label41.Location = new System.Drawing.Point(11, 213);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(87, 16);
+            this.label41.TabIndex = 25;
+            this.label41.Text = "1#排空色皿";
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Font = new System.Drawing.Font("宋体", 12F);
+            this.label42.Location = new System.Drawing.Point(11, 186);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(87, 16);
+            this.label42.TabIndex = 24;
+            this.label42.Text = "1#排空时间";
+            // 
+            // textBox30
+            // 
+            this.textBox30.Location = new System.Drawing.Point(101, 155);
+            this.textBox30.Name = "textBox30";
+            this.textBox30.Size = new System.Drawing.Size(107, 26);
+            this.textBox30.TabIndex = 23;
+            // 
+            // textBox31
+            // 
+            this.textBox31.Location = new System.Drawing.Point(101, 129);
+            this.textBox31.Name = "textBox31";
+            this.textBox31.Size = new System.Drawing.Size(107, 26);
+            this.textBox31.TabIndex = 22;
+            // 
+            // textBox32
+            // 
+            this.textBox32.Location = new System.Drawing.Point(101, 103);
+            this.textBox32.Name = "textBox32";
+            this.textBox32.Size = new System.Drawing.Size(107, 26);
+            this.textBox32.TabIndex = 21;
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Font = new System.Drawing.Font("宋体", 12F);
+            this.label38.Location = new System.Drawing.Point(11, 159);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(87, 16);
+            this.label38.TabIndex = 20;
+            this.label38.Text = "1#搅拌时间";
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Font = new System.Drawing.Font("宋体", 12F);
+            this.label39.Location = new System.Drawing.Point(11, 132);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(87, 16);
+            this.label39.TabIndex = 19;
+            this.label39.Text = "1#搅拌速度";
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Font = new System.Drawing.Font("宋体", 12F);
+            this.label40.Location = new System.Drawing.Point(11, 105);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(87, 16);
+            this.label40.TabIndex = 18;
+            this.label40.Text = "1#抽液时间";
+            // 
+            // textBox27
+            // 
+            this.textBox27.Location = new System.Drawing.Point(101, 77);
+            this.textBox27.Name = "textBox27";
+            this.textBox27.Size = new System.Drawing.Size(107, 26);
+            this.textBox27.TabIndex = 17;
+            // 
+            // textBox28
+            // 
+            this.textBox28.Location = new System.Drawing.Point(101, 51);
+            this.textBox28.Name = "textBox28";
+            this.textBox28.Size = new System.Drawing.Size(107, 26);
+            this.textBox28.TabIndex = 16;
+            // 
+            // textBox29
+            // 
+            this.textBox29.Location = new System.Drawing.Point(101, 25);
+            this.textBox29.Name = "textBox29";
+            this.textBox29.Size = new System.Drawing.Size(107, 26);
+            this.textBox29.TabIndex = 15;
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Font = new System.Drawing.Font("宋体", 12F);
+            this.label35.Location = new System.Drawing.Point(11, 78);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(87, 16);
+            this.label35.TabIndex = 14;
+            this.label35.Text = "1#采样间隔";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("宋体", 12F);
+            this.label36.Location = new System.Drawing.Point(11, 51);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(87, 16);
+            this.label36.TabIndex = 13;
+            this.label36.Text = "1#结束波长";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Font = new System.Drawing.Font("宋体", 12F);
+            this.label37.Location = new System.Drawing.Point(11, 24);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(87, 16);
+            this.label37.TabIndex = 12;
+            this.label37.Text = "1#开始波长";
+            // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.chk_OutPut_Stir_4);
+            this.groupBox2.Controls.Add(this.chk_OutPut_Stir_3);
+            this.groupBox2.Controls.Add(this.chk_OutPut_Stir_2);
+            this.groupBox2.Controls.Add(this.chk_OutPut_Stir_1);
+            this.groupBox2.Controls.Add(this.chk_InPut_Two);
+            this.groupBox2.Controls.Add(this.chk_InPut_One);
+            this.groupBox2.Controls.Add(this.chk_OutPut_Two);
+            this.groupBox2.Controls.Add(this.chk_OutPut_One);
             this.groupBox2.Controls.Add(this.label76);
             this.groupBox2.Controls.Add(this.label75);
             this.groupBox2.Controls.Add(this.chk_OutPut_TotalDrainage);
@@ -1017,12 +1047,120 @@
             this.groupBox2.Controls.Add(this.chk_InPut_Open_1);
             this.groupBox2.Controls.Add(this.chk_InPut_Close_1);
             this.groupBox2.Font = new System.Drawing.Font("宋体", 12F);
-            this.groupBox2.Location = new System.Drawing.Point(1065, 210);
+            this.groupBox2.Location = new System.Drawing.Point(1065, 268);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(823, 220);
+            this.groupBox2.Size = new System.Drawing.Size(823, 252);
             this.groupBox2.TabIndex = 120;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "IO页面";
+            // 
+            // chk_OutPut_Stir_4
+            // 
+            this.chk_OutPut_Stir_4.AutoSize = true;
+            this.chk_OutPut_Stir_4.Font = new System.Drawing.Font("宋体", 12F);
+            this.chk_OutPut_Stir_4.Location = new System.Drawing.Point(9, 215);
+            this.chk_OutPut_Stir_4.Name = "chk_OutPut_Stir_4";
+            this.chk_OutPut_Stir_4.Size = new System.Drawing.Size(74, 20);
+            this.chk_OutPut_Stir_4.TabIndex = 157;
+            this.chk_OutPut_Stir_4.Text = "4#搅拌";
+            this.chk_OutPut_Stir_4.UseVisualStyleBackColor = true;
+            // 
+            // chk_OutPut_Stir_3
+            // 
+            this.chk_OutPut_Stir_3.AutoSize = true;
+            this.chk_OutPut_Stir_3.Font = new System.Drawing.Font("宋体", 12F);
+            this.chk_OutPut_Stir_3.Location = new System.Drawing.Point(629, 191);
+            this.chk_OutPut_Stir_3.Name = "chk_OutPut_Stir_3";
+            this.chk_OutPut_Stir_3.Size = new System.Drawing.Size(74, 20);
+            this.chk_OutPut_Stir_3.TabIndex = 156;
+            this.chk_OutPut_Stir_3.Text = "3#搅拌";
+            this.chk_OutPut_Stir_3.UseVisualStyleBackColor = true;
+            // 
+            // chk_OutPut_Stir_2
+            // 
+            this.chk_OutPut_Stir_2.AutoSize = true;
+            this.chk_OutPut_Stir_2.Font = new System.Drawing.Font("宋体", 12F);
+            this.chk_OutPut_Stir_2.Location = new System.Drawing.Point(505, 191);
+            this.chk_OutPut_Stir_2.Name = "chk_OutPut_Stir_2";
+            this.chk_OutPut_Stir_2.Size = new System.Drawing.Size(74, 20);
+            this.chk_OutPut_Stir_2.TabIndex = 155;
+            this.chk_OutPut_Stir_2.Text = "2#搅拌";
+            this.chk_OutPut_Stir_2.UseVisualStyleBackColor = true;
+            // 
+            // chk_OutPut_Stir_1
+            // 
+            this.chk_OutPut_Stir_1.AutoSize = true;
+            this.chk_OutPut_Stir_1.Font = new System.Drawing.Font("宋体", 12F);
+            this.chk_OutPut_Stir_1.Location = new System.Drawing.Point(381, 189);
+            this.chk_OutPut_Stir_1.Name = "chk_OutPut_Stir_1";
+            this.chk_OutPut_Stir_1.Size = new System.Drawing.Size(74, 20);
+            this.chk_OutPut_Stir_1.TabIndex = 154;
+            this.chk_OutPut_Stir_1.Text = "1#搅拌";
+            this.chk_OutPut_Stir_1.UseVisualStyleBackColor = true;
+            // 
+            // chk_InPut_Two
+            // 
+            this.chk_InPut_Two.AutoSize = true;
+            this.chk_InPut_Two.Font = new System.Drawing.Font("宋体", 12F);
+            this.chk_InPut_Two.Location = new System.Drawing.Point(505, 63);
+            this.chk_InPut_Two.Name = "chk_InPut_Two";
+            this.chk_InPut_Two.Size = new System.Drawing.Size(74, 20);
+            this.chk_InPut_Two.TabIndex = 153;
+            this.chk_InPut_Two.Text = "2#线圈";
+            this.chk_InPut_Two.UseVisualStyleBackColor = true;
+            // 
+            // chk_InPut_One
+            // 
+            this.chk_InPut_One.AutoSize = true;
+            this.chk_InPut_One.Font = new System.Drawing.Font("宋体", 12F);
+            this.chk_InPut_One.Location = new System.Drawing.Point(381, 63);
+            this.chk_InPut_One.Name = "chk_InPut_One";
+            this.chk_InPut_One.Size = new System.Drawing.Size(74, 20);
+            this.chk_InPut_One.TabIndex = 152;
+            this.chk_InPut_One.Text = "1#线圈";
+            this.chk_InPut_One.UseVisualStyleBackColor = true;
+            // 
+            // chk_OutPut_Two
+            // 
+            this.chk_OutPut_Two.AutoSize = true;
+            this.chk_OutPut_Two.Font = new System.Drawing.Font("宋体", 12F);
+            this.chk_OutPut_Two.Location = new System.Drawing.Point(257, 189);
+            this.chk_OutPut_Two.Name = "chk_OutPut_Two";
+            this.chk_OutPut_Two.Size = new System.Drawing.Size(74, 20);
+            this.chk_OutPut_Two.TabIndex = 151;
+            this.chk_OutPut_Two.Text = "2#线圈";
+            this.chk_OutPut_Two.UseVisualStyleBackColor = true;
+            // 
+            // chk_OutPut_One
+            // 
+            this.chk_OutPut_One.AutoSize = true;
+            this.chk_OutPut_One.Font = new System.Drawing.Font("宋体", 12F);
+            this.chk_OutPut_One.Location = new System.Drawing.Point(133, 189);
+            this.chk_OutPut_One.Name = "chk_OutPut_One";
+            this.chk_OutPut_One.Size = new System.Drawing.Size(74, 20);
+            this.chk_OutPut_One.TabIndex = 150;
+            this.chk_OutPut_One.Text = "1#线圈";
+            this.chk_OutPut_One.UseVisualStyleBackColor = true;
+            // 
+            // label76
+            // 
+            this.label76.AutoSize = true;
+            this.label76.Font = new System.Drawing.Font("宋体", 12F);
+            this.label76.Location = new System.Drawing.Point(6, 22);
+            this.label76.Name = "label76";
+            this.label76.Size = new System.Drawing.Size(71, 16);
+            this.label76.TabIndex = 149;
+            this.label76.Text = "输入信号";
+            // 
+            // label75
+            // 
+            this.label75.AutoSize = true;
+            this.label75.Font = new System.Drawing.Font("宋体", 12F);
+            this.label75.Location = new System.Drawing.Point(6, 94);
+            this.label75.Name = "label75";
+            this.label75.Size = new System.Drawing.Size(71, 16);
+            this.label75.TabIndex = 148;
+            this.label75.Text = "输出信号";
             // 
             // chk_OutPut_TotalDrainage
             // 
@@ -1334,6 +1472,15 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.Btn_Total);
+            this.groupBox3.Controls.Add(this.Btn_Extend2);
+            this.groupBox3.Controls.Add(this.Btn_Extend1);
+            this.groupBox3.Controls.Add(this.label142);
+            this.groupBox3.Controls.Add(this.label141);
+            this.groupBox3.Controls.Add(this.txt_4);
+            this.groupBox3.Controls.Add(this.txt_3);
+            this.groupBox3.Controls.Add(this.txt_2);
+            this.groupBox3.Controls.Add(this.txt_1);
             this.groupBox3.Controls.Add(this.Btn_Reversal_4);
             this.groupBox3.Controls.Add(this.Btn_Forward_4);
             this.groupBox3.Controls.Add(this.label33);
@@ -1365,7 +1512,7 @@
             this.groupBox3.Font = new System.Drawing.Font("宋体", 12F);
             this.groupBox3.Location = new System.Drawing.Point(1059, 19);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(829, 179);
+            this.groupBox3.Size = new System.Drawing.Size(829, 220);
             this.groupBox3.TabIndex = 121;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "手动页面";
@@ -1373,28 +1520,30 @@
             // Btn_Reversal_4
             // 
             this.Btn_Reversal_4.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn_Reversal_4.Location = new System.Drawing.Point(664, 132);
+            this.Btn_Reversal_4.Location = new System.Drawing.Point(700, 146);
             this.Btn_Reversal_4.Name = "Btn_Reversal_4";
             this.Btn_Reversal_4.Size = new System.Drawing.Size(121, 29);
             this.Btn_Reversal_4.TabIndex = 117;
             this.Btn_Reversal_4.Text = "4#抽液反转";
             this.Btn_Reversal_4.UseVisualStyleBackColor = true;
+            this.Btn_Reversal_4.Click += new System.EventHandler(this.Btn_Reversal_4_Click);
             // 
             // Btn_Forward_4
             // 
             this.Btn_Forward_4.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn_Forward_4.Location = new System.Drawing.Point(527, 132);
+            this.Btn_Forward_4.Location = new System.Drawing.Point(563, 146);
             this.Btn_Forward_4.Name = "Btn_Forward_4";
             this.Btn_Forward_4.Size = new System.Drawing.Size(121, 29);
             this.Btn_Forward_4.TabIndex = 116;
             this.Btn_Forward_4.Text = "4#抽液正转";
             this.Btn_Forward_4.UseVisualStyleBackColor = true;
+            this.Btn_Forward_4.Click += new System.EventHandler(this.Btn_Forward_4_Click);
             // 
             // label33
             // 
             this.label33.AutoSize = true;
             this.label33.Font = new System.Drawing.Font("宋体", 12F);
-            this.label33.Location = new System.Drawing.Point(488, 140);
+            this.label33.Location = new System.Drawing.Point(544, 152);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(15, 16);
             this.label33.TabIndex = 115;
@@ -1402,56 +1551,61 @@
             // 
             // txt_Current_4
             // 
-            this.txt_Current_4.Location = new System.Drawing.Point(395, 138);
+            this.txt_Current_4.Location = new System.Drawing.Point(451, 150);
             this.txt_Current_4.Name = "txt_Current_4";
             this.txt_Current_4.Size = new System.Drawing.Size(87, 26);
             this.txt_Current_4.TabIndex = 114;
+            this.txt_Current_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Btn_Stir_4
             // 
             this.Btn_Stir_4.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn_Stir_4.Location = new System.Drawing.Point(303, 132);
+            this.Btn_Stir_4.Location = new System.Drawing.Point(272, 146);
             this.Btn_Stir_4.Name = "Btn_Stir_4";
             this.Btn_Stir_4.Size = new System.Drawing.Size(87, 29);
             this.Btn_Stir_4.TabIndex = 113;
             this.Btn_Stir_4.Text = "4#搅拌";
             this.Btn_Stir_4.UseVisualStyleBackColor = true;
+            this.Btn_Stir_4.Click += new System.EventHandler(this.Btn_Stir_4_Click);
             // 
             // Btn_Spray_4
             // 
             this.Btn_Spray_4.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn_Spray_4.Location = new System.Drawing.Point(204, 132);
+            this.Btn_Spray_4.Location = new System.Drawing.Point(184, 146);
             this.Btn_Spray_4.Name = "Btn_Spray_4";
             this.Btn_Spray_4.Size = new System.Drawing.Size(87, 29);
             this.Btn_Spray_4.TabIndex = 112;
             this.Btn_Spray_4.Text = "4#喷水";
             this.Btn_Spray_4.UseVisualStyleBackColor = true;
+            this.Btn_Spray_4.Click += new System.EventHandler(this.Btn_Spray_4_Click);
             // 
             // Btn_Drainage_4
             // 
             this.Btn_Drainage_4.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn_Drainage_4.Location = new System.Drawing.Point(105, 132);
+            this.Btn_Drainage_4.Location = new System.Drawing.Point(94, 146);
             this.Btn_Drainage_4.Name = "Btn_Drainage_4";
             this.Btn_Drainage_4.Size = new System.Drawing.Size(87, 29);
             this.Btn_Drainage_4.TabIndex = 111;
             this.Btn_Drainage_4.Text = "4#排水";
             this.Btn_Drainage_4.UseVisualStyleBackColor = true;
+            this.Btn_Drainage_4.Click += new System.EventHandler(this.Btn_Drainage_4_Click);
             // 
             // Btn_OpenCover_4
             // 
             this.Btn_OpenCover_4.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn_OpenCover_4.Location = new System.Drawing.Point(6, 132);
+            this.Btn_OpenCover_4.Location = new System.Drawing.Point(6, 146);
             this.Btn_OpenCover_4.Name = "Btn_OpenCover_4";
             this.Btn_OpenCover_4.Size = new System.Drawing.Size(87, 29);
             this.Btn_OpenCover_4.TabIndex = 110;
             this.Btn_OpenCover_4.Text = "4#开盖";
             this.Btn_OpenCover_4.UseVisualStyleBackColor = true;
+            this.Btn_OpenCover_4.Click += new System.EventHandler(this.Btn_OpenCover_4_Click);
             // 
             // label34
             // 
             this.label34.AutoSize = true;
             this.label34.Font = new System.Drawing.Font("宋体", 12F);
-            this.label34.Location = new System.Drawing.Point(488, 105);
+            this.label34.Location = new System.Drawing.Point(544, 117);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(15, 16);
             this.label34.TabIndex = 109;
@@ -1459,76 +1613,83 @@
             // 
             // txt_Current_3
             // 
-            this.txt_Current_3.Location = new System.Drawing.Point(395, 103);
+            this.txt_Current_3.Location = new System.Drawing.Point(451, 115);
             this.txt_Current_3.Name = "txt_Current_3";
             this.txt_Current_3.Size = new System.Drawing.Size(87, 26);
             this.txt_Current_3.TabIndex = 108;
+            this.txt_Current_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Btn_Stir_3
             // 
             this.Btn_Stir_3.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn_Stir_3.Location = new System.Drawing.Point(303, 97);
+            this.Btn_Stir_3.Location = new System.Drawing.Point(272, 111);
             this.Btn_Stir_3.Name = "Btn_Stir_3";
             this.Btn_Stir_3.Size = new System.Drawing.Size(87, 29);
             this.Btn_Stir_3.TabIndex = 107;
             this.Btn_Stir_3.Text = "3#搅拌";
             this.Btn_Stir_3.UseVisualStyleBackColor = true;
+            this.Btn_Stir_3.Click += new System.EventHandler(this.Btn_Stir_3_Click);
             // 
             // Btn_Spray_3
             // 
             this.Btn_Spray_3.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn_Spray_3.Location = new System.Drawing.Point(204, 97);
+            this.Btn_Spray_3.Location = new System.Drawing.Point(184, 111);
             this.Btn_Spray_3.Name = "Btn_Spray_3";
             this.Btn_Spray_3.Size = new System.Drawing.Size(87, 29);
             this.Btn_Spray_3.TabIndex = 106;
             this.Btn_Spray_3.Text = "3#喷水";
             this.Btn_Spray_3.UseVisualStyleBackColor = true;
+            this.Btn_Spray_3.Click += new System.EventHandler(this.Btn_Spray_3_Click);
             // 
             // Btn_Drainage_3
             // 
             this.Btn_Drainage_3.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn_Drainage_3.Location = new System.Drawing.Point(105, 97);
+            this.Btn_Drainage_3.Location = new System.Drawing.Point(94, 111);
             this.Btn_Drainage_3.Name = "Btn_Drainage_3";
             this.Btn_Drainage_3.Size = new System.Drawing.Size(87, 29);
             this.Btn_Drainage_3.TabIndex = 105;
             this.Btn_Drainage_3.Text = "3#排水";
             this.Btn_Drainage_3.UseVisualStyleBackColor = true;
+            this.Btn_Drainage_3.Click += new System.EventHandler(this.Btn_Drainage_3_Click);
             // 
             // Btn_OpenCover_3
             // 
             this.Btn_OpenCover_3.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn_OpenCover_3.Location = new System.Drawing.Point(6, 97);
+            this.Btn_OpenCover_3.Location = new System.Drawing.Point(6, 111);
             this.Btn_OpenCover_3.Name = "Btn_OpenCover_3";
             this.Btn_OpenCover_3.Size = new System.Drawing.Size(87, 29);
             this.Btn_OpenCover_3.TabIndex = 104;
             this.Btn_OpenCover_3.Text = "3#开盖";
             this.Btn_OpenCover_3.UseVisualStyleBackColor = true;
+            this.Btn_OpenCover_3.Click += new System.EventHandler(this.Btn_OpenCover_3_Click);
             // 
             // Btn_Reversal_2
             // 
             this.Btn_Reversal_2.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn_Reversal_2.Location = new System.Drawing.Point(664, 60);
+            this.Btn_Reversal_2.Location = new System.Drawing.Point(700, 77);
             this.Btn_Reversal_2.Name = "Btn_Reversal_2";
             this.Btn_Reversal_2.Size = new System.Drawing.Size(121, 29);
             this.Btn_Reversal_2.TabIndex = 103;
             this.Btn_Reversal_2.Text = "2#抽液反转";
             this.Btn_Reversal_2.UseVisualStyleBackColor = true;
+            this.Btn_Reversal_2.Click += new System.EventHandler(this.Btn_Reversal_2_Click);
             // 
             // Btn_Forward_2
             // 
             this.Btn_Forward_2.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn_Forward_2.Location = new System.Drawing.Point(527, 60);
+            this.Btn_Forward_2.Location = new System.Drawing.Point(563, 77);
             this.Btn_Forward_2.Name = "Btn_Forward_2";
             this.Btn_Forward_2.Size = new System.Drawing.Size(121, 29);
             this.Btn_Forward_2.TabIndex = 102;
             this.Btn_Forward_2.Text = "2#抽液正转";
             this.Btn_Forward_2.UseVisualStyleBackColor = true;
+            this.Btn_Forward_2.Click += new System.EventHandler(this.Btn_Forward_2_Click);
             // 
             // label32
             // 
             this.label32.AutoSize = true;
             this.label32.Font = new System.Drawing.Font("宋体", 12F);
-            this.label32.Location = new System.Drawing.Point(488, 68);
+            this.label32.Location = new System.Drawing.Point(544, 80);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(15, 16);
             this.label32.TabIndex = 101;
@@ -1536,56 +1697,61 @@
             // 
             // txt_Current_2
             // 
-            this.txt_Current_2.Location = new System.Drawing.Point(395, 66);
+            this.txt_Current_2.Location = new System.Drawing.Point(451, 78);
             this.txt_Current_2.Name = "txt_Current_2";
             this.txt_Current_2.Size = new System.Drawing.Size(87, 26);
             this.txt_Current_2.TabIndex = 100;
+            this.txt_Current_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Btn_Stir_2
             // 
             this.Btn_Stir_2.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn_Stir_2.Location = new System.Drawing.Point(303, 60);
+            this.Btn_Stir_2.Location = new System.Drawing.Point(272, 74);
             this.Btn_Stir_2.Name = "Btn_Stir_2";
             this.Btn_Stir_2.Size = new System.Drawing.Size(87, 29);
             this.Btn_Stir_2.TabIndex = 99;
             this.Btn_Stir_2.Text = "2#搅拌";
             this.Btn_Stir_2.UseVisualStyleBackColor = true;
+            this.Btn_Stir_2.Click += new System.EventHandler(this.Btn_Stir_2_Click);
             // 
             // Btn_Spray_2
             // 
             this.Btn_Spray_2.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn_Spray_2.Location = new System.Drawing.Point(204, 60);
+            this.Btn_Spray_2.Location = new System.Drawing.Point(184, 74);
             this.Btn_Spray_2.Name = "Btn_Spray_2";
             this.Btn_Spray_2.Size = new System.Drawing.Size(87, 29);
             this.Btn_Spray_2.TabIndex = 98;
             this.Btn_Spray_2.Text = "2#喷水";
             this.Btn_Spray_2.UseVisualStyleBackColor = true;
+            this.Btn_Spray_2.Click += new System.EventHandler(this.Btn_Spray_2_Click);
             // 
             // Btn_Drainage_2
             // 
             this.Btn_Drainage_2.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn_Drainage_2.Location = new System.Drawing.Point(105, 60);
+            this.Btn_Drainage_2.Location = new System.Drawing.Point(94, 74);
             this.Btn_Drainage_2.Name = "Btn_Drainage_2";
             this.Btn_Drainage_2.Size = new System.Drawing.Size(87, 29);
             this.Btn_Drainage_2.TabIndex = 97;
             this.Btn_Drainage_2.Text = "2#排水";
             this.Btn_Drainage_2.UseVisualStyleBackColor = true;
+            this.Btn_Drainage_2.Click += new System.EventHandler(this.Btn_Drainage_2_Click);
             // 
             // Btn_OpenCover_2
             // 
             this.Btn_OpenCover_2.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn_OpenCover_2.Location = new System.Drawing.Point(6, 60);
+            this.Btn_OpenCover_2.Location = new System.Drawing.Point(6, 74);
             this.Btn_OpenCover_2.Name = "Btn_OpenCover_2";
             this.Btn_OpenCover_2.Size = new System.Drawing.Size(87, 29);
             this.Btn_OpenCover_2.TabIndex = 96;
             this.Btn_OpenCover_2.Text = "2#开盖";
             this.Btn_OpenCover_2.UseVisualStyleBackColor = true;
+            this.Btn_OpenCover_2.Click += new System.EventHandler(this.Btn_OpenCover_2_Click);
             // 
             // label31
             // 
             this.label31.AutoSize = true;
             this.label31.Font = new System.Drawing.Font("宋体", 12F);
-            this.label31.Location = new System.Drawing.Point(488, 33);
+            this.label31.Location = new System.Drawing.Point(544, 45);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(15, 16);
             this.label31.TabIndex = 95;
@@ -1593,50 +1759,55 @@
             // 
             // txt_Current_1
             // 
-            this.txt_Current_1.Location = new System.Drawing.Point(395, 31);
+            this.txt_Current_1.Location = new System.Drawing.Point(451, 43);
             this.txt_Current_1.Name = "txt_Current_1";
             this.txt_Current_1.Size = new System.Drawing.Size(87, 26);
             this.txt_Current_1.TabIndex = 94;
+            this.txt_Current_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Btn_Stir_1
             // 
             this.Btn_Stir_1.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn_Stir_1.Location = new System.Drawing.Point(303, 25);
+            this.Btn_Stir_1.Location = new System.Drawing.Point(272, 39);
             this.Btn_Stir_1.Name = "Btn_Stir_1";
             this.Btn_Stir_1.Size = new System.Drawing.Size(87, 29);
             this.Btn_Stir_1.TabIndex = 93;
             this.Btn_Stir_1.Text = "1#搅拌";
             this.Btn_Stir_1.UseVisualStyleBackColor = true;
+            this.Btn_Stir_1.Click += new System.EventHandler(this.Btn_Stir_1_Click);
             // 
             // Btn_Spray_1
             // 
             this.Btn_Spray_1.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn_Spray_1.Location = new System.Drawing.Point(204, 25);
+            this.Btn_Spray_1.Location = new System.Drawing.Point(184, 39);
             this.Btn_Spray_1.Name = "Btn_Spray_1";
             this.Btn_Spray_1.Size = new System.Drawing.Size(87, 29);
             this.Btn_Spray_1.TabIndex = 92;
             this.Btn_Spray_1.Text = "1#喷水";
             this.Btn_Spray_1.UseVisualStyleBackColor = true;
+            this.Btn_Spray_1.Click += new System.EventHandler(this.Btn_Spray_1_Click);
             // 
             // Btn_Drainage_1
             // 
             this.Btn_Drainage_1.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn_Drainage_1.Location = new System.Drawing.Point(105, 25);
+            this.Btn_Drainage_1.Location = new System.Drawing.Point(94, 39);
             this.Btn_Drainage_1.Name = "Btn_Drainage_1";
             this.Btn_Drainage_1.Size = new System.Drawing.Size(87, 29);
             this.Btn_Drainage_1.TabIndex = 91;
             this.Btn_Drainage_1.Text = "1#排水";
             this.Btn_Drainage_1.UseVisualStyleBackColor = true;
+            this.Btn_Drainage_1.Click += new System.EventHandler(this.Btn_Drainage_1_Click);
             // 
             // Btn_OpenCover_1
             // 
             this.Btn_OpenCover_1.Font = new System.Drawing.Font("宋体", 12F);
-            this.Btn_OpenCover_1.Location = new System.Drawing.Point(6, 25);
+            this.Btn_OpenCover_1.Location = new System.Drawing.Point(6, 39);
             this.Btn_OpenCover_1.Name = "Btn_OpenCover_1";
             this.Btn_OpenCover_1.Size = new System.Drawing.Size(87, 29);
             this.Btn_OpenCover_1.TabIndex = 90;
             this.Btn_OpenCover_1.Text = "1#开盖";
             this.Btn_OpenCover_1.UseVisualStyleBackColor = true;
+            this.Btn_OpenCover_1.Click += new System.EventHandler(this.Btn_OpenCover_1_Click);
             // 
             // groupBox4
             // 
@@ -1736,6 +1907,7 @@
             this.txt_P4.Name = "txt_P4";
             this.txt_P4.Size = new System.Drawing.Size(107, 26);
             this.txt_P4.TabIndex = 121;
+            this.txt_P4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label28
             // 
@@ -1753,6 +1925,7 @@
             this.txt_Times.Name = "txt_Times";
             this.txt_Times.Size = new System.Drawing.Size(107, 26);
             this.txt_Times.TabIndex = 119;
+            this.txt_Times.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label29
             // 
@@ -1770,6 +1943,7 @@
             this.txt_CheckBeat.Name = "txt_CheckBeat";
             this.txt_CheckBeat.Size = new System.Drawing.Size(107, 26);
             this.txt_CheckBeat.TabIndex = 117;
+            this.txt_CheckBeat.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label30
             // 
@@ -1787,6 +1961,7 @@
             this.txt_P3.Name = "txt_P3";
             this.txt_P3.Size = new System.Drawing.Size(107, 26);
             this.txt_P3.TabIndex = 115;
+            this.txt_P3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label27
             // 
@@ -1804,6 +1979,7 @@
             this.txt_Receivedbytes.Name = "txt_Receivedbytes";
             this.txt_Receivedbytes.Size = new System.Drawing.Size(107, 26);
             this.txt_Receivedbytes.TabIndex = 113;
+            this.txt_Receivedbytes.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label26
             // 
@@ -1821,6 +1997,7 @@
             this.txt_WorkstationsStatus.Name = "txt_WorkstationsStatus";
             this.txt_WorkstationsStatus.Size = new System.Drawing.Size(107, 26);
             this.txt_WorkstationsStatus.TabIndex = 111;
+            this.txt_WorkstationsStatus.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label25
             // 
@@ -1838,6 +2015,7 @@
             this.txt_StatusCode_4.Name = "txt_StatusCode_4";
             this.txt_StatusCode_4.Size = new System.Drawing.Size(107, 26);
             this.txt_StatusCode_4.TabIndex = 109;
+            this.txt_StatusCode_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_LidSignal_4
             // 
@@ -1845,6 +2023,7 @@
             this.txt_LidSignal_4.Name = "txt_LidSignal_4";
             this.txt_LidSignal_4.Size = new System.Drawing.Size(107, 26);
             this.txt_LidSignal_4.TabIndex = 108;
+            this.txt_LidSignal_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_Beat_4
             // 
@@ -1852,6 +2031,7 @@
             this.txt_Beat_4.Name = "txt_Beat_4";
             this.txt_Beat_4.Size = new System.Drawing.Size(107, 26);
             this.txt_Beat_4.TabIndex = 107;
+            this.txt_Beat_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label13
             // 
@@ -1909,6 +2089,7 @@
             this.txt_Status_4.Name = "txt_Status_4";
             this.txt_Status_4.Size = new System.Drawing.Size(107, 26);
             this.txt_Status_4.TabIndex = 101;
+            this.txt_Status_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label17
             // 
@@ -1946,6 +2127,7 @@
             this.txt_StatusCode_3.Name = "txt_StatusCode_3";
             this.txt_StatusCode_3.Size = new System.Drawing.Size(107, 26);
             this.txt_StatusCode_3.TabIndex = 97;
+            this.txt_StatusCode_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_LidSignal_3
             // 
@@ -1953,6 +2135,7 @@
             this.txt_LidSignal_3.Name = "txt_LidSignal_3";
             this.txt_LidSignal_3.Size = new System.Drawing.Size(107, 26);
             this.txt_LidSignal_3.TabIndex = 96;
+            this.txt_LidSignal_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_Beat_3
             // 
@@ -1960,6 +2143,7 @@
             this.txt_Beat_3.Name = "txt_Beat_3";
             this.txt_Beat_3.Size = new System.Drawing.Size(107, 26);
             this.txt_Beat_3.TabIndex = 95;
+            this.txt_Beat_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label19
             // 
@@ -2017,6 +2201,7 @@
             this.txt_Status_3.Name = "txt_Status_3";
             this.txt_Status_3.Size = new System.Drawing.Size(107, 26);
             this.txt_Status_3.TabIndex = 89;
+            this.txt_Status_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label23
             // 
@@ -2054,6 +2239,7 @@
             this.txt_StatusCode_2.Name = "txt_StatusCode_2";
             this.txt_StatusCode_2.Size = new System.Drawing.Size(107, 26);
             this.txt_StatusCode_2.TabIndex = 85;
+            this.txt_StatusCode_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_LidSignal_2
             // 
@@ -2061,6 +2247,7 @@
             this.txt_LidSignal_2.Name = "txt_LidSignal_2";
             this.txt_LidSignal_2.Size = new System.Drawing.Size(107, 26);
             this.txt_LidSignal_2.TabIndex = 84;
+            this.txt_LidSignal_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_Beat_2
             // 
@@ -2068,6 +2255,7 @@
             this.txt_Beat_2.Name = "txt_Beat_2";
             this.txt_Beat_2.Size = new System.Drawing.Size(107, 26);
             this.txt_Beat_2.TabIndex = 83;
+            this.txt_Beat_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label7
             // 
@@ -2125,6 +2313,7 @@
             this.txt_Status_2.Name = "txt_Status_2";
             this.txt_Status_2.Size = new System.Drawing.Size(107, 26);
             this.txt_Status_2.TabIndex = 77;
+            this.txt_Status_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label11
             // 
@@ -2162,6 +2351,7 @@
             this.txt_StatusCode_1.Name = "txt_StatusCode_1";
             this.txt_StatusCode_1.Size = new System.Drawing.Size(107, 26);
             this.txt_StatusCode_1.TabIndex = 73;
+            this.txt_StatusCode_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_LidSignal_1
             // 
@@ -2169,6 +2359,7 @@
             this.txt_LidSignal_1.Name = "txt_LidSignal_1";
             this.txt_LidSignal_1.Size = new System.Drawing.Size(107, 26);
             this.txt_LidSignal_1.TabIndex = 72;
+            this.txt_LidSignal_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_Beat_1
             // 
@@ -2176,6 +2367,7 @@
             this.txt_Beat_1.Name = "txt_Beat_1";
             this.txt_Beat_1.Size = new System.Drawing.Size(107, 26);
             this.txt_Beat_1.TabIndex = 71;
+            this.txt_Beat_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label4
             // 
@@ -2233,6 +2425,7 @@
             this.txt_Status_1.Name = "txt_Status_1";
             this.txt_Status_1.Size = new System.Drawing.Size(107, 26);
             this.txt_Status_1.TabIndex = 65;
+            this.txt_Status_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label2
             // 
@@ -2308,172 +2501,6 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "1工位发送接收区";
             // 
-            // txt_RecBaseResult_1
-            // 
-            this.txt_RecBaseResult_1.Location = new System.Drawing.Point(149, 235);
-            this.txt_RecBaseResult_1.Name = "txt_RecBaseResult_1";
-            this.txt_RecBaseResult_1.Size = new System.Drawing.Size(107, 26);
-            this.txt_RecBaseResult_1.TabIndex = 43;
-            // 
-            // txt_RecExtraction_1
-            // 
-            this.txt_RecExtraction_1.Location = new System.Drawing.Point(149, 209);
-            this.txt_RecExtraction_1.Name = "txt_RecExtraction_1";
-            this.txt_RecExtraction_1.Size = new System.Drawing.Size(107, 26);
-            this.txt_RecExtraction_1.TabIndex = 42;
-            // 
-            // label67
-            // 
-            this.label67.AutoSize = true;
-            this.label67.Font = new System.Drawing.Font("宋体", 12F);
-            this.label67.Location = new System.Drawing.Point(6, 241);
-            this.label67.Name = "label67";
-            this.label67.Size = new System.Drawing.Size(87, 16);
-            this.label67.TabIndex = 41;
-            this.label67.Text = "1#基线结果";
-            // 
-            // label68
-            // 
-            this.label68.AutoSize = true;
-            this.label68.Font = new System.Drawing.Font("宋体", 12F);
-            this.label68.Location = new System.Drawing.Point(6, 214);
-            this.label68.Name = "label68";
-            this.label68.Size = new System.Drawing.Size(119, 16);
-            this.label68.TabIndex = 40;
-            this.label68.Text = "1#正在针筒抽液";
-            // 
-            // txt_RecBaseMark_1
-            // 
-            this.txt_RecBaseMark_1.Location = new System.Drawing.Point(149, 183);
-            this.txt_RecBaseMark_1.Name = "txt_RecBaseMark_1";
-            this.txt_RecBaseMark_1.Size = new System.Drawing.Size(107, 26);
-            this.txt_RecBaseMark_1.TabIndex = 39;
-            // 
-            // txt_RecProcess_1
-            // 
-            this.txt_RecProcess_1.Location = new System.Drawing.Point(149, 157);
-            this.txt_RecProcess_1.Name = "txt_RecProcess_1";
-            this.txt_RecProcess_1.Size = new System.Drawing.Size(107, 26);
-            this.txt_RecProcess_1.TabIndex = 38;
-            // 
-            // txt_RecStopTimes_1
-            // 
-            this.txt_RecStopTimes_1.Location = new System.Drawing.Point(149, 131);
-            this.txt_RecStopTimes_1.Name = "txt_RecStopTimes_1";
-            this.txt_RecStopTimes_1.Size = new System.Drawing.Size(107, 26);
-            this.txt_RecStopTimes_1.TabIndex = 37;
-            // 
-            // label69
-            // 
-            this.label69.AutoSize = true;
-            this.label69.Font = new System.Drawing.Font("宋体", 12F);
-            this.label69.Location = new System.Drawing.Point(6, 187);
-            this.label69.Name = "label69";
-            this.label69.Size = new System.Drawing.Size(119, 16);
-            this.label69.TabIndex = 36;
-            this.label69.Text = "1#测基线标记位";
-            // 
-            // label70
-            // 
-            this.label70.AutoSize = true;
-            this.label70.Font = new System.Drawing.Font("宋体", 12F);
-            this.label70.Location = new System.Drawing.Point(6, 160);
-            this.label70.Name = "label70";
-            this.label70.Size = new System.Drawing.Size(87, 16);
-            this.label70.TabIndex = 35;
-            this.label70.Text = "1#收到工序";
-            // 
-            // label71
-            // 
-            this.label71.AutoSize = true;
-            this.label71.Font = new System.Drawing.Font("宋体", 12F);
-            this.label71.Location = new System.Drawing.Point(6, 133);
-            this.label71.Name = "label71";
-            this.label71.Size = new System.Drawing.Size(87, 16);
-            this.label71.TabIndex = 34;
-            this.label71.Text = "1#停止次数";
-            // 
-            // txt_RecSave_1
-            // 
-            this.txt_RecSave_1.Location = new System.Drawing.Point(149, 105);
-            this.txt_RecSave_1.Name = "txt_RecSave_1";
-            this.txt_RecSave_1.Size = new System.Drawing.Size(107, 26);
-            this.txt_RecSave_1.TabIndex = 33;
-            // 
-            // txt_RecFinish_1
-            // 
-            this.txt_RecFinish_1.Location = new System.Drawing.Point(149, 79);
-            this.txt_RecFinish_1.Name = "txt_RecFinish_1";
-            this.txt_RecFinish_1.Size = new System.Drawing.Size(107, 26);
-            this.txt_RecFinish_1.TabIndex = 32;
-            // 
-            // txt_RecReady_1
-            // 
-            this.txt_RecReady_1.Location = new System.Drawing.Point(149, 53);
-            this.txt_RecReady_1.Name = "txt_RecReady_1";
-            this.txt_RecReady_1.Size = new System.Drawing.Size(107, 26);
-            this.txt_RecReady_1.TabIndex = 31;
-            // 
-            // label72
-            // 
-            this.label72.AutoSize = true;
-            this.label72.Font = new System.Drawing.Font("宋体", 12F);
-            this.label72.Location = new System.Drawing.Point(6, 106);
-            this.label72.Name = "label72";
-            this.label72.Size = new System.Drawing.Size(119, 16);
-            this.label72.TabIndex = 30;
-            this.label72.Text = "1#数据保存完成";
-            // 
-            // label73
-            // 
-            this.label73.AutoSize = true;
-            this.label73.Font = new System.Drawing.Font("宋体", 12F);
-            this.label73.Location = new System.Drawing.Point(6, 79);
-            this.label73.Name = "label73";
-            this.label73.Size = new System.Drawing.Size(87, 16);
-            this.label73.TabIndex = 29;
-            this.label73.Text = "1#执行完成";
-            // 
-            // label74
-            // 
-            this.label74.AutoSize = true;
-            this.label74.Font = new System.Drawing.Font("宋体", 12F);
-            this.label74.Location = new System.Drawing.Point(6, 52);
-            this.label74.Name = "label74";
-            this.label74.Size = new System.Drawing.Size(135, 16);
-            this.label74.TabIndex = 28;
-            this.label74.Text = "1#启动/停止/准备";
-            // 
-            // label75
-            // 
-            this.label75.AutoSize = true;
-            this.label75.Font = new System.Drawing.Font("宋体", 12F);
-            this.label75.Location = new System.Drawing.Point(6, 94);
-            this.label75.Name = "label75";
-            this.label75.Size = new System.Drawing.Size(71, 16);
-            this.label75.TabIndex = 148;
-            this.label75.Text = "输出信号";
-            // 
-            // label76
-            // 
-            this.label76.AutoSize = true;
-            this.label76.Font = new System.Drawing.Font("宋体", 12F);
-            this.label76.Location = new System.Drawing.Point(6, 22);
-            this.label76.Name = "label76";
-            this.label76.Size = new System.Drawing.Size(71, 16);
-            this.label76.TabIndex = 149;
-            this.label76.Text = "输入信号";
-            // 
-            // label77
-            // 
-            this.label77.AutoSize = true;
-            this.label77.Font = new System.Drawing.Font("宋体", 12F);
-            this.label77.Location = new System.Drawing.Point(47, 25);
-            this.label77.Name = "label77";
-            this.label77.Size = new System.Drawing.Size(79, 16);
-            this.label77.TabIndex = 44;
-            this.label77.Text = "PLC接收区";
-            // 
             // label78
             // 
             this.label78.AutoSize = true;
@@ -2490,6 +2517,7 @@
             this.txt_SendHistory_1.Name = "txt_SendHistory_1";
             this.txt_SendHistory_1.Size = new System.Drawing.Size(107, 26);
             this.txt_SendHistory_1.TabIndex = 60;
+            this.txt_SendHistory_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_SendCutMark_1
             // 
@@ -2497,6 +2525,7 @@
             this.txt_SendCutMark_1.Name = "txt_SendCutMark_1";
             this.txt_SendCutMark_1.Size = new System.Drawing.Size(107, 26);
             this.txt_SendCutMark_1.TabIndex = 59;
+            this.txt_SendCutMark_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label79
             // 
@@ -2524,6 +2553,7 @@
             this.txt_SendAbnormalCode_1.Name = "txt_SendAbnormalCode_1";
             this.txt_SendAbnormalCode_1.Size = new System.Drawing.Size(107, 26);
             this.txt_SendAbnormalCode_1.TabIndex = 56;
+            this.txt_SendAbnormalCode_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_SendDataCount_1
             // 
@@ -2531,6 +2561,7 @@
             this.txt_SendDataCount_1.Name = "txt_SendDataCount_1";
             this.txt_SendDataCount_1.Size = new System.Drawing.Size(107, 26);
             this.txt_SendDataCount_1.TabIndex = 55;
+            this.txt_SendDataCount_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_SendBottleNum_1
             // 
@@ -2538,6 +2569,7 @@
             this.txt_SendBottleNum_1.Name = "txt_SendBottleNum_1";
             this.txt_SendBottleNum_1.Size = new System.Drawing.Size(107, 26);
             this.txt_SendBottleNum_1.TabIndex = 54;
+            this.txt_SendBottleNum_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label81
             // 
@@ -2575,6 +2607,7 @@
             this.txt_SendRequestSave_1.Name = "txt_SendRequestSave_1";
             this.txt_SendRequestSave_1.Size = new System.Drawing.Size(107, 26);
             this.txt_SendRequestSave_1.TabIndex = 50;
+            this.txt_SendRequestSave_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_SendRequest_1
             // 
@@ -2582,6 +2615,7 @@
             this.txt_SendRequest_1.Name = "txt_SendRequest_1";
             this.txt_SendRequest_1.Size = new System.Drawing.Size(107, 26);
             this.txt_SendRequest_1.TabIndex = 49;
+            this.txt_SendRequest_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_SendStatus_1
             // 
@@ -2589,6 +2623,7 @@
             this.txt_SendStatus_1.Name = "txt_SendStatus_1";
             this.txt_SendStatus_1.Size = new System.Drawing.Size(107, 26);
             this.txt_SendStatus_1.TabIndex = 48;
+            this.txt_SendStatus_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label84
             // 
@@ -2619,6 +2654,160 @@
             this.label86.Size = new System.Drawing.Size(87, 16);
             this.label86.TabIndex = 45;
             this.label86.Text = "1#工位状态";
+            // 
+            // label77
+            // 
+            this.label77.AutoSize = true;
+            this.label77.Font = new System.Drawing.Font("宋体", 12F);
+            this.label77.Location = new System.Drawing.Point(47, 25);
+            this.label77.Name = "label77";
+            this.label77.Size = new System.Drawing.Size(79, 16);
+            this.label77.TabIndex = 44;
+            this.label77.Text = "PLC接收区";
+            // 
+            // txt_RecBaseResult_1
+            // 
+            this.txt_RecBaseResult_1.Location = new System.Drawing.Point(149, 235);
+            this.txt_RecBaseResult_1.Name = "txt_RecBaseResult_1";
+            this.txt_RecBaseResult_1.Size = new System.Drawing.Size(107, 26);
+            this.txt_RecBaseResult_1.TabIndex = 43;
+            this.txt_RecBaseResult_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txt_RecExtraction_1
+            // 
+            this.txt_RecExtraction_1.Location = new System.Drawing.Point(149, 209);
+            this.txt_RecExtraction_1.Name = "txt_RecExtraction_1";
+            this.txt_RecExtraction_1.Size = new System.Drawing.Size(107, 26);
+            this.txt_RecExtraction_1.TabIndex = 42;
+            this.txt_RecExtraction_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label67
+            // 
+            this.label67.AutoSize = true;
+            this.label67.Font = new System.Drawing.Font("宋体", 12F);
+            this.label67.Location = new System.Drawing.Point(6, 241);
+            this.label67.Name = "label67";
+            this.label67.Size = new System.Drawing.Size(87, 16);
+            this.label67.TabIndex = 41;
+            this.label67.Text = "1#基线结果";
+            // 
+            // label68
+            // 
+            this.label68.AutoSize = true;
+            this.label68.Font = new System.Drawing.Font("宋体", 12F);
+            this.label68.Location = new System.Drawing.Point(6, 214);
+            this.label68.Name = "label68";
+            this.label68.Size = new System.Drawing.Size(119, 16);
+            this.label68.TabIndex = 40;
+            this.label68.Text = "1#正在针筒抽液";
+            // 
+            // txt_RecBaseMark_1
+            // 
+            this.txt_RecBaseMark_1.Location = new System.Drawing.Point(149, 183);
+            this.txt_RecBaseMark_1.Name = "txt_RecBaseMark_1";
+            this.txt_RecBaseMark_1.Size = new System.Drawing.Size(107, 26);
+            this.txt_RecBaseMark_1.TabIndex = 39;
+            this.txt_RecBaseMark_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txt_RecProcess_1
+            // 
+            this.txt_RecProcess_1.Location = new System.Drawing.Point(149, 157);
+            this.txt_RecProcess_1.Name = "txt_RecProcess_1";
+            this.txt_RecProcess_1.Size = new System.Drawing.Size(107, 26);
+            this.txt_RecProcess_1.TabIndex = 38;
+            this.txt_RecProcess_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txt_RecStopTimes_1
+            // 
+            this.txt_RecStopTimes_1.Location = new System.Drawing.Point(149, 131);
+            this.txt_RecStopTimes_1.Name = "txt_RecStopTimes_1";
+            this.txt_RecStopTimes_1.Size = new System.Drawing.Size(107, 26);
+            this.txt_RecStopTimes_1.TabIndex = 37;
+            this.txt_RecStopTimes_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label69
+            // 
+            this.label69.AutoSize = true;
+            this.label69.Font = new System.Drawing.Font("宋体", 12F);
+            this.label69.Location = new System.Drawing.Point(6, 187);
+            this.label69.Name = "label69";
+            this.label69.Size = new System.Drawing.Size(119, 16);
+            this.label69.TabIndex = 36;
+            this.label69.Text = "1#测基线标记位";
+            // 
+            // label70
+            // 
+            this.label70.AutoSize = true;
+            this.label70.Font = new System.Drawing.Font("宋体", 12F);
+            this.label70.Location = new System.Drawing.Point(6, 160);
+            this.label70.Name = "label70";
+            this.label70.Size = new System.Drawing.Size(87, 16);
+            this.label70.TabIndex = 35;
+            this.label70.Text = "1#收到工序";
+            // 
+            // label71
+            // 
+            this.label71.AutoSize = true;
+            this.label71.Font = new System.Drawing.Font("宋体", 12F);
+            this.label71.Location = new System.Drawing.Point(6, 133);
+            this.label71.Name = "label71";
+            this.label71.Size = new System.Drawing.Size(87, 16);
+            this.label71.TabIndex = 34;
+            this.label71.Text = "1#停止次数";
+            // 
+            // txt_RecSave_1
+            // 
+            this.txt_RecSave_1.Location = new System.Drawing.Point(149, 105);
+            this.txt_RecSave_1.Name = "txt_RecSave_1";
+            this.txt_RecSave_1.Size = new System.Drawing.Size(107, 26);
+            this.txt_RecSave_1.TabIndex = 33;
+            this.txt_RecSave_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txt_RecFinish_1
+            // 
+            this.txt_RecFinish_1.Location = new System.Drawing.Point(149, 79);
+            this.txt_RecFinish_1.Name = "txt_RecFinish_1";
+            this.txt_RecFinish_1.Size = new System.Drawing.Size(107, 26);
+            this.txt_RecFinish_1.TabIndex = 32;
+            this.txt_RecFinish_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txt_RecReady_1
+            // 
+            this.txt_RecReady_1.Location = new System.Drawing.Point(149, 53);
+            this.txt_RecReady_1.Name = "txt_RecReady_1";
+            this.txt_RecReady_1.Size = new System.Drawing.Size(107, 26);
+            this.txt_RecReady_1.TabIndex = 31;
+            this.txt_RecReady_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label72
+            // 
+            this.label72.AutoSize = true;
+            this.label72.Font = new System.Drawing.Font("宋体", 12F);
+            this.label72.Location = new System.Drawing.Point(6, 106);
+            this.label72.Name = "label72";
+            this.label72.Size = new System.Drawing.Size(119, 16);
+            this.label72.TabIndex = 30;
+            this.label72.Text = "1#数据保存完成";
+            // 
+            // label73
+            // 
+            this.label73.AutoSize = true;
+            this.label73.Font = new System.Drawing.Font("宋体", 12F);
+            this.label73.Location = new System.Drawing.Point(6, 79);
+            this.label73.Name = "label73";
+            this.label73.Size = new System.Drawing.Size(87, 16);
+            this.label73.TabIndex = 29;
+            this.label73.Text = "1#执行完成";
+            // 
+            // label74
+            // 
+            this.label74.AutoSize = true;
+            this.label74.Font = new System.Drawing.Font("宋体", 12F);
+            this.label74.Location = new System.Drawing.Point(6, 52);
+            this.label74.Name = "label74";
+            this.label74.Size = new System.Drawing.Size(135, 16);
+            this.label74.TabIndex = 28;
+            this.label74.Text = "1#启动/停止/准备";
             // 
             // groupBox6
             // 
@@ -2680,6 +2869,7 @@
             this.txt_SendHistory_3.Name = "txt_SendHistory_3";
             this.txt_SendHistory_3.Size = new System.Drawing.Size(107, 26);
             this.txt_SendHistory_3.TabIndex = 60;
+            this.txt_SendHistory_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_SendCutMark_3
             // 
@@ -2687,6 +2877,7 @@
             this.txt_SendCutMark_3.Name = "txt_SendCutMark_3";
             this.txt_SendCutMark_3.Size = new System.Drawing.Size(107, 26);
             this.txt_SendCutMark_3.TabIndex = 59;
+            this.txt_SendCutMark_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label88
             // 
@@ -2714,6 +2905,7 @@
             this.txt_SendAbnormalCode_3.Name = "txt_SendAbnormalCode_3";
             this.txt_SendAbnormalCode_3.Size = new System.Drawing.Size(107, 26);
             this.txt_SendAbnormalCode_3.TabIndex = 56;
+            this.txt_SendAbnormalCode_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_SendDataCount_3
             // 
@@ -2721,6 +2913,7 @@
             this.txt_SendDataCount_3.Name = "txt_SendDataCount_3";
             this.txt_SendDataCount_3.Size = new System.Drawing.Size(107, 26);
             this.txt_SendDataCount_3.TabIndex = 55;
+            this.txt_SendDataCount_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_SendBottleNum_3
             // 
@@ -2728,6 +2921,7 @@
             this.txt_SendBottleNum_3.Name = "txt_SendBottleNum_3";
             this.txt_SendBottleNum_3.Size = new System.Drawing.Size(107, 26);
             this.txt_SendBottleNum_3.TabIndex = 54;
+            this.txt_SendBottleNum_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label90
             // 
@@ -2765,6 +2959,7 @@
             this.txt_SendRequestSave_3.Name = "txt_SendRequestSave_3";
             this.txt_SendRequestSave_3.Size = new System.Drawing.Size(107, 26);
             this.txt_SendRequestSave_3.TabIndex = 50;
+            this.txt_SendRequestSave_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_SendRequest_3
             // 
@@ -2772,6 +2967,7 @@
             this.txt_SendRequest_3.Name = "txt_SendRequest_3";
             this.txt_SendRequest_3.Size = new System.Drawing.Size(107, 26);
             this.txt_SendRequest_3.TabIndex = 49;
+            this.txt_SendRequest_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_SendStatus_3
             // 
@@ -2779,6 +2975,7 @@
             this.txt_SendStatus_3.Name = "txt_SendStatus_3";
             this.txt_SendStatus_3.Size = new System.Drawing.Size(107, 26);
             this.txt_SendStatus_3.TabIndex = 48;
+            this.txt_SendStatus_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label93
             // 
@@ -2826,6 +3023,7 @@
             this.txt_RecBaseResult_3.Name = "txt_RecBaseResult_3";
             this.txt_RecBaseResult_3.Size = new System.Drawing.Size(107, 26);
             this.txt_RecBaseResult_3.TabIndex = 43;
+            this.txt_RecBaseResult_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_RecExtraction_3
             // 
@@ -2833,6 +3031,7 @@
             this.txt_RecExtraction_3.Name = "txt_RecExtraction_3";
             this.txt_RecExtraction_3.Size = new System.Drawing.Size(107, 26);
             this.txt_RecExtraction_3.TabIndex = 42;
+            this.txt_RecExtraction_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label97
             // 
@@ -2860,6 +3059,7 @@
             this.txt_RecBaseMark_3.Name = "txt_RecBaseMark_3";
             this.txt_RecBaseMark_3.Size = new System.Drawing.Size(107, 26);
             this.txt_RecBaseMark_3.TabIndex = 39;
+            this.txt_RecBaseMark_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_RecProcess_3
             // 
@@ -2867,6 +3067,7 @@
             this.txt_RecProcess_3.Name = "txt_RecProcess_3";
             this.txt_RecProcess_3.Size = new System.Drawing.Size(107, 26);
             this.txt_RecProcess_3.TabIndex = 38;
+            this.txt_RecProcess_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_RecStopTimes_3
             // 
@@ -2874,6 +3075,7 @@
             this.txt_RecStopTimes_3.Name = "txt_RecStopTimes_3";
             this.txt_RecStopTimes_3.Size = new System.Drawing.Size(107, 26);
             this.txt_RecStopTimes_3.TabIndex = 37;
+            this.txt_RecStopTimes_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label99
             // 
@@ -2911,6 +3113,7 @@
             this.txt_RecSave_3.Name = "txt_RecSave_3";
             this.txt_RecSave_3.Size = new System.Drawing.Size(107, 26);
             this.txt_RecSave_3.TabIndex = 33;
+            this.txt_RecSave_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_RecFinish_3
             // 
@@ -2918,6 +3121,7 @@
             this.txt_RecFinish_3.Name = "txt_RecFinish_3";
             this.txt_RecFinish_3.Size = new System.Drawing.Size(107, 26);
             this.txt_RecFinish_3.TabIndex = 32;
+            this.txt_RecFinish_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_RecReady_3
             // 
@@ -2925,6 +3129,7 @@
             this.txt_RecReady_3.Name = "txt_RecReady_3";
             this.txt_RecReady_3.Size = new System.Drawing.Size(107, 26);
             this.txt_RecReady_3.TabIndex = 31;
+            this.txt_RecReady_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label102
             // 
@@ -3017,6 +3222,7 @@
             this.txt_SendHistory_4.Name = "txt_SendHistory_4";
             this.txt_SendHistory_4.Size = new System.Drawing.Size(107, 26);
             this.txt_SendHistory_4.TabIndex = 60;
+            this.txt_SendHistory_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_SendCutMark_4
             // 
@@ -3024,6 +3230,7 @@
             this.txt_SendCutMark_4.Name = "txt_SendCutMark_4";
             this.txt_SendCutMark_4.Size = new System.Drawing.Size(107, 26);
             this.txt_SendCutMark_4.TabIndex = 59;
+            this.txt_SendCutMark_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label106
             // 
@@ -3051,6 +3258,7 @@
             this.txt_SendAbnormalCode_4.Name = "txt_SendAbnormalCode_4";
             this.txt_SendAbnormalCode_4.Size = new System.Drawing.Size(107, 26);
             this.txt_SendAbnormalCode_4.TabIndex = 56;
+            this.txt_SendAbnormalCode_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_SendDataCount_4
             // 
@@ -3058,6 +3266,7 @@
             this.txt_SendDataCount_4.Name = "txt_SendDataCount_4";
             this.txt_SendDataCount_4.Size = new System.Drawing.Size(107, 26);
             this.txt_SendDataCount_4.TabIndex = 55;
+            this.txt_SendDataCount_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_SendBottleNum_4
             // 
@@ -3065,6 +3274,7 @@
             this.txt_SendBottleNum_4.Name = "txt_SendBottleNum_4";
             this.txt_SendBottleNum_4.Size = new System.Drawing.Size(107, 26);
             this.txt_SendBottleNum_4.TabIndex = 54;
+            this.txt_SendBottleNum_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label108
             // 
@@ -3102,6 +3312,7 @@
             this.txt_SendRequestSave_4.Name = "txt_SendRequestSave_4";
             this.txt_SendRequestSave_4.Size = new System.Drawing.Size(107, 26);
             this.txt_SendRequestSave_4.TabIndex = 50;
+            this.txt_SendRequestSave_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_SendRequest_4
             // 
@@ -3109,6 +3320,7 @@
             this.txt_SendRequest_4.Name = "txt_SendRequest_4";
             this.txt_SendRequest_4.Size = new System.Drawing.Size(107, 26);
             this.txt_SendRequest_4.TabIndex = 49;
+            this.txt_SendRequest_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_SendStatus_4
             // 
@@ -3116,6 +3328,7 @@
             this.txt_SendStatus_4.Name = "txt_SendStatus_4";
             this.txt_SendStatus_4.Size = new System.Drawing.Size(107, 26);
             this.txt_SendStatus_4.TabIndex = 48;
+            this.txt_SendStatus_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label111
             // 
@@ -3163,6 +3376,7 @@
             this.txt_RecBaseResult_4.Name = "txt_RecBaseResult_4";
             this.txt_RecBaseResult_4.Size = new System.Drawing.Size(107, 26);
             this.txt_RecBaseResult_4.TabIndex = 43;
+            this.txt_RecBaseResult_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_RecExtraction_4
             // 
@@ -3170,6 +3384,7 @@
             this.txt_RecExtraction_4.Name = "txt_RecExtraction_4";
             this.txt_RecExtraction_4.Size = new System.Drawing.Size(107, 26);
             this.txt_RecExtraction_4.TabIndex = 42;
+            this.txt_RecExtraction_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label115
             // 
@@ -3197,6 +3412,7 @@
             this.txt_RecBaseMark_4.Name = "txt_RecBaseMark_4";
             this.txt_RecBaseMark_4.Size = new System.Drawing.Size(107, 26);
             this.txt_RecBaseMark_4.TabIndex = 39;
+            this.txt_RecBaseMark_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_RecProcess_4
             // 
@@ -3204,6 +3420,7 @@
             this.txt_RecProcess_4.Name = "txt_RecProcess_4";
             this.txt_RecProcess_4.Size = new System.Drawing.Size(107, 26);
             this.txt_RecProcess_4.TabIndex = 38;
+            this.txt_RecProcess_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_RecStopTimes_4
             // 
@@ -3211,6 +3428,7 @@
             this.txt_RecStopTimes_4.Name = "txt_RecStopTimes_4";
             this.txt_RecStopTimes_4.Size = new System.Drawing.Size(107, 26);
             this.txt_RecStopTimes_4.TabIndex = 37;
+            this.txt_RecStopTimes_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label117
             // 
@@ -3248,6 +3466,7 @@
             this.txt_RecSave_4.Name = "txt_RecSave_4";
             this.txt_RecSave_4.Size = new System.Drawing.Size(107, 26);
             this.txt_RecSave_4.TabIndex = 33;
+            this.txt_RecSave_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_RecFinish_4
             // 
@@ -3255,6 +3474,7 @@
             this.txt_RecFinish_4.Name = "txt_RecFinish_4";
             this.txt_RecFinish_4.Size = new System.Drawing.Size(107, 26);
             this.txt_RecFinish_4.TabIndex = 32;
+            this.txt_RecFinish_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_RecReady_4
             // 
@@ -3262,6 +3482,7 @@
             this.txt_RecReady_4.Name = "txt_RecReady_4";
             this.txt_RecReady_4.Size = new System.Drawing.Size(107, 26);
             this.txt_RecReady_4.TabIndex = 31;
+            this.txt_RecReady_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label120
             // 
@@ -3353,6 +3574,7 @@
             this.txt_SendHistory_2.Name = "txt_SendHistory_2";
             this.txt_SendHistory_2.Size = new System.Drawing.Size(107, 26);
             this.txt_SendHistory_2.TabIndex = 60;
+            this.txt_SendHistory_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_SendCutMark_2
             // 
@@ -3360,6 +3582,7 @@
             this.txt_SendCutMark_2.Name = "txt_SendCutMark_2";
             this.txt_SendCutMark_2.Size = new System.Drawing.Size(107, 26);
             this.txt_SendCutMark_2.TabIndex = 59;
+            this.txt_SendCutMark_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label124
             // 
@@ -3387,6 +3610,7 @@
             this.txt_SendAbnormalCode_2.Name = "txt_SendAbnormalCode_2";
             this.txt_SendAbnormalCode_2.Size = new System.Drawing.Size(107, 26);
             this.txt_SendAbnormalCode_2.TabIndex = 56;
+            this.txt_SendAbnormalCode_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_SendDataCount_2
             // 
@@ -3394,6 +3618,7 @@
             this.txt_SendDataCount_2.Name = "txt_SendDataCount_2";
             this.txt_SendDataCount_2.Size = new System.Drawing.Size(107, 26);
             this.txt_SendDataCount_2.TabIndex = 55;
+            this.txt_SendDataCount_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_SendBottleNum_2
             // 
@@ -3401,6 +3626,7 @@
             this.txt_SendBottleNum_2.Name = "txt_SendBottleNum_2";
             this.txt_SendBottleNum_2.Size = new System.Drawing.Size(107, 26);
             this.txt_SendBottleNum_2.TabIndex = 54;
+            this.txt_SendBottleNum_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label126
             // 
@@ -3438,6 +3664,7 @@
             this.txt_SendRequestSave_2.Name = "txt_SendRequestSave_2";
             this.txt_SendRequestSave_2.Size = new System.Drawing.Size(107, 26);
             this.txt_SendRequestSave_2.TabIndex = 50;
+            this.txt_SendRequestSave_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_SendRequest_2
             // 
@@ -3445,6 +3672,7 @@
             this.txt_SendRequest_2.Name = "txt_SendRequest_2";
             this.txt_SendRequest_2.Size = new System.Drawing.Size(107, 26);
             this.txt_SendRequest_2.TabIndex = 49;
+            this.txt_SendRequest_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_SendStatus_2
             // 
@@ -3452,6 +3680,7 @@
             this.txt_SendStatus_2.Name = "txt_SendStatus_2";
             this.txt_SendStatus_2.Size = new System.Drawing.Size(107, 26);
             this.txt_SendStatus_2.TabIndex = 48;
+            this.txt_SendStatus_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label129
             // 
@@ -3499,6 +3728,7 @@
             this.txt_RecBaseResult_2.Name = "txt_RecBaseResult_2";
             this.txt_RecBaseResult_2.Size = new System.Drawing.Size(107, 26);
             this.txt_RecBaseResult_2.TabIndex = 43;
+            this.txt_RecBaseResult_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_RecExtraction_2
             // 
@@ -3506,6 +3736,7 @@
             this.txt_RecExtraction_2.Name = "txt_RecExtraction_2";
             this.txt_RecExtraction_2.Size = new System.Drawing.Size(107, 26);
             this.txt_RecExtraction_2.TabIndex = 42;
+            this.txt_RecExtraction_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label133
             // 
@@ -3533,6 +3764,7 @@
             this.txt_RecBaseMark_2.Name = "txt_RecBaseMark_2";
             this.txt_RecBaseMark_2.Size = new System.Drawing.Size(107, 26);
             this.txt_RecBaseMark_2.TabIndex = 39;
+            this.txt_RecBaseMark_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_RecProcess_2
             // 
@@ -3540,6 +3772,7 @@
             this.txt_RecProcess_2.Name = "txt_RecProcess_2";
             this.txt_RecProcess_2.Size = new System.Drawing.Size(107, 26);
             this.txt_RecProcess_2.TabIndex = 38;
+            this.txt_RecProcess_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_RecStopTimes_2
             // 
@@ -3547,6 +3780,7 @@
             this.txt_RecStopTimes_2.Name = "txt_RecStopTimes_2";
             this.txt_RecStopTimes_2.Size = new System.Drawing.Size(107, 26);
             this.txt_RecStopTimes_2.TabIndex = 37;
+            this.txt_RecStopTimes_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label135
             // 
@@ -3584,6 +3818,7 @@
             this.txt_RecSave_2.Name = "txt_RecSave_2";
             this.txt_RecSave_2.Size = new System.Drawing.Size(107, 26);
             this.txt_RecSave_2.TabIndex = 33;
+            this.txt_RecSave_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_RecFinish_2
             // 
@@ -3591,6 +3826,7 @@
             this.txt_RecFinish_2.Name = "txt_RecFinish_2";
             this.txt_RecFinish_2.Size = new System.Drawing.Size(107, 26);
             this.txt_RecFinish_2.TabIndex = 32;
+            this.txt_RecFinish_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txt_RecReady_2
             // 
@@ -3598,6 +3834,7 @@
             this.txt_RecReady_2.Name = "txt_RecReady_2";
             this.txt_RecReady_2.Size = new System.Drawing.Size(107, 26);
             this.txt_RecReady_2.TabIndex = 31;
+            this.txt_RecReady_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label138
             // 
@@ -3628,6 +3865,101 @@
             this.label140.Size = new System.Drawing.Size(135, 16);
             this.label140.TabIndex = 28;
             this.label140.Text = "2#启动/停止/准备";
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // txt_4
+            // 
+            this.txt_4.Location = new System.Drawing.Point(360, 149);
+            this.txt_4.Name = "txt_4";
+            this.txt_4.Size = new System.Drawing.Size(87, 26);
+            this.txt_4.TabIndex = 121;
+            this.txt_4.Text = "400";
+            this.txt_4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txt_3
+            // 
+            this.txt_3.Location = new System.Drawing.Point(360, 114);
+            this.txt_3.Name = "txt_3";
+            this.txt_3.Size = new System.Drawing.Size(87, 26);
+            this.txt_3.TabIndex = 120;
+            this.txt_3.Text = "400";
+            this.txt_3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txt_2
+            // 
+            this.txt_2.Location = new System.Drawing.Point(360, 77);
+            this.txt_2.Name = "txt_2";
+            this.txt_2.Size = new System.Drawing.Size(87, 26);
+            this.txt_2.TabIndex = 119;
+            this.txt_2.Text = "400";
+            this.txt_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txt_1
+            // 
+            this.txt_1.Location = new System.Drawing.Point(360, 42);
+            this.txt_1.Name = "txt_1";
+            this.txt_1.Size = new System.Drawing.Size(87, 26);
+            this.txt_1.TabIndex = 118;
+            this.txt_1.Text = "400";
+            this.txt_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label141
+            // 
+            this.label141.AutoSize = true;
+            this.label141.Font = new System.Drawing.Font("宋体", 12F);
+            this.label141.Location = new System.Drawing.Point(368, 20);
+            this.label141.Name = "label141";
+            this.label141.Size = new System.Drawing.Size(71, 16);
+            this.label141.TabIndex = 150;
+            this.label141.Text = "搅拌速度";
+            // 
+            // label142
+            // 
+            this.label142.AutoSize = true;
+            this.label142.Font = new System.Drawing.Font("宋体", 12F);
+            this.label142.Location = new System.Drawing.Point(457, 20);
+            this.label142.Name = "label142";
+            this.label142.Size = new System.Drawing.Size(55, 16);
+            this.label142.TabIndex = 151;
+            this.label142.Text = "电流值";
+            // 
+            // Btn_Extend2
+            // 
+            this.Btn_Extend2.Font = new System.Drawing.Font("宋体", 12F);
+            this.Btn_Extend2.Location = new System.Drawing.Point(146, 183);
+            this.Btn_Extend2.Name = "Btn_Extend2";
+            this.Btn_Extend2.Size = new System.Drawing.Size(121, 29);
+            this.Btn_Extend2.TabIndex = 153;
+            this.Btn_Extend2.Text = "2#气缸伸出";
+            this.Btn_Extend2.UseVisualStyleBackColor = true;
+            this.Btn_Extend2.Click += new System.EventHandler(this.Btn_Extend2_Click);
+            // 
+            // Btn_Extend1
+            // 
+            this.Btn_Extend1.Font = new System.Drawing.Font("宋体", 12F);
+            this.Btn_Extend1.Location = new System.Drawing.Point(9, 183);
+            this.Btn_Extend1.Name = "Btn_Extend1";
+            this.Btn_Extend1.Size = new System.Drawing.Size(121, 29);
+            this.Btn_Extend1.TabIndex = 152;
+            this.Btn_Extend1.Text = "1#气缸伸出";
+            this.Btn_Extend1.UseVisualStyleBackColor = true;
+            this.Btn_Extend1.Click += new System.EventHandler(this.Btn_Extend1_Click);
+            // 
+            // Btn_Total
+            // 
+            this.Btn_Total.Font = new System.Drawing.Font("宋体", 12F);
+            this.Btn_Total.Location = new System.Drawing.Point(273, 183);
+            this.Btn_Total.Name = "Btn_Total";
+            this.Btn_Total.Size = new System.Drawing.Size(121, 29);
+            this.Btn_Total.TabIndex = 154;
+            this.Btn_Total.Text = "总排水阀";
+            this.Btn_Total.UseVisualStyleBackColor = true;
+            this.Btn_Total.Click += new System.EventHandler(this.Btn_Total_Click);
             // 
             // AbsHMIMain
             // 
@@ -3991,5 +4323,23 @@
         private System.Windows.Forms.Label label138;
         private System.Windows.Forms.Label label139;
         private System.Windows.Forms.Label label140;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.CheckBox chk_InPut_Two;
+        private System.Windows.Forms.CheckBox chk_InPut_One;
+        private System.Windows.Forms.CheckBox chk_OutPut_Two;
+        private System.Windows.Forms.CheckBox chk_OutPut_One;
+        private System.Windows.Forms.CheckBox chk_OutPut_Stir_4;
+        private System.Windows.Forms.CheckBox chk_OutPut_Stir_3;
+        private System.Windows.Forms.CheckBox chk_OutPut_Stir_2;
+        private System.Windows.Forms.CheckBox chk_OutPut_Stir_1;
+        private System.Windows.Forms.Label label142;
+        private System.Windows.Forms.Label label141;
+        private System.Windows.Forms.TextBox txt_4;
+        private System.Windows.Forms.TextBox txt_3;
+        private System.Windows.Forms.TextBox txt_2;
+        private System.Windows.Forms.TextBox txt_1;
+        private System.Windows.Forms.Button Btn_Extend2;
+        private System.Windows.Forms.Button Btn_Extend1;
+        private System.Windows.Forms.Button Btn_Total;
     }
 }

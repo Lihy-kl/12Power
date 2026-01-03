@@ -168,6 +168,8 @@ namespace SmartDyeing.FADM_Auto
                 FADM_Object.Communal.WriteMachineStatus(7);
                 int i_mRes = 0;
 
+
+
                 MyModbusFun.SetBatchStart();
 
                 //判断染色线程是否需要用机械手
@@ -175,7 +177,6 @@ namespace SmartDyeing.FADM_Auto
                 {
                     FADM_Object.Communal.WriteDripWait(true);
                     Communal._b_isWaitDrip = true;
-                    Communal._b_isAllowDrip = true;
                     while (true)
                     {
                         if (false == FADM_Object.Communal.ReadDripWait())
@@ -195,10 +196,14 @@ namespace SmartDyeing.FADM_Auto
 
                     DataTable dt_drop_head = FADM_Object.Communal._fadmSqlserver.GetData(
                        "SELECT * FROM abs_drop_head WHERE BatchName = '" + o_BatchName + "' AND CupFinish = 0    ORDER BY CupNum;");
-
+                    FADM_Object.Communal._b_use[0] = false;
+                    FADM_Object.Communal._b_use[1] = false;
+                    FADM_Object.Communal._b_use[2] = false;
+                    FADM_Object.Communal._b_use[3] = false;
                     foreach (DataRow dataRow in dt_drop_head.Rows)
                     {
                         int i_cupNum = Convert.ToInt16(dataRow["CupNum"]);
+                        FADM_Object.Communal._b_use[i_cupNum-1] = true;
                         //写入当前杯号的配方代码和染固色工艺
                         FADM_Object.Communal._fadmSqlserver.ReviseData(
                             "UPDATE abs_cup_details SET  Statues = '检查待机状态'  WHERE CupNum = " + i_cupNum + ";");
@@ -217,7 +222,8 @@ namespace SmartDyeing.FADM_Auto
                             goto label1;
                         }
                     }
-
+                    //洗杯杯号
+                    List<int> lis_iWash = new List<int>();
                     //判断杯子历史状态
                     List<int> lis_iUse = new List<int>();
                     foreach (DataRow dataRow in dt_drop_head.Rows)
@@ -229,6 +235,8 @@ namespace SmartDyeing.FADM_Auto
 
                         if (0 != i_state)
                         {
+                            if (!lis_iWash.Contains(i_cupNum))
+                                lis_iWash.Add(i_cupNum);
                             //发送洗杯
                             if (FADM_Object.Communal._b_absErr)
                             {
@@ -250,9 +258,13 @@ namespace SmartDyeing.FADM_Auto
                             int[] values1 = new int[1];
                             values1[0] = 2;
                             if (i_cupNum == 1)
-                                FADM_Object.Communal._tcpModBusAbs.Write(800, values1);
-                            else
-                                FADM_Object.Communal._tcpModBusAbs.Write(810, values1);
+                                FADM_Object.Communal._tcpModBusAbs.Write(13088, values1);
+                            else if (i_cupNum == 2)
+                                FADM_Object.Communal._tcpModBusAbs.Write(13098, values1);
+                            else if (i_cupNum == 3)
+                                FADM_Object.Communal._tcpModBusAbs.Write(13108, values1);
+                            else if (i_cupNum == 4)
+                                FADM_Object.Communal._tcpModBusAbs.Write(13118, values1);
 
                             //判断待机后再发洗杯
                             while (true)
@@ -261,52 +273,14 @@ namespace SmartDyeing.FADM_Auto
                                     break;
                             }
 
-                            //发送启动
-                            int[] values2 = new int[5];
-                            values2[0] = 1;
-                            values2[1] = 0;
-                            values2[2] = 0;
-                            values2[3] = 0;
-                            values2[4] = 3;
-                            if (!FADM_Object.Communal._tcpModBusAbs._b_Connect)
-                            {
-                                FADM_Object.Communal._tcpModBusAbs.ReConnect();
-                            }
-
-                            //写入测量数据
-                            int d_1 = 0;
-                            d_1 = Convert.ToInt32(FADM_Object.Communal._d_abs_total * 1000 * 2) / 65536;
-                            int i_d_11 = Convert.ToInt32(FADM_Object.Communal._d_abs_total * 1000 * 2) % 65536;
-
-                            int d_2 = 0;
-                            d_2 = (Convert.ToInt32(Lib_Card.Configure.Parameter.Other_AbsAddWater * 1000) + 10000) / 65536;
-                            int i_d_22 = (Convert.ToInt32(Lib_Card.Configure.Parameter.Other_AbsAddWater * 1000) + 10000) % 65536;
-
-                            int d_3 = 0;
-                            d_3 = Lib_Card.Configure.Parameter.Other_WashStirTime / 65536;
-                            int i_d_33 = Lib_Card.Configure.Parameter.Other_WashStirTime % 65536;
-
-                            int d_4 = 0;
-                            d_4 = Lib_Card.Configure.Parameter.Other_StirTime / 65536;
-                            int i_d_44 = Lib_Card.Configure.Parameter.Other_StirTime % 65536;
-
-                            int d_5 = 0;
-                            d_5 = Lib_Card.Configure.Parameter.Other_AspirationTime / 65536;
-                            int i_d_55 = Lib_Card.Configure.Parameter.Other_AspirationTime % 65536;
-
-                            int[] ia_array = new int[] { i_d_11, d_1, i_d_22, d_2, i_d_33, d_3 };
-                            if (i_cupNum == 1)
-                                FADM_Object.Communal._tcpModBusAbs.Write(1010, ia_array);
-                            else
-                                FADM_Object.Communal._tcpModBusAbs.Write(1060, ia_array);
-
-                            if (i_cupNum == 1)
-                                FADM_Object.Communal._tcpModBusAbs.Write(800, values2);
-                            else
-                                FADM_Object.Communal._tcpModBusAbs.Write(810, values2);
+                            
 
                             string s_sql1 = "UPDATE abs_cup_details SET Statues='洗杯',IsUsing = 1,Type=0  WHERE CupNum = " + i_cupNum + " ;";
                             FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql1);
+
+                            SmartDyeing.FADM_Auto.MyAbsorbance.Generate(2, i_cupNum);
+                            SmartDyeing.FADM_Auto.MyAbsorbance.SendData(i_cupNum);
+
                             //释放机械手
                             FADM_Object.Communal.WriteDripWait(true);
 
@@ -320,7 +294,33 @@ namespace SmartDyeing.FADM_Auto
                     
                     while(true)
                     {
-                        if (MyAbsorbance._abs_Temps[0]._s_currentState == "1")
+                        if (lis_iWash.Contains(1))
+                        {
+                            if (MyAbsorbance._abs_Temps[0]._s_currentState == "1")
+                            {
+                                //判断是否整个洗杯流程完成
+                                string s_sql = "SELECT *  FROM Abs_details where CupNum = " + 1 + " And Finish = 0 order by StepNum;";
+
+                                DataTable dt_temp = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+
+                                if (dt_temp.Rows.Count == 0)
+                                    lis_iWash.Remove(1);
+                            }
+                        }
+                        else if (lis_iWash.Contains(3))
+                        {
+                            if (MyAbsorbance._abs_Temps[2]._s_currentState == "1")
+                            {
+                                //判断是否整个洗杯流程完成
+                                string s_sql = "SELECT *  FROM Abs_details where CupNum = " + 3 + " And Finish = 0 order by StepNum;";
+
+                                DataTable dt_temp = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+
+                                if (dt_temp.Rows.Count == 0)
+                                    lis_iWash.Remove(3);
+                            }
+                        }
+                        if (lis_iWash.Count == 0)
                             break;
                         Thread.Sleep(1000);
                     }
@@ -331,54 +331,38 @@ namespace SmartDyeing.FADM_Auto
                     foreach (DataRow dataRow in dt_drop_head.Rows)
                     {
                         int i_cupNum = Convert.ToInt16(dataRow["CupNum"]);
-
-                        //发送启动
-                        int[] values2 = new int[6];
-                        values2[0] = 1;
-                        values2[1] = 0;
-                        values2[2] = 0;
-                        values2[3] = 0;
-                        values2[4] = 5;
-                        if (!FADM_Object.Communal._tcpModBusAbs._b_Connect)
-                        {
-                            FADM_Object.Communal._tcpModBusAbs.ReConnect();
-                        }
-
-                        //写入测量数据
-                        
-
-                        int d_4 = 0;
-                        d_4 = Lib_Card.Configure.Parameter.Other_StirTime / 65536;
-                        int i_d_44 = Lib_Card.Configure.Parameter.Other_StirTime % 65536;
-
-                        
-
-                        int[] ia_array = new int[] { i_d_44, d_4 };
-                        if (i_cupNum == 1)
-                            FADM_Object.Communal._tcpModBusAbs.Write(1006, ia_array);
-                        else
-                            FADM_Object.Communal._tcpModBusAbs.Write(1056, ia_array);
-
-                        if (i_cupNum == 1)
-                            FADM_Object.Communal._tcpModBusAbs.Write(800, values2);
-                        else
-                            FADM_Object.Communal._tcpModBusAbs.Write(810, values2);
-
+                        //配液
+                        SmartDyeing.FADM_Auto.MyAbsorbance.Generate(3, i_cupNum);
+                        SmartDyeing.FADM_Auto.MyAbsorbance.SendData(i_cupNum);
                     }
 
-
-                    //等待准备状态
-                    while (true)
+                    if (FADM_Object.Communal._b_use[0])
                     {
+                        //等待准备状态
+                        while (true)
+                        {
+                            //判断两个杯是否都可以注液
+                            if (MyAbsorbance._abs_Temps[0]._s_request == "4")
+                                break;
 
-                        if (MyAbsorbance._abs_Temps[0]._s_request == "4")
-                            break;
+                            Thread.Sleep(1000);
+                        }
+                    }
+                    if (FADM_Object.Communal._b_use[2])
+                    {
+                        //等待准备状态
+                        while (true)
+                        {
+                            //判断两个杯是否都可以注液
+                            if (MyAbsorbance._abs_Temps[2]._s_request == "4")
+                                break;
 
-                        Thread.Sleep(1000);
+                            Thread.Sleep(1000);
+                        }
                     }
 
-                    FADM_Object.Communal._fadmSqlserver.ReviseData(
-                             "UPDATE abs_cup_details SET Statues = '运行中' WHERE CupNum = " + 1 + ";");
+                    //FADM_Object.Communal._fadmSqlserver.ReviseData(
+                    //         "UPDATE abs_cup_details SET Statues = '运行中' WHERE CupNum = " + 1 + ";");
 
                 }
 
@@ -386,6 +370,7 @@ namespace SmartDyeing.FADM_Auto
                 string s_homeErr = "";
 
                 MyModbusFun.Reset();
+
 
                 this.DripProcess(o_BatchName);
 
@@ -416,81 +401,162 @@ namespace SmartDyeing.FADM_Auto
                 FADM_Object.Communal.WriteMachineStatus(0);
                 _i_dripType = 0;
 
-                //插入到虚拟瓶号中，瓶号为999，插入助剂编号为ABS999
-                FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from assistant_details where AssistantCode = 'ABS999'");
-
-                List<string> lis_data = new List<string>();
-                lis_data.Add("ABS999");
-                lis_data.Add("ABS999"); 
-                lis_data.Add("混合液");
-                lis_data.Add("其他染料");
-                lis_data.Add("%");
-                lis_data.Add("0");
-                lis_data.Add("0");
-                lis_data.Add("24");
-                lis_data.Add("0");
-                lis_data.Add("0");
-                //如果是新增
-                string s_sql = "INSERT INTO assistant_details" +
-                                   " (AssistantCode, AssistantBarCode, AssistantName, AssistantType, UnitOfAccount," +
-                                   " AllowMinColoringConcentration, AllowMaxColoringConcentration, TermOfValidity," +
-                                   " Intensity, Cost) VALUES('" + lis_data[0] + "','" + lis_data[1] + "','" + lis_data[2] + "'," +
-                                   "'" + lis_data[3] + "','" + lis_data[4] + "','" + lis_data[5] + "','" + lis_data[6] + "'," +
-                                   "'" + lis_data[7] + "','" + lis_data[8] + "','" + lis_data[9] + "');";
-                FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
-
-                lis_data.Clear();
-                lis_data.Add("999"); 
-                lis_data.Add("ABS999");
-                lis_data.Add(FADM_Object.Communal._d_abs_mixture.ToString("f6"));//设定浓度
-                lis_data.Add("500");//当前液量
-                lis_data.Add("小针筒");//针筒类型
-                lis_data.Add("0.1");//当前液量
-                lis_data.Add("其他");//开料流程
-                lis_data.Add("0");//原瓶号
-                lis_data.Add("1000");//
-                lis_data.Add(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"));//开料日期
-                lis_data.Add(FADM_Object.Communal._d_abs_mixture.ToString("f6"));//实际浓度
-                FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from bottle_details where BottleNum = 999");
-
-                //如果是新增
-                s_sql = "INSERT INTO bottle_details (" +
-                            " BottleNum, AssistantCode, SettingConcentration," +
-                            " CurrentWeight, SyringeType, DropMinWeight," +
-                            " BrewingCode, OriginalBottleNum, AllowMaxWeight," +
-                            " BrewingData, RealConcentration) VALUES( '" + lis_data[0] + "'," +
-                            " '" + lis_data[1] + "','" + lis_data[2] + "'," +
-                            " '" + lis_data[3] + "','" + lis_data[4] + "'," +
-                            " '" + lis_data[5] + "','" + lis_data[6] + "'," +
-                            " '" + lis_data[7] + "','" + lis_data[8] + "'," +
-                            "'" + lis_data[9] + "','" + lis_data[10] + "');";
-                FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
-
-                FADM_Object.Communal._fadmSqlserver.ReviseData(
-                        "INSERT INTO abs_wait_list(BottleNum, InsertDate,Type) VALUES('" + 999 + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
-
-                //插入到ABS测量等待列表第一条记录
-
-
-                //复位请求
-                int[] values = new int[1];
-                values[0] = 0;
-                if (!FADM_Object.Communal._tcpModBusAbs._b_Connect)
+                if (FADM_Object.Communal._b_use[0])
                 {
-                    FADM_Object.Communal._tcpModBusAbs.ReConnect();
+                    //插入到虚拟瓶号中，瓶号为888，插入助剂编号为ABS888
+                    FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from assistant_details where AssistantCode = 'ABS888'");
+
+                    List<string> lis_data = new List<string>();
+                    lis_data.Add("ABS888");
+                    lis_data.Add(o_BatchName.ToString());//批次号保存进去
+                    lis_data.Add("1");//杯号保存进去
+                    lis_data.Add("其他染料");
+                    lis_data.Add("%");
+                    lis_data.Add("0");
+                    lis_data.Add("0");
+                    lis_data.Add("24");
+                    lis_data.Add("0");
+                    lis_data.Add("0");
+                    //如果是新增
+                    string s_sql = "INSERT INTO assistant_details" +
+                                       " (AssistantCode, AssistantBarCode, AssistantName, AssistantType, UnitOfAccount," +
+                                       " AllowMinColoringConcentration, AllowMaxColoringConcentration, TermOfValidity," +
+                                       " Intensity, Cost) VALUES('" + lis_data[0] + "','" + lis_data[1] + "','" + lis_data[2] + "'," +
+                                       "'" + lis_data[3] + "','" + lis_data[4] + "','" + lis_data[5] + "','" + lis_data[6] + "'," +
+                                       "'" + lis_data[7] + "','" + lis_data[8] + "','" + lis_data[9] + "');";
+                    FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
+
+                    lis_data.Clear();
+                    lis_data.Add("888");
+                    lis_data.Add("ABS888");
+                    lis_data.Add(FADM_Object.Communal._d_abs_mixture.ToString("f6"));//设定浓度
+                    lis_data.Add("500");//当前液量
+                    lis_data.Add("小针筒");//针筒类型
+                    lis_data.Add("0.1");//当前液量
+                    lis_data.Add("其他");//开料流程
+                    lis_data.Add("0");//原瓶号
+                    lis_data.Add("1000");//
+                    lis_data.Add(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"));//开料日期
+                    lis_data.Add(FADM_Object.Communal._d_abs_mixture.ToString("f6"));//实际浓度
+                    FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from bottle_details where BottleNum = 888");
+
+                    //如果是新增
+                    s_sql = "INSERT INTO bottle_details (" +
+                                " BottleNum, AssistantCode, SettingConcentration," +
+                                " CurrentWeight, SyringeType, DropMinWeight," +
+                                " BrewingCode, OriginalBottleNum, AllowMaxWeight," +
+                                " BrewingData, RealConcentration) VALUES( '" + lis_data[0] + "'," +
+                                " '" + lis_data[1] + "','" + lis_data[2] + "'," +
+                                " '" + lis_data[3] + "','" + lis_data[4] + "'," +
+                                " '" + lis_data[5] + "','" + lis_data[6] + "'," +
+                                " '" + lis_data[7] + "','" + lis_data[8] + "'," +
+                                "'" + lis_data[9] + "','" + lis_data[10] + "');";
+                    FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
+
+                    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                            "INSERT INTO abs_wait_list(BottleNum, InsertDate,Type) VALUES('" + 888 + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+
+                    //插入到ABS测量等待列表第一条记录
+
+
+                    //复位请求
+                    int[] values = new int[1];
+                    values[0] = 0;
+                    if (!FADM_Object.Communal._tcpModBusAbs._b_Connect)
+                    {
+                        FADM_Object.Communal._tcpModBusAbs.ReConnect();
+                    }
+
+                    FADM_Object.Communal._tcpModBusAbs.Write(13189, values);
+
+                    //复位加药完成
+                    values[0] = 2;
+                    if (!FADM_Object.Communal._tcpModBusAbs._b_Connect)
+                    {
+                        FADM_Object.Communal._tcpModBusAbs.ReConnect();
+                    }
+                    FADM_Object.Communal._tcpModBusAbs.Write(13089, values);
+
+                    //Lib_SerialPort.Balance.METTLER.bReSetSign = true;
                 }
-
-                FADM_Object.Communal._tcpModBusAbs.Write(901, values);
-
-                //复位加药完成
-                values[0] = 2;
-                if (!FADM_Object.Communal._tcpModBusAbs._b_Connect)
+                if (FADM_Object.Communal._b_use[2])
                 {
-                    FADM_Object.Communal._tcpModBusAbs.ReConnect();
-                }
-                FADM_Object.Communal._tcpModBusAbs.Write(801, values);
+                    //插入到虚拟瓶号中，瓶号为999，插入助剂编号为ABS999
+                    FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from assistant_details where AssistantCode = 'ABS999'");
 
-                //Lib_SerialPort.Balance.METTLER.bReSetSign = true;
+                    List<string> lis_data = new List<string>();
+                    lis_data.Add("ABS999");
+                    lis_data.Add(o_BatchName.ToString());//批次号保存进去
+                    lis_data.Add("3");//杯号保存进去
+                    lis_data.Add("其他染料");
+                    lis_data.Add("%");
+                    lis_data.Add("0");
+                    lis_data.Add("0");
+                    lis_data.Add("24");
+                    lis_data.Add("0");
+                    lis_data.Add("0");
+                    //如果是新增
+                    string s_sql = "INSERT INTO assistant_details" +
+                                       " (AssistantCode, AssistantBarCode, AssistantName, AssistantType, UnitOfAccount," +
+                                       " AllowMinColoringConcentration, AllowMaxColoringConcentration, TermOfValidity," +
+                                       " Intensity, Cost) VALUES('" + lis_data[0] + "','" + lis_data[1] + "','" + lis_data[2] + "'," +
+                                       "'" + lis_data[3] + "','" + lis_data[4] + "','" + lis_data[5] + "','" + lis_data[6] + "'," +
+                                       "'" + lis_data[7] + "','" + lis_data[8] + "','" + lis_data[9] + "');";
+                    FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
+
+                    lis_data.Clear();
+                    lis_data.Add("999");
+                    lis_data.Add("ABS999");
+                    lis_data.Add(FADM_Object.Communal._d_abs_mixture_2.ToString("f6"));//设定浓度
+                    lis_data.Add("500");//当前液量
+                    lis_data.Add("小针筒");//针筒类型
+                    lis_data.Add("0.1");//当前液量
+                    lis_data.Add("其他");//开料流程
+                    lis_data.Add("0");//原瓶号
+                    lis_data.Add("1000");//
+                    lis_data.Add(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"));//开料日期
+                    lis_data.Add(FADM_Object.Communal._d_abs_mixture_2.ToString("f6"));//实际浓度
+                    FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from bottle_details where BottleNum = 999");
+
+                    //如果是新增
+                    s_sql = "INSERT INTO bottle_details (" +
+                                " BottleNum, AssistantCode, SettingConcentration," +
+                                " CurrentWeight, SyringeType, DropMinWeight," +
+                                " BrewingCode, OriginalBottleNum, AllowMaxWeight," +
+                                " BrewingData, RealConcentration) VALUES( '" + lis_data[0] + "'," +
+                                " '" + lis_data[1] + "','" + lis_data[2] + "'," +
+                                " '" + lis_data[3] + "','" + lis_data[4] + "'," +
+                                " '" + lis_data[5] + "','" + lis_data[6] + "'," +
+                                " '" + lis_data[7] + "','" + lis_data[8] + "'," +
+                                "'" + lis_data[9] + "','" + lis_data[10] + "');";
+                    FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
+
+                    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                            "INSERT INTO abs_wait_list(BottleNum, InsertDate,Type) VALUES('" + 999 + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+
+                    //插入到ABS测量等待列表第一条记录
+
+
+                    //复位请求
+                    int[] values = new int[1];
+                    values[0] = 0;
+                    if (!FADM_Object.Communal._tcpModBusAbs._b_Connect)
+                    {
+                        FADM_Object.Communal._tcpModBusAbs.ReConnect();
+                    }
+
+                    FADM_Object.Communal._tcpModBusAbs.Write(13209, values);
+
+                    //复位加药完成
+                    values[0] = 2;
+                    if (!FADM_Object.Communal._tcpModBusAbs._b_Connect)
+                    {
+                        FADM_Object.Communal._tcpModBusAbs.ReConnect();
+                    }
+                    FADM_Object.Communal._tcpModBusAbs.Write(13109, values);
+
+                    //Lib_SerialPort.Balance.METTLER.bReSetSign = true;
+                }
 
                 _b_dripStop = false;
 
@@ -502,6 +568,8 @@ namespace SmartDyeing.FADM_Auto
             }
             catch (Exception ex)
             {
+                //解锁6工位
+                MyModbusFun.UnLockSix();
                 Console.WriteLine("异常了,读取异常标志位 然后");
                 _i_dripType = 0;
                 _b_dripStop = false;
@@ -669,7 +737,6 @@ namespace SmartDyeing.FADM_Auto
             {
                 FADM_Object.Communal.WriteDripWait(true);
                 Communal._b_isWaitDrip = true;
-                Communal._b_isAllowDrip = true;
                 while (true)
                 {
                     if (false == FADM_Object.Communal.ReadDripWait())
@@ -720,7 +787,6 @@ namespace SmartDyeing.FADM_Auto
                     {
                         FADM_Object.Communal.WriteDripWait(true);
                         Communal._b_isWaitDrip = true;
-                        Communal._b_isAllowDrip = true;
                         while (true)
                         {
                             if (false == FADM_Object.Communal.ReadDripWait())
@@ -768,7 +834,9 @@ namespace SmartDyeing.FADM_Auto
                         }
                         FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand",  i_cupNo + "号吸光度配液杯加水启动");
                         double d_addWaterTime = MyModbusFun.GetWaterTime(d_blObjectW);//加水时间
+
                         FADM_Object.Communal.AddWater(d_addWaterTime);
+                        
                         FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", i_cupNo + "号吸光度配液杯加水完成");
                     }
                     //如果勾选加水，但实际计算出来加水量为0，直接完成
@@ -877,8 +945,8 @@ namespace SmartDyeing.FADM_Auto
                         //判断是否异常
                         FADM_Object.Communal.BalanceState("滴液");
                     }
-                    
-                   
+
+
 
                     //Lib_SerialPort.Balance.METTLER.bZeroSign = true;
 
@@ -912,8 +980,9 @@ namespace SmartDyeing.FADM_Auto
                     double d_blBalanceValue0 = SteBalance();
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平读数：" + d_blBalanceValue0);
 
-                    double d_addWaterTime2 = MyModbusFun.GetWaterTime(Lib_Card.Configure.Parameter.Correcting_Water_RWeight);//加水时间 校正加水时间
-                    FADM_Object.Communal.AddWater(d_addWaterTime2);
+                    double d_addWaterTime = MyModbusFun.GetWaterTime(Lib_Card.Configure.Parameter.Correcting_Water_RWeight);//加水时间 校正加水时间
+
+                    FADM_Object.Communal.AddWater(d_addWaterTime);
 
                     //读取天平数据
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平稳定读数启动");
@@ -922,6 +991,7 @@ namespace SmartDyeing.FADM_Auto
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平稳定读数：" + d_blRRead + ",实际重量：" + d_blWeight);
                     double d_blWE = Convert.ToDouble(string.Format("{0:F3}", (d_blWeight - Lib_Card.Configure.Parameter.Correcting_Water_RWeight)));
                     double d_blDif = Convert.ToDouble(string.Format("{0:F3}", d_blWE / Lib_Card.Configure.Parameter.Correcting_Water_RWeight));
+                    double d_blDif_span = Convert.ToDouble(string.Format("{0:F3}", d_blWeight / Lib_Card.Configure.Parameter.Correcting_Water_RWeight));
                     int irErr = Convert.ToInt16(d_blDif * 100);
                     irErr = irErr < 0 ? -irErr : irErr;
 
@@ -936,7 +1006,7 @@ namespace SmartDyeing.FADM_Auto
                         {
                             continue;
                         }
-                        Double d_objAddWaiterWeight = Convert.ToDouble(dataRow["ObjectAddWaterWeight"].ToString()) + d_blWE;
+                        Double d_objAddWaiterWeight = Convert.ToDouble(dataRow["ObjectAddWaterWeight"].ToString()) * d_blDif_span;
                         //if (d_blWeight == 0)
                         //{
                         //    FADM_Object.Communal._fadmSqlserver.ReviseData(
@@ -948,21 +1018,27 @@ namespace SmartDyeing.FADM_Auto
                         //  "UPDATE cup_details SET TotalWeight =  " + string.Format("{0:F3}", d_objAddWaiterWeight) + " WHERE CupNum = " + dataRow["CupNum"] + " ;");
                         //}
 
-                        if (Convert.ToDouble(dataRow["ObjectAddWaterWeight"].ToString()) > 20)
+                        //if (Convert.ToDouble(dataRow["ObjectAddWaterWeight"].ToString()) > 20)
+                        //{
+                        //    if (System.Math.Abs(d_blWE * 100 / (Convert.ToDouble(dataRow["TotalWeight"].ToString()))) > Lib_Card.Configure.Parameter.Other_AErr_DripWater || d_blWeight == 0)
+                        //    {
+                        //        b_fail = true;
+                        //        s_failC += dataRow["CupNum"].ToString() + ",";
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    if (System.Math.Abs(Convert.ToDouble(dataRow["ObjectAddWaterWeight"].ToString()) * d_blDif * 100) / (Convert.ToDouble(dataRow["TotalWeight"].ToString())) > Lib_Card.Configure.Parameter.Other_AErr_DripWater || d_blWeight == 0)
+                        //    {
+                        //        b_fail = true;
+                        //        s_failC += dataRow["CupNum"].ToString() + ",";
+                        //    }
+                        //}
+
+                        if(System.Math.Abs(d_blDif) *100 > Lib_Card.Configure.Parameter.Other_AErr_DripWater)
                         {
-                            if (System.Math.Abs(d_blWE * 100 / (Convert.ToDouble(dataRow["TotalWeight"].ToString()))) > Lib_Card.Configure.Parameter.Other_AErr_DripWater || d_blWeight == 0)
-                            {
-                                b_fail = true;
-                                s_failC += dataRow["CupNum"].ToString() + ",";
-                            }
-                        }
-                        else
-                        {
-                            if (System.Math.Abs(Convert.ToDouble(dataRow["ObjectAddWaterWeight"].ToString()) * d_blDif * 100) / (Convert.ToDouble(dataRow["TotalWeight"].ToString())) > Lib_Card.Configure.Parameter.Other_AErr_DripWater || d_blWeight == 0)
-                            {
-                                b_fail = true;
-                                s_failC += dataRow["CupNum"].ToString() + ",";
-                            }
+                            b_fail = true;
+                            s_failC += dataRow["CupNum"].ToString() + ",";
                         }
                     }
 
@@ -991,7 +1067,7 @@ namespace SmartDyeing.FADM_Auto
                     }
                     else
                     {
-                        s_sql = "UPDATE abs_drop_head SET RealAddWaterWeight = (ObjectAddWaterWeight + " + d_blWE + "), AddWaterFinish = 1 WHERE " +
+                        s_sql = "UPDATE abs_drop_head SET RealAddWaterWeight = (ObjectAddWaterWeight * " + d_blDif_span + "), AddWaterFinish = 1 WHERE " +
                         "BatchName = '" + oBatchName + "' AND AddWaterChoose = 1 AND CupFinish = 0   AND ObjectAddWaterWeight > 0 AND ObjectAddWaterWeight <= 20  And AddWaterFinish = 0 And CupNum in (" + s_cupAddWater + ");";
 
                         FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
@@ -1006,7 +1082,7 @@ namespace SmartDyeing.FADM_Auto
                     }
                     else
                     {
-                        s_sql = "UPDATE abs_drop_head SET RealAddWaterWeight = (ObjectAddWaterWeight + " + d_blWE + "), AddWaterFinish = 1 WHERE " +
+                        s_sql = "UPDATE abs_drop_head SET RealAddWaterWeight = (ObjectAddWaterWeight * " + d_blDif_span + "), AddWaterFinish = 1 WHERE " +
                         "BatchName = '" + oBatchName + "' AND AddWaterChoose = 1 AND CupFinish = 0   AND ObjectAddWaterWeight > 20  And AddWaterFinish = 0 And CupNum in (" + s_cupAddWater + ");";
                         FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
                     }
@@ -1015,7 +1091,6 @@ namespace SmartDyeing.FADM_Auto
                     {
                         s_failC = s_failC.Remove(s_failC.Length - 1);
                         FADM_Object.Communal.WriteDripWait(true);
-                        Communal._b_isAllowDrip = false;
                         FADM_Object.MyAlarm myAlarm;
 
                         if (Lib_Card.Configure.Parameter.Other_Language == 0)
@@ -1028,16 +1103,91 @@ namespace SmartDyeing.FADM_Auto
                                 break;
                             Thread.Sleep(1);
                         }
-                        Communal._b_isAllowDrip = true;
+
                         if (2 == myAlarm._i_alarm_Choose)
+                        {
+                            if (FADM_Object.Communal._b_use[0])
+                            {
+                                Thread thread33 = new Thread(() =>
+                            {
+                                //等待没有交互时再发送停止
+                                //while (true)
+                                //{
+                                //    if (MyAbsorbance._abs_Temps[Convert.ToInt32(_cup.NO) - 1]._s_request == "0")
+                                //    {
+                                //        break;
+                                //    }
+                                //}
+
+                                //先发一个停止，再发一个洗杯
+                                int[] values1 = new int[1];
+                                values1[0] = 2;
+                                FADM_Object.Communal._tcpModBusAbs.Write(13088, values1);
+
+                                //判断待机后再发洗杯
+                                while (true)
+                                {
+                                    if (MyAbsorbance._abs_Temps[0]._s_currentState == "1")
+                                        break;
+                                }
+
+                                s_sql = "UPDATE abs_cup_details SET Statues='洗杯',IsUsing = 1,Type=0  WHERE CupNum = " + 1 + " ;";
+                                FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
+
+                                SmartDyeing.FADM_Auto.MyAbsorbance.Generate(2, 1);
+                                SmartDyeing.FADM_Auto.MyAbsorbance.SendData(1);
+
+
+
+
+                            });
+                                thread33.Start();
+                            }
+                            if (FADM_Object.Communal._b_use[2])
+                            {
+                                Thread thread33 = new Thread(() =>
+                                {
+                                    //等待没有交互时再发送停止
+                                    //while (true)
+                                    //{
+                                    //    if (MyAbsorbance._abs_Temps[Convert.ToInt32(_cup.NO) - 1]._s_request == "0")
+                                    //    {
+                                    //        break;
+                                    //    }
+                                    //}
+
+                                    //先发一个停止，再发一个洗杯
+                                    int[] values1 = new int[1];
+                                    values1[0] = 2;
+                                    FADM_Object.Communal._tcpModBusAbs.Write(13108, values1);
+
+                                    //判断待机后再发洗杯
+                                    while (true)
+                                    {
+                                        if (MyAbsorbance._abs_Temps[2]._s_currentState == "1")
+                                            break;
+                                    }
+
+                                    s_sql = "UPDATE abs_cup_details SET Statues='洗杯',IsUsing = 1,Type=0  WHERE CupNum = " + 3 + " ;";
+                                    FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
+
+                                    SmartDyeing.FADM_Auto.MyAbsorbance.Generate(2, 3);
+                                    SmartDyeing.FADM_Auto.MyAbsorbance.SendData(3);
+
+
+
+
+                                });
+                                thread33.Start();
+                            }
                             throw new Exception("收到退出消息");
+                        }
 
                         //判断染色线程是否需要用机械手
                         if (null != FADM_Object.Communal.ReadDyeThread())
                         {
                             FADM_Object.Communal.WriteDripWait(true);
                             Communal._b_isWaitDrip = true;
-                            Communal._b_isAllowDrip = true;
                             while (true)
                             {
                                 if (false == FADM_Object.Communal.ReadDripWait())
@@ -1265,8 +1415,22 @@ namespace SmartDyeing.FADM_Auto
             s_sql = "SELECT * FROM bottle_details WHERE BottleNum = " + i_minBottleNo + ";";
             DataTable dt_bottle_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
             int i_adjust = Convert.ToInt32(dt_bottle_details.Rows[0]["AdjustValue"]);
+            DateTime dateTime = dt_bottle_details.Rows[0]["LastUseTime"] is DBNull ? DateTime.Now :
+                Convert.ToDateTime(dt_bottle_details.Rows[0]["LastUseTime"]);
+            double weight = Convert.ToDouble(dt_bottle_details.Rows[0]["CurrentWeight"]);
             bool b_lCheckSuccess = (Convert.ToString(dt_bottle_details.Rows[0]["AdjustSuccess"]) == "1");
             string s_syringeType = Convert.ToString(dt_bottle_details.Rows[0]["SyringeType"]);
+            string s_dripReserveFirst = "0";
+            if(!(dt_bottle_details.Rows[0]["DripReserveFirst"] is DBNull))
+            {
+                s_dripReserveFirst = dt_bottle_details.Rows[0]["DripReserveFirst"].ToString();
+            }
+            object lastUseTimeObj = dt_bottle_details.Rows[0]["LastUseTime"];
+            DateTime dateTime11 = (lastUseTimeObj == DBNull.Value || lastUseTimeObj == null)
+                ? DateTime.Now
+                : Convert.ToDateTime(lastUseTimeObj);
+            double weight11 = Convert.ToDouble(dt_bottle_details.Rows[0]["CurrentWeight"]);
+
 
 
 
@@ -1302,7 +1466,6 @@ namespace SmartDyeing.FADM_Auto
                         if (dt_pre_brew.Rows.Count > 0)
                         {
                             FADM_Object.Communal.WriteDripWait(true);
-                            Communal._b_isAllowDrip = false;
                             FADM_Object.MyAlarm myAlarm;
                             if (Lib_Card.Configure.Parameter.Other_Language == 0)
                                 myAlarm = new FADM_Object.MyAlarm(
@@ -1316,13 +1479,11 @@ namespace SmartDyeing.FADM_Auto
                                     break;
                                 Thread.Sleep(1);
                             }
-                            Communal._b_isAllowDrip = true;
                             //判断染色线程是否需要用机械手
                             if (null != FADM_Object.Communal.ReadDyeThread())
                             {
                                 FADM_Object.Communal.WriteDripWait(true);
                                 Communal._b_isWaitDrip = true;
-                                Communal._b_isAllowDrip = true;
                                 while (true)
                                 {
                                     if (false == FADM_Object.Communal.ReadDripWait())
@@ -1373,7 +1534,6 @@ namespace SmartDyeing.FADM_Auto
                         if (dt_pre_brew.Rows.Count > 0)
                         {
                             FADM_Object.Communal.WriteDripWait(true);
-                            Communal._b_isAllowDrip = false;
                             FADM_Object.MyAlarm myAlarm;
                             if (Lib_Card.Configure.Parameter.Other_Language == 0)
                                 myAlarm = new FADM_Object.MyAlarm(
@@ -1392,7 +1552,6 @@ namespace SmartDyeing.FADM_Auto
                             {
                                 FADM_Object.Communal.WriteDripWait(true);
                                 Communal._b_isWaitDrip = true;
-                                Communal._b_isAllowDrip = true;
                                 while (true)
                                 {
                                     if (false == FADM_Object.Communal.ReadDripWait())
@@ -1477,7 +1636,6 @@ namespace SmartDyeing.FADM_Auto
             {
                 FADM_Object.Communal.WriteDripWait(true);
                 Communal._b_isWaitDrip = true;
-                Communal._b_isAllowDrip = true;
                 while (true)
                 {
                     if (false == FADM_Object.Communal.ReadDripWait())
@@ -1489,6 +1647,11 @@ namespace SmartDyeing.FADM_Auto
             else
                 Communal._b_isWaitDrip = false;
 
+            if (_b_dripStop)
+            {
+                FADM_Object.Communal._b_stop = true;
+            }
+
             //针检
             if ((0 >= i_adjust || false == b_lCheckSuccess) && !b_checkFail)
             {
@@ -1498,7 +1661,6 @@ namespace SmartDyeing.FADM_Auto
                 {
                     FADM_Object.Communal.WriteDripWait(true);
                     Communal._b_isWaitDrip = true;
-                    Communal._b_isAllowDrip = true;
                     while (true)
                     {
                         if (false == FADM_Object.Communal.ReadDripWait())
@@ -1518,13 +1680,12 @@ namespace SmartDyeing.FADM_Auto
                 if (-1 == i_res)
                 {
                     FADM_Object.Communal.WriteDripWait(true);
-                    Communal._b_isAllowDrip = false;
                     FADM_Object.MyAlarm myAlarm;
                     if (Lib_Card.Configure.Parameter.Other_Language == 0)
-                        myAlarm = new FADM_Object.MyAlarm(i_minBottleNo + "号母液瓶针检失败，是否继续?(继续针检请点是，退出针检请点否)", "滴液针检", true, 1, true);
+                        myAlarm = new FADM_Object.MyAlarm(i_minBottleNo + "号母液瓶针检失败，是否继续?(继续针检请点是，退出针检请点否)", "滴液针检", true, 1);
                     else
                         myAlarm = new FADM_Object.MyAlarm(i_minBottleNo + " bottle needle inspection failed, do you want to continue? " +
-                            "(To continue the needle examination, please click Yes, and to exit the needle examination, please click No)", "Drip needle examination", true, 1, true);
+                            "(To continue the needle examination, please click Yes, and to exit the needle examination, please click No)", "Drip needle examination", true, 1);
                     while (true)
 
                     {
@@ -1532,13 +1693,11 @@ namespace SmartDyeing.FADM_Auto
                             break;
                         Thread.Sleep(1);
                     }
-                    Communal._b_isAllowDrip = true;
                     //判断染色线程是否需要用机械手
                     if (null != FADM_Object.Communal.ReadDyeThread())
                     {
                         FADM_Object.Communal.WriteDripWait(true);
                         Communal._b_isWaitDrip = true;
-                        Communal._b_isAllowDrip = true;
                         while (true)
                         {
                             if (false == FADM_Object.Communal.ReadDripWait())
@@ -1593,7 +1752,6 @@ namespace SmartDyeing.FADM_Auto
             {
                 FADM_Object.Communal.WriteDripWait(true);
                 Communal._b_isWaitDrip = true;
-                Communal._b_isAllowDrip = true;
                 while (true)
                 {
                     if (false == FADM_Object.Communal.ReadDripWait())
@@ -1613,34 +1771,48 @@ namespace SmartDyeing.FADM_Auto
             o._s_unitOfAccount = s_unitOfAccount;
             o._dic_pulse= dic_pulse;
             o._dic_water =dic_water;
+
+            if (_b_dripStop)
+            {
+                FADM_Object.Communal._b_stop = true;
+            }
+            if (_b_isAloneDripReserve)
+            {
+                if (s_dripReserveFirst == "0")
+                {
+                    _b_isDripReserveFirst = false;
+                }
+                else
+                {
+                    _b_isDripReserveFirst = true;
+                }
+            }
+
             Dictionary<int, double> dic_return = new Dictionary<int, double>();
-            int i_ret=FADM_Object.Communal.AddMac(o,ref dic_return,2, 0);
+            int i_ret=FADM_Object.Communal.AddMacOther(o,ref dic_return,3,0);
             //夹不到针筒
             if (i_ret == -1)
             {
                 if (i_lowSrart == 2)
                 {
                     FADM_Object.Communal.WriteDripWait(true);
-                    Communal._b_isAllowDrip = false;
                     FADM_Object.MyAlarm myAlarm;
                     if (Lib_Card.Configure.Parameter.Other_Language == 0)
-                        myAlarm = new FADM_Object.MyAlarm(i_minBottleNo + "号母液瓶未找到针筒，是否继续执行?(继续寻找请点是，退出滴液请点否)", "滴液", true, 1, true);
+                        myAlarm = new FADM_Object.MyAlarm(i_minBottleNo + "号母液瓶未找到针筒，是否继续执行?(继续寻找请点是，退出滴液请点否)", "滴液", true, 1);
                     else
                         myAlarm = new FADM_Object.MyAlarm(i_minBottleNo + " bottle did not find a syringe. Do you want to continue? " +
-                            "(To continue searching, please click Yes. To exit Drip, please click No)", "Drip", true, 1, true);
+                            "(To continue searching, please click Yes. To exit Drip, please click No)", "Drip", true, 1);
                     while (true)
                     {
                         if (0 != myAlarm._i_alarm_Choose)
                             break;
                         Thread.Sleep(1);
                     }
-                    Communal._b_isAllowDrip = true;
                     //判断染色线程是否需要用机械手
                     if (null != FADM_Object.Communal.ReadDyeThread())
                     {
                         FADM_Object.Communal.WriteDripWait(true);
                         Communal._b_isWaitDrip = true;
-                        Communal._b_isAllowDrip = true;
                         while (true)
                         {
                             if (false == FADM_Object.Communal.ReadDripWait())
@@ -1675,40 +1847,40 @@ namespace SmartDyeing.FADM_Auto
                 {
                     foreach (KeyValuePair<int, double> kvp in dic_return)
                     {
-                        double d_blRErr = 0;
-                        if ("小针筒" == s_syringeType || "Little Syringe" == s_syringeType)
-                            d_blRErr = Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? Convert.ToDouble(string.Format("{0:F2}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_S_Weight)) : Convert.ToDouble(string.Format("{0:F3}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_S_Weight));
-                        else
-                            d_blRErr = Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? Convert.ToDouble(string.Format("{0:F2}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_B_Weight)) : Convert.ToDouble(string.Format("{0:F3}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_B_Weight));
+                        //double d_blRErr = 0;
+                        //if ("小针筒" == s_syringeType || "Little Syringe" == s_syringeType)
+                        //    d_blRErr = Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? Convert.ToDouble(string.Format("{0:F2}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_S_Weight)) : Convert.ToDouble(string.Format("{0:F3}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_S_Weight));
+                        //else
+                        //    d_blRErr = Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? Convert.ToDouble(string.Format("{0:F2}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_B_Weight)) : Convert.ToDouble(string.Format("{0:F3}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_B_Weight));
                         
-                        //查询开料日期
-                        DataTable dt_bottle_details2 = FADM_Object.Communal._fadmSqlserver.GetData(
-                                    "SELECT * FROM bottle_details WHERE  BottleNum = " + i_minBottleNo + ";");
+                        ////查询开料日期
+                        //DataTable dt_bottle_details2 = FADM_Object.Communal._fadmSqlserver.GetData(
+                        //            "SELECT * FROM bottle_details WHERE  BottleNum = " + i_minBottleNo + ";");
 
-                        if (0.00 != kvp.Value)
-                        {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                            "UPDATE abs_drop_details SET Finish = 1,RealDropWeight = ObjectDropWeight + " + d_blRErr + " ,BrewingData = '" + dt_bottle_details2.Rows[0]["BrewingData"].ToString() + "' " +
-                            "WHERE BatchName = '" + oBatchName.ToString() + "' AND BottleNum = " + i_minBottleNo + " AND " +
-                            "CupNum = " + kvp.Key + ";");
+                        //if (0.00 != kvp.Value)
+                        //{
+                        //    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                        //    "UPDATE abs_drop_details SET Finish = 1,RealDropWeight = ObjectDropWeight + " + d_blRErr + " ,BrewingData = '" + dt_bottle_details2.Rows[0]["BrewingData"].ToString() + "' " +
+                        //    "WHERE BatchName = '" + oBatchName.ToString() + "' AND BottleNum = " + i_minBottleNo + " AND " +
+                        //    "CupNum = " + kvp.Key + ";");
 
-                            DataTable dt_drop_details2 = FADM_Object.Communal._fadmSqlserver.GetData(
-                                "SELECT * FROM abs_drop_details WHERE BatchName = '" + oBatchName.ToString() + "' AND BottleNum = " + i_minBottleNo + " AND CupNum = " + kvp.Key + ";");
-                            //FADM_Object.Communal._fadmSqlserver.ReviseData(
-                            //    "UPDATE cup_details SET TotalWeight = TotalWeight+ " + dt_drop_details2.Rows[0]["RealDropWeight"] + " WHERE CupNum = " + kvp.Key + ";");
+                        //    DataTable dt_drop_details2 = FADM_Object.Communal._fadmSqlserver.GetData(
+                        //        "SELECT * FROM abs_drop_details WHERE BatchName = '" + oBatchName.ToString() + "' AND BottleNum = " + i_minBottleNo + " AND CupNum = " + kvp.Key + ";");
+                        //    //FADM_Object.Communal._fadmSqlserver.ReviseData(
+                        //    //    "UPDATE cup_details SET TotalWeight = TotalWeight+ " + dt_drop_details2.Rows[0]["RealDropWeight"] + " WHERE CupNum = " + kvp.Key + ";");
 
-                            //母液瓶扣减
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                "UPDATE bottle_details SET CurrentWeight = CurrentWeight - " + dt_drop_details2.Rows[0]["RealDropWeight"] + " " +
-                                "WHERE BottleNum = '" + i_minBottleNo + "';");
-                        }
-                        else
-                        {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                           "UPDATE abs_drop_details SET Finish = 1,RealDropWeight = 0.00 " + " ,BrewingData = '" + dt_bottle_details2.Rows[0]["BrewingData"].ToString() + "' " +
-                           "WHERE BatchName = '" + oBatchName.ToString() + "' AND BottleNum = " + i_minBottleNo + " AND " +
-                           "CupNum = " + kvp.Key + ";");
-                        }
+                        //    //母液瓶扣减
+                        //    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                        //        "UPDATE bottle_details SET CurrentWeight = CurrentWeight - " + dt_drop_details2.Rows[0]["RealDropWeight"] + " " +
+                        //        "WHERE BottleNum = '" + i_minBottleNo + "';");
+                        //}
+                        //else
+                        //{
+                        //    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                        //   "UPDATE abs_drop_details SET Finish = 1,RealDropWeight = 0.00 " + " ,BrewingData = '" + dt_bottle_details2.Rows[0]["BrewingData"].ToString() + "' " +
+                        //   "WHERE BatchName = '" + oBatchName.ToString() + "' AND BottleNum = " + i_minBottleNo + " AND " +
+                        //   "CupNum = " + kvp.Key + ";");
+                        //}
 
                         DataTable dt_drop_details3 = FADM_Object.Communal._fadmSqlserver.GetData(
                                 "SELECT * FROM abs_drop_details WHERE BatchName = '" + oBatchName.ToString() + "' AND Finish = 0" + " AND CupNum = " + kvp.Key + ";");
@@ -1798,53 +1970,7 @@ namespace SmartDyeing.FADM_Auto
 
                     }
                 }
-                else
-                {
-                    foreach (KeyValuePair<int, double> kvp in dic_return)
-                    {
-                        double d_blRErr = 0;
-                        if ("小针筒" == s_syringeType || "Little Syringe" == s_syringeType)
-                            d_blRErr = Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? Convert.ToDouble(string.Format("{0:F2}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_S_Weight)) : Convert.ToDouble(string.Format("{0:F3}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_S_Weight));
-                        else
-                            d_blRErr = Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? Convert.ToDouble(string.Format("{0:F2}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_B_Weight)) : Convert.ToDouble(string.Format("{0:F3}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_B_Weight));
-                        ;
-
-                        //查询开料日期
-                        DataTable dt_bottle_details2 = FADM_Object.Communal._fadmSqlserver.GetData(
-                                    "SELECT * FROM bottle_details WHERE  BottleNum = " + i_minBottleNo + ";");
-
-                        if (0.00 != kvp.Value)
-                        {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                            "UPDATE abs_drop_details SET Finish = 1,RealDropWeight = ObjectDropWeight + " + d_blRErr + " ,BrewingData = '" + dt_bottle_details2.Rows[0]["BrewingData"].ToString() + "' " +
-                            "WHERE BatchName = '" + oBatchName + "' AND BottleNum = " + i_minBottleNo + " AND " +
-                            "CupNum = " + kvp.Key + ";");
-
-                            DataTable dt_drop_details2 = FADM_Object.Communal._fadmSqlserver.GetData(
-                                "SELECT * FROM abs_drop_details WHERE BatchName = '" + oBatchName + "' AND BottleNum = " + i_minBottleNo + " AND CupNum = " + kvp.Key + ";");
-                            //FADM_Object.Communal._fadmSqlserver.ReviseData(
-                            //    "UPDATE cup_details SET TotalWeight = TotalWeight+ " + dt_drop_details2.Rows[0]["RealDropWeight"] + " WHERE CupNum = " + kvp.Key + ";");
-
-                            //母液瓶扣减
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                "UPDATE bottle_details SET CurrentWeight = CurrentWeight - " + dt_drop_details2.Rows[0]["RealDropWeight"] + " " +
-                                "WHERE BottleNum = '" + i_minBottleNo + "';");
-
-                            ////置位完成标志位
-                            //FADM_Object.Communal._fadmSqlserver.ReviseData(
-                            //    "UPDATE drop_details SET Finish = 1 WHERE BatchName = '" + o_BatchName + "' AND " +
-                            //    "BottleNum = " + _i_minBottleNo + " AND CupNum = " + dic_pulse.First().Key + ";");
-                        }
-                        else
-                        {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                           "UPDATE abs_drop_details SET Finish = 1,RealDropWeight = 0.00 " + " ,BrewingData = '" + dt_bottle_details2.Rows[0]["BrewingData"].ToString() + "' " +
-                           "WHERE BatchName = '" + oBatchName + "' AND BottleNum = " + i_minBottleNo + " AND " +
-                           "CupNum = " + kvp.Key + ";");
-                        }
-
-                    }
-                }
+                
             }
             //由于滴废液时发现数值太小，直接提醒，不先滴这个，跳过
             else if(i_ret == -2)
@@ -1854,40 +1980,40 @@ namespace SmartDyeing.FADM_Auto
                 {
                     foreach (KeyValuePair<int, double> kvp in dic_return)
                     {
-                        double d_blRErr = 0;
-                        if ("小针筒" == s_syringeType || "Little Syringe" == s_syringeType)
-                            d_blRErr = Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? Convert.ToDouble(string.Format("{0:F2}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_S_Weight)) : Convert.ToDouble(string.Format("{0:F3}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_S_Weight));
-                        else
-                            d_blRErr = Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? Convert.ToDouble(string.Format("{0:F2}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_B_Weight)) : Convert.ToDouble(string.Format("{0:F3}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_B_Weight));
+                        //double d_blRErr = 0;
+                        //if ("小针筒" == s_syringeType || "Little Syringe" == s_syringeType)
+                        //    d_blRErr = Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? Convert.ToDouble(string.Format("{0:F2}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_S_Weight)) : Convert.ToDouble(string.Format("{0:F3}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_S_Weight));
+                        //else
+                        //    d_blRErr = Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? Convert.ToDouble(string.Format("{0:F2}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_B_Weight)) : Convert.ToDouble(string.Format("{0:F3}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_B_Weight));
 
-                        //查询开料日期
-                        DataTable dt_bottle_details2 = FADM_Object.Communal._fadmSqlserver.GetData(
-                                    "SELECT * FROM bottle_details WHERE  BottleNum = " + i_minBottleNo + ";");
+                        ////查询开料日期
+                        //DataTable dt_bottle_details2 = FADM_Object.Communal._fadmSqlserver.GetData(
+                        //            "SELECT * FROM bottle_details WHERE  BottleNum = " + i_minBottleNo + ";");
 
-                        if (0.00 != kvp.Value)
-                        {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                            "UPDATE abs_drop_details SET Finish = 1,RealDropWeight = ObjectDropWeight + " + d_blRErr + " ,BrewingData = '" + dt_bottle_details2.Rows[0]["BrewingData"].ToString() + "' " +
-                            "WHERE BatchName = '" + oBatchName.ToString() + "' AND BottleNum = " + i_minBottleNo + " AND " +
-                            "CupNum = " + kvp.Key + ";");
+                        //if (0.00 != kvp.Value)
+                        //{
+                        //    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                        //    "UPDATE abs_drop_details SET Finish = 1,RealDropWeight = ObjectDropWeight + " + d_blRErr + " ,BrewingData = '" + dt_bottle_details2.Rows[0]["BrewingData"].ToString() + "' " +
+                        //    "WHERE BatchName = '" + oBatchName.ToString() + "' AND BottleNum = " + i_minBottleNo + " AND " +
+                        //    "CupNum = " + kvp.Key + ";");
 
-                            DataTable dt_drop_details2 = FADM_Object.Communal._fadmSqlserver.GetData(
-                                "SELECT * FROM abs_drop_details WHERE BatchName = '" + oBatchName.ToString() + "' AND BottleNum = " + i_minBottleNo + " AND CupNum = " + kvp.Key + ";");
-                            //FADM_Object.Communal._fadmSqlserver.ReviseData(
-                            //    "UPDATE cup_details SET TotalWeight = TotalWeight+ " + dt_drop_details2.Rows[0]["RealDropWeight"] + " WHERE CupNum = " + kvp.Key + ";");
+                        //    DataTable dt_drop_details2 = FADM_Object.Communal._fadmSqlserver.GetData(
+                        //        "SELECT * FROM abs_drop_details WHERE BatchName = '" + oBatchName.ToString() + "' AND BottleNum = " + i_minBottleNo + " AND CupNum = " + kvp.Key + ";");
+                        //    //FADM_Object.Communal._fadmSqlserver.ReviseData(
+                        //    //    "UPDATE cup_details SET TotalWeight = TotalWeight+ " + dt_drop_details2.Rows[0]["RealDropWeight"] + " WHERE CupNum = " + kvp.Key + ";");
 
-                            //母液瓶扣减
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                "UPDATE bottle_details SET CurrentWeight = CurrentWeight - " + dt_drop_details2.Rows[0]["RealDropWeight"] + " " +
-                                "WHERE BottleNum = '" + i_minBottleNo + "';");
-                        }
-                        else
-                        {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                           "UPDATE abs_drop_details SET Finish = 1,RealDropWeight = 0.00 " + " ,BrewingData = '" + dt_bottle_details2.Rows[0]["BrewingData"].ToString() + "' " +
-                           "WHERE BatchName = '" + oBatchName.ToString() + "' AND BottleNum = " + i_minBottleNo + " AND " +
-                           "CupNum = " + kvp.Key + ";");
-                        }
+                        //    //母液瓶扣减
+                        //    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                        //        "UPDATE bottle_details SET CurrentWeight = CurrentWeight - " + dt_drop_details2.Rows[0]["RealDropWeight"] + " " +
+                        //        "WHERE BottleNum = '" + i_minBottleNo + "';");
+                        //}
+                        //else
+                        //{
+                        //    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                        //   "UPDATE abs_drop_details SET Finish = 1,RealDropWeight = 0.00 " + " ,BrewingData = '" + dt_bottle_details2.Rows[0]["BrewingData"].ToString() + "' " +
+                        //   "WHERE BatchName = '" + oBatchName.ToString() + "' AND BottleNum = " + i_minBottleNo + " AND " +
+                        //   "CupNum = " + kvp.Key + ";");
+                        //}
 
                         DataTable dt_drop_details3 = FADM_Object.Communal._fadmSqlserver.GetData(
                                 "SELECT * FROM abs_drop_details WHERE BatchName = '" + oBatchName.ToString() + "' AND Finish = 0" + " AND CupNum = " + kvp.Key + ";");
@@ -1977,53 +2103,7 @@ namespace SmartDyeing.FADM_Auto
 
                     }
                 }
-                else
-                {
-                    foreach (KeyValuePair<int, double> kvp in dic_return)
-                    {
-                        double d_blRErr = 0;
-                        if ("小针筒" == s_syringeType || "Little Syringe" == s_syringeType)
-                            d_blRErr = Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? Convert.ToDouble(string.Format("{0:F2}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_S_Weight)) : Convert.ToDouble(string.Format("{0:F3}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_S_Weight));
-                        else
-                            d_blRErr = Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? Convert.ToDouble(string.Format("{0:F2}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_B_Weight)) : Convert.ToDouble(string.Format("{0:F3}", kvp.Value - Lib_Card.Configure.Parameter.Correcting_B_Weight));
-                        ;
-
-                        //查询开料日期
-                        DataTable dt_bottle_details2 = FADM_Object.Communal._fadmSqlserver.GetData(
-                                    "SELECT * FROM bottle_details WHERE  BottleNum = " + i_minBottleNo + ";");
-
-                        if (0.00 != kvp.Value)
-                        {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                            "UPDATE abs_drop_details SET Finish = 1,RealDropWeight = ObjectDropWeight + " + d_blRErr + " ,BrewingData = '" + dt_bottle_details2.Rows[0]["BrewingData"].ToString() + "' " +
-                            "WHERE BatchName = '" + oBatchName + "' AND BottleNum = " + i_minBottleNo + " AND " +
-                            "CupNum = " + kvp.Key + ";");
-
-                            DataTable dt_drop_details2 = FADM_Object.Communal._fadmSqlserver.GetData(
-                                "SELECT * FROM abs_drop_details WHERE BatchName = '" + oBatchName + "' AND BottleNum = " + i_minBottleNo + " AND CupNum = " + kvp.Key + ";");
-                            //FADM_Object.Communal._fadmSqlserver.ReviseData(
-                            //    "UPDATE cup_details SET TotalWeight = TotalWeight+ " + dt_drop_details2.Rows[0]["RealDropWeight"] + " WHERE CupNum = " + kvp.Key + ";");
-
-                            //母液瓶扣减
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                "UPDATE bottle_details SET CurrentWeight = CurrentWeight - " + dt_drop_details2.Rows[0]["RealDropWeight"] + " " +
-                                "WHERE BottleNum = '" + i_minBottleNo + "';");
-
-                            ////置位完成标志位
-                            //FADM_Object.Communal._fadmSqlserver.ReviseData(
-                            //    "UPDATE drop_details SET Finish = 1 WHERE BatchName = '" + o_BatchName + "' AND " +
-                            //    "BottleNum = " + _i_minBottleNo + " AND CupNum = " + dic_pulse.First().Key + ";");
-                        }
-                        else
-                        {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                           "UPDATE abs_drop_details SET Finish = 1,RealDropWeight = 0.00 " + " ,BrewingData = '" + dt_bottle_details2.Rows[0]["BrewingData"].ToString() + "' " +
-                           "WHERE BatchName = '" + oBatchName + "' AND BottleNum = " + i_minBottleNo + " AND " +
-                           "CupNum = " + kvp.Key + ";");
-                        }
-
-                    }
-                }
+                
 
                 //更新需要加药第一杯脉冲
                 s_sql = "UPDATE abs_drop_details SET NeedPulse = " + Communal._i_needPulse+" WHERE BatchName = '" + oBatchName + "'  And " +
@@ -2036,10 +2116,10 @@ namespace SmartDyeing.FADM_Auto
                 FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
                 MyAlarm myAlarm;
                 if (Lib_Card.Configure.Parameter.Other_Language == 0)
-                    myAlarm = new FADM_Object.MyAlarm(i_minBottleNo + "号母液瓶预滴液数值太小,请检查实际是否液量过低?(继续执行请点是)", "Drip", i_minBottleNo, 2, 10,true);
+                    myAlarm = new FADM_Object.MyAlarm(i_minBottleNo + "号母液瓶预滴液数值太小,请检查实际是否液量过低?(继续执行请点是)", "Drip", i_minBottleNo, 2, 20);
                 else
                     myAlarm = new FADM_Object.MyAlarm( " The number of pre-drops in mother liquor bottle "+i_minBottleNo +"  is too small, please check whether the actual amount of liquid is too low" +
-                        "( Continue to perform please click Yes)", "Drip", i_minBottleNo, 2, 10, true);
+                        "( Continue to perform please click Yes)", "Drip", i_minBottleNo, 2, 20);
 
                 //回一次原点再继续，担心失步导致后续母液抽不了
                 int i_state = MyModbusFun.goHome();
@@ -2080,7 +2160,6 @@ namespace SmartDyeing.FADM_Auto
 
                 s_alarmBottleNo = s_alarmBottleNo.Remove(s_alarmBottleNo.Length - 1);
                 FADM_Object.Communal.WriteDripWait(true);
-                Communal._b_isAllowDrip = false;
                 FADM_Object.MyAlarm myAlarm;
                 if (Lib_Card.Configure.Parameter.Other_Language == 0)
                     myAlarm = new FADM_Object.MyAlarm(s_alarmBottleNo + "号母液瓶液量过低，是否继续滴液?", "滴液", true, 1);
@@ -2092,13 +2171,11 @@ namespace SmartDyeing.FADM_Auto
                         break;
                     Thread.Sleep(1);
                 }
-                Communal._b_isAllowDrip = true;
                 //判断染色线程是否需要用机械手
                 if (null != FADM_Object.Communal.ReadDyeThread())
                 {
                     FADM_Object.Communal.WriteDripWait(true);
                     Communal._b_isWaitDrip = true;
-                    Communal._b_isAllowDrip = true;
                     while (true)
                     {
                         if (false == FADM_Object.Communal.ReadDripWait())
@@ -2148,7 +2225,6 @@ namespace SmartDyeing.FADM_Auto
 
                 s_alarmBottleNo = s_alarmBottleNo.Remove(s_alarmBottleNo.Length - 1);
                 FADM_Object.Communal.WriteDripWait(true);
-                Communal._b_isAllowDrip = false;
                 FADM_Object.MyAlarm myAlarm;
                 if (Lib_Card.Configure.Parameter.Other_Language == 0)
                     myAlarm = new FADM_Object.MyAlarm(s_alarmBottleNo + "号母液瓶过期，是否继续滴液?", "滴液", true, 1);
@@ -2160,13 +2236,11 @@ namespace SmartDyeing.FADM_Auto
                         break;
                     Thread.Sleep(1);
                 }
-                Communal._b_isAllowDrip = true;
                 //判断染色线程是否需要用机械手
                 if (null != FADM_Object.Communal.ReadDyeThread())
                 {
                     FADM_Object.Communal.WriteDripWait(true);
                     Communal._b_isWaitDrip = true;
-                    Communal._b_isAllowDrip = true;
                     while (true)
                     {
                         if (false == FADM_Object.Communal.ReadDripWait())
@@ -2216,24 +2290,21 @@ namespace SmartDyeing.FADM_Auto
 
                 s_alarmBottleNo = s_alarmBottleNo.Remove(s_alarmBottleNo.Length - 1);
                 FADM_Object.Communal.WriteDripWait(true);
-                Communal._b_isAllowDrip = false;
                 FADM_Object.MyAlarm myAlarm;
                 if (Lib_Card.Configure.Parameter.Other_Language == 0)
-                    myAlarm = new FADM_Object.MyAlarm(s_alarmBottleNo + "号母液瓶未检测到针筒，是否继续滴液 ? ", "滴液", true, 1, true);
+                    myAlarm = new FADM_Object.MyAlarm(s_alarmBottleNo + "号母液瓶未检测到针筒，是否继续滴液 ? ", "滴液", true, 1);
                 else
-                    myAlarm = new FADM_Object.MyAlarm(s_alarmBottleNo + " bottle did not find a syringe. Do you want to continue? ", "Drip", true, 1, true);
+                    myAlarm = new FADM_Object.MyAlarm(s_alarmBottleNo + " bottle did not find a syringe. Do you want to continue? ", "Drip", true, 1);
                 while (true)
                 {
                     if (0 != myAlarm._i_alarm_Choose)
                         break;
                     Thread.Sleep(1);
                 }
-                Communal._b_isAllowDrip = true;
                 //判断染色线程是否需要用机械手
                 if (null != FADM_Object.Communal.ReadDyeThread())
                 {
                     FADM_Object.Communal.WriteDripWait(true);
-                    Communal._b_isAllowDrip = true;
                     Communal._b_isWaitDrip = true;
                     while (true)
                     {
@@ -2271,7 +2342,6 @@ namespace SmartDyeing.FADM_Auto
         //滴液完成    
         label6:
             FADM_Object.Communal.WriteDripWait(true);
-            Communal._b_isAllowDrip = false;
             if (!b_chooseNo)
             {
                 lab_Re:
@@ -2291,7 +2361,6 @@ namespace SmartDyeing.FADM_Auto
                             {
                                 FADM_Object.Communal.WriteDripWait(true);
                                 Communal._b_isWaitDrip = true;
-                                Communal._b_isAllowDrip = true;
                                 while (true)
                                 {
                                     if (false == FADM_Object.Communal.ReadDripWait())
@@ -2333,7 +2402,7 @@ namespace SmartDyeing.FADM_Auto
             if (null != thread)
                 thread.Join();
 
-            if (FADM_Object.Communal._b_isFinishSend)
+            //if (FADM_Object.Communal._b_isFinishSend)
             {
                 //把由于超期，液量低跳过的所有置为不合格
                 FADM_Object.Communal._fadmSqlserver.ReviseData(
@@ -2363,7 +2432,6 @@ namespace SmartDyeing.FADM_Auto
                         s_cupNo = s_cupNo.Remove(s_cupNo.Length - 1);
 
                         FADM_Object.Communal.WriteDripWait(true);
-                        Communal._b_isAllowDrip = false;
                         FADM_Object.MyAlarm myAlarm;
                         if (Lib_Card.Configure.Parameter.Other_Language == 0)
                             myAlarm = new FADM_Object.MyAlarm(s_cupNo + "号配液杯滴液失败，是否继续(重新滴液请点是，退出滴液请点否)?", "滴液", true, 1);
@@ -2377,13 +2445,11 @@ namespace SmartDyeing.FADM_Auto
                                 break;
                             Thread.Sleep(1);
                         }
-                        Communal._b_isAllowDrip = true;
                         //判断染色线程是否需要用机械手
                         if (null != FADM_Object.Communal.ReadDyeThread())
                         {
                             FADM_Object.Communal.WriteDripWait(true);
                             Communal._b_isWaitDrip = true;
-                            Communal._b_isAllowDrip = true;
                             while (true)
                             {
                                 if (false == FADM_Object.Communal.ReadDripWait())
@@ -2397,7 +2463,7 @@ namespace SmartDyeing.FADM_Auto
                             Communal._b_isWaitDrip = false;
                             FADM_Object.Communal.WriteDripWait(false);
                         }
-
+                        List<int> lis_iWash = new List<int>();
                         if (1 == myAlarm._i_alarm_Choose)
                         {
                             //先把滴液区域重置
@@ -2414,15 +2480,191 @@ namespace SmartDyeing.FADM_Auto
                                         "UPDATE abs_drop_details SET Finish = 0, MinWeight = 0, RealDropWeight = 0.00 , NeedPulse = 0" +
                                         "WHERE BatchName = '" + oBatchName + "' AND CupNum = " + lis_cupFailT[i] + ";");
                                     int Num = lis_cupFailT[i];
-                                    lis_cupFailT.Remove(lis_cupFailT[i]);
-                                    lis_cupSuc.Remove(Num);
+
+                                    if (!lis_iWash.Contains(Num))
+                                        lis_iWash.Add(Num);
+
+                                    //先发一个停止，再发一个洗杯
+                                    int[] values1 = new int[1];
+                                    values1[0] = 2;
+                                    if (Convert.ToInt32(Num) == 1)
+                                        FADM_Object.Communal._tcpModBusAbs.Write(13088, values1);
+                                    else if (Convert.ToInt32(Num) == 2)
+                                        FADM_Object.Communal._tcpModBusAbs.Write(13098, values1);
+                                    else if (Convert.ToInt32(Num) == 3)
+                                        FADM_Object.Communal._tcpModBusAbs.Write(13108, values1);
+                                    else if (Convert.ToInt32(Num) == 4)
+                                        FADM_Object.Communal._tcpModBusAbs.Write(13118, values1);
+
+                                    //判断待机后再发洗杯
+                                    while (true)
+                                    {
+                                        if (MyAbsorbance._abs_Temps[Convert.ToInt32(Num) - 1]._s_currentState == "1")
+                                            break;
+                                    }
+
+                                    //发送洗杯
+                                    SmartDyeing.FADM_Auto.MyAbsorbance.Generate(2, Num);
+                                    SmartDyeing.FADM_Auto.MyAbsorbance.SendData(Num);
                                 }
 
+
+
+                            }
+
+                            while (true)
+                            {
+                                if (lis_iWash.Contains(1))
+                                {
+                                    if (MyAbsorbance._abs_Temps[0]._s_currentState == "1")
+                                    {
+                                        //判断是否整个洗杯流程完成
+                                         s_sql = "SELECT *  FROM Abs_details where CupNum = " + 1 + " And Finish = 0 order by StepNum;";
+
+                                        DataTable dt_temp = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+
+                                        if (dt_temp.Rows.Count == 0)
+                                            lis_iWash.Remove(1);
+                                    }
+                                }
+                                else if (lis_iWash.Contains(3))
+                                {
+                                    if (MyAbsorbance._abs_Temps[2]._s_currentState == "1")
+                                    {
+                                        //判断是否整个洗杯流程完成
+                                         s_sql = "SELECT *  FROM Abs_details where CupNum = " + 3 + " And Finish = 0 order by StepNum;";
+
+                                        DataTable dt_temp = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+
+                                        if (dt_temp.Rows.Count == 0)
+                                            lis_iWash.Remove(3);
+                                    }
+                                }
+                                if (lis_iWash.Count == 0)
+                                    break;
+                                Thread.Sleep(1000);
+                            }
+
+
+
+                            //写入滴液状态
+                            for (int i = lis_cupFailT.Count - 1; i >= 0; i--)
+                            {
+                                int i_cupNum = lis_cupFailT[i];
+                                //配液
+                                SmartDyeing.FADM_Auto.MyAbsorbance.Generate(3, i_cupNum);
+                                SmartDyeing.FADM_Auto.MyAbsorbance.SendData(i_cupNum);
+                            }
+
+                            if (lis_cupFailT.Contains(1))
+                            {
+                                //等待准备状态
+                                while (true)
+                                {
+                                    //判断两个杯是否都可以注液
+                                    if (MyAbsorbance._abs_Temps[0]._s_request == "4")
+                                        break;
+
+                                    Thread.Sleep(1000);
+                                }
+                            }
+                            if (lis_cupFailT.Contains(3))
+                            {
+                                //等待准备状态
+                                while (true)
+                                {
+                                    //判断两个杯是否都可以注液
+                                    if (MyAbsorbance._abs_Temps[2]._s_request == "4")
+                                        break;
+
+                                    Thread.Sleep(1000);
+                                }
                             }
                             //重新滴液时重新清一下
                             this.DripProcess(oBatchName);
                         }
-                        
+                        else
+                        {
+                            if(lis_cupFailT.Contains(1))
+                            {
+                                FADM_Object.Communal._b_use[0] = false;
+
+                                Thread thread33 = new Thread(() =>
+                                {
+                                    //等待没有交互时再发送停止
+                                    //while (true)
+                                    //{
+                                    //    if (MyAbsorbance._abs_Temps[Convert.ToInt32(_cup.NO) - 1]._s_request == "0")
+                                    //    {
+                                    //        break;
+                                    //    }
+                                    //}
+
+                                    //先发一个停止，再发一个洗杯
+                                    int[] values1 = new int[1];
+                                    values1[0] = 2;
+                                        FADM_Object.Communal._tcpModBusAbs.Write(13088, values1);
+
+                                    //判断待机后再发洗杯
+                                    while (true)
+                                    {
+                                        if (MyAbsorbance._abs_Temps[0]._s_currentState == "1")
+                                            break;
+                                    }
+
+                                    s_sql = "UPDATE abs_cup_details SET Statues='洗杯',IsUsing = 1,Type=0  WHERE CupNum = " + 1+ " ;";
+                                    FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
+
+                                    SmartDyeing.FADM_Auto.MyAbsorbance.Generate(2, 1);
+                                    SmartDyeing.FADM_Auto.MyAbsorbance.SendData(1);
+
+
+
+
+                                });
+                                thread33.Start();
+                            }
+                            if (lis_cupFailT.Contains(3))
+                            {
+                                FADM_Object.Communal._b_use[2] = false;
+
+                                Thread thread33 = new Thread(() =>
+                                {
+                                    //等待没有交互时再发送停止
+                                    //while (true)
+                                    //{
+                                    //    if (MyAbsorbance._abs_Temps[Convert.ToInt32(_cup.NO) - 1]._s_request == "0")
+                                    //    {
+                                    //        break;
+                                    //    }
+                                    //}
+
+                                    //先发一个停止，再发一个洗杯
+                                    int[] values1 = new int[1];
+                                    values1[0] = 2;
+                                    FADM_Object.Communal._tcpModBusAbs.Write(13108, values1);
+
+                                    //判断待机后再发洗杯
+                                    while (true)
+                                    {
+                                        if (MyAbsorbance._abs_Temps[2]._s_currentState == "1")
+                                            break;
+                                    }
+
+                                    s_sql = "UPDATE abs_cup_details SET Statues='洗杯',IsUsing = 1,Type=0  WHERE CupNum = " + 3 + " ;";
+                                    FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
+
+                                    SmartDyeing.FADM_Auto.MyAbsorbance.Generate(2, 3);
+                                    SmartDyeing.FADM_Auto.MyAbsorbance.SendData(3);
+
+
+
+
+                                });
+                                thread33.Start();
+                            }
+                            
+                        }
 
                     }
                 }
@@ -2473,366 +2715,152 @@ namespace SmartDyeing.FADM_Auto
                 {
                     if (lis_cupSuc.Contains(Convert.ToInt32(row["CupNum"].ToString())))
                     {
-
-                        //计算混合液浓度
-                        FADM_Object.Communal._d_abs_mixture = 0;
-                        DataTable dt_drop_head_suc = FADM_Object.Communal._fadmSqlserver.GetData(
-                   "SELECT * FROM abs_drop_head WHERE   BatchName = '" + oBatchName + "' AND CupNum = " + row["CupNum"].ToString() + " ;");
-
-                        DataTable dt_drop_details_suc = FADM_Object.Communal._fadmSqlserver.GetData(
-                   "SELECT * FROM abs_drop_details WHERE   BatchName = '" + oBatchName + "' AND CupNum = " + row["CupNum"].ToString() + " ;");
-                        //混合液总重量
-                        double d_sum= 0;
-                        
-                        //混合液纯含量
-                        double d_wei = 0;
-
-                        //if(dt_drop_head_suc.Rows.Count > 0)
-                        //{
-                        //    d_sum += Convert.ToDouble(dt_drop_head_suc.Rows[0]["RealAddWaterWeight"].ToString());
-                        //}
-                        //foreach (DataRow row_suc in dt_drop_details_suc.Rows)
-                        //{
-                        //    d_sum += Convert.ToDouble(row_suc["RealDropWeight"].ToString()) ;
-                        //}
-                        //foreach (DataRow row_suc in dt_drop_details_suc.Rows)
-                        //{
-                        //    d_wei += Convert.ToDouble(row_suc["RealDropWeight"].ToString())* Convert.ToDouble(row_suc["RealConcentration"].ToString());
-                        //}
-                        //if (d_sum > 0)
-                        //    FADM_Object.Communal._d_abs_mixture = d_wei / d_sum;
-
-                        FADM_Object.Communal._d_abs_mixture = Convert.ToDouble(dt_drop_head_suc.Rows[0]["ClothWeight"].ToString()) / Convert.ToDouble(dt_drop_head_suc.Rows[0]["TotalWeight"].ToString());
-
-                        FADM_Object.Communal._fadmSqlserver.ReviseData(
-                        "INSERT INTO abs_history_head (" + s_columnHead + ") (SELECT " + s_columnHead + " FROM abs_drop_head " +
-                        "WHERE BatchName = '" + oBatchName + "' AND CupNum = " + row["CupNum"].ToString() + ") ;");
-
-                        //FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "INSERT INTO history_head (" + s_columnHead + ") (SELECT " + s_columnHead + " FROM drop_head " +
-                        //    "WHERE BatchName = '" + o_BatchName + "' AND CupNum >= " + _i_cupMin + " AND CupNum <= " + _i_cupMax + s_te + ");");
-
-
-                        FADM_Object.Communal._fadmSqlserver.ReviseData(
-                           "INSERT INTO abs_history_details (" + s_columnDetails + ") (SELECT " + s_columnDetails + " FROM abs_drop_details " +
-                           "WHERE BatchName = '" + oBatchName + "' AND CupNum = " + row["CupNum"].ToString() + ") ;");
-
-                        //滴液
-                        //if (SmartDyeing.FADM_Object.Communal._lis_dripCupNum.Contains(Convert.ToInt32(row["CupNum"].ToString())))
+                        if (Convert.ToInt32(row["CupNum"].ToString()) == 1)
                         {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                  "DELETE FROM abs_drop_head WHERE CupNum = " + row["CupNum"].ToString() + " AND BatchName = '" + oBatchName + "' ;");
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                "DELETE FROM abs_drop_details WHERE CupNum = " + row["CupNum"].ToString() + " AND BatchName = '" + oBatchName + "' ;");
+                            //计算混合液浓度
+                            FADM_Object.Communal._d_abs_mixture = 0;
+                            DataTable dt_drop_head_suc = FADM_Object.Communal._fadmSqlserver.GetData(
+                       "SELECT * FROM abs_drop_head WHERE   BatchName = '" + oBatchName + "' AND CupNum = " + row["CupNum"].ToString() + " ;");
 
+                            DataTable dt_drop_details_suc = FADM_Object.Communal._fadmSqlserver.GetData(
+                       "SELECT * FROM abs_drop_details WHERE   BatchName = '" + oBatchName + "' AND CupNum = " + row["CupNum"].ToString() + " ;");
+                            //混合液总重量
+                            double d_sum = 0;
 
-                            //FADM_Object.Communal._fadmSqlserver.ReviseData(
-                            //    "UPDATE cup_details SET FormulaCode = null, " +
-                            //    "DyeingCode = null, IsUsing = 0, Statues = '待机', " +
-                            //    "StartTime = null, SetTemp = null, StepNum = null, TotalWeight = null, " +
-                            //    "TotalStep = null, TechnologyName = null, StepStartTime = null, SetTime = null,RecordIndex = 0 WHERE CupNum = " +
-                            //    row["CupNum"].ToString() + " ;");
-                        }
-                    }
-                }
+                            //混合液纯含量
+                            double d_wei = 0;
 
+                            //配方用量
+                            double d_sum_do = 0;
 
-            }
-            else
-            {
-                s_sql = "UPDATE abs_drop_head SET CupFinish = 1 WHERE BatchName = '" + oBatchName + "'  ;";
-                FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
-
-                //获取滴液不合格记录
-                dt_drop_head = FADM_Object.Communal._fadmSqlserver.GetData(
-                   "SELECT abs_drop_details.CupNum as CupNum, " +
-                   "abs_drop_details.BottleNum as BottleNum, " +
-                   "abs_drop_details.ObjectDropWeight as ObjectDropWeight, " +
-                   "abs_drop_details.RealDropWeight as RealDropWeight, " +
-                   "bottle_details.SyringeType as SyringeType " +
-                   "FROM abs_drop_details left join bottle_details on " +
-                   "bottle_details.BottleNum = abs_drop_details.BottleNum " +
-                   "WHERE abs_drop_details.BatchName = '" + oBatchName + "' ;");
-                List<int> lis_cupFailD = new List<int>();
-                List<int> lis_cupFailT = new List<int>();
-                foreach (DataRow dr in dt_drop_head.Rows)
-                {
-                    double d_blRealErr = Convert.ToDouble(Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? string.Format("{0:F2}",
-                        Convert.ToDouble(dr["ObjectDropWeight"]) - Convert.ToDouble(dr["RealDropWeight"])): string.Format("{0:F3}",
-                        Convert.ToDouble(dr["ObjectDropWeight"]) - Convert.ToDouble(dr["RealDropWeight"])));
-                    d_blRealErr = d_blRealErr < 0 ? -d_blRealErr : d_blRealErr;
-                    if (d_blRealErr > Lib_Card.Configure.Parameter.Other_AErr_Drip)
-                        lis_cupFailD.Add(Convert.ToInt32(dr["CupNum"]));
-                }
-                lis_cupFailD = lis_cupFailD.Distinct().ToList();
-
-
-
-                lis_cupT = new List<int>();
-                //滴液成功，转换到历史表杯号
-                lis_cupSuc = new List<int>();
-                string s_cupNo = null;
-
-                dt_drop_head = FADM_Object.Communal._fadmSqlserver.GetData(
-                    "SELECT * FROM abs_drop_head WHERE BatchName = '" + oBatchName + "'    ORDER BY CupNum ;");
-                foreach (DataRow dr in dt_drop_head.Rows)
-                {
-                    int i_cup = Convert.ToInt16(dr["CupNum"]);
-                    int i_step = Convert.ToInt16(dr["Step"]);
-                    double d_objWater = Convert.ToDouble(dr["ObjectAddWaterWeight"]);
-                    double d_realWater = Convert.ToDouble(dr["RealAddWaterWeight"]);
-                    double d_totalWeight = Convert.ToDouble(dr["TotalWeight"]);
-                    double d_testTubeObjectAddWaterWeight = Convert.ToDouble(dr["TestTubeObjectAddWaterWeight"]);
-                    double d_testTubeRealAddWaterWeight = Convert.ToDouble(dr["TestTubeRealAddWaterWeight"]);
-                    if (i_step == 1)
-                        lis_cupSuc.Add(i_cup);
-                    lis_cupT.Add(i_cup);
-                    double d_realDif = Convert.ToDouble(Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? string.Format("{0:F}", d_realWater - d_objWater): string.Format("{0:F3}", d_realWater - d_objWater));
-                    d_realDif = d_realDif < 0 ? -d_realDif : d_realDif;
-                    double d_allDif = Convert.ToDouble(Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? string.Format("{0:F}",
-                        d_totalWeight * Convert.ToDouble(Lib_Card.Configure.Parameter.Other_AErr_DripWater / 100.00)): string.Format("{0:F3}",
-                        d_totalWeight * Convert.ToDouble(Lib_Card.Configure.Parameter.Other_AErr_DripWater / 100.00)));
-                    string s_describe;
-                    string s_describe_EN;
-
-                    //只判断当前滴液的数据
-                    if (i_step == 1)
-                    {
-                        if (d_allDif < d_realDif || (d_realWater == 0.0 && d_objWater > 0))
-                        {
-                            //加水失败
-                            s_describe = "滴液失败!目标加水:" + (Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? string.Format("{0:F}", d_objWater): string.Format("{0:F3}", d_objWater)) +
-                                             ",实际加水:" + (Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? string.Format("{0:F}", d_realWater): string.Format("{0:F3}", d_realWater));
-                            s_describe_EN = "Drip Fail !ObjectAddWaterWeight:" + (Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? string.Format("{0:F}", d_objWater) : string.Format("{0:F3}", d_objWater)) +
-                                             ",RealAddWaterWeight:" + (Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? string.Format("{0:F}", d_realWater) : string.Format("{0:F3}", d_realWater));
-                            lis_cupFailT.Add(i_cup);
-                            s_cupNo += i_cup.ToString() + "; ";
-                            //FADM_Object.Communal._fadmSqlserver.ReviseData(
-                            //    "UPDATE cup_details SET Statues = '滴液失败' WHERE CupNum = " + i_cup + ";");
-
-                        }
-                        else
-                        {
-                            //加水成功
-                            if (lis_cupFailD.Contains(i_cup))
+                            if (dt_drop_head_suc.Rows.Count > 0)
                             {
-                                //滴液失败
-                                s_describe = "滴液失败!目标加水:" + (Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? string.Format("{0:F}", d_objWater) : string.Format("{0:F3}", d_objWater)) +
-                                            ",实际加水:" + (Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? string.Format("{0:F}", d_realWater) : string.Format("{0:F3}", d_realWater));
-                                s_describe_EN = "Drip Fail !ObjectAddWaterWeight:" + (Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? string.Format("{0:F}", d_objWater) : string.Format("{0:F3}", d_objWater)) +
-                                             ",RealAddWaterWeight:" + (Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? string.Format("{0:F}", d_realWater) : string.Format("{0:F3}", d_realWater));
-                                lis_cupFailT.Add(i_cup);
-                                s_cupNo += i_cup.ToString() + "; ";
+                                d_sum += Convert.ToDouble(dt_drop_head_suc.Rows[0]["RealAddWaterWeight"].ToString());
+                            }
+                            foreach (DataRow row_suc in dt_drop_details_suc.Rows)
+                            {
+                                d_sum += Convert.ToDouble(row_suc["RealDropWeight"].ToString());
+                            }
+                            foreach (DataRow row_suc in dt_drop_details_suc.Rows)
+                            {
+                                d_sum_do += Convert.ToDouble(row_suc["FormulaDosage"].ToString());
+                            }
+                            foreach (DataRow row_suc in dt_drop_details_suc.Rows)
+                            {
+                                d_wei += Convert.ToDouble(row_suc["RealDropWeight"].ToString()) * Convert.ToDouble(row_suc["RealConcentration"].ToString());
+                            }
+                            //if (d_sum > 0)
+                            //    FADM_Object.Communal._d_abs_mixture = d_wei / d_sum;
+                            // FADM_Object.Communal._d_abs_mixture = 0.01;
+                            FADM_Object.Communal._d_abs_mixture = Convert.ToDouble(dt_drop_head_suc.Rows[0]["ClothWeight"].ToString()) /
+                        Convert.ToDouble(dt_drop_head_suc.Rows[0]["TotalWeight"].ToString());
+
+                            //FADM_Object.Communal._d_abs_mixture = Convert.ToDouble(dt_drop_head_suc.Rows[0]["TotalWeight"].ToString()) * 0.01 * d_sum_do * 0.01;
+
+                            FADM_Object.Communal._fadmSqlserver.ReviseData(
+                            "INSERT INTO abs_history_head (" + s_columnHead + ") (SELECT " + s_columnHead + " FROM abs_drop_head " +
+                            "WHERE BatchName = '" + oBatchName + "' AND CupNum = " + row["CupNum"].ToString() + ") ;");
+
+                            //FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "INSERT INTO history_head (" + s_columnHead + ") (SELECT " + s_columnHead + " FROM drop_head " +
+                            //    "WHERE BatchName = '" + o_BatchName + "' AND CupNum >= " + _i_cupMin + " AND CupNum <= " + _i_cupMax + s_te + ");");
+
+
+                            FADM_Object.Communal._fadmSqlserver.ReviseData(
+                               "INSERT INTO abs_history_details (" + s_columnDetails + ") (SELECT " + s_columnDetails + " FROM abs_drop_details " +
+                               "WHERE BatchName = '" + oBatchName + "' AND CupNum = " + row["CupNum"].ToString() + ") ;");
+
+                            //滴液
+                            //if (SmartDyeing.FADM_Object.Communal._lis_dripCupNum.Contains(Convert.ToInt32(row["CupNum"].ToString())))
+                            {
+                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                      "DELETE FROM abs_drop_head WHERE CupNum = " + row["CupNum"].ToString() + " AND BatchName = '" + oBatchName + "' ;");
+                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                    "DELETE FROM abs_drop_details WHERE CupNum = " + row["CupNum"].ToString() + " AND BatchName = '" + oBatchName + "' ;");
+
 
                                 //FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                //    "UPDATE cup_details SET Statues = '滴液失败' WHERE CupNum = " + i_cup + ";");
+                                //    "UPDATE cup_details SET FormulaCode = null, " +
+                                //    "DyeingCode = null, IsUsing = 0, Statues = '待机', " +
+                                //    "StartTime = null, SetTemp = null, StepNum = null, TotalWeight = null, " +
+                                //    "TotalStep = null, TechnologyName = null, StepStartTime = null, SetTime = null,RecordIndex = 0 WHERE CupNum = " +
+                                //    row["CupNum"].ToString() + " ;");
                             }
-                            else
+                        }
+                        else
+                        {
+                            //计算混合液浓度
+                            FADM_Object.Communal._d_abs_mixture_2 = 0;
+                            DataTable dt_drop_head_suc = FADM_Object.Communal._fadmSqlserver.GetData(
+                       "SELECT * FROM abs_drop_head WHERE   BatchName = '" + oBatchName + "' AND CupNum = " + row["CupNum"].ToString() + " ;");
+
+                            DataTable dt_drop_details_suc = FADM_Object.Communal._fadmSqlserver.GetData(
+                       "SELECT * FROM abs_drop_details WHERE   BatchName = '" + oBatchName + "' AND CupNum = " + row["CupNum"].ToString() + " ;");
+                            //混合液总重量
+                            double d_sum = 0;
+
+                            //混合液纯含量
+                            double d_wei = 0;
+
+                            //配方用量
+                            double d_sum_do = 0;
+
+                            foreach (DataRow row_suc in dt_drop_details_suc.Rows)
                             {
-                                //滴液成功
-                                s_describe = "滴液成功!目标加水:" + (Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? string.Format("{0:F}", d_objWater) : string.Format("{0:F3}", d_objWater)) +
-                                              ",实际加水:" + (Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? string.Format("{0:F}", d_realWater) : string.Format("{0:F3}", d_realWater));
-                                s_describe_EN = "Drip Success !ObjectAddWaterWeight:" + (Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? string.Format("{0:F}", d_objWater) : string.Format("{0:F3}", d_objWater)) +
-                                             ",RealAddWaterWeight:" + (Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? string.Format("{0:F}", d_realWater) : string.Format("{0:F3}", d_realWater));
-                                //if (SmartDyeing.FADM_Object.Communal._lis_dyeCupNum.Contains(i_cup))
-                                //{
-                                //    if (i_step == 1)
-                                //        FADM_Object.Communal._lis_dripSuccessCup.Add(i_cup);
-                                //}
+                                d_sum_do += Convert.ToDouble(row_suc["FormulaDosage"].ToString());
+                            }
+
+                            //if (dt_drop_head_suc.Rows.Count > 0)
+                            //{
+                            //    d_sum += Convert.ToDouble(dt_drop_head_suc.Rows[0]["RealAddWaterWeight"].ToString());
+                            //}
+                            //foreach (DataRow row_suc in dt_drop_details_suc.Rows)
+                            //{
+                            //    d_sum += Convert.ToDouble(row_suc["RealDropWeight"].ToString());
+                            //}
+                            //foreach (DataRow row_suc in dt_drop_details_suc.Rows)
+                            //{
+                            //    d_wei += Convert.ToDouble(row_suc["RealDropWeight"].ToString()) * Convert.ToDouble(row_suc["RealConcentration"].ToString());
+                            //}
+                            //if (d_sum > 0)
+                            //    FADM_Object.Communal._d_abs_mixture_2 = d_wei / d_sum;
+                            FADM_Object.Communal._d_abs_mixture_2 = Convert.ToDouble(dt_drop_head_suc.Rows[0]["ClothWeight"].ToString()) /
+                                   Convert.ToDouble(dt_drop_head_suc.Rows[0]["TotalWeight"].ToString());
+
+                            //FADM_Object.Communal._d_abs_mixture_2 = Convert.ToDouble(dt_drop_head_suc.Rows[0]["TotalWeight"].ToString()) * 0.01 * d_sum_do * 0.01;
+                            // FADM_Object.Communal._d_abs_mixture_2 = 0.01;
+                            FADM_Object.Communal._fadmSqlserver.ReviseData(
+                            "INSERT INTO abs_history_head (" + s_columnHead + ") (SELECT " + s_columnHead + " FROM abs_drop_head " +
+                            "WHERE BatchName = '" + oBatchName + "' AND CupNum = " + row["CupNum"].ToString() + ") ;");
+
+                            //FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "INSERT INTO history_head (" + s_columnHead + ") (SELECT " + s_columnHead + " FROM drop_head " +
+                            //    "WHERE BatchName = '" + o_BatchName + "' AND CupNum >= " + _i_cupMin + " AND CupNum <= " + _i_cupMax + s_te + ");");
+
+
+                            FADM_Object.Communal._fadmSqlserver.ReviseData(
+                               "INSERT INTO abs_history_details (" + s_columnDetails + ") (SELECT " + s_columnDetails + " FROM abs_drop_details " +
+                               "WHERE BatchName = '" + oBatchName + "' AND CupNum = " + row["CupNum"].ToString() + ") ;");
+
+                            //滴液
+                            //if (SmartDyeing.FADM_Object.Communal._lis_dripCupNum.Contains(Convert.ToInt32(row["CupNum"].ToString())))
+                            {
+                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                      "DELETE FROM abs_drop_head WHERE CupNum = " + row["CupNum"].ToString() + " AND BatchName = '" + oBatchName + "' ;");
+                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                    "DELETE FROM abs_drop_details WHERE CupNum = " + row["CupNum"].ToString() + " AND BatchName = '" + oBatchName + "' ;");
+
 
                                 //FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                //  "UPDATE cup_details SET Statues = '滴液成功' WHERE CupNum = " + i_cup + ";");
+                                //    "UPDATE cup_details SET FormulaCode = null, " +
+                                //    "DyeingCode = null, IsUsing = 0, Statues = '待机', " +
+                                //    "StartTime = null, SetTemp = null, StepNum = null, TotalWeight = null, " +
+                                //    "TotalStep = null, TechnologyName = null, StepStartTime = null, SetTime = null,RecordIndex = 0 WHERE CupNum = " +
+                                //    row["CupNum"].ToString() + " ;");
                             }
                         }
-
-                        FADM_Object.Communal._fadmSqlserver.ReviseData(
-                               "UPDATE abs_drop_head SET DescribeChar = '" + s_describe + "',DescribeChar_EN = '" + s_describe_EN + "', FinishTime = '" + DateTime.Now + "', Step = 2 " +
-                               "WHERE BatchName = '" + oBatchName + "' AND CupNum = " + i_cup + ";");
-                    }
-
-                }
-
-
-                if (FADM_Auto.ABS_Drip._b_dripErr == false)
-                {
-                    if (0 < lis_cupFailT.Count)
-                    {
-                        s_cupNo = s_cupNo.Remove(s_cupNo.Length - 1);
-
-                        FADM_Object.Communal.WriteDripWait(true);
-                        Communal._b_isAllowDrip = false;
-                        FADM_Object.MyAlarm myAlarm;
-                        if (Lib_Card.Configure.Parameter.Other_Language == 0)
-                            myAlarm = new FADM_Object.MyAlarm(s_cupNo + "号配液杯滴液失败，是否继续(重新滴液请点是，退出滴液请点否)?", "滴液", true, 1);
-                        else
-                            myAlarm = new FADM_Object.MyAlarm("The dispensing cup" + s_cupNo + "  failed to dispense liquid. Do you want to continue (please click Yes for re dispensing and No for exiting the dispensing)? ", "Drip", true, 1);
-
-                        while (true)
-                        {
-                            if (0 != myAlarm._i_alarm_Choose)
-                                break;
-                            Thread.Sleep(1);
-                        }
-                        Communal._b_isAllowDrip = true;
-                        //判断染色线程是否需要用机械手
-                        if (null != FADM_Object.Communal.ReadDyeThread())
-                        {
-                            FADM_Object.Communal.WriteDripWait(true);
-                            Communal._b_isWaitDrip = true;
-                            Communal._b_isAllowDrip = true;
-                            while (true)
-                            {
-                                if (false == FADM_Object.Communal.ReadDripWait())
-                                    break;
-                                Thread.Sleep(1);
-                            }
-                            Communal._b_isWaitDrip = false;
-                        }
-                        else
-                        {
-                            Communal._b_isWaitDrip = false;
-                            FADM_Object.Communal.WriteDripWait(false);
-                        }
-
-                        if (1 == myAlarm._i_alarm_Choose)
-                        {
-                            //先把滴液区域重置
-                            //滴液区
-                            for (int i = lis_cupFailT.Count - 1; i >= 0; i--)
-                            {
-                                //if (SmartDyeing.FADM_Object.Communal._lis_dripCupNum.Contains(lis_cupFailT[i]))
-                                {
-
-                                    FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                        "UPDATE abs_drop_head SET CupFinish = 0, AddWaterFinish = 0, RealAddWaterWeight = 0.00 , Step = 1,DescribeChar=null " +
-                                        "WHERE BatchName = '" + oBatchName + "' AND CupNum = " + lis_cupFailT[i] + ";");
-
-                                    FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                        "UPDATE abs_drop_details SET Finish = 0, MinWeight = 0, RealDropWeight = 0.00 , NeedPulse = 0" +
-                                        "WHERE BatchName = '" + oBatchName + "' AND CupNum = " + lis_cupFailT[i] + ";");
-                                    int i_num = lis_cupFailT[i];
-                                    lis_cupFailT.Remove(lis_cupFailT[i]);
-                                    lis_cupSuc.Remove(i_num);
-                                }
-
-                            }
-                            this.DripProcess(oBatchName);
-                        }
-
                     }
                 }
 
-                string s_cupList = "";
-                string s_te = "";
-                if (lis_cupSuc.Count > 0)
-                {
-                    for (int i = 0; i < lis_cupSuc.Count; i++)
-                    {
-                        s_cupList += lis_cupSuc[i] + ",";
-                    }
-                }
-                if (s_cupList != "")
-                {
-                    s_cupList = s_cupList.Remove(s_cupList.Length - 1);
-                    s_te = " And CupNum in (" + s_cupList + ")";
-                }
-                //添加历史表
-                dt_drop_head = FADM_Object.Communal._fadmSqlserver.GetData(
-                 "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'abs_drop_head';");
-                string s_columnHead = null;
-                foreach (DataRow row in dt_drop_head.Rows)
-                {
-                    string s_curName = Convert.ToString(row[0]);
-                    if ("TestTubeFinish" != s_curName && "TestTubeWaterLower" != s_curName && "AddWaterFinish" != s_curName &&
-                        "CupFinish" != s_curName && "TestTubeWaterLower" != s_curName)
-                        s_columnHead += s_curName + ", ";
-                }
-                s_columnHead = s_columnHead.Remove(s_columnHead.Length - 2);
 
-                dt_drop_head = FADM_Object.Communal._fadmSqlserver.GetData(
-                   "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'abs_drop_details';");
-                string s_columnDetails = null;
-                foreach (DataRow row in dt_drop_head.Rows)
-                {
-                    string s_curName = Convert.ToString(row[0]);
-                    if ("MinWeight" != s_curName && "Finish" != s_curName && "IsShow" != s_curName && "NeedPulse" != s_curName)
-                        s_columnDetails += Convert.ToString(row[0]) + ", ";
-                }
-                s_columnDetails = s_columnDetails.Remove(s_columnDetails.Length - 2);
-
-                dt_drop_head = FADM_Object.Communal._fadmSqlserver.GetData(
-                   "SELECT * FROM abs_drop_head WHERE   BatchName = '" + oBatchName + "' ;");
-
-                foreach (DataRow row in dt_drop_head.Rows)
-                {
-                    if (lis_cupSuc.Contains(Convert.ToInt32(row["CupNum"].ToString())))
-                    {
-
-                        //计算混合液浓度
-                        FADM_Object.Communal._d_abs_mixture = 0;
-                        DataTable dt_drop_head_suc = FADM_Object.Communal._fadmSqlserver.GetData(
-                   "SELECT * FROM abs_drop_head WHERE   BatchName = '" + oBatchName + "' AND CupNum = " + row["CupNum"].ToString() + " ;");
-
-                        DataTable dt_drop_details_suc = FADM_Object.Communal._fadmSqlserver.GetData(
-                   "SELECT * FROM abs_drop_details WHERE   BatchName = '" + oBatchName + "' AND CupNum = " + row["CupNum"].ToString() + " ;");
-                        //混合液总重量
-                        double d_sum = 0;
-
-                        //混合液纯含量
-                        double d_wei = 0;
-
-                        //if (dt_drop_head_suc.Rows.Count > 0)
-                        //{
-                        //    d_sum += Convert.ToDouble(dt_drop_head_suc.Rows[0]["RealAddWaterWeight"].ToString());
-                        //}
-                        //foreach (DataRow row_suc in dt_drop_details_suc.Rows)
-                        //{
-                        //    d_sum += Convert.ToDouble(row_suc["RealDropWeight"].ToString());
-                        //}
-                        //foreach (DataRow row_suc in dt_drop_details_suc.Rows)
-                        //{
-                        //    d_wei += Convert.ToDouble(row_suc["RealDropWeight"].ToString()) * Convert.ToDouble(row_suc["RealConcentration"].ToString());
-                        //}
-                        //if (d_sum > 0)
-                        //    FADM_Object.Communal._d_abs_mixture = d_wei / d_sum;
-
-                        FADM_Object.Communal._d_abs_mixture = Convert.ToDouble(dt_drop_head_suc.Rows[0]["ClothWeight"].ToString()) / Convert.ToDouble(dt_drop_head_suc.Rows[0]["TotalWeight"].ToString());
-
-                        FADM_Object.Communal._fadmSqlserver.ReviseData(
-                        "INSERT INTO abs_history_head (" + s_columnHead + ") (SELECT " + s_columnHead + " FROM abs_drop_head " +
-                        "WHERE BatchName = '" + oBatchName + "' AND CupNum = " + row["CupNum"].ToString() + ") ;");
-
-                        //FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "INSERT INTO history_head (" + s_columnHead + ") (SELECT " + s_columnHead + " FROM drop_head " +
-                        //    "WHERE BatchName = '" + o_BatchName + "' AND CupNum >= " + _i_cupMin + " AND CupNum <= " + _i_cupMax + s_te + ");");
-
-
-                        FADM_Object.Communal._fadmSqlserver.ReviseData(
-                           "INSERT INTO abs_history_details (" + s_columnDetails + ") (SELECT " + s_columnDetails + " FROM abs_drop_details " +
-                           "WHERE BatchName = '" + oBatchName + "' AND CupNum = " + row["CupNum"].ToString() + ") ;");
-
-                        //滴液
-                        //if (SmartDyeing.FADM_Object.Communal._lis_dripCupNum.Contains(Convert.ToInt32(row["CupNum"].ToString())))
-                        {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                  "DELETE FROM abs_drop_head WHERE CupNum = " + row["CupNum"].ToString() + " AND BatchName = '" + oBatchName + "' ;");
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                "DELETE FROM abs_drop_details WHERE CupNum = " + row["CupNum"].ToString() + " AND BatchName = '" + oBatchName + "' ;");
-
-
-                            //FADM_Object.Communal._fadmSqlserver.ReviseData(
-                            //    "UPDATE cup_details SET FormulaCode = null, " +
-                            //    "DyeingCode = null, IsUsing = 0, Statues = '待机', " +
-                            //    "StartTime = null, SetTemp = null, StepNum = null, TotalWeight = null, " +
-                            //    "TotalStep = null, TechnologyName = null, StepStartTime = null, SetTime = null,RecordIndex = 0 WHERE CupNum = " +
-                            //    row["CupNum"].ToString() + " ;");
-                        }
-                    }
-                }
-
-                if (FADM_Auto.ABS_Drip._b_dripErr)
-                {
-                    //FADM_Object.Communal._lis_dripStopCup.AddRange(lis_cupT);
-
-                }
             }
 
         }

@@ -13,7 +13,7 @@ namespace SmartDyeing.FADM_Object
     internal class IndependentDye
     {
         
-        public IndependentDye(List<FADM_Object.Data> lis_datas, int i)
+        public IndependentDye(List<FADM_Object.Data> lis_datas, int i,int i_type)
         {
             if (lis_datas.Count != 12)
             {
@@ -36,7 +36,7 @@ namespace SmartDyeing.FADM_Object
                 FADM_Object.Communal._sa_dyeConFTime[i] = "";
             }
 
-            for (int j = 0; j < lis_datas.Count; j++)
+            for (int j = 0; j < (i_type==7?8:lis_datas.Count); j++)
             {
                 int i_cupmin = 0;
                 if (i == 0)
@@ -461,10 +461,35 @@ namespace SmartDyeing.FADM_Object
                                     "UPDATE dye_details SET FinishTime = '" + DateTime.Now + "', Finish = 1 WHERE CupNum = " + i_cupNo +
                                     " AND StepNum = " + (Convert.ToInt16(dt_dye_details.Rows[0]["StepNum"].ToString())) + ";");
 
+                                if (dt_dye_details.Rows[0]["TechnologyName"].ToString() == "加A" || "Add A" == dt_dye_details.Rows[0]["TechnologyName"].ToString())
+                                {
+                                    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                    "UPDATE dye_details SET RealDropWeight = '" + Convert.ToDouble(lis_datas[j]._s_A).ToString("f2") + "' WHERE CupNum = " + i_cupNo +
+                                    " AND StepNum = " + (Convert.ToInt16(dt_dye_details.Rows[0]["StepNum"].ToString())) + ";");
+                                }
+                                else if (dt_dye_details.Rows[0]["TechnologyName"].ToString() == "加B" || "Add B" == dt_dye_details.Rows[0]["TechnologyName"].ToString()
+                                    || dt_dye_details.Rows[0]["TechnologyName"].ToString() == "加C" || "Add C" == dt_dye_details.Rows[0]["TechnologyName"].ToString()
+                                    || dt_dye_details.Rows[0]["TechnologyName"].ToString() == "加D" || "Add D" == dt_dye_details.Rows[0]["TechnologyName"].ToString()
+                                    || dt_dye_details.Rows[0]["TechnologyName"].ToString() == "加E" || "Add E" == dt_dye_details.Rows[0]["TechnologyName"].ToString()
+                                    || dt_dye_details.Rows[0]["TechnologyName"].ToString() == "加F" || "Add F" == dt_dye_details.Rows[0]["TechnologyName"].ToString()
+                                    || dt_dye_details.Rows[0]["TechnologyName"].ToString() == "加G" || "Add G" == dt_dye_details.Rows[0]["TechnologyName"].ToString()
+                                    || dt_dye_details.Rows[0]["TechnologyName"].ToString() == "加H" || "Add H" == dt_dye_details.Rows[0]["TechnologyName"].ToString()
+                                    || dt_dye_details.Rows[0]["TechnologyName"].ToString() == "加I" || "Add I" == dt_dye_details.Rows[0]["TechnologyName"].ToString()
+                                    || dt_dye_details.Rows[0]["TechnologyName"].ToString() == "加J" || "Add J" == dt_dye_details.Rows[0]["TechnologyName"].ToString()
+                                    || dt_dye_details.Rows[0]["TechnologyName"].ToString() == "加K" || "Add K" == dt_dye_details.Rows[0]["TechnologyName"].ToString()
+                                    || dt_dye_details.Rows[0]["TechnologyName"].ToString() == "加L" || "Add L" == dt_dye_details.Rows[0]["TechnologyName"].ToString()
+                                    || dt_dye_details.Rows[0]["TechnologyName"].ToString() == "加M" || "Add M" == dt_dye_details.Rows[0]["TechnologyName"].ToString()
+                                    || dt_dye_details.Rows[0]["TechnologyName"].ToString() == "加N" || "Add N" == dt_dye_details.Rows[0]["TechnologyName"].ToString()
+                                    )
+                                {
+                                    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                    "UPDATE dye_details SET RealDropWeight = '" + Convert.ToDouble(lis_datas[j]._s_B).ToString("f2") + "' WHERE CupNum = " + i_cupNo +
+                                    " AND StepNum = " + (Convert.ToInt16(dt_dye_details.Rows[0]["StepNum"].ToString())) + ";");
+                                }
 
                                 //查找第一个没完成的工艺
                                 s_sql = "SELECT * FROM dye_details WHERE CupNum = " + i_cupNo + " AND " +
-                                       "Finish = 0 Order by StepNum;";
+                                           "Finish = 0 Order by StepNum;";
                                 dt_dye_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
                                 if (0 == dt_dye_details.Rows.Count)
                                     continue;
@@ -563,15 +588,24 @@ namespace SmartDyeing.FADM_Object
                             //其他
                             else
                                 ai_zero[0] = 0x06;
+
+                            //if(i_type == 6)
+                            //{
+                            //    //12杯精密机先跳过加药
+                            //    if(ai_zero[0] == 0x02)
+                            //    {
+                            //        ai_zero[0] = 0x06;
+                            //    }
+                            //}
                             //启动
                             ai_zero[1] = 1;
 
                             //如果瓶号是200就是加A
-                            if(ai_zero[1] == 0x02)
+                            if(ai_zero[0] == 0x02)
                             {
-                                if (Convert.ToInt32(dt_dye_details.Rows[0]["BottleNum"]) == 200)
+                                if ("加A" == s_technologyName || "Add A" == s_technologyName)
                                 {
-                                    int i_w = Convert.ToInt32(Convert.ToDouble(dt_dye_details.Rows[0]["ObjectDropWeight"]) * 10);
+                                    int i_w = Convert.ToInt32(Convert.ToDouble(dt_dye_details.Rows[0]["ObjectDropWeight"]) * 100);
                                     int i_d0 = 0, i_d1 = 0, i_d2 = 0;
                                     i_d0 = i_w;
                                     i_d2 = i_d0 / 65536;
@@ -603,7 +637,7 @@ namespace SmartDyeing.FADM_Object
                                 {
                                     ai_zero[2] = 0;
                                     ai_zero[3] = 0;
-                                    int i_w = Convert.ToInt32(Convert.ToDouble(dt_dye_details.Rows[0]["ObjectDropWeight"]) * 10);
+                                    int i_w = Convert.ToInt32(Convert.ToDouble(dt_dye_details.Rows[0]["ObjectDropWeight"]) * 100);
                                     int i_d0 = 0, i_d1 = 0, i_d2 = 0;
                                     i_d0 = i_w;
                                     i_d2 = i_d0 / 65536;

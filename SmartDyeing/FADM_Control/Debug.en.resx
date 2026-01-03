@@ -703,6 +703,69 @@
   <data name="groupBox5.Text" xml:space="preserve">
     <value>FixedPointMove</value>
   </data>
+  <data name="RdoPHTest.Location" type="System.Drawing.Point, System.Drawing">
+    <value>167, 337</value>
+  </data>
+  <data name="RdoPHTest.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 23</value>
+  </data>
+  <data name="RdoPHTest.Text" xml:space="preserve">
+    <value>PHTest</value>
+  </data>
+  <data name="RdoWashBottle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>281, 336</value>
+  </data>
+  <data name="RdoWashBottle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>127, 23</value>
+  </data>
+  <data name="RdoWashBottle.Text" xml:space="preserve">
+    <value>WashBottle</value>
+  </data>
+  <data name="RdoSysFinish.Location" type="System.Drawing.Point, System.Drawing">
+    <value>29, 337</value>
+  </data>
+  <data name="RdoSysFinish.Size" type="System.Drawing.Size, System.Drawing">
+    <value>117, 23</value>
+  </data>
+  <data name="RdoSysFinish.Text" xml:space="preserve">
+    <value>SysFinish</value>
+  </data>
+  <data name="RdoPower.Location" type="System.Drawing.Point, System.Drawing">
+    <value>281, 309</value>
+  </data>
+  <data name="RdoPower.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 23</value>
+  </data>
+  <data name="RdoPower.Text" xml:space="preserve">
+    <value>Power</value>
+  </data>
+  <data name="RdoBrew.Location" type="System.Drawing.Point, System.Drawing">
+    <value>168, 310</value>
+  </data>
+  <data name="RdoBrew.Size" type="System.Drawing.Size, System.Drawing">
+    <value>67, 23</value>
+  </data>
+  <data name="RdoBrew.Text" xml:space="preserve">
+    <value>Brew</value>
+  </data>
+  <data name="RdoSalinity.Location" type="System.Drawing.Point, System.Drawing">
+    <value>29, 310</value>
+  </data>
+  <data name="RdoSalinity.Size" type="System.Drawing.Size, System.Drawing">
+    <value>107, 23</value>
+  </data>
+  <data name="RdoSalinity.Text" xml:space="preserve">
+    <value>Salinity</value>
+  </data>
+  <data name="RdoPH.Location" type="System.Drawing.Point, System.Drawing">
+    <value>29, 368</value>
+  </data>
+  <data name="RdoPH.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 23</value>
+  </data>
+  <data name="RdoPH.Text" xml:space="preserve">
+    <value>PH</value>
+  </data>
   <data name="RdoSupportCover.Location" type="System.Drawing.Point, System.Drawing">
     <value>281, 277</value>
   </data>
@@ -752,19 +815,19 @@
     <value>Wash</value>
   </data>
   <data name="button4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>315, 451</value>
+    <value>315, 487</value>
   </data>
   <data name="button4.Text" xml:space="preserve">
     <value>Generate-Coordinate</value>
   </data>
   <data name="button3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>171, 451</value>
+    <value>171, 487</value>
   </data>
   <data name="button3.Text" xml:space="preserve">
     <value>Write-Coordinate</value>
   </data>
   <data name="button2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>27, 451</value>
+    <value>27, 487</value>
   </data>
   <data name="button2.Text" xml:space="preserve">
     <value>Test-Coordinate</value>
@@ -851,16 +914,19 @@
     <value>MotherLiquidArea</value>
   </data>
   <data name="BtnStartMove.Location" type="System.Drawing.Point, System.Drawing">
-    <value>176, 350</value>
+    <value>176, 436</value>
+  </data>
+  <data name="BtnStartMove.Size" type="System.Drawing.Size, System.Drawing">
+    <value>147, 40</value>
   </data>
   <data name="BtnStartMove.Text" xml:space="preserve">
     <value>Start</value>
   </data>
   <data name="TxtNum.Location" type="System.Drawing.Point, System.Drawing">
-    <value>203, 309</value>
+    <value>203, 394</value>
   </data>
   <data name="label12.Location" type="System.Drawing.Point, System.Drawing">
-    <value>50, 314</value>
+    <value>50, 399</value>
   </data>
   <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
     <value>149, 19</value>

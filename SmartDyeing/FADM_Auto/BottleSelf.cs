@@ -184,12 +184,16 @@ namespace SmartDyeing.FADM_Auto
                 if ("收到退出消息" == ex.Message)
                 {
                     FADM_Object.Communal._b_stop = false;
+                    //解锁6工位
+                    MyModbusFun.UnLockSix();
                     MyModbusFun.MyMachineReset(); //里面会改状态WriteMachineStatus(0)
                     return;
 
                 }
                 else
                 {
+                    //解锁6工位
+                    MyModbusFun.UnLockSix();
                     FADM_Object.Communal.WriteMachineStatus(8);
                     if (ex.Message.Equals("-2"))
                     {
@@ -836,6 +840,9 @@ namespace SmartDyeing.FADM_Auto
                 }
                 FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", i_bottleNo + "号母液瓶放针完成");
                 thread.Join();
+
+                //解锁6工位
+                MyModbusFun.UnLockSix();
 
                 //更新自检记录到自检表
                 string s_sql = "SELECT  SelfChecking1,SelfChecking2,SelfChecking3,SelfChecking4,AdjustValue,CurrentAdjustWeight FROM  bottle_details where BottleNum = '" + i_bottleNo + "';";

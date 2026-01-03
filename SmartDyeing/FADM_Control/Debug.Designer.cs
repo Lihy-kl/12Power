@@ -69,6 +69,7 @@ namespace SmartDyeing.FADM_Control
             this.btn_reset_a = new System.Windows.Forms.Button();
             this.LabBalanceValue = new System.Windows.Forms.Label();
             this.grp_in = new System.Windows.Forms.GroupBox();
+            this.ChkInPut_Dye_Stop = new System.Windows.Forms.CheckBox();
             this.ChkInPut_Slow_Cylinder_Mid_3 = new System.Windows.Forms.CheckBox();
             this.ChkInPut_Slow_Cylinder_Mid_2 = new System.Windows.Forms.CheckBox();
             this.ChkInPut_SupportCover = new System.Windows.Forms.CheckBox();
@@ -127,6 +128,13 @@ namespace SmartDyeing.FADM_Control
             this.BtnOutPut_Y_Power = new System.Windows.Forms.Button();
             this.BtnOutPut_X_Power = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.RdoPHTest = new System.Windows.Forms.RadioButton();
+            this.RdoWashBottle = new System.Windows.Forms.RadioButton();
+            this.RdoSysFinish = new System.Windows.Forms.RadioButton();
+            this.RdoPower = new System.Windows.Forms.RadioButton();
+            this.RdoBrew = new System.Windows.Forms.RadioButton();
+            this.RdoSalinity = new System.Windows.Forms.RadioButton();
+            this.RdoPH = new System.Windows.Forms.RadioButton();
             this.RdoSupportCover = new System.Windows.Forms.RadioButton();
             this.RdoExtraction = new System.Windows.Forms.RadioButton();
             this.RdoStandBy = new System.Windows.Forms.RadioButton();
@@ -148,7 +156,6 @@ namespace SmartDyeing.FADM_Control
             this.TxtNum = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.Tmr = new System.Windows.Forms.Timer(this.components);
-            this.ChkInPut_Dye_Stop = new System.Windows.Forms.CheckBox();
             this.grp_move.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.grp_in.SuspendLayout();
@@ -158,6 +165,7 @@ namespace SmartDyeing.FADM_Control
             // 
             // grp_move
             // 
+            resources.ApplyResources(this.grp_move, "grp_move");
             this.grp_move.Controls.Add(this.BtnStop);
             this.grp_move.Controls.Add(this.TxtRPosY);
             this.grp_move.Controls.Add(this.TxtRPosX);
@@ -189,7 +197,6 @@ namespace SmartDyeing.FADM_Control
             this.grp_move.Controls.Add(this.label3);
             this.grp_move.Controls.Add(this.label2);
             this.grp_move.Controls.Add(this.label1);
-            resources.ApplyResources(this.grp_move, "grp_move");
             this.grp_move.Name = "grp_move";
             this.grp_move.TabStop = false;
             // 
@@ -362,9 +369,9 @@ namespace SmartDyeing.FADM_Control
             // 
             // groupBox2
             // 
+            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Controls.Add(this.btn_reset_a);
             this.groupBox2.Controls.Add(this.LabBalanceValue);
-            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
             // 
@@ -382,6 +389,7 @@ namespace SmartDyeing.FADM_Control
             // 
             // grp_in
             // 
+            resources.ApplyResources(this.grp_in, "grp_in");
             this.grp_in.Controls.Add(this.ChkInPut_Dye_Stop);
             this.grp_in.Controls.Add(this.ChkInPut_Slow_Cylinder_Mid_3);
             this.grp_in.Controls.Add(this.ChkInPut_Slow_Cylinder_Mid_2);
@@ -417,9 +425,14 @@ namespace SmartDyeing.FADM_Control
             this.grp_in.Controls.Add(this.ChkInPut_X_Ready);
             this.grp_in.Controls.Add(this.ChkInPut_X_Reverse);
             this.grp_in.Controls.Add(this.ChkInPut_X_Corotation);
-            resources.ApplyResources(this.grp_in, "grp_in");
             this.grp_in.Name = "grp_in";
             this.grp_in.TabStop = false;
+            // 
+            // ChkInPut_Dye_Stop
+            // 
+            resources.ApplyResources(this.ChkInPut_Dye_Stop, "ChkInPut_Dye_Stop");
+            this.ChkInPut_Dye_Stop.Name = "ChkInPut_Dye_Stop";
+            this.ChkInPut_Dye_Stop.UseVisualStyleBackColor = true;
             // 
             // ChkInPut_Slow_Cylinder_Mid_3
             // 
@@ -627,6 +640,7 @@ namespace SmartDyeing.FADM_Control
             // 
             // grp_out
             // 
+            resources.ApplyResources(this.grp_out, "grp_out");
             this.grp_out.Controls.Add(this.BtnOutPut_Slow_3);
             this.grp_out.Controls.Add(this.BtnOutPut_Slow_2);
             this.grp_out.Controls.Add(this.BtnOutPut_Dissolving);
@@ -649,7 +663,6 @@ namespace SmartDyeing.FADM_Control
             this.grp_out.Controls.Add(this.BtnOutPut_Tongs);
             this.grp_out.Controls.Add(this.BtnOutPut_Y_Power);
             this.grp_out.Controls.Add(this.BtnOutPut_X_Power);
-            resources.ApplyResources(this.grp_out, "grp_out");
             this.grp_out.Name = "grp_out";
             this.grp_out.TabStop = false;
             // 
@@ -809,6 +822,14 @@ namespace SmartDyeing.FADM_Control
             // 
             // groupBox5
             // 
+            resources.ApplyResources(this.groupBox5, "groupBox5");
+            this.groupBox5.Controls.Add(this.RdoPHTest);
+            this.groupBox5.Controls.Add(this.RdoWashBottle);
+            this.groupBox5.Controls.Add(this.RdoSysFinish);
+            this.groupBox5.Controls.Add(this.RdoPower);
+            this.groupBox5.Controls.Add(this.RdoBrew);
+            this.groupBox5.Controls.Add(this.RdoSalinity);
+            this.groupBox5.Controls.Add(this.RdoPH);
             this.groupBox5.Controls.Add(this.RdoSupportCover);
             this.groupBox5.Controls.Add(this.RdoExtraction);
             this.groupBox5.Controls.Add(this.RdoStandBy);
@@ -829,9 +850,57 @@ namespace SmartDyeing.FADM_Control
             this.groupBox5.Controls.Add(this.BtnStartMove);
             this.groupBox5.Controls.Add(this.TxtNum);
             this.groupBox5.Controls.Add(this.label12);
-            resources.ApplyResources(this.groupBox5, "groupBox5");
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.TabStop = false;
+            // 
+            // RdoPHTest
+            // 
+            resources.ApplyResources(this.RdoPHTest, "RdoPHTest");
+            this.RdoPHTest.Name = "RdoPHTest";
+            this.RdoPHTest.TabStop = true;
+            this.RdoPHTest.UseVisualStyleBackColor = true;
+            // 
+            // RdoWashBottle
+            // 
+            resources.ApplyResources(this.RdoWashBottle, "RdoWashBottle");
+            this.RdoWashBottle.Name = "RdoWashBottle";
+            this.RdoWashBottle.TabStop = true;
+            this.RdoWashBottle.UseVisualStyleBackColor = true;
+            // 
+            // RdoSysFinish
+            // 
+            resources.ApplyResources(this.RdoSysFinish, "RdoSysFinish");
+            this.RdoSysFinish.Name = "RdoSysFinish";
+            this.RdoSysFinish.TabStop = true;
+            this.RdoSysFinish.UseVisualStyleBackColor = true;
+            // 
+            // RdoPower
+            // 
+            resources.ApplyResources(this.RdoPower, "RdoPower");
+            this.RdoPower.Name = "RdoPower";
+            this.RdoPower.TabStop = true;
+            this.RdoPower.UseVisualStyleBackColor = true;
+            // 
+            // RdoBrew
+            // 
+            resources.ApplyResources(this.RdoBrew, "RdoBrew");
+            this.RdoBrew.Name = "RdoBrew";
+            this.RdoBrew.TabStop = true;
+            this.RdoBrew.UseVisualStyleBackColor = true;
+            // 
+            // RdoSalinity
+            // 
+            resources.ApplyResources(this.RdoSalinity, "RdoSalinity");
+            this.RdoSalinity.Name = "RdoSalinity";
+            this.RdoSalinity.TabStop = true;
+            this.RdoSalinity.UseVisualStyleBackColor = true;
+            // 
+            // RdoPH
+            // 
+            resources.ApplyResources(this.RdoPH, "RdoPH");
+            this.RdoPH.Name = "RdoPH";
+            this.RdoPH.TabStop = true;
+            this.RdoPH.UseVisualStyleBackColor = true;
             // 
             // RdoSupportCover
             // 
@@ -973,12 +1042,6 @@ namespace SmartDyeing.FADM_Control
             // 
             this.Tmr.Enabled = true;
             this.Tmr.Tick += new System.EventHandler(this.Tmr_Tick);
-            // 
-            // ChkInPut_Dye_Stop
-            // 
-            resources.ApplyResources(this.ChkInPut_Dye_Stop, "ChkInPut_Dye_Stop");
-            this.ChkInPut_Dye_Stop.Name = "ChkInPut_Dye_Stop";
-            this.ChkInPut_Dye_Stop.UseVisualStyleBackColor = true;
             // 
             // Debug
             // 
@@ -1123,5 +1186,12 @@ namespace SmartDyeing.FADM_Control
         private Button BtnOutPut_Slow_3;
         private Button BtnOutPut_Slow_2;
         private CheckBox ChkInPut_Dye_Stop;
+        private RadioButton RdoSalinity;
+        private RadioButton RdoPH;
+        private RadioButton RdoBrew;
+        private RadioButton RdoPower;
+        private RadioButton RdoSysFinish;
+        private RadioButton RdoWashBottle;
+        private RadioButton RdoPHTest;
     }
 }

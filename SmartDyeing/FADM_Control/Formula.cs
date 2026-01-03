@@ -6039,10 +6039,78 @@ namespace SmartDyeing.FADM_Control
                 {
                     for (int i = dgv_FormulaBrowse.SelectedRows.Count - 1; i >= 0; i--)
                     {
+                        //有自动开料
+                        if (FADM_Object.Communal._b_isHaveAutoBrew)
+                        {
+                            string s_sql_detail = "SELECT * from  formula_details WHERE FormulaCode ='" + dgv_FormulaBrowse.SelectedRows[i].Cells[0].Value.ToString() +
+                                "' And  VersionNum = " + dgv_FormulaBrowse.SelectedRows[i].Cells[1].Value.ToString() + ";";
+                            DataTable dt_data_detail = FADM_Object.Communal._fadmSqlserver.GetData(s_sql_detail);
+
+                            foreach (DataRow dr in dt_data_detail.Rows)
+                            {
+                                int i_minBottleNo = Convert.ToInt32(dr["BottleNum"].ToString());
+                                string s_sql_bottle = "SELECT * FROM bottle_details WHERE BottleNum = " + dr["BottleNum"].ToString() + ";";
+                                DataTable dt_bottle_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql_bottle);
+                                if (dt_bottle_details.Rows.Count > 0)
+                                {
+                                    double d_blCW = Convert.ToDouble(string.Format("{0:F3}", dt_bottle_details.Rows[0]["CurrentWeight"]));
+                                    double d_blOAddW = Convert.ToDouble(string.Format("{0:F3}", dr["ObjectDropWeight"]));
+                                    d_blCW -= d_blOAddW;
+                                    //查询判断是否超期
+                                    s_sql_bottle = "SELECT * FROM assistant_details WHERE AssistantCode = '" + dt_bottle_details.Rows[0]["AssistantCode"].ToString() + "';";
+                                    DataTable dt_assistant_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql_bottle);
+
+                                    DateTime timeA = Convert.ToDateTime(dt_bottle_details.Rows[0]["BrewingData"].ToString());
+                                    DateTime timeB = DateTime.Now; //获取当前时间
+                                    TimeSpan ts = timeB - timeA; //计算时间差
+                                    string s_time = ts.TotalHours.ToString(); //将时间差转换为小时
+                                    if (d_blCW < Lib_Card.Configure.Parameter.Other_Bottle_MinWeight && FADM_Object.Communal._b_isLowDrip)
+                                    {
+                                        //插入自动开料列表
+                                        //判断是否存在正在开料的记录
+                                        s_sql_bottle = "select * from brew_station_details where IsUsing = 1 And Station<6 And BottleNum =" + i_minBottleNo;
+                                        DataTable dt_brew_station_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql_bottle);
+                                        if (dt_brew_station_details.Rows.Count == 0)
+                                        {
+                                            //判断等待列表是否存在排队
+                                            s_sql_bottle = "select * from Brew_wait_list where  BottleNum =" + i_minBottleNo;
+                                            DataTable dt_Brew_wait_list = FADM_Object.Communal._fadmSqlserver.GetData(s_sql_bottle);
+                                            if (dt_Brew_wait_list.Rows.Count == 0)
+                                            {
+                                                //插入到排队列表
+                                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                   "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + i_minBottleNo + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+                                            }
+
+                                        }
+                                    }
+                                    else if (Convert.ToDouble(s_time) > Convert.ToDouble(dt_assistant_details.Rows[0]["TermOfValidity"].ToString()) && FADM_Object.Communal._b_isOutDrip)
+                                    {
+                                        //插入自动开料列表
+                                        //判断是否存在正在开料的记录
+                                        s_sql_bottle = "select * from brew_station_details where IsUsing = 1 And Station<6 And BottleNum =" + i_minBottleNo;
+                                        DataTable dt_brew_station_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql_bottle);
+                                        if (dt_brew_station_details.Rows.Count == 0)
+                                        {
+                                            //判断等待列表是否存在排队
+                                            s_sql_bottle = "select * from Brew_wait_list where  BottleNum =" + i_minBottleNo;
+                                            DataTable dt_Brew_wait_list = FADM_Object.Communal._fadmSqlserver.GetData(s_sql_bottle);
+                                            if (dt_Brew_wait_list.Rows.Count == 0)
+                                            {
+                                                //插入到排队列表
+                                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                   "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + i_minBottleNo + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
 
                         //查询对应配方资料
                         string s_sql = "SELECT FormulaCode, VersionNum, CreateTime, CupNum,Stage,DyeingCode,ClothNum from  formula_head WHERE FormulaCode ='" + dgv_FormulaBrowse.SelectedRows[i].Cells[0].Value.ToString() +
-                                "' And  VersionNum = " + dgv_FormulaBrowse.SelectedRows[i].Cells[1].Value.ToString() + ";";
+                            "' And  VersionNum = " + dgv_FormulaBrowse.SelectedRows[i].Cells[1].Value.ToString() + ";";
                         DataTable dt_data = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
                         if (dt_data.Rows.Count > 0)
                         {
@@ -6822,6 +6890,75 @@ namespace SmartDyeing.FADM_Control
             }
             else
             {
+                //有自动开料
+                if (FADM_Object.Communal._b_isHaveAutoBrew)
+                {
+                    string s_sql_detail = "SELECT * from  formula_details WHERE FormulaCode ='" + txt_FormulaCode.Text +
+                        "' And  VersionNum = " + txt_VersionNum.Text + ";";
+                    DataTable dt_data_detail = FADM_Object.Communal._fadmSqlserver.GetData(s_sql_detail);
+
+                    foreach (DataRow dr in dt_data_detail.Rows)
+                    {
+                        int i_minBottleNo = Convert.ToInt32(dr["BottleNum"].ToString());
+                        string s_sql_bottle = "SELECT * FROM bottle_details WHERE BottleNum = " + dr["BottleNum"].ToString() + ";";
+                        DataTable dt_bottle_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql_bottle);
+                        if (dt_bottle_details.Rows.Count > 0)
+                        {
+                            double d_blCW = Convert.ToDouble(string.Format("{0:F3}", dt_bottle_details.Rows[0]["CurrentWeight"]));
+                            double d_blOAddW = Convert.ToDouble(string.Format("{0:F3}", dr["ObjectDropWeight"]));
+                            d_blCW -= d_blOAddW;
+                            //查询判断是否超期
+                            s_sql_bottle = "SELECT * FROM assistant_details WHERE AssistantCode = '" + dt_bottle_details.Rows[0]["AssistantCode"].ToString() + "';";
+                            DataTable dt_assistant_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql_bottle);
+
+                            DateTime timeA = Convert.ToDateTime(dt_bottle_details.Rows[0]["BrewingData"].ToString());
+                            DateTime timeB = DateTime.Now; //获取当前时间
+                            TimeSpan ts = timeB - timeA; //计算时间差
+                            string s_time = ts.TotalHours.ToString(); //将时间差转换为小时
+                            if (d_blCW < Lib_Card.Configure.Parameter.Other_Bottle_MinWeight && FADM_Object.Communal._b_isLowDrip)
+                            {
+                                //插入自动开料列表
+                                //判断是否存在正在开料的记录
+                                s_sql_bottle = "select * from brew_station_details where IsUsing = 1 And Station<6 And BottleNum =" + i_minBottleNo;
+                                DataTable dt_brew_station_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql_bottle);
+                                if (dt_brew_station_details.Rows.Count == 0)
+                                {
+                                    //判断等待列表是否存在排队
+                                    s_sql_bottle = "select * from Brew_wait_list where  BottleNum =" + i_minBottleNo;
+                                    DataTable dt_Brew_wait_list = FADM_Object.Communal._fadmSqlserver.GetData(s_sql_bottle);
+                                    if (dt_Brew_wait_list.Rows.Count == 0)
+                                    {
+                                        //插入到排队列表
+                                        FADM_Object.Communal._fadmSqlserver.ReviseData(
+                           "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + i_minBottleNo + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+                                    }
+
+                                }
+                            }
+                            else if (Convert.ToDouble(s_time) > Convert.ToDouble(dt_assistant_details.Rows[0]["TermOfValidity"].ToString()) && FADM_Object.Communal._b_isOutDrip)
+                            {
+                                //插入自动开料列表
+                                //判断是否存在正在开料的记录
+                                s_sql_bottle = "select * from brew_station_details where IsUsing = 1 And Station<6 And BottleNum =" + i_minBottleNo;
+                                DataTable dt_brew_station_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql_bottle);
+                                if (dt_brew_station_details.Rows.Count == 0)
+                                {
+                                    //判断等待列表是否存在排队
+                                    s_sql_bottle = "select * from Brew_wait_list where  BottleNum =" + i_minBottleNo;
+                                    DataTable dt_Brew_wait_list = FADM_Object.Communal._fadmSqlserver.GetData(s_sql_bottle);
+                                    if (dt_Brew_wait_list.Rows.Count == 0)
+                                    {
+                                        //插入到排队列表
+                                        FADM_Object.Communal._fadmSqlserver.ReviseData(
+                           "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + i_minBottleNo + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+
                 //2024-11-07 开始改  这是当前输入配方面板焦点
                 //判断当前输入杯号是否与数据库杯号一致，不一致就不加入
                 string s_formulaHead = "SELECT  CupNum,DyeingCode FROM  formula_head where FormulaCode = '" + txt_FormulaCode.Text + "' and VersionNum = '" + txt_VersionNum.Text + "';";

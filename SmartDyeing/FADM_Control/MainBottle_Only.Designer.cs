@@ -54,6 +54,8 @@ namespace SmartDyeing.FADM_Control
             this.tsm_TestStanAbs = new System.Windows.Forms.ToolStripMenuItem();
             this.tsm_Wash = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
+            this.tsm_Brew = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsm_AutoBrew = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
             this.SuspendLayout();
@@ -71,63 +73,63 @@ namespace SmartDyeing.FADM_Control
             // 
             // lab_Low
             // 
-            resources.ApplyResources(this.lab_Low, "lab_Low");
             this.lab_Low.AutoEllipsis = true;
+            resources.ApplyResources(this.lab_Low, "lab_Low");
             this.lab_Low.ForeColor = System.Drawing.Color.Red;
             this.lab_Low.Name = "lab_Low";
             // 
             // lab_Expire
             // 
-            resources.ApplyResources(this.lab_Expire, "lab_Expire");
             this.lab_Expire.AutoEllipsis = true;
+            resources.ApplyResources(this.lab_Expire, "lab_Expire");
             this.lab_Expire.ForeColor = System.Drawing.Color.Red;
             this.lab_Expire.Name = "lab_Expire";
             // 
             // contextMenuStrip1
             // 
-            resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsm_Check,
             this.tsm_Self,
             this.tsm_Water,
             this.tsm_Abs,
-            this.tsm_InsertAbs});
+            this.tsm_InsertAbs,
+            this.tsm_AutoBrew});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
+            resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // tsm_Check
             // 
-            resources.ApplyResources(this.tsm_Check, "tsm_Check");
             this.tsm_Check.Name = "tsm_Check";
+            resources.ApplyResources(this.tsm_Check, "tsm_Check");
             this.tsm_Check.Click += new System.EventHandler(this.tsm_CheckAndSelf_Click);
             // 
             // tsm_Self
             // 
-            resources.ApplyResources(this.tsm_Self, "tsm_Self");
             this.tsm_Self.Name = "tsm_Self";
+            resources.ApplyResources(this.tsm_Self, "tsm_Self");
             this.tsm_Self.Click += new System.EventHandler(this.tsm_Self_Click);
             // 
             // tsm_Water
             // 
-            resources.ApplyResources(this.tsm_Water, "tsm_Water");
             this.tsm_Water.Name = "tsm_Water";
+            resources.ApplyResources(this.tsm_Water, "tsm_Water");
             this.tsm_Water.Click += new System.EventHandler(this.tsm_Water_Click);
             // 
             // tsm_Abs
             // 
-            resources.ApplyResources(this.tsm_Abs, "tsm_Abs");
             this.tsm_Abs.Name = "tsm_Abs";
+            resources.ApplyResources(this.tsm_Abs, "tsm_Abs");
             this.tsm_Abs.Click += new System.EventHandler(this.tsm_Abs_Click);
             // 
             // tsm_InsertAbs
             // 
-            resources.ApplyResources(this.tsm_InsertAbs, "tsm_InsertAbs");
             this.tsm_InsertAbs.Name = "tsm_InsertAbs";
+            resources.ApplyResources(this.tsm_InsertAbs, "tsm_InsertAbs");
             this.tsm_InsertAbs.Click += new System.EventHandler(this.tsm_InsertAbs_Click);
             // 
             // contextMenuStrip2
             // 
-            resources.ApplyResources(this.contextMenuStrip2, "contextMenuStrip2");
             this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsm_SignCheck,
             this.tsm_SignSelf,
@@ -137,62 +139,64 @@ namespace SmartDyeing.FADM_Control
             this.tsm_TestAbs,
             this.tsm_TestBaseAbs,
             this.tsm_TestStanAbs,
-            this.tsm_Wash});
+            this.tsm_Wash,
+            this.tsm_Brew});
             this.contextMenuStrip2.Name = "contextMenuStrip2";
+            resources.ApplyResources(this.contextMenuStrip2, "contextMenuStrip2");
             this.contextMenuStrip2.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip2_Opening);
             // 
             // tsm_SignCheck
             // 
-            resources.ApplyResources(this.tsm_SignCheck, "tsm_SignCheck");
             this.tsm_SignCheck.Name = "tsm_SignCheck";
+            resources.ApplyResources(this.tsm_SignCheck, "tsm_SignCheck");
             this.tsm_SignCheck.Click += new System.EventHandler(this.tsm_SignCheck_Click);
             // 
             // tsm_SignSelf
             // 
-            resources.ApplyResources(this.tsm_SignSelf, "tsm_SignSelf");
             this.tsm_SignSelf.Name = "tsm_SignSelf";
+            resources.ApplyResources(this.tsm_SignSelf, "tsm_SignSelf");
             this.tsm_SignSelf.Click += new System.EventHandler(this.tsm_SignSelf_Click);
             // 
             // tsm_SignPause
             // 
-            resources.ApplyResources(this.tsm_SignPause, "tsm_SignPause");
             this.tsm_SignPause.Name = "tsm_SignPause";
+            resources.ApplyResources(this.tsm_SignPause, "tsm_SignPause");
             this.tsm_SignPause.Click += new System.EventHandler(this.tsm_SignPause_Click);
             // 
             // tsm_SignStop
             // 
-            resources.ApplyResources(this.tsm_SignStop, "tsm_SignStop");
             this.tsm_SignStop.Name = "tsm_SignStop";
+            resources.ApplyResources(this.tsm_SignStop, "tsm_SignStop");
             this.tsm_SignStop.Click += new System.EventHandler(this.tsm_SignStop_Click);
             // 
             // tsm_SignUpdate
             // 
-            resources.ApplyResources(this.tsm_SignUpdate, "tsm_SignUpdate");
             this.tsm_SignUpdate.Name = "tsm_SignUpdate";
+            resources.ApplyResources(this.tsm_SignUpdate, "tsm_SignUpdate");
             this.tsm_SignUpdate.Click += new System.EventHandler(this.tsm_SignUpdate_Click);
             // 
             // tsm_TestAbs
             // 
-            resources.ApplyResources(this.tsm_TestAbs, "tsm_TestAbs");
             this.tsm_TestAbs.Name = "tsm_TestAbs";
+            resources.ApplyResources(this.tsm_TestAbs, "tsm_TestAbs");
             this.tsm_TestAbs.Click += new System.EventHandler(this.tsm_TestAbs_Click);
             // 
             // tsm_TestBaseAbs
             // 
-            resources.ApplyResources(this.tsm_TestBaseAbs, "tsm_TestBaseAbs");
             this.tsm_TestBaseAbs.Name = "tsm_TestBaseAbs";
+            resources.ApplyResources(this.tsm_TestBaseAbs, "tsm_TestBaseAbs");
             this.tsm_TestBaseAbs.Click += new System.EventHandler(this.tsm_TestBaseAbs_Click);
             // 
             // tsm_TestStanAbs
             // 
-            resources.ApplyResources(this.tsm_TestStanAbs, "tsm_TestStanAbs");
             this.tsm_TestStanAbs.Name = "tsm_TestStanAbs";
+            resources.ApplyResources(this.tsm_TestStanAbs, "tsm_TestStanAbs");
             this.tsm_TestStanAbs.Click += new System.EventHandler(this.tsm_TestStanAbs_Click);
             // 
             // tsm_Wash
             // 
-            resources.ApplyResources(this.tsm_Wash, "tsm_Wash");
             this.tsm_Wash.Name = "tsm_Wash";
+            resources.ApplyResources(this.tsm_Wash, "tsm_Wash");
             this.tsm_Wash.Click += new System.EventHandler(this.tsm_Wash_Click);
             // 
             // button1
@@ -201,6 +205,18 @@ namespace SmartDyeing.FADM_Control
             this.button1.Name = "button1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // tsm_Brew
+            // 
+            this.tsm_Brew.Name = "tsm_Brew";
+            resources.ApplyResources(this.tsm_Brew, "tsm_Brew");
+            this.tsm_Brew.Click += new System.EventHandler(this.tsm_Brew_Click);
+            // 
+            // tsm_AutoBrew
+            // 
+            this.tsm_AutoBrew.Name = "tsm_AutoBrew";
+            resources.ApplyResources(this.tsm_AutoBrew, "tsm_AutoBrew");
+            this.tsm_AutoBrew.Click += new System.EventHandler(this.tsm_AutoBrew_Click);
             // 
             // MainBottle_Only
             // 
@@ -245,5 +261,7 @@ namespace SmartDyeing.FADM_Control
         private ToolStripMenuItem tsm_InsertAbs;
         private Button button1;
         private ToolStripMenuItem tsm_Wash;
+        private ToolStripMenuItem tsm_Brew;
+        private ToolStripMenuItem tsm_AutoBrew;
     }
 }

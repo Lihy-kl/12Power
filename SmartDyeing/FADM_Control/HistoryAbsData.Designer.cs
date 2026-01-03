@@ -35,7 +35,19 @@ namespace SmartDyeing.FADM_Control
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HistoryAbsData));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.grp_DropRecord = new System.Windows.Forms.GroupBox();
+            this.Rdo_Stand = new System.Windows.Forms.RadioButton();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.Rdo_Combination = new System.Windows.Forms.RadioButton();
+            this.Rdo_Record = new System.Windows.Forms.RadioButton();
+            this.txt_RecordBottleNum = new System.Windows.Forms.TextBox();
+            this.label28 = new System.Windows.Forms.Label();
             this.Btn_SetStand = new System.Windows.Forms.Button();
             this.txt_Record_CupNum = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -50,9 +62,21 @@ namespace SmartDyeing.FADM_Control
             this.label3 = new System.Windows.Forms.Label();
             this.dgv_DropRecord = new System.Windows.Forms.DataGridView();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.dgv_Details = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.grp_FormulaData = new System.Windows.Forms.GroupBox();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.lab_FormulaCode = new System.Windows.Forms.Label();
+            this.lab_BathRatio = new System.Windows.Forms.Label();
+            this.lab_ClothWeight = new System.Windows.Forms.Label();
+            this.lab_TotalWeight = new System.Windows.Forms.Label();
+            this.txt_TotalWeight = new System.Windows.Forms.TextBox();
+            this.txt_FormulaCode = new System.Windows.Forms.TextBox();
+            this.txt_BathRatio = new System.Windows.Forms.TextBox();
+            this.txt_VersionNum = new System.Windows.Forms.TextBox();
+            this.txt_ClothWeight = new System.Windows.Forms.TextBox();
+            this.chk_AddWaterChoose = new System.Windows.Forms.CheckBox();
+            this.txt_BaseData = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
@@ -67,6 +91,12 @@ namespace SmartDyeing.FADM_Control
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.txt_dL = new System.Windows.Forms.TextBox();
@@ -77,37 +107,53 @@ namespace SmartDyeing.FADM_Control
             this.label5 = new System.Windows.Forms.Label();
             this.txt_dB = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.txt_PB = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.txt_PA = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.txt_PL = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txt_SB = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.txt_SA = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.txt_SL = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.label24 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.label25 = new System.Windows.Forms.Label();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.Tsm_Insert = new System.Windows.Forms.ToolStripMenuItem();
+            this.Tsm_Reset = new System.Windows.Forms.ToolStripMenuItem();
+            this.myDataGridView1 = new SmartDyeing.FADM_Object.MyDataGridView();
+            this.dgv_FormulaData = new SmartDyeing.FADM_Object.MyDataGridView();
+            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewComboBoxColumn2 = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewCheckBoxColumn2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grp_DropRecord.SuspendLayout();
+            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_DropRecord)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_Details)).BeginInit();
             this.grp_FormulaData.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.myDataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_FormulaData)).BeginInit();
             this.SuspendLayout();
             // 
             // grp_DropRecord
             // 
+            this.grp_DropRecord.Controls.Add(this.Rdo_Stand);
+            this.grp_DropRecord.Controls.Add(this.panel2);
+            this.grp_DropRecord.Controls.Add(this.txt_RecordBottleNum);
+            this.grp_DropRecord.Controls.Add(this.label28);
             this.grp_DropRecord.Controls.Add(this.Btn_SetStand);
             this.grp_DropRecord.Controls.Add(this.txt_Record_CupNum);
             this.grp_DropRecord.Controls.Add(this.label10);
@@ -124,6 +170,45 @@ namespace SmartDyeing.FADM_Control
             resources.ApplyResources(this.grp_DropRecord, "grp_DropRecord");
             this.grp_DropRecord.Name = "grp_DropRecord";
             this.grp_DropRecord.TabStop = false;
+            // 
+            // Rdo_Stand
+            // 
+            resources.ApplyResources(this.Rdo_Stand, "Rdo_Stand");
+            this.Rdo_Stand.Name = "Rdo_Stand";
+            this.Rdo_Stand.UseVisualStyleBackColor = true;
+            // 
+            // panel2
+            // 
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.Rdo_Combination);
+            this.panel2.Controls.Add(this.Rdo_Record);
+            resources.ApplyResources(this.panel2, "panel2");
+            this.panel2.Name = "panel2";
+            // 
+            // Rdo_Combination
+            // 
+            resources.ApplyResources(this.Rdo_Combination, "Rdo_Combination");
+            this.Rdo_Combination.Name = "Rdo_Combination";
+            this.Rdo_Combination.UseVisualStyleBackColor = true;
+            // 
+            // Rdo_Record
+            // 
+            resources.ApplyResources(this.Rdo_Record, "Rdo_Record");
+            this.Rdo_Record.Checked = true;
+            this.Rdo_Record.Name = "Rdo_Record";
+            this.Rdo_Record.TabStop = true;
+            this.Rdo_Record.UseVisualStyleBackColor = true;
+            this.Rdo_Record.CheckedChanged += new System.EventHandler(this.Rdo_Record_CheckedChanged);
+            // 
+            // txt_RecordBottleNum
+            // 
+            resources.ApplyResources(this.txt_RecordBottleNum, "txt_RecordBottleNum");
+            this.txt_RecordBottleNum.Name = "txt_RecordBottleNum";
+            // 
+            // label28
+            // 
+            resources.ApplyResources(this.label28, "label28");
+            this.label28.Name = "label28";
             // 
             // Btn_SetStand
             // 
@@ -219,24 +304,9 @@ namespace SmartDyeing.FADM_Control
             this.dgv_DropRecord.RowHeadersVisible = false;
             this.dgv_DropRecord.RowTemplate.Height = 23;
             this.dgv_DropRecord.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv_DropRecord.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgv_DropRecord_CellMouseDoubleClick);
             this.dgv_DropRecord.CurrentCellChanged += new System.EventHandler(this.dgv_DropRecord_CurrentCellChanged);
             this.dgv_DropRecord.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv_DropRecord_DataBindingComplete);
-            // 
-            // dgv_Details
-            // 
-            this.dgv_Details.AllowUserToAddRows = false;
-            this.dgv_Details.AllowUserToDeleteRows = false;
-            this.dgv_Details.AllowUserToResizeColumns = false;
-            this.dgv_Details.AllowUserToResizeRows = false;
-            this.dgv_Details.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dgv_Details.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            resources.ApplyResources(this.dgv_Details, "dgv_Details");
-            this.dgv_Details.MultiSelect = false;
-            this.dgv_Details.Name = "dgv_Details";
-            this.dgv_Details.ReadOnly = true;
-            this.dgv_Details.RowHeadersVisible = false;
-            this.dgv_Details.RowTemplate.Height = 23;
-            this.dgv_Details.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             // 
             // panel1
             // 
@@ -245,6 +315,21 @@ namespace SmartDyeing.FADM_Control
             // 
             // grp_FormulaData
             // 
+            this.grp_FormulaData.Controls.Add(this.myDataGridView1);
+            this.grp_FormulaData.Controls.Add(this.panel3);
+            this.grp_FormulaData.Controls.Add(this.dgv_FormulaData);
+            this.grp_FormulaData.Controls.Add(this.lab_FormulaCode);
+            this.grp_FormulaData.Controls.Add(this.lab_BathRatio);
+            this.grp_FormulaData.Controls.Add(this.lab_ClothWeight);
+            this.grp_FormulaData.Controls.Add(this.lab_TotalWeight);
+            this.grp_FormulaData.Controls.Add(this.txt_TotalWeight);
+            this.grp_FormulaData.Controls.Add(this.txt_FormulaCode);
+            this.grp_FormulaData.Controls.Add(this.txt_BathRatio);
+            this.grp_FormulaData.Controls.Add(this.txt_VersionNum);
+            this.grp_FormulaData.Controls.Add(this.txt_ClothWeight);
+            this.grp_FormulaData.Controls.Add(this.chk_AddWaterChoose);
+            this.grp_FormulaData.Controls.Add(this.txt_BaseData);
+            this.grp_FormulaData.Controls.Add(this.label26);
             this.grp_FormulaData.Controls.Add(this.textBox4);
             this.grp_FormulaData.Controls.Add(this.label23);
             this.grp_FormulaData.Controls.Add(this.textBox2);
@@ -259,15 +344,86 @@ namespace SmartDyeing.FADM_Control
             this.grp_FormulaData.Controls.Add(this.label18);
             this.grp_FormulaData.Controls.Add(this.label17);
             this.grp_FormulaData.Controls.Add(this.groupBox3);
-            this.grp_FormulaData.Controls.Add(this.groupBox2);
-            this.grp_FormulaData.Controls.Add(this.groupBox1);
             this.grp_FormulaData.Controls.Add(this.label1);
             this.grp_FormulaData.Controls.Add(this.textBox1);
             this.grp_FormulaData.Controls.Add(this.panel1);
-            this.grp_FormulaData.Controls.Add(this.dgv_Details);
             resources.ApplyResources(this.grp_FormulaData, "grp_FormulaData");
             this.grp_FormulaData.Name = "grp_FormulaData";
             this.grp_FormulaData.TabStop = false;
+            // 
+            // panel3
+            // 
+            resources.ApplyResources(this.panel3, "panel3");
+            this.panel3.Name = "panel3";
+            // 
+            // lab_FormulaCode
+            // 
+            resources.ApplyResources(this.lab_FormulaCode, "lab_FormulaCode");
+            this.lab_FormulaCode.Name = "lab_FormulaCode";
+            // 
+            // lab_BathRatio
+            // 
+            resources.ApplyResources(this.lab_BathRatio, "lab_BathRatio");
+            this.lab_BathRatio.Name = "lab_BathRatio";
+            // 
+            // lab_ClothWeight
+            // 
+            resources.ApplyResources(this.lab_ClothWeight, "lab_ClothWeight");
+            this.lab_ClothWeight.Name = "lab_ClothWeight";
+            // 
+            // lab_TotalWeight
+            // 
+            resources.ApplyResources(this.lab_TotalWeight, "lab_TotalWeight");
+            this.lab_TotalWeight.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lab_TotalWeight.Name = "lab_TotalWeight";
+            // 
+            // txt_TotalWeight
+            // 
+            resources.ApplyResources(this.txt_TotalWeight, "txt_TotalWeight");
+            this.txt_TotalWeight.Name = "txt_TotalWeight";
+            this.txt_TotalWeight.ReadOnly = true;
+            // 
+            // txt_FormulaCode
+            // 
+            resources.ApplyResources(this.txt_FormulaCode, "txt_FormulaCode");
+            this.txt_FormulaCode.Name = "txt_FormulaCode";
+            this.txt_FormulaCode.ReadOnly = true;
+            // 
+            // txt_BathRatio
+            // 
+            resources.ApplyResources(this.txt_BathRatio, "txt_BathRatio");
+            this.txt_BathRatio.Name = "txt_BathRatio";
+            this.txt_BathRatio.ReadOnly = true;
+            // 
+            // txt_VersionNum
+            // 
+            resources.ApplyResources(this.txt_VersionNum, "txt_VersionNum");
+            this.txt_VersionNum.Name = "txt_VersionNum";
+            this.txt_VersionNum.ReadOnly = true;
+            // 
+            // txt_ClothWeight
+            // 
+            resources.ApplyResources(this.txt_ClothWeight, "txt_ClothWeight");
+            this.txt_ClothWeight.Name = "txt_ClothWeight";
+            this.txt_ClothWeight.ReadOnly = true;
+            // 
+            // chk_AddWaterChoose
+            // 
+            resources.ApplyResources(this.chk_AddWaterChoose, "chk_AddWaterChoose");
+            this.chk_AddWaterChoose.BackColor = System.Drawing.SystemColors.Control;
+            this.chk_AddWaterChoose.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.chk_AddWaterChoose.Name = "chk_AddWaterChoose";
+            this.chk_AddWaterChoose.UseVisualStyleBackColor = false;
+            // 
+            // txt_BaseData
+            // 
+            resources.ApplyResources(this.txt_BaseData, "txt_BaseData");
+            this.txt_BaseData.Name = "txt_BaseData";
+            // 
+            // label26
+            // 
+            resources.ApplyResources(this.label26, "label26");
+            this.label26.Name = "label26";
             // 
             // textBox4
             // 
@@ -336,10 +492,12 @@ namespace SmartDyeing.FADM_Control
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.textBox7);
+            this.groupBox3.Controls.Add(this.label9);
+            this.groupBox3.Controls.Add(this.textBox5);
+            this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Controls.Add(this.textBox6);
             this.groupBox3.Controls.Add(this.label25);
-            this.groupBox3.Controls.Add(this.textBox5);
-            this.groupBox3.Controls.Add(this.label24);
             this.groupBox3.Controls.Add(this.label16);
             this.groupBox3.Controls.Add(this.label15);
             this.groupBox3.Controls.Add(this.txt_dL);
@@ -353,6 +511,36 @@ namespace SmartDyeing.FADM_Control
             resources.ApplyResources(this.groupBox3, "groupBox3");
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.TabStop = false;
+            // 
+            // textBox7
+            // 
+            resources.ApplyResources(this.textBox7, "textBox7");
+            this.textBox7.Name = "textBox7";
+            // 
+            // label9
+            // 
+            resources.ApplyResources(this.label9, "label9");
+            this.label9.Name = "label9";
+            // 
+            // textBox5
+            // 
+            resources.ApplyResources(this.textBox5, "textBox5");
+            this.textBox5.Name = "textBox5";
+            // 
+            // label8
+            // 
+            resources.ApplyResources(this.label8, "label8");
+            this.label8.Name = "label8";
+            // 
+            // textBox6
+            // 
+            resources.ApplyResources(this.textBox6, "textBox6");
+            this.textBox6.Name = "textBox6";
+            // 
+            // label25
+            // 
+            resources.ApplyResources(this.label25, "label25");
+            this.label25.Name = "label25";
             // 
             // label16
             // 
@@ -404,93 +592,10 @@ namespace SmartDyeing.FADM_Control
             resources.ApplyResources(this.label6, "label6");
             this.label6.Name = "label6";
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.txt_PB);
-            this.groupBox2.Controls.Add(this.label12);
-            this.groupBox2.Controls.Add(this.txt_PA);
-            this.groupBox2.Controls.Add(this.label13);
-            this.groupBox2.Controls.Add(this.txt_PL);
-            this.groupBox2.Controls.Add(this.label14);
-            resources.ApplyResources(this.groupBox2, "groupBox2");
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.TabStop = false;
-            // 
-            // txt_PB
-            // 
-            resources.ApplyResources(this.txt_PB, "txt_PB");
-            this.txt_PB.Name = "txt_PB";
-            // 
-            // label12
-            // 
-            resources.ApplyResources(this.label12, "label12");
-            this.label12.Name = "label12";
-            // 
-            // txt_PA
-            // 
-            resources.ApplyResources(this.txt_PA, "txt_PA");
-            this.txt_PA.Name = "txt_PA";
-            // 
-            // label13
-            // 
-            resources.ApplyResources(this.label13, "label13");
-            this.label13.Name = "label13";
-            // 
-            // txt_PL
-            // 
-            resources.ApplyResources(this.txt_PL, "txt_PL");
-            this.txt_PL.Name = "txt_PL";
-            // 
-            // label14
-            // 
-            resources.ApplyResources(this.label14, "label14");
-            this.label14.Name = "label14";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.txt_SB);
-            this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Controls.Add(this.txt_SA);
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.txt_SL);
-            this.groupBox1.Controls.Add(this.label8);
-            resources.ApplyResources(this.groupBox1, "groupBox1");
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.TabStop = false;
-            // 
-            // txt_SB
-            // 
-            resources.ApplyResources(this.txt_SB, "txt_SB");
-            this.txt_SB.Name = "txt_SB";
-            // 
-            // label11
-            // 
-            resources.ApplyResources(this.label11, "label11");
-            this.label11.Name = "label11";
-            // 
-            // txt_SA
-            // 
-            resources.ApplyResources(this.txt_SA, "txt_SA");
-            this.txt_SA.Name = "txt_SA";
-            // 
-            // label9
-            // 
-            resources.ApplyResources(this.label9, "label9");
-            this.label9.Name = "label9";
-            // 
-            // txt_SL
-            // 
-            resources.ApplyResources(this.txt_SL, "txt_SL");
-            this.txt_SL.Name = "txt_SL";
-            // 
-            // label8
-            // 
-            resources.ApplyResources(this.label8, "label8");
-            this.label8.Name = "label8";
-            // 
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
+            this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Name = "label1";
             // 
             // textBox1
@@ -498,25 +603,271 @@ namespace SmartDyeing.FADM_Control
             resources.ApplyResources(this.textBox1, "textBox1");
             this.textBox1.Name = "textBox1";
             // 
-            // textBox5
+            // contextMenuStrip1
             // 
-            resources.ApplyResources(this.textBox5, "textBox5");
-            this.textBox5.Name = "textBox5";
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Tsm_Insert,
+            this.Tsm_Reset});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
             // 
-            // label24
+            // Tsm_Insert
             // 
-            resources.ApplyResources(this.label24, "label24");
-            this.label24.Name = "label24";
+            this.Tsm_Insert.Name = "Tsm_Insert";
+            resources.ApplyResources(this.Tsm_Insert, "Tsm_Insert");
+            this.Tsm_Insert.Click += new System.EventHandler(this.Tsm_Insert_Click);
             // 
-            // textBox6
+            // Tsm_Reset
             // 
-            resources.ApplyResources(this.textBox6, "textBox6");
-            this.textBox6.Name = "textBox6";
+            this.Tsm_Reset.Name = "Tsm_Reset";
+            resources.ApplyResources(this.Tsm_Reset, "Tsm_Reset");
+            this.Tsm_Reset.Click += new System.EventHandler(this.Tsm_Reset_Click);
             // 
-            // label25
+            // myDataGridView1
             // 
-            resources.ApplyResources(this.label25, "label25");
-            this.label25.Name = "label25";
+            this.myDataGridView1.AllowUserToDeleteRows = false;
+            this.myDataGridView1.AllowUserToResizeColumns = false;
+            this.myDataGridView1.AllowUserToResizeRows = false;
+            this.myDataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
+            this.myDataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 10.5F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.myDataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.myDataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.myDataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.Column1,
+            this.Column2,
+            this.Column8,
+            this.Column10,
+            this.Column9,
+            this.Column11,
+            this.Column3,
+            this.Column4,
+            this.Column5});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 10.5F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.myDataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            this.myDataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            resources.ApplyResources(this.myDataGridView1, "myDataGridView1");
+            this.myDataGridView1.MultiSelect = false;
+            this.myDataGridView1.Name = "myDataGridView1";
+            this.myDataGridView1.RowHeadersVisible = false;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 14.25F);
+            this.myDataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            this.myDataGridView1.RowTemplate.Height = 30;
+            this.myDataGridView1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // dgv_FormulaData
+            // 
+            this.dgv_FormulaData.AllowUserToDeleteRows = false;
+            this.dgv_FormulaData.AllowUserToResizeColumns = false;
+            this.dgv_FormulaData.AllowUserToResizeRows = false;
+            this.dgv_FormulaData.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
+            this.dgv_FormulaData.BackgroundColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 10.5F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_FormulaData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            this.dgv_FormulaData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_FormulaData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn10,
+            this.dataGridViewTextBoxColumn11,
+            this.dataGridViewTextBoxColumn12,
+            this.dataGridViewTextBoxColumn13,
+            this.dataGridViewTextBoxColumn14,
+            this.dataGridViewComboBoxColumn2,
+            this.dataGridViewTextBoxColumn15,
+            this.dataGridViewTextBoxColumn16,
+            this.dataGridViewTextBoxColumn17,
+            this.dataGridViewTextBoxColumn18,
+            this.Column6,
+            this.dataGridViewCheckBoxColumn2,
+            this.Column7});
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("宋体", 10.5F);
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv_FormulaData.DefaultCellStyle = dataGridViewCellStyle5;
+            this.dgv_FormulaData.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            resources.ApplyResources(this.dgv_FormulaData, "dgv_FormulaData");
+            this.dgv_FormulaData.MultiSelect = false;
+            this.dgv_FormulaData.Name = "dgv_FormulaData";
+            this.dgv_FormulaData.RowHeadersVisible = false;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("宋体", 14.25F);
+            this.dgv_FormulaData.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            this.dgv_FormulaData.RowTemplate.Height = 30;
+            this.dgv_FormulaData.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_FormulaData.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_FormulaData_RowLeave);
+            // 
+            // dataGridViewTextBoxColumn10
+            // 
+            this.dataGridViewTextBoxColumn10.FillWeight = 32.65508F;
+            resources.ApplyResources(this.dataGridViewTextBoxColumn10, "dataGridViewTextBoxColumn10");
+            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            this.dataGridViewTextBoxColumn10.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // dataGridViewTextBoxColumn11
+            // 
+            this.dataGridViewTextBoxColumn11.FillWeight = 44.48533F;
+            resources.ApplyResources(this.dataGridViewTextBoxColumn11, "dataGridViewTextBoxColumn11");
+            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
+            this.dataGridViewTextBoxColumn11.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // dataGridViewTextBoxColumn12
+            // 
+            this.dataGridViewTextBoxColumn12.FillWeight = 64.663F;
+            resources.ApplyResources(this.dataGridViewTextBoxColumn12, "dataGridViewTextBoxColumn12");
+            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+            this.dataGridViewTextBoxColumn12.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // dataGridViewTextBoxColumn13
+            // 
+            this.dataGridViewTextBoxColumn13.FillWeight = 31.98594F;
+            resources.ApplyResources(this.dataGridViewTextBoxColumn13, "dataGridViewTextBoxColumn13");
+            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+            this.dataGridViewTextBoxColumn13.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // dataGridViewTextBoxColumn14
+            // 
+            this.dataGridViewTextBoxColumn14.FillWeight = 33.8447F;
+            resources.ApplyResources(this.dataGridViewTextBoxColumn14, "dataGridViewTextBoxColumn14");
+            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+            this.dataGridViewTextBoxColumn14.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // dataGridViewComboBoxColumn2
+            // 
+            this.dataGridViewComboBoxColumn2.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
+            this.dataGridViewComboBoxColumn2.FillWeight = 25.56866F;
+            this.dataGridViewComboBoxColumn2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            resources.ApplyResources(this.dataGridViewComboBoxColumn2, "dataGridViewComboBoxColumn2");
+            this.dataGridViewComboBoxColumn2.Name = "dataGridViewComboBoxColumn2";
+            // 
+            // dataGridViewTextBoxColumn15
+            // 
+            this.dataGridViewTextBoxColumn15.FillWeight = 49.56582F;
+            resources.ApplyResources(this.dataGridViewTextBoxColumn15, "dataGridViewTextBoxColumn15");
+            this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
+            this.dataGridViewTextBoxColumn15.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // dataGridViewTextBoxColumn16
+            // 
+            this.dataGridViewTextBoxColumn16.FillWeight = 51.74948F;
+            resources.ApplyResources(this.dataGridViewTextBoxColumn16, "dataGridViewTextBoxColumn16");
+            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+            this.dataGridViewTextBoxColumn16.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // dataGridViewTextBoxColumn17
+            // 
+            this.dataGridViewTextBoxColumn17.FillWeight = 349.5684F;
+            resources.ApplyResources(this.dataGridViewTextBoxColumn17, "dataGridViewTextBoxColumn17");
+            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+            this.dataGridViewTextBoxColumn17.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // dataGridViewTextBoxColumn18
+            // 
+            this.dataGridViewTextBoxColumn18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn18.FillWeight = 545.9362F;
+            resources.ApplyResources(this.dataGridViewTextBoxColumn18, "dataGridViewTextBoxColumn18");
+            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
+            this.dataGridViewTextBoxColumn18.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Column6
+            // 
+            this.Column6.FillWeight = 42.39613F;
+            resources.ApplyResources(this.Column6, "Column6");
+            this.Column6.Name = "Column6";
+            // 
+            // dataGridViewCheckBoxColumn2
+            // 
+            this.dataGridViewCheckBoxColumn2.FillWeight = 29.55336F;
+            resources.ApplyResources(this.dataGridViewCheckBoxColumn2, "dataGridViewCheckBoxColumn2");
+            this.dataGridViewCheckBoxColumn2.Name = "dataGridViewCheckBoxColumn2";
+            // 
+            // Column7
+            // 
+            this.Column7.FillWeight = 42.39613F;
+            resources.ApplyResources(this.Column7, "Column7");
+            this.Column7.Name = "Column7";
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.FillWeight = 32.65508F;
+            resources.ApplyResources(this.dataGridViewTextBoxColumn1, "dataGridViewTextBoxColumn1");
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.FillWeight = 44.48533F;
+            resources.ApplyResources(this.dataGridViewTextBoxColumn2, "dataGridViewTextBoxColumn2");
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Column1
+            // 
+            resources.ApplyResources(this.Column1, "Column1");
+            this.Column1.Name = "Column1";
+            // 
+            // Column2
+            // 
+            resources.ApplyResources(this.Column2, "Column2");
+            this.Column2.Name = "Column2";
+            // 
+            // Column8
+            // 
+            resources.ApplyResources(this.Column8, "Column8");
+            this.Column8.Name = "Column8";
+            // 
+            // Column10
+            // 
+            resources.ApplyResources(this.Column10, "Column10");
+            this.Column10.Name = "Column10";
+            // 
+            // Column9
+            // 
+            resources.ApplyResources(this.Column9, "Column9");
+            this.Column9.Name = "Column9";
+            // 
+            // Column11
+            // 
+            resources.ApplyResources(this.Column11, "Column11");
+            this.Column11.Name = "Column11";
+            // 
+            // Column3
+            // 
+            resources.ApplyResources(this.Column3, "Column3");
+            this.Column3.Name = "Column3";
+            // 
+            // Column4
+            // 
+            resources.ApplyResources(this.Column4, "Column4");
+            this.Column4.Name = "Column4";
+            // 
+            // Column5
+            // 
+            resources.ApplyResources(this.Column5, "Column5");
+            this.Column5.Name = "Column5";
             // 
             // HistoryAbsData
             // 
@@ -527,16 +878,16 @@ namespace SmartDyeing.FADM_Control
             this.Name = "HistoryAbsData";
             this.grp_DropRecord.ResumeLayout(false);
             this.grp_DropRecord.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_DropRecord)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_Details)).EndInit();
             this.grp_FormulaData.ResumeLayout(false);
             this.grp_FormulaData.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.myDataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_FormulaData)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -550,17 +901,11 @@ namespace SmartDyeing.FADM_Control
         private System.Windows.Forms.Button btn_Record_Select;
         private System.Windows.Forms.RadioButton rdo_Record_All;
         private System.Windows.Forms.RadioButton rdo_Record_Now;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DataGridView dgv_DropRecord;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.TextBox txt_Record_CupNum;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.DataGridView dgv_Details;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox grp_FormulaData;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox txt_dA;
         private System.Windows.Forms.Label label5;
@@ -571,21 +916,7 @@ namespace SmartDyeing.FADM_Control
         private System.Windows.Forms.TextBox txt_dE;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button Btn_SetStand;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox txt_SL;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox txt_PB;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox txt_PA;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox txt_PL;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox txt_SB;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox txt_SA;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label17;
@@ -603,7 +934,62 @@ namespace SmartDyeing.FADM_Control
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.TextBox txt_BaseData;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.TextBox txt_RecordBottleNum;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label lab_FormulaCode;
+        private System.Windows.Forms.Label lab_BathRatio;
+        private System.Windows.Forms.Label lab_ClothWeight;
+        private System.Windows.Forms.Label lab_TotalWeight;
+        private System.Windows.Forms.TextBox txt_TotalWeight;
+        private System.Windows.Forms.TextBox txt_FormulaCode;
+        private System.Windows.Forms.TextBox txt_BathRatio;
+        private System.Windows.Forms.TextBox txt_VersionNum;
+        private System.Windows.Forms.TextBox txt_ClothWeight;
+        private System.Windows.Forms.CheckBox chk_AddWaterChoose;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txt_Record_CupNum;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label3;
+        private FADM_Object.MyDataGridView dgv_FormulaData;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
+        private System.Windows.Forms.DataGridViewComboBoxColumn dataGridViewComboBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.RadioButton Rdo_Combination;
+        private System.Windows.Forms.RadioButton Rdo_Record;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem Tsm_Insert;
+        private System.Windows.Forms.ToolStripMenuItem Tsm_Reset;
+        private System.Windows.Forms.RadioButton Rdo_Stand;
+        private System.Windows.Forms.Panel panel3;
+        private FADM_Object.MyDataGridView myDataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
     }
 }

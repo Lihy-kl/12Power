@@ -133,6 +133,72 @@
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
     <value>6, 26</value>
   </data>
+  <data name="MiBrewingProcess.Size" type="System.Drawing.Size, System.Drawing">
+    <value>198, 24</value>
+  </data>
+  <data name="MiBrewingProcess.Text" xml:space="preserve">
+    <value>Dosing Process</value>
+  </data>
+  <data name="DyeingProcessConfiguration.Size" type="System.Drawing.Size, System.Drawing">
+    <value>362, 24</value>
+  </data>
+  <data name="DyeingProcessConfiguration.Text" xml:space="preserve">
+    <value>DyeingProcessConfiguration</value>
+  </data>
+  <data name="PostTreatmentProcessConfiguration.Size" type="System.Drawing.Size, System.Drawing">
+    <value>362, 24</value>
+  </data>
+  <data name="PostTreatmentProcessConfiguration.Text" xml:space="preserve">
+    <value>PostTreatmentProcessConfiguration</value>
+  </data>
+  <data name="DyeingAndFixationProcessConfiguration.Size" type="System.Drawing.Size, System.Drawing">
+    <value>362, 24</value>
+  </data>
+  <data name="DyeingAndFixationProcessConfiguration.Text" xml:space="preserve">
+    <value>DyeingAndFixationProcessConfiguration</value>
+  </data>
+  <data name="MiDyeingProcess.Size" type="System.Drawing.Size, System.Drawing">
+    <value>198, 24</value>
+  </data>
+  <data name="MiDyeingProcess.Text" xml:space="preserve">
+    <value>Dyeing Process</value>
+  </data>
+  <data name="MiAssistant.Size" type="System.Drawing.Size, System.Drawing">
+    <value>198, 24</value>
+  </data>
+  <data name="MiAssistant.Text" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="MiBottle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>198, 24</value>
+  </data>
+  <data name="MiBottle.Text" xml:space="preserve">
+    <value>Bottle Solution</value>
+  </data>
+  <data name="MiCup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>198, 24</value>
+  </data>
+  <data name="MiCup.Text" xml:space="preserve">
+    <value>DispenseCup</value>
+  </data>
+  <data name="MiLimitSet.Size" type="System.Drawing.Size, System.Drawing">
+    <value>198, 24</value>
+  </data>
+  <data name="MiLimitSet.Text" xml:space="preserve">
+    <value>Chemical Limited</value>
+  </data>
+  <data name="MiFormulaGroup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>198, 24</value>
+  </data>
+  <data name="MiFormulaGroup.Text" xml:space="preserve">
+    <value>Recipe together</value>
+  </data>
+  <data name="MiOperator.Size" type="System.Drawing.Size, System.Drawing">
+    <value>198, 24</value>
+  </data>
+  <data name="MiOperator.Text" xml:space="preserve">
+    <value>User</value>
+  </data>
   <data name="toolStripSplitButton1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft YaHei UI, 10.5pt, style=Bold</value>
   </data>
@@ -141,6 +207,36 @@
   </data>
   <data name="toolStripSplitButton1.Text" xml:space="preserve">
     <value>Database</value>
+  </data>
+  <data name="MiOut1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>207, 24</value>
+  </data>
+  <data name="MiOut1.Text" xml:space="preserve">
+    <value>LifeCheck</value>
+  </data>
+  <data name="MiLow1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>207, 24</value>
+  </data>
+  <data name="MiLow1.Text" xml:space="preserve">
+    <value>StockCheck</value>
+  </data>
+  <data name="MiFullDrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>207, 24</value>
+  </data>
+  <data name="MiFullDrip1.Text" xml:space="preserve">
+    <value>FullDrip</value>
+  </data>
+  <data name="MiOutAllowDrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>207, 24</value>
+  </data>
+  <data name="MiOutAllowDrip.Text" xml:space="preserve">
+    <value>ExpiredAllowsDrip</value>
+  </data>
+  <data name="MiLowAllowDrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>207, 24</value>
+  </data>
+  <data name="MiLowAllowDrip.Text" xml:space="preserve">
+    <value>LowAllowsDrip</value>
   </data>
   <data name="toolStripSplitButton6.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft YaHei UI, 10.5pt, style=Bold</value>
@@ -153,6 +249,30 @@
   </data>
   <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
     <value>6, 26</value>
+  </data>
+  <data name="MiDebug.Size" type="System.Drawing.Size, System.Drawing">
+    <value>187, 24</value>
+  </data>
+  <data name="MiDebug.Text" xml:space="preserve">
+    <value>TheDebugPage</value>
+  </data>
+  <data name="MiRun.Size" type="System.Drawing.Size, System.Drawing">
+    <value>187, 24</value>
+  </data>
+  <data name="MiRun.Text" xml:space="preserve">
+    <value>TheRunPage</value>
+  </data>
+  <data name="MiAlarm.Size" type="System.Drawing.Size, System.Drawing">
+    <value>187, 24</value>
+  </data>
+  <data name="MiAlarm.Text" xml:space="preserve">
+    <value>TheAlarmPage</value>
+  </data>
+  <data name="MiAbsDebug.Size" type="System.Drawing.Size, System.Drawing">
+    <value>187, 24</value>
+  </data>
+  <data name="MiAbsDebug.Text" xml:space="preserve">
+    <value>ABSDebugPage</value>
   </data>
   <data name="toolStripSplitButton2.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft YaHei UI, 10.5pt, style=Bold</value>
@@ -256,6 +376,30 @@
   <data name="toolStripSeparator8.Size" type="System.Drawing.Size, System.Drawing">
     <value>6, 26</value>
   </data>
+  <data name="MiHistoryPage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 24</value>
+  </data>
+  <data name="MiHistoryPage.Text" xml:space="preserve">
+    <value>HistoricalQueryPage</value>
+  </data>
+  <data name="MiFormulaPage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 24</value>
+  </data>
+  <data name="MiFormulaPage.Text" xml:space="preserve">
+    <value>RecipeHistoryPage</value>
+  </data>
+  <data name="MiBrewPage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 24</value>
+  </data>
+  <data name="MiBrewPage.Text" xml:space="preserve">
+    <value>BrewPage</value>
+  </data>
+  <data name="MiAbsPage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 24</value>
+  </data>
+  <data name="MiAbsPage.Text" xml:space="preserve">
+    <value>AbsHistoryPage</value>
+  </data>
   <data name="toolStripSplitButton4.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft YaHei UI, 10.5pt, style=Bold</value>
   </data>
@@ -294,6 +438,18 @@
   </data>
   <data name="toolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
     <value>6, 26</value>
+  </data>
+  <data name="MiAbort.Size" type="System.Drawing.Size, System.Drawing">
+    <value>128, 24</value>
+  </data>
+  <data name="MiAbort.Text" xml:space="preserve">
+    <value>Abort</value>
+  </data>
+  <data name="MiRegister.Size" type="System.Drawing.Size, System.Drawing">
+    <value>128, 24</value>
+  </data>
+  <data name="MiRegister.Text" xml:space="preserve">
+    <value>SignUp</value>
   </data>
   <data name="toolStripSplitButton3.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft YaHei UI, 10.5pt, style=Bold</value>
@@ -339,156 +495,6 @@
   </data>
   <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
     <value>1283, 26</value>
-  </data>
-  <data name="MiBrewingProcess.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 24</value>
-  </data>
-  <data name="MiBrewingProcess.Text" xml:space="preserve">
-    <value>Dosing Process</value>
-  </data>
-  <data name="MiDyeingProcess.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 24</value>
-  </data>
-  <data name="MiDyeingProcess.Text" xml:space="preserve">
-    <value>Dyeing Process</value>
-  </data>
-  <data name="DyeingProcessConfiguration.Size" type="System.Drawing.Size, System.Drawing">
-    <value>362, 24</value>
-  </data>
-  <data name="DyeingProcessConfiguration.Text" xml:space="preserve">
-    <value>DyeingProcessConfiguration</value>
-  </data>
-  <data name="PostTreatmentProcessConfiguration.Size" type="System.Drawing.Size, System.Drawing">
-    <value>362, 24</value>
-  </data>
-  <data name="PostTreatmentProcessConfiguration.Text" xml:space="preserve">
-    <value>PostTreatmentProcessConfiguration</value>
-  </data>
-  <data name="DyeingAndFixationProcessConfiguration.Size" type="System.Drawing.Size, System.Drawing">
-    <value>362, 24</value>
-  </data>
-  <data name="DyeingAndFixationProcessConfiguration.Text" xml:space="preserve">
-    <value>DyeingAndFixationProcessConfiguration</value>
-  </data>
-  <data name="MiAssistant.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 24</value>
-  </data>
-  <data name="MiAssistant.Text" xml:space="preserve">
-    <value>Product</value>
-  </data>
-  <data name="MiBottle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 24</value>
-  </data>
-  <data name="MiBottle.Text" xml:space="preserve">
-    <value>Bottle Solution</value>
-  </data>
-  <data name="MiCup.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 24</value>
-  </data>
-  <data name="MiCup.Text" xml:space="preserve">
-    <value>DispenseCup</value>
-  </data>
-  <data name="MiLimitSet.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 24</value>
-  </data>
-  <data name="MiLimitSet.Text" xml:space="preserve">
-    <value>Chemical Limited</value>
-  </data>
-  <data name="MiFormulaGroup.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 24</value>
-  </data>
-  <data name="MiFormulaGroup.Text" xml:space="preserve">
-    <value>Recipe together</value>
-  </data>
-  <data name="MiOperator.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 24</value>
-  </data>
-  <data name="MiOperator.Text" xml:space="preserve">
-    <value>User</value>
-  </data>
-  <data name="MiOut1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>207, 24</value>
-  </data>
-  <data name="MiOut1.Text" xml:space="preserve">
-    <value>LifeCheck</value>
-  </data>
-  <data name="MiLow1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>207, 24</value>
-  </data>
-  <data name="MiLow1.Text" xml:space="preserve">
-    <value>StockCheck</value>
-  </data>
-  <data name="MiFullDrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>207, 24</value>
-  </data>
-  <data name="MiFullDrip1.Text" xml:space="preserve">
-    <value>FullDrip</value>
-  </data>
-  <data name="MiOutAllowDrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>207, 24</value>
-  </data>
-  <data name="MiOutAllowDrip.Text" xml:space="preserve">
-    <value>ExpiredAllowsDrip</value>
-  </data>
-  <data name="MiLowAllowDrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>207, 24</value>
-  </data>
-  <data name="MiLowAllowDrip.Text" xml:space="preserve">
-    <value>LowAllowsDrip</value>
-  </data>
-  <data name="MiDebug.Size" type="System.Drawing.Size, System.Drawing">
-    <value>184, 24</value>
-  </data>
-  <data name="MiDebug.Text" xml:space="preserve">
-    <value>TheDebugPage</value>
-  </data>
-  <data name="MiRun.Size" type="System.Drawing.Size, System.Drawing">
-    <value>184, 24</value>
-  </data>
-  <data name="MiRun.Text" xml:space="preserve">
-    <value>TheRunPage</value>
-  </data>
-  <data name="MiAlarm.Size" type="System.Drawing.Size, System.Drawing">
-    <value>184, 24</value>
-  </data>
-  <data name="MiAlarm.Text" xml:space="preserve">
-    <value>TheAlarmPage</value>
-  </data>
-  <data name="MiHistoryPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 24</value>
-  </data>
-  <data name="MiHistoryPage.Text" xml:space="preserve">
-    <value>HistoricalQueryPage</value>
-  </data>
-  <data name="MiFormulaPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 24</value>
-  </data>
-  <data name="MiFormulaPage.Text" xml:space="preserve">
-    <value>RecipeHistoryPage</value>
-  </data>
-  <data name="MiBrewPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 24</value>
-  </data>
-  <data name="MiBrewPage.Text" xml:space="preserve">
-    <value>BrewPage</value>
-  </data>
-  <data name="MiAbsPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 24</value>
-  </data>
-  <data name="MiAbsPage.Text" xml:space="preserve">
-    <value>AbsHistoryPage</value>
-  </data>
-  <data name="MiAbort.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 24</value>
-  </data>
-  <data name="MiAbort.Text" xml:space="preserve">
-    <value>Abort</value>
-  </data>
-  <data name="MiRegister.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 24</value>
-  </data>
-  <data name="MiRegister.Text" xml:space="preserve">
-    <value>SignUp</value>
   </data>
   <data name="PnlMain.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 26</value>

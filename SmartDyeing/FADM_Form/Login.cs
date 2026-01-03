@@ -232,6 +232,16 @@ namespace SmartDyeing.FADM_Form
                 SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(4501, "未发现抓手");
                 SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(4502, "取布夹具时抓手关失败");
                 SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(4503, "取布夹具时气缸下失败");
+                SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(4504, "称粉电机回原点失败");
+
+                SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(5411, "放瓶时气缸下失败");
+                SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(5412, "放瓶失败");
+                SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(5413, "在洗瓶工位取瓶失败");
+                SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(5414, "在转盘工位取瓶失败");
+                SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(5415, "放瓶到洗瓶工位失败");
+                SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(5416, "放瓶到转盘工位失败");
+
+                SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(5421, "加粉超时");
 
                 SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(1120, "气缸阻挡位与气缸下同时接通");
                 SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(1121, "气缸单输出点不存在气缸慢速中信号");
@@ -454,6 +464,16 @@ namespace SmartDyeing.FADM_Form
                 SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(4501, "No gripper found");
                 SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(4502, "The gripper failed to close when taking the fabric fixture");
                 SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(4503, "The cylinder failed to drop when taking the fabric fixture");
+                SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(4504, "The powder weighing motor failed to return to the origin");
+
+                SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(5411, "The cylinder failed to drop when placing the bottle");
+                SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(5412, "Failed to place the bottle");
+                SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(5413, "Failed to retrieve the bottle at the bottle washing station");
+                SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(5414, "Failed to retrieve the bottle at the turntable station");
+                SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(5415, "Failed to place the bottle at the bottle washing station");
+                SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(5416, "Failed to place the bottle at the turntable station");
+
+                SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(5421, "The time limit for adding followers");
 
 
                 SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.Add(1120, "The cylinder block position is connected simultaneously with the cylinder bottom");
@@ -821,6 +841,13 @@ namespace SmartDyeing.FADM_Form
                                 System.Diagnostics.Process.GetProcessById(System.Diagnostics.Process.GetCurrentProcess().Id).Kill();
                             }
                         }
+
+                        //吸光度配置
+                        if (Lib_Card.Configure.Parameter.Other_UseAbs == 1)
+                        {
+                            FADM_Object.Communal._tcpModBusAbs = FADM_Object.Communal._tcpModBus;
+
+                        }
                     }
                     catch
                     {
@@ -1064,7 +1091,7 @@ namespace SmartDyeing.FADM_Form
                         MyModbusFun.CalTarget(0, 1, ref x, ref y);
                     FADM_Object.Communal._i_Max_Y = y + 10000;
 
-                    int i_coordinate_Balance_Y = Convert.ToInt32(FADM_Object.Communal._i_Max_Y);//天平Y坐标
+                    int i_coordinate_Balance_Y = Convert.ToInt32(Lib_Card.Configure.Parameter.Coordinate_Balance_Y);//天平Y坐标
                     int i_d84 = 0;
                     int i_d84_84 = 0;
                     this.ComParment(i_coordinate_Balance_Y, ref i_d84, ref i_d84_84);
@@ -1267,6 +1294,51 @@ namespace SmartDyeing.FADM_Form
                     int i_d188_188 = 0;
                     this.ComParment(i_other_ClothPulseDown, ref i_d188, ref i_d188_188);
 
+                    int i_other_GetDryCloth = Convert.ToInt32(Lib_Card.Configure.Parameter.Other_GetDryCloth);//干布区取布位置
+                    int i_d190 = 0;
+                    int i_d190_190 = 0;
+                    this.ComParment(i_other_GetDryCloth, ref i_d190, ref i_d190_190);
+
+                    int i_other_TurntableXStart = Convert.ToInt32(Lib_Card.Configure.Parameter.Other_TurntableXStart);//转盘的X轴起始位置
+                    int i_d192 = 0;
+                    int i_d192_192 = 0;
+                    this.ComParment(i_other_TurntableXStart, ref i_d192, ref i_d192_192);
+
+                    int i_other_TurntableXEnd = Convert.ToInt32(Lib_Card.Configure.Parameter.Other_TurntableXEnd);//转盘的X轴终点位置
+                    int i_d194 = 0;
+                    int i_d194_194 = 0;
+                    this.ComParment(i_other_TurntableXEnd, ref i_d194, ref i_d194_194);
+
+                    int i_other_TurntableYStart = Convert.ToInt32(Lib_Card.Configure.Parameter.Other_TurntableYStart);//转盘的Y轴起始位置
+                    int i_d196 = 0;
+                    int i_d196_196 = 0;
+                    this.ComParment(i_other_TurntableYStart, ref i_d196, ref i_d196_196);
+
+                    int i_other_TurntableYEnd = Convert.ToInt32(Lib_Card.Configure.Parameter.Other_TurntableYEnd);//转盘的Y轴终点位置
+                    int i_d198 = 0;
+                    int i_d198_198 = 0;
+                    this.ComParment(i_other_TurntableYEnd, ref i_d198, ref i_d198_198);
+
+                    int i_other_TightBottlePluse = Convert.ToInt32(Lib_Card.Configure.Parameter.Other_TightBottlePluse);//夹紧母液瓶脉冲
+                    int i_d200 = 0;
+                    int i_d200_200 = 0;
+                    this.ComParment(i_other_TightBottlePluse, ref i_d200, ref i_d200_200);
+
+                    int i_other_LooseBottlePluse = Convert.ToInt32(Lib_Card.Configure.Parameter.Other_LooseBottlePluse);//松开母液瓶脉冲
+                    int i_d202 = 0;
+                    int i_d202_202 = 0;
+                    this.ComParment(i_other_LooseBottlePluse, ref i_d202, ref i_d202_202);
+
+                    int i_other_PowerOverTime = Convert.ToInt32(Lib_Card.Configure.Parameter.Other_PowerOverTime);//加粉超时时间
+                    int i_d204 = 0;
+                    int i_d204_204 = 0;
+                    this.ComParment(i_other_PowerOverTime, ref i_d204, ref i_d204_204);
+
+                    int i_other_PowerPluse = Convert.ToInt32(Lib_Card.Configure.Parameter.Other_PowerPluse);//粉罐上抽脉冲
+                    int i_d206 = 0;
+                    int i_d206_206 = 0;
+                    this.ComParment(i_other_PowerPluse, ref i_d206, ref i_d206_206);
+
                     if (Convert.ToInt32(Lib_Card.Configure.Parameter.Correcting_B_Pulse) < 0)
                     {
                         FADM_Form.CustomMessageBox.Show("大针筒校正脉冲错误!", "设备", MessageBoxButtons.OK, false);
@@ -1345,7 +1417,8 @@ namespace SmartDyeing.FADM_Form
 
                         int[] ia_array2 = { i_d148, i_d148_148, i_d150, i_d150_150, i_d152, i_d152_152, i_d154, i_d154_154, i_d156, i_d156_156, i_d158
                                 , i_d158_158, i_d160, i_d160_160, i_d162, i_d162_162,i_d164,i_d164_164,i_d166,i_d166_166,i_d168,i_d168_168,i_d170,i_d170_170,
-                            0,0,0,0,i_d176,i_d176_176,i_d178,i_d178_178,i_d180,i_d180_180,i_d182,i_d182_182,i_d184,i_d184_184,i_d186,i_d186_186,i_d188,i_d188_188 };
+                            0,0,0,0,i_d176,i_d176_176,i_d178,i_d178_178,i_d180,i_d180_180,i_d182,i_d182_182,i_d184,i_d184_184,i_d186,i_d186_186,i_d188,i_d188_188
+                        ,i_d190,i_d190_190,i_d192,i_d192_192,i_d194,i_d194_194,i_d196,i_d196_196,i_d198,i_d198_198,i_d200,i_d200_200,i_d202,i_d202_202,i_d204,i_d204_204,i_d206,i_d206_206};
 
                         int i_c2 = FADM_Object.Communal._tcpModBus.Write(1148, ia_array2);
                         if (i_c2 == -1)
@@ -1986,93 +2059,73 @@ namespace SmartDyeing.FADM_Form
                         FADM_Form.CustomMessageBox.Show(ex.Message, "Test dyeing machine", MessageBoxButtons.OK, false);
                     System.Diagnostics.Process.GetProcessById(System.Diagnostics.Process.GetCurrentProcess().Id).Kill();
                 }
-
-                //开料机配置
-                try
+                if (!FADM_Object.Communal._b_isHaveAutoBrew)
                 {
-                    //使用TCP通讯
-                    if (0 == Lib_Card.Configure.Parameter.Machine_Opening_Type || 1 == Lib_Card.Configure.Parameter.Machine_Opening_Type)
-                    {
-                        string s_path = Environment.CurrentDirectory + "\\Config\\Config.ini";
-                        string s_server1 = Lib_File.Ini.GetIni("HMIBrew", "IP", s_path);
-                        string s_port1 = Lib_File.Ini.GetIni("HMIBrew", "Port", s_path);
-
-                        FADM_Object.Communal._tcpModBusBrew = new TCPModBus();
-                        FADM_Object.Communal._tcpModBusBrew._i_port = Convert.ToInt32(s_port1);
-                        FADM_Object.Communal._tcpModBusBrew._s_IP = s_server1;
-                        FADM_Object.Communal._tcpModBusBrew.Connect();
-                    }
-                    //使用串口通讯
-                    else
-                    {
-
-                        FADM_Object.Communal.MyBrew = new Lib_SerialPort.HMI.BrewHMI
-                        {
-                            PortName = "COM2",
-                            BaudRate = Lib_SerialPort.BaudRates.BR_9600,
-                            DataBits = Lib_SerialPort.DataBits.Eight,
-                            StopBits = System.IO.Ports.StopBits.Two,
-                            Parity = System.IO.Ports.Parity.None
-                        };
-                        FADM_Object.Communal.MyBrew.Open();
-                        byte[] b_send = new byte[6];
-                        //威纶
-                        if (2 == Lib_Card.Configure.Parameter.Machine_Opening_Type)
-                        {
-                            b_send[0] = 0x01;
-                            b_send[1] = 0x06;
-                            b_send[2] = ((10999) / 256);
-                            b_send[3] = ((10999) % 256);
-                            b_send[4] = Convert.ToByte(Lib_Card.Configure.Parameter.Machine_Bottle_Total / 256);
-                            b_send[5] = Convert.ToByte(Lib_Card.Configure.Parameter.Machine_Bottle_Total % 256);
-                        }
-                        //台达
-                        else
-                        {
-                            b_send[0] = 0x01;
-                            b_send[1] = 0x06;
-                            b_send[2] = ((3000) / 256);
-                            b_send[3] = ((3000) % 256);
-                            b_send[4] = Convert.ToByte(Lib_Card.Configure.Parameter.Machine_Bottle_Total / 256);
-                            b_send[5] = Convert.ToByte(Lib_Card.Configure.Parameter.Machine_Bottle_Total % 256);
-                        }
-
-                        FADM_Object.Communal.MyBrew.WriteAndRead(b_send);
-
-                    }
-                }
-                catch (Exception ex)
-                {
-                    if (Lib_Card.Configure.Parameter.Other_Language == 0)
-                        FADM_Form.CustomMessageBox.Show(ex.Message, "测试开料机", MessageBoxButtons.OK, false);
-                    else
-                        FADM_Form.CustomMessageBox.Show(ex.Message, "Testing the cutting machine", MessageBoxButtons.OK, false);
-                    System.Diagnostics.Process.GetProcessById(System.Diagnostics.Process.GetCurrentProcess().Id).Kill();
-                }
-
-                //吸光度配置
-                if (Lib_Card.Configure.Parameter.Other_UseAbs == 1)
-                {
+                    //开料机配置
                     try
                     {
-                        string s_path = Environment.CurrentDirectory + "\\Config\\Config.ini";
-                        string s_server1 = Lib_File.Ini.GetIni("HMIAbs", "IP", s_path);
-                        string s_port1 = Lib_File.Ini.GetIni("HMIAbs", "Port", s_path);
+                        //使用TCP通讯
+                        if (0 == Lib_Card.Configure.Parameter.Machine_Opening_Type || 1 == Lib_Card.Configure.Parameter.Machine_Opening_Type)
+                        {
+                            string s_path = Environment.CurrentDirectory + "\\Config\\Config.ini";
+                            string s_server1 = Lib_File.Ini.GetIni("HMIBrew", "IP", s_path);
+                            string s_port1 = Lib_File.Ini.GetIni("HMIBrew", "Port", s_path);
 
-                        FADM_Object.Communal._tcpModBusAbs = new TCPModBus();
-                        FADM_Object.Communal._tcpModBusAbs._i_port = Convert.ToInt32(s_port1);
-                        FADM_Object.Communal._tcpModBusAbs._s_IP = s_server1;
-                        FADM_Object.Communal._tcpModBusAbs.Connect();
+                            FADM_Object.Communal._tcpModBusBrew = new TCPModBus();
+                            FADM_Object.Communal._tcpModBusBrew._i_port = Convert.ToInt32(s_port1);
+                            FADM_Object.Communal._tcpModBusBrew._s_IP = s_server1;
+                            FADM_Object.Communal._tcpModBusBrew.Connect();
+                        }
+                        //使用串口通讯
+                        else
+                        {
+
+                            FADM_Object.Communal.MyBrew = new Lib_SerialPort.HMI.BrewHMI
+                            {
+                                PortName = "COM2",
+                                BaudRate = Lib_SerialPort.BaudRates.BR_9600,
+                                DataBits = Lib_SerialPort.DataBits.Eight,
+                                StopBits = System.IO.Ports.StopBits.Two,
+                                Parity = System.IO.Ports.Parity.None
+                            };
+                            FADM_Object.Communal.MyBrew.Open();
+                            byte[] b_send = new byte[6];
+                            //威纶
+                            if (2 == Lib_Card.Configure.Parameter.Machine_Opening_Type)
+                            {
+                                b_send[0] = 0x01;
+                                b_send[1] = 0x06;
+                                b_send[2] = ((10999) / 256);
+                                b_send[3] = ((10999) % 256);
+                                b_send[4] = Convert.ToByte(Lib_Card.Configure.Parameter.Machine_Bottle_Total / 256);
+                                b_send[5] = Convert.ToByte(Lib_Card.Configure.Parameter.Machine_Bottle_Total % 256);
+                            }
+                            //台达
+                            else
+                            {
+                                b_send[0] = 0x01;
+                                b_send[1] = 0x06;
+                                b_send[2] = ((3000) / 256);
+                                b_send[3] = ((3000) % 256);
+                                b_send[4] = Convert.ToByte(Lib_Card.Configure.Parameter.Machine_Bottle_Total / 256);
+                                b_send[5] = Convert.ToByte(Lib_Card.Configure.Parameter.Machine_Bottle_Total % 256);
+                            }
+
+                            FADM_Object.Communal.MyBrew.WriteAndRead(b_send);
+
+                        }
                     }
                     catch (Exception ex)
                     {
                         if (Lib_Card.Configure.Parameter.Other_Language == 0)
-                            FADM_Form.CustomMessageBox.Show(ex.Message, "测试吸光度机", MessageBoxButtons.OK, false);
+                            FADM_Form.CustomMessageBox.Show(ex.Message, "测试开料机", MessageBoxButtons.OK, false);
                         else
-                            FADM_Form.CustomMessageBox.Show(ex.Message, "Test the absorbance machine", MessageBoxButtons.OK, false);
+                            FADM_Form.CustomMessageBox.Show(ex.Message, "Testing the cutting machine", MessageBoxButtons.OK, false);
                         System.Diagnostics.Process.GetProcessById(System.Diagnostics.Process.GetCurrentProcess().Id).Kill();
                     }
                 }
+
+                
 
 
                 FADM_Object.Communal._fadmSqlserver.ReviseData(
@@ -2838,6 +2891,13 @@ namespace SmartDyeing.FADM_Form
 
                 }
 
+                dt_head = Communal._fadmSqlserver.GetData("SELECT *FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'formula_head_temp' AND COLUMN_NAME = 'DyeingCodeRemark'");
+                if (dt_head.Rows.Count == 0)
+                {
+                    Communal._fadmSqlserver.ReviseData("ALTER TABLE formula_head_temp ADD DyeingCodeRemark nvarchar(50) null ");
+
+                }
+
                 dt_head = Communal._fadmSqlserver.GetData("SELECT *FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'drop_head' AND COLUMN_NAME = 'DyeingCodeRemark'");
                 if (dt_head.Rows.Count == 0)
                 {
@@ -2854,6 +2914,13 @@ namespace SmartDyeing.FADM_Form
                 if (dt_head.Rows.Count == 0)
                 {
                     Communal._fadmSqlserver.ReviseData("ALTER TABLE formula_head ADD Recoloration nvarchar(50) null ");
+
+                }
+
+                dt_head = Communal._fadmSqlserver.GetData("SELECT *FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'formula_head_temp' AND COLUMN_NAME = 'Recoloration'");
+                if (dt_head.Rows.Count == 0)
+                {
+                    Communal._fadmSqlserver.ReviseData("ALTER TABLE formula_head_temp ADD Recoloration nvarchar(50) null ");
 
                 }
 
@@ -2911,6 +2978,13 @@ namespace SmartDyeing.FADM_Form
                 if (dt_head.Rows.Count == 0)
                 {
                     Communal._fadmSqlserver.ReviseData("ALTER TABLE formula_head ADD Colorists nvarchar(50) null ");
+
+                }
+
+                dt_head = Communal._fadmSqlserver.GetData("SELECT *FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'formula_head_temp' AND COLUMN_NAME = 'Colorists'");
+                if (dt_head.Rows.Count == 0)
+                {
+                    Communal._fadmSqlserver.ReviseData("ALTER TABLE formula_head_temp ADD Colorists nvarchar(50) null ");
 
                 }
 
@@ -3048,7 +3122,7 @@ namespace SmartDyeing.FADM_Form
                         }
 
                         //新增精密机杯号
-                        if (Lib_Card.Configure.Parameter.Machine_Area1_DyeType == 6)
+                        if (Lib_Card.Configure.Parameter.Machine_Area1_DyeType == 6|| Lib_Card.Configure.Parameter.Machine_Area1_DyeType == 7)
                         {
                             SmartDyeing.FADM_Object.Communal._lis_PrecisionCupNum.Add(i);
                         }
@@ -3172,7 +3246,7 @@ namespace SmartDyeing.FADM_Form
                         }
 
                         //新增精密机杯号
-                        if (Lib_Card.Configure.Parameter.Machine_Area2_DyeType == 6)
+                        if (Lib_Card.Configure.Parameter.Machine_Area2_DyeType == 6|| Lib_Card.Configure.Parameter.Machine_Area2_DyeType == 7)
                         {
                             SmartDyeing.FADM_Object.Communal._lis_PrecisionCupNum.Add(i);
                         }
@@ -3295,7 +3369,7 @@ namespace SmartDyeing.FADM_Form
                         }
 
                         //新增精密机杯号
-                        if (Lib_Card.Configure.Parameter.Machine_Area3_DyeType == 6)
+                        if (Lib_Card.Configure.Parameter.Machine_Area3_DyeType == 6 || Lib_Card.Configure.Parameter.Machine_Area3_DyeType == 7)
                         {
                             SmartDyeing.FADM_Object.Communal._lis_PrecisionCupNum.Add(i);
                         }
@@ -3421,7 +3495,7 @@ namespace SmartDyeing.FADM_Form
                         }
 
                         //新增精密机杯号
-                        if (Lib_Card.Configure.Parameter.Machine_Area4_DyeType == 6)
+                        if (Lib_Card.Configure.Parameter.Machine_Area4_DyeType == 6 || Lib_Card.Configure.Parameter.Machine_Area4_DyeType == 7)
                         {
                             SmartDyeing.FADM_Object.Communal._lis_PrecisionCupNum.Add(i);
                         }
@@ -3544,7 +3618,7 @@ namespace SmartDyeing.FADM_Form
                         }
 
                         //新增精密机杯号
-                        if (Lib_Card.Configure.Parameter.Machine_Area5_DyeType == 6)
+                        if (Lib_Card.Configure.Parameter.Machine_Area5_DyeType == 6 || Lib_Card.Configure.Parameter.Machine_Area5_DyeType == 7)
                         {
                             SmartDyeing.FADM_Object.Communal._lis_PrecisionCupNum.Add(i);
                         }
@@ -3667,7 +3741,7 @@ namespace SmartDyeing.FADM_Form
                         }
 
                         //新增精密机杯号
-                        if (Lib_Card.Configure.Parameter.Machine_Area6_DyeType == 6)
+                        if (Lib_Card.Configure.Parameter.Machine_Area6_DyeType == 6 || Lib_Card.Configure.Parameter.Machine_Area6_DyeType == 7)
                         {
                             SmartDyeing.FADM_Object.Communal._lis_PrecisionCupNum.Add(i);
                         }
@@ -3867,6 +3941,8 @@ namespace SmartDyeing.FADM_Form
                                           "UPDATE dye_details SET Cooperate = 0 WHERE Cooperate in(5,6,7,8,9) ;");
             FADM_Object.Communal._fadmSqlserver.ReviseData(
                                           "UPDATE cup_details SET Cooperate = 0  ;");
+            FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                          "UPDATE brew_station_details SET Cooperate = 0  where Cooperate = 11;");
             if (Communal._b_isUseCloth && FADM_Object.Communal.HMIBaClo._b_Connect) {
                 //跟称布那里对接下
                 //滴料区区域数量
@@ -3938,8 +4014,76 @@ namespace SmartDyeing.FADM_Form
                     FADM_Form.CustomMessageBox.Show("写入滴液区配置参数表失败", "温馨提示", MessageBoxButtons.OK, false);
                 }
             }
-            
 
+            string s_path = Environment.CurrentDirectory + "\\Config\\Config.ini";
+            string s_balanceInDrip = Lib_File.Ini.GetIni("Setting", "IsBalanceInDrip", "1", s_path);
+
+            string s_isHaveAutoBrew = Lib_File.Ini.GetIni("Setting", "IsHaveAutoBrew", "0", s_path);
+            if (s_isHaveAutoBrew == "1")
+            {
+                FADM_Object.Communal._b_isHaveAutoBrew = true;
+            }
+
+            if (FADM_Object.Communal._b_isHaveAutoBrew)
+            {
+                //先把数据读出来，把交互请求清空
+                //读取自动开料数据
+                int[] ia_array_Brew = new int[1];
+                int i_state_Brew = FADM_Object.Communal._tcpModBus.Read(22289 , 1, ref ia_array_Brew);
+                if (i_state_Brew != -1)
+                {
+                    if (ia_array_Brew[0] == 4 || ia_array_Brew[0] == 5|| ia_array_Brew[0] == 6)
+                    {
+                        int[] ii = new int[1];
+                        ii[0] = 3;
+                        FADM_Object.Communal._tcpModBus.Write(22289, ii);
+                    }
+                }
+
+                i_state_Brew = FADM_Object.Communal._tcpModBus.Read(22289+40, 1, ref ia_array_Brew);
+                if (i_state_Brew != -1)
+                {
+                    if (ia_array_Brew[0] == 4 || ia_array_Brew[0] == 5 || ia_array_Brew[0] == 6)
+                    {
+                        int[] ii = new int[1];
+                        ii[0] = 3;
+                        FADM_Object.Communal._tcpModBus.Write(22289+40, ii);
+                    }
+                }
+
+                i_state_Brew = FADM_Object.Communal._tcpModBus.Read(22289 + 40*2, 1, ref ia_array_Brew);
+                if (i_state_Brew != -1)
+                {
+                    if (ia_array_Brew[0] == 4 || ia_array_Brew[0] == 5 || ia_array_Brew[0] == 6)
+                    {
+                        int[] ii = new int[1];
+                        ii[0] = 3;
+                        FADM_Object.Communal._tcpModBus.Write(22289 + 40*2, ii);
+                    }
+                }
+
+                i_state_Brew = FADM_Object.Communal._tcpModBus.Read(22289 + 40*3, 1, ref ia_array_Brew);
+                if (i_state_Brew != -1)
+                {
+                    if (ia_array_Brew[0] == 4 || ia_array_Brew[0] == 5 || ia_array_Brew[0] == 6)
+                    {
+                        int[] ii = new int[1];
+                        ii[0] = 3;
+                        FADM_Object.Communal._tcpModBus.Write(22289 + 40*3, ii);
+                    }
+                }
+
+                i_state_Brew = FADM_Object.Communal._tcpModBus.Read(22289 + 40*4, 1, ref ia_array_Brew);
+                if (i_state_Brew != -1)
+                {
+                    if (ia_array_Brew[0] == 4 || ia_array_Brew[0] == 5 || ia_array_Brew[0] == 6)
+                    {
+                        int[] ii = new int[1];
+                        ii[0] = 3;
+                        FADM_Object.Communal._tcpModBus.Write(22289 + 40*4, ii);
+                    }
+                }
+            }
         }
 
         private void Login_KeyDown(object sender, KeyEventArgs e)

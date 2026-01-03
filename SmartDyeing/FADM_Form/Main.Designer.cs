@@ -59,6 +59,7 @@ namespace SmartDyeing.FADM_Form
             this.MiDebug = new System.Windows.Forms.ToolStripMenuItem();
             this.MiRun = new System.Windows.Forms.ToolStripMenuItem();
             this.MiAlarm = new System.Windows.Forms.ToolStripMenuItem();
+            this.MiAbsDebug = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.BtnMain = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -94,6 +95,7 @@ namespace SmartDyeing.FADM_Form
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timerNeedToDo = new System.Windows.Forms.Timer(this.components);
             this.timer_Update = new System.Windows.Forms.Timer(this.components);
+            this.MiABSProcess = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -154,7 +156,8 @@ namespace SmartDyeing.FADM_Form
             this.MiCup,
             this.MiLimitSet,
             this.MiFormulaGroup,
-            this.MiOperator});
+            this.MiOperator,
+            this.MiABSProcess});
             resources.ApplyResources(this.toolStripSplitButton1, "toolStripSplitButton1");
             this.toolStripSplitButton1.Name = "toolStripSplitButton1";
             // 
@@ -281,7 +284,8 @@ namespace SmartDyeing.FADM_Form
             this.toolStripSplitButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MiDebug,
             this.MiRun,
-            this.MiAlarm});
+            this.MiAlarm,
+            this.MiAbsDebug});
             resources.ApplyResources(this.toolStripSplitButton2, "toolStripSplitButton2");
             this.toolStripSplitButton2.Name = "toolStripSplitButton2";
             // 
@@ -302,6 +306,12 @@ namespace SmartDyeing.FADM_Form
             this.MiAlarm.Name = "MiAlarm";
             resources.ApplyResources(this.MiAlarm, "MiAlarm");
             this.MiAlarm.Click += new System.EventHandler(this.MiAlarm_Click);
+            // 
+            // MiAbsDebug
+            // 
+            this.MiAbsDebug.Name = "MiAbsDebug";
+            resources.ApplyResources(this.MiAbsDebug, "MiAbsDebug");
+            this.MiAbsDebug.Click += new System.EventHandler(this.MiAbsDebug_Click);
             // 
             // toolStripSeparator3
             // 
@@ -521,6 +531,12 @@ namespace SmartDyeing.FADM_Form
             this.timer_Update.Interval = 1000;
             this.timer_Update.Tick += new System.EventHandler(this.timer_Update_Tick);
             // 
+            // MiABSProcess
+            // 
+            this.MiABSProcess.Name = "MiABSProcess";
+            resources.ApplyResources(this.MiABSProcess, "MiABSProcess");
+            this.MiABSProcess.Click += new System.EventHandler(this.MiABSProcess_Click);
+            // 
             // Main
             // 
             resources.ApplyResources(this, "$this");
@@ -602,5 +618,7 @@ namespace SmartDyeing.FADM_Form
         private Timer timer_Update;
         private ToolStripSeparator toolStripSeparator11;
         private ToolStripButton CupStatus;
+        private ToolStripMenuItem MiAbsDebug;
+        private ToolStripMenuItem MiABSProcess;
     }
 }

@@ -635,6 +635,78 @@
         /// </summary>
         public static int Machine_AreaWetCloth3_CupMax { get; set; }
 
+        /// <summary>
+        /// 测PH区域1类型
+        /// 0：无
+        /// 1：有
+        /// </summary>
+        public static int Machine_TestPH1_Type { get; set; }
+
+
+        /// <summary>
+        /// 测PH区域1行数
+        /// </summary>
+        public static int Machine_TestPH1_Row { get; set; }
+
+
+        /// <summary>
+        /// 测PH区域1最小杯号
+        /// </summary>
+        public static int Machine_TestPH1_CupMin { get; set; }
+
+        /// <summary>
+        /// 测PH区域1最大杯号
+        /// </summary>
+        public static int Machine_TestPH1_CupMax { get; set; }
+
+        /// <summary>
+        /// 测PH区域2类型
+        /// 0：无
+        /// 1：有
+        /// </summary>
+        public static int Machine_TestPH2_Type { get; set; }
+
+
+        /// <summary>
+        /// 测PH区域2行数
+        /// </summary>
+        public static int Machine_TestPH2_Row { get; set; }
+
+
+        /// <summary>
+        /// 测PH区域2最小杯号
+        /// </summary>
+        public static int Machine_TestPH2_CupMin { get; set; }
+
+        /// <summary>
+        /// 测PH区域2最大杯号
+        /// </summary>
+        public static int Machine_TestPH2_CupMax { get; set; }
+
+        /// <summary>
+        /// 测PH区域3类型
+        /// 0：无
+        /// 1：有
+        /// </summary>
+        public static int Machine_TestPH3_Type { get; set; }
+
+
+        /// <summary>
+        /// 测PH区域3行数
+        /// </summary>
+        public static int Machine_TestPH3_Row { get; set; }
+
+
+        /// <summary>
+        /// 测PH区域3最小杯号
+        /// </summary>
+        public static int Machine_TestPH3_CupMin { get; set; }
+
+        /// <summary>
+        /// 测PH区域3最大杯号
+        /// </summary>
+        public static int Machine_TestPH3_CupMax { get; set; }
+
         #endregion
 
         #region 回零参数
@@ -2201,6 +2273,66 @@
         /// </summary>
         public static int Coordinate_AreaWetCloth3_IntervalY { get; set; }
 
+        /// <summary>
+        /// 测PH区域1最小配液杯X轴坐标
+        /// </summary>
+        public static int Coordinate_TestPH1_X { get; set; }
+
+        /// <summary>
+        /// 测PH区域1最小配液杯Y轴坐标
+        /// </summary>
+        public static int Coordinate_TestPH1_Y { get; set; }
+
+        /// <summary>
+        /// 测PH区域1X轴间隔
+        /// </summary>
+        public static int Coordinate_TestPH1_IntervalX { get; set; }
+
+        /// <summary>
+        /// 测PH区域1Y轴间隔
+        /// </summary>
+        public static int Coordinate_TestPH1_IntervalY { get; set; }
+
+        /// <summary>
+        /// 测PH区域2最小配液杯X轴坐标
+        /// </summary>
+        public static int Coordinate_TestPH2_X { get; set; }
+
+        /// <summary>
+        /// 测PH区域2最小配液杯Y轴坐标
+        /// </summary>
+        public static int Coordinate_TestPH2_Y { get; set; }
+
+        /// <summary>
+        /// 测PH区域2X轴间隔
+        /// </summary>
+        public static int Coordinate_TestPH2_IntervalX { get; set; }
+
+        /// <summary>
+        /// 测PH区域2Y轴间隔
+        /// </summary>
+        public static int Coordinate_TestPH2_IntervalY { get; set; }
+
+        /// <summary>
+        /// 测PH区域3最小配液杯X轴坐标
+        /// </summary>
+        public static int Coordinate_TestPH3_X { get; set; }
+
+        /// <summary>
+        /// 测PH区域3最小配液杯Y轴坐标
+        /// </summary>
+        public static int Coordinate_TestPH3_Y { get; set; }
+
+        /// <summary>
+        /// 测PH区域3X轴间隔
+        /// </summary>
+        public static int Coordinate_TestPH3_IntervalX { get; set; }
+
+        /// <summary>
+        /// 测PH区域3Y轴间隔
+        /// </summary>
+        public static int Coordinate_TestPH3_IntervalY { get; set; }
+
 
         /// <summary>
         /// 杯盖区域行数
@@ -2247,6 +2379,177 @@
         /// 清洗针筒Y轴坐标
         /// </summary>
         public static int Coordinate_Wash_Y { get; set; }
+
+        /// <summary>
+        /// 粉筒夹子X轴坐标
+        /// </summary>
+        public static int Coordinate_PowerClamp_X { get; set; }
+
+        /// <summary>
+        /// 粉筒夹子Y轴坐标
+        /// </summary>
+        public static int Coordinate_PowerClamp_Y { get; set; }
+
+        /// <summary>
+        /// 清洗母液瓶Y轴坐标
+        /// </summary>
+        public static int Coordinate_WashBottle_Y { get; set; }
+
+        /// <summary>
+        /// 清洗母液瓶X轴坐标
+        /// </summary>
+        public static int Coordinate_WashBottle_X { get; set; }
+
+
+        /// <summary>
+        /// 1号开料位X坐标
+        /// </summary>
+        public static int Coordinate_Brew1_IntervalX { get; set; }
+
+        /// <summary>
+        /// 1号开料位Y坐标
+        /// </summary>
+        public static int Coordinate_Brew1_IntervalY { get; set; }
+
+        /// <summary>
+        /// 2号开料位X坐标
+        /// </summary>
+        public static int Coordinate_Brew2_IntervalX { get; set; }
+
+        /// <summary>
+        /// 2号开料位Y坐标
+        /// </summary>
+        public static int Coordinate_Brew2_IntervalY { get; set; }
+
+        /// <summary>
+        /// 3号开料位X坐标
+        /// </summary>
+        public static int Coordinate_Brew3_IntervalX { get; set; }
+
+        /// <summary>
+        /// 3号开料位Y坐标
+        /// </summary>
+        public static int Coordinate_Brew3_IntervalY { get; set; }
+
+        /// <summary>
+        /// 4号开料位X坐标
+        /// </summary>
+        public static int Coordinate_Brew4_IntervalX { get; set; }
+
+        /// <summary>
+        /// 4号开料位Y坐标
+        /// </summary>
+        public static int Coordinate_Brew4_IntervalY { get; set; }
+
+        /// <summary>
+        /// 5号开料位X坐标
+        /// </summary>
+        public static int Coordinate_Brew5_IntervalX { get; set; }
+
+        /// <summary>
+        /// 5号开料位Y坐标
+        /// </summary>
+        public static int Coordinate_Brew5_IntervalY { get; set; }
+
+        /// <summary>
+        /// 6号开料位X坐标
+        /// </summary>
+        public static int Coordinate_Brew6_IntervalX { get; set; }
+
+        /// <summary>
+        /// 6号开料位Y坐标
+        /// </summary>
+        public static int Coordinate_Brew6_IntervalY { get; set; }
+
+        /// <summary>
+        /// 1号放针位X坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes1_IntervalX { get; set; }
+
+        /// <summary>
+        /// 1号放针位Y坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes1_IntervalY { get; set; }
+
+        /// <summary>
+        /// 2号放针位X坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes2_IntervalX { get; set; }
+
+        /// <summary>
+        /// 2号放针位Y坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes2_IntervalY { get; set; }
+
+        /// <summary>
+        /// 3号放针位X坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes3_IntervalX { get; set; }
+
+        /// <summary>
+        /// 3号放针位Y坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes3_IntervalY { get; set; }
+
+        /// <summary>
+        /// 4号放针位X坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes4_IntervalX { get; set; }
+
+        /// <summary>
+        /// 4号放针位Y坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes4_IntervalY { get; set; }
+
+        /// <summary>
+        /// 5号放针位X坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes5_IntervalX { get; set; }
+
+        /// <summary>
+        /// 5号放针位Y坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes5_IntervalY { get; set; }
+
+        /// <summary>
+        /// 6号放针位X坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes6_IntervalX { get; set; }
+
+        /// <summary>
+        /// 6号放针位Y坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes6_IntervalY { get; set; }
+
+        /// <summary>
+        /// PH计X坐标
+        /// </summary>
+        public static int Coordinate_PH_IntervalX { get; set; }
+
+        /// <summary>
+        /// PH计Y坐标
+        /// </summary>
+        public static int Coordinate_PH_IntervalY { get; set; }
+
+        /// <summary>
+        /// 盐度计X坐标
+        /// </summary>
+        public static int Coordinate_Salinity_IntervalX { get; set; }
+
+        /// <summary>
+        /// 盐度计Y坐标
+        /// </summary>
+        public static int Coordinate_Salinity_IntervalY { get; set; }
+
+        /// <summary>
+        /// 加水校正位置X坐标
+        /// </summary>
+        public static int Coordinate_AddWaterCorrecting_IntervalX { get; set; }
+
+        /// <summary>
+        /// 加水校正位置Y坐标
+        /// </summary>
+        public static int Coordinate_AddWaterCorrecting_IntervalY { get; set; }
 
         #endregion
 
@@ -2297,10 +2600,30 @@
         /// </summary>
         public static double Correcting_Water_FWeight { get; set; }
 
+        /// <summary>
+        /// 加溶解剂校正时间
+        /// </summary>
+        public static int Correcting_Dissolving_Time { get; set; }
+
+        /// <summary>
+        /// 加溶解剂校正重量
+        /// </summary>
+        public static int Correcting_Dissolving_RWeight { get; set; }
+
+        /// <summary>
+        /// 加溶解剂校正值
+        /// </summary>
+        public static double Correcting_Dissolving_Value { get; set; }
+
+        /// <summary>
+        /// 加溶解剂首秒重量
+        /// </summary>
+        public static double Correcting_Dissolving_FWeight { get; set; }
+
         #endregion
 
         #region 时间参数
-        
+
         /// <summary>
         /// 上下气缸延时
         /// </summary>
@@ -2694,6 +3017,58 @@
         /// 合夹夹布脉冲下限
         /// </summary>
         public static int Other_ClothPulseDown { get; set; }
+
+        /// <summary>
+        /// 测PH抽液脉冲
+        /// </summary>
+        public static int Other_PHExtractPluse { get; set; }
+
+        /// <summary>
+        /// 干布区取布位置
+        /// </summary>
+        public static int Other_GetDryCloth { get; set; }
+
+        /// <summary>
+        /// 转盘的X轴起始位置
+        /// </summary>
+        public static int Other_TurntableXStart { get; set; }
+
+        /// <summary>
+        /// 转盘的X轴终点位置
+        /// </summary>
+        public static int Other_TurntableXEnd { get; set; }
+
+        /// <summary>
+        /// 转盘的Y轴起始位置
+        /// </summary>
+        public static int Other_TurntableYStart { get; set; }
+
+        
+
+        /// <summary>
+        /// 转盘的Y轴终点位置
+        /// </summary>
+        public static int Other_TurntableYEnd { get; set; }
+
+        /// <summary>
+        /// 夹紧母液瓶脉冲
+        /// </summary>
+        public static int Other_TightBottlePluse { get; set; }
+
+        /// <summary>
+        /// 松开母液瓶脉冲
+        /// </summary>
+        public static int Other_LooseBottlePluse { get; set; }
+
+        /// <summary>
+        /// 加粉超时时间
+        /// </summary>
+        public static int Other_PowerOverTime { get; set; }
+
+        /// <summary>
+        /// 粉罐上抽脉冲
+        /// </summary>
+        public static int Other_PowerPluse { get; set; }
 
     }
 }

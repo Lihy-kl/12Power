@@ -47,20 +47,78 @@ namespace SmartDyeing.FADM_Auto
 
                 //判断是否异常
                 FADM_Object.Communal.BalanceState("水校正");
+                double d_blBalanceValue0 = 0;
+
+                //如果转盘水校正，先读初始值
+                if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                {
+                    //记录初始天平读数
+                    d_blBalanceValue0 = FADM_Object.Communal.SteBalance(); ;
+                    FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平读数：" + d_blBalanceValue0);
+                }
 
                 int i_count = 0;
+                int i_mRes = -1;
 
             label4:
                 if (FADM_Object.Communal._b_isUseNewCorrectingWater)
                 {
                     //Lib_SerialPort.Balance.METTLER.bZeroSign = true;
 
-                    //移动到天平位
-                    FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找天平位");
-                    int i_mRes = MyModbusFun.TargetMove(2, 0, 1);
-                    if (-2 == i_mRes)
-                        throw new Exception("收到退出消息");
-                    FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达天平位");
+                    if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //移动母液瓶
+                        try
+                        {
+                            //执行母液瓶移动
+                            Communal.MoveBottle(6, 5);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == "-97")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "在转盘工位取瓶失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "放瓶时气缸下失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else
+                                throw;
+                        }
+
+                        //移动到水校正位置
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找水校正位置");
+                        i_mRes = MyModbusFun.TargetMove(21, 0, 1);
+                        if (-2 == i_mRes)
+                            throw new Exception("收到退出消息");
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达水校正位置");
+
+                        //
+
+                    }
+                    else
+                    {
+                        //移动到天平位
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找天平位");
+                        i_mRes = MyModbusFun.TargetMove(2, 0, 1);
+                        if (-2 == i_mRes)
+                            throw new Exception("收到退出消息");
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达天平位");
+                    }
 
                     //if (FADM_Object.Communal._b_isZero)
                     //{
@@ -80,10 +138,14 @@ namespace SmartDyeing.FADM_Auto
                     //    }
                     //}
 
+                    if (!FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //记录初始天平读数
+                        d_blBalanceValue0 = FADM_Object.Communal.SteBalance(); ;
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平读数：" + d_blBalanceValue0);
+                    }
 
-                    //记录初始天平读数
-                    double d_blBalanceValue0 = FADM_Object.Communal.SteBalance(); ;
-                    FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平读数：" + d_blBalanceValue0);
+
 
                     //伸出接液盘
 
@@ -95,6 +157,42 @@ namespace SmartDyeing.FADM_Auto
 
 
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "加水完成");
+
+                    if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //移动母液瓶
+                        try
+                        {
+                            //执行母液瓶移动
+                            Communal.MoveBottle(6, 6);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == "-97")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "在转盘工位取瓶失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "放瓶时气缸下失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else
+                                throw;
+                        }
+                    }
 
                     //读取校正重量
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平稳定读数启动");
@@ -115,13 +213,16 @@ namespace SmartDyeing.FADM_Auto
                         i_count++;
                         goto label4;
                     }
-                    if(i_count==4)
+                    if (i_count == 4)
                     {
                         if (Lib_Card.Configure.Parameter.Other_Language == 0)
                             new FADM_Object.MyAlarm("没有水，停止水校正", 1);
                         else
                             new FADM_Object.MyAlarm("There is no water. Stop the water calibration", 1);
                         FADM_Object.Communal.WriteMachineStatus(0);
+
+                        //解锁6工位
+                        MyModbusFun.UnLockSix();
                         return;
                     }
 
@@ -131,12 +232,93 @@ namespace SmartDyeing.FADM_Auto
                     double d_blTime = 0;
                     d_blTime = Lib_Card.Configure.Parameter.Correcting_Water_RWeight / d_blAdjust;
 
+                    if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //移动母液瓶
+                        try
+                        {
+                            //执行母液瓶移动
+                            Communal.MoveBottle(6, 5);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == "-97")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "在转盘工位取瓶失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "放瓶时气缸下失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else
+                                throw;
+                        }
+
+                        //移动到水校正位置
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找水校正位置");
+                        i_mRes = MyModbusFun.TargetMove(21, 0, 1);
+                        if (-2 == i_mRes)
+                            throw new Exception("收到退出消息");
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达水校正位置");
+
+                        //
+
+                    }
 
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "加水启动(" + string.Format("{0:F3}", d_blTime) + "s)");
                     d_addWaterTime = d_blTime;
                     FADM_Object.Communal.AddWater(d_blTime);
 
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "加水完成");
+
+                    if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //移动母液瓶
+                        try
+                        {
+                            //执行母液瓶移动
+                            Communal.MoveBottle(6, 6);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == "-97")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "在转盘工位取瓶失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "放瓶时气缸下失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else
+                                throw;
+                        }
+                    }
 
                     //读取校正重量
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平稳定读数启动");
@@ -149,10 +331,11 @@ namespace SmartDyeing.FADM_Auto
                         MyModbusFun.ReadFlow();
                         FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "脉冲：" + Communal.i_flowPulse + ",实际重量：" + d_blWeightC);
                     }
-
+                    
                     int i_rErr = Convert.ToInt16((d_blWeightC - Lib_Card.Configure.Parameter.Correcting_Water_RWeight) / Lib_Card.Configure.Parameter.Correcting_Water_RWeight * 100);
                     i_rErr = i_rErr < 0 ? -i_rErr : i_rErr;
-
+                    //解锁6工位
+                    MyModbusFun.UnLockSix();
                     if (i_rErr > Lib_Card.Configure.Parameter.Other_AErr_Water)
                     {
                     lable5:
@@ -184,6 +367,7 @@ namespace SmartDyeing.FADM_Auto
                             Lib_File.Ini.WriteIni("Correcting", "Correcting_FlowPulse_Value", string.Format("{0:F3}", d_blAdjust_Pulse), Environment.CurrentDirectory + "\\Config\\parameter.ini");
                         }
                     }
+                    
 
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找待机位");
                     FADM_Object.Communal._i_OptCupNum = 0;
@@ -216,12 +400,60 @@ namespace SmartDyeing.FADM_Auto
                 {
                     //Lib_SerialPort.Balance.METTLER.bZeroSign = true;
 
-                    //移动到天平位
-                    FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找天平位");
-                    int i_mRes = MyModbusFun.TargetMove(2, 0, 1);
-                    if (-2 == i_mRes)
-                        throw new Exception("收到退出消息");
-                    FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达天平位");
+                    if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //移动母液瓶
+                        try
+                        {
+                            //执行母液瓶移动
+                            Communal.MoveBottle(6, 5);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == "-97")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "在转盘工位取瓶失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "放瓶时气缸下失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else
+                                throw;
+                        }
+
+                        //移动到水校正位置
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找水校正位置");
+                        i_mRes = MyModbusFun.TargetMove(21, 0, 1);
+                        if (-2 == i_mRes)
+                            throw new Exception("收到退出消息");
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达水校正位置");
+
+                        //
+
+                    }
+                    else
+                    {
+                        //移动到天平位
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找天平位");
+                        i_mRes = MyModbusFun.TargetMove(2, 0, 1);
+                        if (-2 == i_mRes)
+                            throw new Exception("收到退出消息");
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达天平位");
+                    }
 
                     //if (FADM_Object.Communal._b_isZero)
                     //{
@@ -241,10 +473,12 @@ namespace SmartDyeing.FADM_Auto
                     //    }
                     //}
 
-
-                    //记录初始天平读数
-                    double d_blBalanceValue0 = FADM_Object.Communal.SteBalance(); ;
-                    FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平读数：" + d_blBalanceValue0);
+                    if (!FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //记录初始天平读数
+                        d_blBalanceValue0 = FADM_Object.Communal.SteBalance(); ;
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平读数：" + d_blBalanceValue0);
+                    }
 
                     //伸出接液盘
 
@@ -254,6 +488,42 @@ namespace SmartDyeing.FADM_Auto
                         throw new Exception("收到退出消息");
 
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "加水完成");
+
+                    if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //移动母液瓶
+                        try
+                        {
+                            //执行母液瓶移动
+                            Communal.MoveBottle(6, 6);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == "-97")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "在转盘工位取瓶失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "放瓶时气缸下失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else
+                                throw;
+                        }
+                    }
 
                     //读取首秒重量
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平稳定读数启动");
@@ -273,6 +543,8 @@ namespace SmartDyeing.FADM_Auto
                         else
                             new FADM_Object.MyAlarm("There is no water. Stop the water calibration", 1);
                         FADM_Object.Communal.WriteMachineStatus(0);
+                        //解锁6工位
+                        MyModbusFun.UnLockSix();
                         return;
                     }
 
@@ -281,12 +553,94 @@ namespace SmartDyeing.FADM_Auto
                     //    goto label4;
                     //}
 
+
+                    if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //移动母液瓶
+                        try
+                        {
+                            //执行母液瓶移动
+                            Communal.MoveBottle(6, 5);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == "-97")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "在转盘工位取瓶失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "放瓶时气缸下失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else
+                                throw;
+                        }
+
+                        //移动到水校正位置
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找水校正位置");
+                        i_mRes = MyModbusFun.TargetMove(21, 0, 1);
+                        if (-2 == i_mRes)
+                            throw new Exception("收到退出消息");
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达水校正位置");
+
+                        //
+
+                    }
                     //加水
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "加水启动(" + Lib_Card.Configure.Parameter.Correcting_Water_Time + "s)");
 
                     double d_addWaterTime = Lib_Card.Configure.Parameter.Correcting_Water_Time;
                     FADM_Object.Communal.AddWater(d_addWaterTime);
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "加水完成");
+
+                    if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //移动母液瓶
+                        try
+                        {
+                            //执行母液瓶移动
+                            Communal.MoveBottle(6, 6);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == "-97")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "在转盘工位取瓶失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "放瓶时气缸下失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else
+                                throw;
+                        }
+                    }
 
                     //读取校正重量
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平稳定读数启动");
@@ -311,6 +665,8 @@ namespace SmartDyeing.FADM_Auto
                         else
                             new FADM_Object.MyAlarm("There is no water. Stop the water calibration", 1);
                         FADM_Object.Communal.WriteMachineStatus(0);
+                        //解锁6工位
+                        MyModbusFun.UnLockSix();
                         return;
                     }
 
@@ -337,6 +693,51 @@ namespace SmartDyeing.FADM_Auto
                             d_blTime = Lib_Card.Configure.Parameter.Correcting_Water_RWeight / d_blAdjust + Lib_Card.Configure.Parameter.Other_Coefficient_Water;
                     }
 
+                    if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //移动母液瓶
+                        try
+                        {
+                            //执行母液瓶移动
+                            Communal.MoveBottle(6, 5);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == "-97")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "在转盘工位取瓶失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "放瓶时气缸下失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else
+                                throw;
+                        }
+
+                        //移动到水校正位置
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找水校正位置");
+                        i_mRes = MyModbusFun.TargetMove(21, 0, 1);
+                        if (-2 == i_mRes)
+                            throw new Exception("收到退出消息");
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达水校正位置");
+
+                        //
+
+                    }
 
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "加水启动(" + string.Format("{0:F3}", d_blTime) + "s)");
 
@@ -344,16 +745,53 @@ namespace SmartDyeing.FADM_Auto
 
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "加水完成");
 
+                    if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //移动母液瓶
+                        try
+                        {
+                            //执行母液瓶移动
+                            Communal.MoveBottle(6, 6);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == "-97")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "在转盘工位取瓶失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "放瓶时气缸下失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else
+                                throw;
+                        }
+                    }
+
                     //读取校正重量
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平稳定读数启动");
                     d_blRRead = FADM_Object.Communal.SteBalance();
                     double d_blWeightC = Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? Convert.ToDouble(string.Format("{0:F2}", d_blRRead - d_blBalanceValue0)) : Convert.ToDouble(string.Format("{0:F3}", d_blRRead - d_blBalanceValue0));
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平稳定读数：" + d_blRRead + ",实际重量：" + d_blWeightC);
-
                     
+
                     int i_rErr = Convert.ToInt16((d_blWeightC - Lib_Card.Configure.Parameter.Correcting_Water_RWeight) / Lib_Card.Configure.Parameter.Correcting_Water_RWeight * 100);
                     i_rErr = i_rErr < 0 ? -i_rErr : i_rErr;
-
+                    //解锁6工位
+                    MyModbusFun.UnLockSix();
                     if (i_rErr > Lib_Card.Configure.Parameter.Other_AErr_Water)
                     {
                     lable5:
@@ -380,7 +818,7 @@ namespace SmartDyeing.FADM_Auto
                         Lib_File.Ini.WriteIni("Correcting", "Correcting_Water_FWeight", string.Format("{0:F3}", d_blWeightF), Environment.CurrentDirectory + "\\Config\\parameter.ini");
                         Lib_File.Ini.WriteIni("Correcting", "Correcting_Water_Value", string.Format("{0:F3}", d_blAdjust), Environment.CurrentDirectory + "\\Config\\parameter.ini");
                     }
-
+                    
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找待机位");
                     FADM_Object.Communal._i_OptCupNum = 0;
                     FADM_Object.Communal._i_optBottleNum = 0;
@@ -411,6 +849,8 @@ namespace SmartDyeing.FADM_Auto
             }
             catch (Exception ex)
             {
+                //解锁6工位
+                MyModbusFun.UnLockSix();
                 // FADM_Object.Communal.WriteMachineStatus(8);
                 //if (Lib_Card.Configure.Parameter.Other_Language == 0)
                 //    FADM_Form.CustomMessageBox.Show(ex.Message, "水校正", MessageBoxButtons.OK, true);
@@ -554,21 +994,79 @@ namespace SmartDyeing.FADM_Auto
                 Thread.Sleep(500);
 
 
+
+
+                int i_mRes = -1;
+                double d_blBalanceValue0 = 0;
+            label4:
                 //判断是否异常
                 FADM_Object.Communal.BalanceState("水校正");
 
+                //如果转盘水校正，先读初始值
+                if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                {
+                    //记录初始天平读数
+                    d_blBalanceValue0 = FADM_Object.Communal.SteBalance(); ;
+                    FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平读数：" + d_blBalanceValue0);
+                }
 
-            label4:
                 if (FADM_Object.Communal._b_isUseNewCorrectingWater)
                 {
                     //Lib_SerialPort.Balance.METTLER.bZeroSign = true;
+                    if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //移动母液瓶
+                        try
+                        {
+                            //执行母液瓶移动
+                            Communal.MoveBottle(6, 5);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == "-97")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "在转盘工位取瓶失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "放瓶时气缸下失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else
+                                throw;
+                        }
 
-                    //移动到天平位
-                    FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找天平位");
-                    int i_mRes = MyModbusFun.TargetMove(2, 0, 1);
-                    if (-2 == i_mRes)
-                        throw new Exception("收到退出消息");
-                    FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达天平位");
+                        //移动到水校正位置
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找水校正位置");
+                        i_mRes = MyModbusFun.TargetMove(21, 0, 1);
+                        if (-2 == i_mRes)
+                            throw new Exception("收到退出消息");
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达水校正位置");
+
+                        //
+
+                    }
+                    else
+                    {
+                        //移动到天平位
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找天平位");
+                        i_mRes = MyModbusFun.TargetMove(2, 0, 1);
+                        if (-2 == i_mRes)
+                            throw new Exception("收到退出消息");
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达天平位");
+                    }
 
                     //if (FADM_Object.Communal._b_isZero)
                     //{
@@ -587,10 +1085,12 @@ namespace SmartDyeing.FADM_Auto
                     //        Thread.Sleep(1);
                     //    }
                     //}
-
-                    //记录初始天平读数
-                    double d_blBalanceValue0 = FADM_Object.Communal.SteBalance(); ;
-                    FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平读数：" + d_blBalanceValue0);
+                    if (!FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //记录初始天平读数
+                        d_blBalanceValue0 = FADM_Object.Communal.SteBalance(); ;
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平读数：" + d_blBalanceValue0);
+                    }
 
                     //伸出接液盘
 
@@ -602,6 +1102,42 @@ namespace SmartDyeing.FADM_Auto
                     FADM_Object.Communal.AddWater(d_addWaterTime);
 
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "加水完成");
+
+                    if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //移动母液瓶
+                        try
+                        {
+                            //执行母液瓶移动
+                            Communal.MoveBottle(6, 6);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == "-97")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "在转盘工位取瓶失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "放瓶时气缸下失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else
+                                throw;
+                        }
+                    }
 
                     //读取校正重量
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平稳定读数启动");
@@ -628,11 +1164,93 @@ namespace SmartDyeing.FADM_Auto
 
                     d_blTime = Lib_Card.Configure.Parameter.Correcting_Water_RWeight / d_blAdjust;
 
+                    if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //移动母液瓶
+                        try
+                        {
+                            //执行母液瓶移动
+                            Communal.MoveBottle(6, 5);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == "-97")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "在转盘工位取瓶失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "放瓶时气缸下失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else
+                                throw;
+                        }
+
+                        //移动到水校正位置
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找水校正位置");
+                        i_mRes = MyModbusFun.TargetMove(21, 0, 1);
+                        if (-2 == i_mRes)
+                            throw new Exception("收到退出消息");
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达水校正位置");
+
+                        //
+
+                    }
+
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "加水启动(" + string.Format("{0:F3}", d_blTime) + "s)");
 
                     FADM_Object.Communal.AddWater(d_blTime);
 
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "加水完成");
+
+                    if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //移动母液瓶
+                        try
+                        {
+                            //执行母液瓶移动
+                            Communal.MoveBottle(6, 6);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == "-97")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "在转盘工位取瓶失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "放瓶时气缸下失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else
+                                throw;
+                        }
+                    }
 
                     //读取校正重量
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平稳定读数启动");
@@ -641,7 +1259,8 @@ namespace SmartDyeing.FADM_Auto
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平稳定读数：" + d_blRRead + ",实际重量：" + d_blWeightC);
                     int i_rErr = Convert.ToInt16((d_blWeightC - Lib_Card.Configure.Parameter.Correcting_Water_RWeight) / Lib_Card.Configure.Parameter.Correcting_Water_RWeight * 100);
                     i_rErr = i_rErr < 0 ? -i_rErr : i_rErr;
-
+                    //解锁6工位
+                    MyModbusFun.UnLockSix();
                     if (i_rErr > Lib_Card.Configure.Parameter.Other_AErr_Water)
                     {
                     lable5:
@@ -697,6 +1316,7 @@ namespace SmartDyeing.FADM_Auto
                         }
                         FADM_Object.Communal._fadmSqlserver.InsertRun("Machine", "滴液水校正完成");
                     }
+                    
 
                     //FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找待机位");
                     //FADM_Object.Communal._i_OptCupNum = 0;
@@ -729,12 +1349,60 @@ namespace SmartDyeing.FADM_Auto
                 {
                     //Lib_SerialPort.Balance.METTLER.bZeroSign = true;
 
-                    //移动到天平位
-                    FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找天平位");
-                    int i_mRes = MyModbusFun.TargetMove(2, 0, 1);
-                    if (-2 == i_mRes)
-                        throw new Exception("收到退出消息");
-                    FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达天平位");
+                    if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //移动母液瓶
+                        try
+                        {
+                            //执行母液瓶移动
+                            Communal.MoveBottle(6, 5);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == "-97")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "在转盘工位取瓶失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "放瓶时气缸下失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else
+                                throw;
+                        }
+
+                        //移动到水校正位置
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找水校正位置");
+                        i_mRes = MyModbusFun.TargetMove(21, 0, 1);
+                        if (-2 == i_mRes)
+                            throw new Exception("收到退出消息");
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达水校正位置");
+
+                        //
+
+                    }
+                    else
+                    {
+                        //移动到天平位
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找天平位");
+                        i_mRes = MyModbusFun.TargetMove(2, 0, 1);
+                        if (-2 == i_mRes)
+                            throw new Exception("收到退出消息");
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达天平位");
+                    }
 
                     //if (FADM_Object.Communal._b_isZero)
                     //{
@@ -754,9 +1422,12 @@ namespace SmartDyeing.FADM_Auto
                     //    }
                     //}
 
-                    //记录初始天平读数
-                    double d_blBalanceValue0 = FADM_Object.Communal.SteBalance(); ;
-                    FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平读数：" + d_blBalanceValue0);
+                    if (!FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //记录初始天平读数
+                        d_blBalanceValue0 = FADM_Object.Communal.SteBalance(); ;
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平读数：" + d_blBalanceValue0);
+                    }
 
                     //伸出接液盘
 
@@ -767,6 +1438,42 @@ namespace SmartDyeing.FADM_Auto
 
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "加水完成");
 
+                    if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //移动母液瓶
+                        try
+                        {
+                            //执行母液瓶移动
+                            Communal.MoveBottle(6, 6);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == "-97")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "在转盘工位取瓶失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "放瓶时气缸下失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else
+                                throw;
+                        }
+                    }
+
                     //读取首秒重量
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平稳定读数启动");
                     double d_blRRead = FADM_Object.Communal.SteBalance();
@@ -776,13 +1483,93 @@ namespace SmartDyeing.FADM_Auto
                     {
                         goto label4;
                     }
+                    if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //移动母液瓶
+                        try
+                        {
+                            //执行母液瓶移动
+                            Communal.MoveBottle(6, 5);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == "-97")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "在转盘工位取瓶失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "放瓶时气缸下失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else
+                                throw;
+                        }
 
+                        //移动到水校正位置
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找水校正位置");
+                        i_mRes = MyModbusFun.TargetMove(21, 0, 1);
+                        if (-2 == i_mRes)
+                            throw new Exception("收到退出消息");
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达水校正位置");
+
+                        //
+
+                    }
                     //加水
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "加水启动(" + Lib_Card.Configure.Parameter.Correcting_Water_Time + "s)");
 
                     double d_addWaterTime = Lib_Card.Configure.Parameter.Correcting_Water_Time;
                     FADM_Object.Communal.AddWater(d_addWaterTime);
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "加水完成");
+
+                    if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //移动母液瓶
+                        try
+                        {
+                            //执行母液瓶移动
+                            Communal.MoveBottle(6, 6);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == "-97")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "在转盘工位取瓶失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "放瓶时气缸下失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else
+                                throw;
+                        }
+                    }
 
                     //读取校正重量
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平稳定读数启动");
@@ -796,6 +1583,8 @@ namespace SmartDyeing.FADM_Auto
                     }
 
                     d_blBalanceValue0 = d_blRRead;
+
+                    
 
                     //验证
                     double d_blTime = 0;
@@ -817,12 +1606,92 @@ namespace SmartDyeing.FADM_Auto
                         else
                             d_blTime = Lib_Card.Configure.Parameter.Correcting_Water_RWeight / d_blAdjust + Lib_Card.Configure.Parameter.Other_Coefficient_Water;
                     }
+                    if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //移动母液瓶
+                        try
+                        {
+                            //执行母液瓶移动
+                            Communal.MoveBottle(6, 5);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == "-97")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "在转盘工位取瓶失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "放瓶时气缸下失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else
+                                throw;
+                        }
 
+                        //移动到水校正位置
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找水校正位置");
+                        i_mRes = MyModbusFun.TargetMove(21, 0, 1);
+                        if (-2 == i_mRes)
+                            throw new Exception("收到退出消息");
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达水校正位置");
+
+                        //
+
+                    }
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "加水启动(" + string.Format("{0:F3}", d_blTime) + "s)");
 
                     FADM_Object.Communal.AddWater(d_blTime);
 
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "加水完成");
+
+                    if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                    {
+                        //移动母液瓶
+                        try
+                        {
+                            //执行母液瓶移动
+                            Communal.MoveBottle(6, 6);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == "-97")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "在转盘工位取瓶失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else if (ex.Message == "放瓶时气缸下失败")
+                            {
+                                //结束
+                                //解锁6工位
+                                MyModbusFun.UnLockSix();
+                                return;
+                            }
+                            else
+                                throw;
+                        }
+                    }
 
                     //读取校正重量
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平稳定读数启动");
@@ -831,7 +1700,8 @@ namespace SmartDyeing.FADM_Auto
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平稳定读数：" + d_blRRead + ",实际重量：" + d_blWeightC);
                     int i_rErr = Convert.ToInt16((d_blWeightC - Lib_Card.Configure.Parameter.Correcting_Water_RWeight) / Lib_Card.Configure.Parameter.Correcting_Water_RWeight * 100);
                     i_rErr = i_rErr < 0 ? -i_rErr : i_rErr;
-
+                    //解锁6工位
+                    MyModbusFun.UnLockSix();
                     if (i_rErr > Lib_Card.Configure.Parameter.Other_AErr_Water)
                     {
                     lable5:
@@ -882,7 +1752,7 @@ namespace SmartDyeing.FADM_Auto
                         Lib_File.Ini.WriteIni("Correcting", "Correcting_Water_Value", string.Format("{0:F3}", d_blAdjust), Environment.CurrentDirectory + "\\Config\\parameter.ini");
                         FADM_Object.Communal._fadmSqlserver.InsertRun("Machine", "滴液水校正完成");
                     }
-
+                    
                     //FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找待机位");
                     //FADM_Object.Communal._i_OptCupNum = 0;
                     //FADM_Object.Communal._i_optBottleNum = 0;
@@ -913,6 +1783,8 @@ namespace SmartDyeing.FADM_Auto
             }
             catch (Exception ex)
             {
+                //解锁6工位
+                MyModbusFun.UnLockSix();
                 // FADM_Object.Communal.WriteMachineStatus(8);
                 //if (Lib_Card.Configure.Parameter.Other_Language == 0)
                 //    FADM_Form.CustomMessageBox.Show(ex.Message, "水校正", MessageBoxButtons.OK, true);
@@ -1043,14 +1915,73 @@ namespace SmartDyeing.FADM_Auto
                 //判断是否异常
                 FADM_Object.Communal.BalanceState("水检查");
 
+                double d_blBalanceValue0 = 0;
+                int i_mRes = -1;
+
+                //如果转盘水校正，先读初始值
+                if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                {
+                    //记录初始天平读数
+                    d_blBalanceValue0 = FADM_Object.Communal.SteBalance(); ;
+                    FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平读数：" + d_blBalanceValue0);
+                }
+
                 //Lib_SerialPort.Balance.METTLER.bZeroSign = true;
 
-                //移动到天平位
-                FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找天平位");
-                int i_mRes = MyModbusFun.TargetMove(2, 0, 1);
-                if (-2 == i_mRes)
-                    throw new Exception("收到退出消息");
-                FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达天平位");
+                if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                {
+                    //移动母液瓶
+                    try
+                    {
+                        //执行母液瓶移动
+                        Communal.MoveBottle(6, 5);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message == "-97")
+                        {
+                            //结束
+                            //解锁6工位
+                            MyModbusFun.UnLockSix();
+                            return;
+                        }
+                        else if (ex.Message == "在转盘工位取瓶失败")
+                        {
+                            //结束
+                            //解锁6工位
+                            MyModbusFun.UnLockSix();
+                            return;
+                        }
+                        else if (ex.Message == "放瓶时气缸下失败")
+                        {
+                            //结束
+                            //解锁6工位
+                            MyModbusFun.UnLockSix();
+                            return;
+                        }
+                        else
+                            throw;
+                    }
+
+                    //移动到水校正位置
+                    FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找水校正位置");
+                    i_mRes = MyModbusFun.TargetMove(21, 0, 1);
+                    if (-2 == i_mRes)
+                        throw new Exception("收到退出消息");
+                    FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达水校正位置");
+
+                    //
+
+                }
+                else
+                {
+                    //移动到天平位
+                    FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找天平位");
+                    i_mRes = MyModbusFun.TargetMove(2, 0, 1);
+                    if (-2 == i_mRes)
+                        throw new Exception("收到退出消息");
+                    FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达天平位");
+                }
 
                 //if (FADM_Object.Communal._b_isZero)
                 //{
@@ -1070,10 +2001,12 @@ namespace SmartDyeing.FADM_Auto
                 //    }
                 //}
 
-
-                //记录初始天平读数
-                double d_blBalanceValue0 = FADM_Object.Communal.SteBalance();
-                FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平读数：" + d_blBalanceValue0);
+                if (!FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                {
+                    //记录初始天平读数
+                    d_blBalanceValue0 = FADM_Object.Communal.SteBalance();
+                    FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平读数：" + d_blBalanceValue0);
+                }
 
                 ////加水
                 //Add(d_blWeight, "RobotHand");
@@ -1081,11 +2014,49 @@ namespace SmartDyeing.FADM_Auto
                 double d_addWaterTime = MyModbusFun.GetWaterTime(d_blWeight);//加水时间
                 FADM_Object.Communal.AddWater(d_addWaterTime);
 
+                if (FADM_Object.Communal._b_isUseTurntableCorrectingWater)
+                {
+                    //移动母液瓶
+                    try
+                    {
+                        //执行母液瓶移动
+                        Communal.MoveBottle(6, 6);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message == "-97")
+                        {
+                            //结束
+                            //解锁6工位
+                            MyModbusFun.UnLockSix();
+                            return;
+                        }
+                        else if (ex.Message == "在转盘工位取瓶失败")
+                        {
+                            //结束
+                            //解锁6工位
+                            MyModbusFun.UnLockSix();
+                            return;
+                        }
+                        else if (ex.Message == "放瓶时气缸下失败")
+                        {
+                            //结束
+                            //解锁6工位
+                            MyModbusFun.UnLockSix();
+                            return;
+                        }
+                        else
+                            throw;
+                    }
+                }
+
                 //天平读数
                 FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平稳定读数启动");
                 double d_blRRead = FADM_Object.Communal.SteBalance();
                 double d_blRWeight = Lib_Card.Configure.Parameter.Machine_IsThousandsBalance == 0 ? Convert.ToDouble(string.Format("{0:F2}", d_blRRead - d_blBalanceValue0)) : Convert.ToDouble(string.Format("{0:F3}", d_blRRead - d_blBalanceValue0));
                 FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平稳定读数：" + d_blRRead + ",实际重量：" + d_blRWeight);
+                //解锁6工位
+                MyModbusFun.UnLockSix();
 
                 //Lib_Card.ADT8940A1.OutPut.Tray.Tray tray = new Lib_Card.ADT8940A1.OutPut.Tray.Tray_Condition();
 
@@ -1154,6 +2125,8 @@ namespace SmartDyeing.FADM_Auto
             }
             catch (Exception ex)
             {
+                //解锁6工位
+                MyModbusFun.UnLockSix();
                 // FADM_Object.Communal.WriteMachineStatus(8);
                 //if (Lib_Card.Configure.Parameter.Other_Language == 0)
                 //    FADM_Form.CustomMessageBox.Show(ex.Message, "水校正", MessageBoxButtons.OK, true);

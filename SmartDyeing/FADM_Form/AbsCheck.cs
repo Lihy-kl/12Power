@@ -24,6 +24,12 @@ namespace SmartDyeing.FADM_Form
 
             cup2.MouseDown += Cup_MouseDown;
             cup2.ContextMenuStrip = this.contextMenuStrip1;
+
+            cup3.MouseDown += Cup_MouseDown;
+            cup3.ContextMenuStrip = this.contextMenuStrip1;
+
+            cup4.MouseDown += Cup_MouseDown;
+            cup4.ContextMenuStrip = this.contextMenuStrip1;
         }
 
         void Cup_MouseDown(object sender, MouseEventArgs e)
@@ -46,6 +52,7 @@ namespace SmartDyeing.FADM_Form
 
         private void tsm_Stop_Click(object sender, EventArgs e)
         {
+            FADM_Auto.Drip._b_dripStop = true;
             if (FADM_Object.Communal._b_absErr)
                 return;
 
@@ -55,9 +62,9 @@ namespace SmartDyeing.FADM_Form
                 int[] values1 = new int[1];
                 values1[0] = 2;
                 if (Convert.ToInt32(_cup.NO) == 1)
-                    FADM_Object.Communal._tcpModBusAbs.Write(800, values1);
+                    FADM_Object.Communal._tcpModBusAbs.Write(13088, values1);
                 else
-                    FADM_Object.Communal._tcpModBusAbs.Write(810, values1);
+                    FADM_Object.Communal._tcpModBusAbs.Write(13098, values1);
 
                 //判断待机后再发洗杯
                 while (true)
@@ -106,9 +113,9 @@ namespace SmartDyeing.FADM_Form
                     FADM_Object.Communal._tcpModBusAbs.Write(1060, ia_array);
 
                 if (Convert.ToInt32(_cup.NO) == 1)
-                    FADM_Object.Communal._tcpModBusAbs.Write(800, values);
+                    FADM_Object.Communal._tcpModBusAbs.Write(13088, values);
                 else
-                    FADM_Object.Communal._tcpModBusAbs.Write(810, values);
+                    FADM_Object.Communal._tcpModBusAbs.Write(13098, values);
 
                 string s_sql = "UPDATE abs_cup_details SET Statues='洗杯',IsUsing = 1,Type=0  WHERE CupNum = " + _cup.NO + " ;";
                 FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);

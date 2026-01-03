@@ -68,7 +68,7 @@ namespace SmartDyeing.FADM_Control
             {
                 //获取染助剂代码表头
                 string s_sql = "SELECT AssistantCode, AssistantName FROM" +
-                                   " assistant_details order by ID;";
+                                   " assistant_details order by " + (FADM_Object.Communal._b_isAssOrderByCode ? "AssistantCode;" : "ID;");
                 DataTable dt_assistant = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
 
                 //捆绑

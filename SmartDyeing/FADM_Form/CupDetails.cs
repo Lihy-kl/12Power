@@ -681,8 +681,8 @@ namespace SmartDyeing.FADM_Form
                 //获取当前批次当前杯号信息
                 s_sql = "SELECT * FROM dye_details WHERE" +
                             " CupNum = '" + this._i_cupNo +
-                            "' AND BottleNum > 0 AND ( BottleNum <= " + i_maxbottle + "" +
-                            " ) ORDER BY StepNum;";
+                            "' AND (BottleNum > 0 AND ( BottleNum <= " + i_maxbottle + "" +
+                            " ) Or BottleNum = 200 Or BottleNum =201)  ORDER BY StepNum;";
 
                 dt_data1 = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
 

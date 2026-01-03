@@ -326,7 +326,7 @@ namespace SmartDyeing.FADM_Object
                         }
                     }
                     //12杯单杯单控
-                    else if (i_type == 6)
+                    else if (i_type == 6|| i_type == 7)
                     {
                         for (int i = 0; i < 12; i++)
                         {
@@ -347,6 +347,26 @@ namespace SmartDyeing.FADM_Object
                                     d._s_reqSave = (ia_values[9]).ToString();
                                     d._s_isTotalFinish = (ia_values[10]).ToString();
                                     d._s_currentCraft = (ia_values[13]).ToString();
+                                    double d_b = 0.0;
+                                    if (ia_values[2] < 0)
+                                    {
+                                        d_b = ((ia_values[3] + 1) * 65536 + ia_values[2]) / 100.0;
+                                    }
+                                    else
+                                    {
+                                        d_b = (ia_values[3] * 65536 + ia_values[2]) / 100.0;
+                                    }
+                                    d._s_A = d_b.ToString();
+
+                                    if (ia_values[4] < 0)
+                                    {
+                                        d_b = ((ia_values[5] + 1) * 65536 + ia_values[4]) / 100.0;
+                                    }
+                                    else
+                                    {
+                                        d_b = (ia_values[5] * 65536 + ia_values[4]) / 100.0;
+                                    }
+                                    d._s_B = d_b.ToString();
                                     lis_l.Add(d);
                                     _b_Connect = true;
                                 }
@@ -575,5 +595,15 @@ namespace SmartDyeing.FADM_Object
         /// 重启记录
         /// </summary>
         public string _s_reStart;
+
+        /// <summary>
+        /// A加药量
+        /// </summary>
+        public string _s_A;
+
+        /// <summary>
+        /// B加药量
+        /// </summary>
+        public string _s_B;
     }
 }

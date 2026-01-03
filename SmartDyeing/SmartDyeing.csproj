@@ -239,6 +239,12 @@
     <Compile Include="FADM_Control\AbsBeater.Designer.cs">
       <DependentUpon>AbsBeater.cs</DependentUpon>
     </Compile>
+    <Compile Include="FADM_Control\ABSConfig.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FADM_Control\ABSConfig.Designer.cs">
+      <DependentUpon>ABSConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="FADM_Control\AbsHMIMain.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -286,6 +292,12 @@
     </Compile>
     <Compile Include="FADM_Control\CurveControl.Designer.cs">
       <DependentUpon>CurveControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FADM_Control\EightBeater.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FADM_Control\EightBeater.Designer.cs">
+      <DependentUpon>EightBeater.cs</DependentUpon>
     </Compile>
     <Compile Include="FADM_Control\FourBeater.cs">
       <SubType>UserControl</SubType>
@@ -515,11 +527,29 @@
     <Compile Include="FADM_Form\AbsCheck.Designer.cs">
       <DependentUpon>AbsCheck.cs</DependentUpon>
     </Compile>
+    <Compile Include="FADM_Form\AbsCupDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FADM_Form\AbsCupDetails.Designer.cs">
+      <DependentUpon>AbsCupDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FADM_Form\ABSStep.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FADM_Form\ABSStep.Designer.cs">
+      <DependentUpon>ABSStep.cs</DependentUpon>
+    </Compile>
     <Compile Include="FADM_Form\Admin.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FADM_Form\Admin.Designer.cs">
       <DependentUpon>Admin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FADM_Form\AutoBrewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FADM_Form\AutoBrewForm.Designer.cs">
+      <DependentUpon>AutoBrewForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FADM_Form\BottleDetails.cs">
       <SubType>Form</SubType>
@@ -796,6 +826,9 @@
     <EmbeddedResource Include="FADM_Control\AbsBeater.resx">
       <DependentUpon>AbsBeater.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FADM_Control\ABSConfig.resx">
+      <DependentUpon>ABSConfig.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FADM_Control\AbsHMIMain.resx">
       <DependentUpon>AbsHMIMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -834,6 +867,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FADM_Control\CurveControl.resx">
       <DependentUpon>CurveControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FADM_Control\EightBeater.en.resx">
+      <DependentUpon>EightBeater.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FADM_Control\EightBeater.resx">
+      <DependentUpon>EightBeater.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FADM_Control\FourBeater.en.resx">
       <DependentUpon>FourBeater.cs</DependentUpon>
@@ -1023,11 +1062,23 @@
     <EmbeddedResource Include="FADM_Form\AbsCheck.resx">
       <DependentUpon>AbsCheck.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FADM_Form\AbsCupDetails.en.resx">
+      <DependentUpon>AbsCupDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FADM_Form\AbsCupDetails.resx">
+      <DependentUpon>AbsCupDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FADM_Form\ABSStep.resx">
+      <DependentUpon>ABSStep.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FADM_Form\Admin.en.resx">
       <DependentUpon>Admin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FADM_Form\Admin.resx">
       <DependentUpon>Admin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FADM_Form\AutoBrewForm.resx">
+      <DependentUpon>AutoBrewForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FADM_Form\BottleDetails.en.resx">
       <DependentUpon>BottleDetails.cs</DependentUpon>

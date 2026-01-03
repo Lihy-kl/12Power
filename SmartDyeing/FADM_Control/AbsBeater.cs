@@ -25,6 +25,12 @@ namespace SmartDyeing.FADM_Control
 
             cup2.MouseDown += Cup_MouseDown;
             cup2.ContextMenuStrip = this.contextMenuStrip1;
+
+            cup3.MouseDown += Cup_MouseDown;
+            cup3.ContextMenuStrip = this.contextMenuStrip1;
+
+            cup4.MouseDown += Cup_MouseDown;
+            cup4.ContextMenuStrip = this.contextMenuStrip1;
         }
 
         void Cup_MouseDown(object sender, MouseEventArgs e)
@@ -40,34 +46,47 @@ namespace SmartDyeing.FADM_Control
 
         private void tsm_Offline_Click(object sender, EventArgs e)
         {
-            string s_sql = "UPDATE abs_cup_details SET IsUsing = 0, Statues = '下线',Enable=0 " +
+            string s_sql1 = "UPDATE abs_cup_details SET IsUsing = 0, Statues = '下线',Enable=0 " +
                 " WHERE CupNum = " + _cup.NO + " AND Statues = '待机'  and IsUsing = 0;";
-            FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
+            FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql1);
         }
 
         private void tsm_Stop_Click(object sender, EventArgs e)
         {
+            string s_sql1 = "SELECT *  FROM abs_cup_details where CupNum = " + _cup.NO + ";";
+
+            DataTable dt_temp = FADM_Object.Communal._fadmSqlserver.GetData(s_sql1);
+            if (dt_temp.Rows.Count > 0)
+            {
+                //if (dt_temp.Rows[0]["Statues"].ToString() == "加水" || dt_temp.Rows[0]["Statues"].ToString() == "加药")
+                    //FADM_Object.Communal._b_stop = true;
+            }
+
             if (FADM_Object.Communal._b_absErr)
                 return;
 
             Thread thread = new Thread(() =>
             {
                 //等待没有交互时再发送停止
-                while (true)
-                {
-                    if (MyAbsorbance._abs_Temps[Convert.ToInt32(_cup.NO) - 1]._s_request == "0")
-                    {
-                        break;
-                    }
-                }
+                //while (true)
+                //{
+                //    if (MyAbsorbance._abs_Temps[Convert.ToInt32(_cup.NO) - 1]._s_request == "0")
+                //    {
+                //        break;
+                //    }
+                //}
 
                 //先发一个停止，再发一个洗杯
                 int[] values1 = new int[1];
                 values1[0] = 2;
                 if (Convert.ToInt32(_cup.NO) == 1)
-                    FADM_Object.Communal._tcpModBusAbs.Write(800, values1);
-                else
-                    FADM_Object.Communal._tcpModBusAbs.Write(810, values1);
+                    FADM_Object.Communal._tcpModBusAbs.Write(13088, values1);
+                else if (Convert.ToInt32(_cup.NO) == 2)
+                    FADM_Object.Communal._tcpModBusAbs.Write(13098, values1);
+                else if (Convert.ToInt32(_cup.NO) == 3)
+                    FADM_Object.Communal._tcpModBusAbs.Write(13108, values1);
+                else if (Convert.ToInt32(_cup.NO) == 4)
+                    FADM_Object.Communal._tcpModBusAbs.Write(13118, values1);
 
                 //判断待机后再发洗杯
                 while (true)
@@ -76,52 +95,15 @@ namespace SmartDyeing.FADM_Control
                         break;
                 }
 
-                //发送启动
-                int[] values = new int[5];
-                values[0] = 1;
-                values[1] = 0;
-                values[2] = 0;
-                values[3] = 0;
-                values[4] = 3;
-                if (!FADM_Object.Communal._tcpModBusAbs._b_Connect)
-                {
-                    FADM_Object.Communal._tcpModBusAbs.ReConnect();
-                }
-
-                //写入测量数据
-                int d_1 = 0;
-                d_1 = Convert.ToInt32(FADM_Object.Communal._d_abs_total * 1000) / 65536;
-                int i_d_11 = Convert.ToInt32(FADM_Object.Communal._d_abs_total * 1000) % 65536;
-
-                int d_2 = 0;
-                d_2 = (Convert.ToInt32(Lib_Card.Configure.Parameter.Other_AbsAddWater * 1000) + 10000) / 65536;
-                int i_d_22 = (Convert.ToInt32(Lib_Card.Configure.Parameter.Other_AbsAddWater * 1000) + 10000) % 65536;
-
-                int d_3 = 0;
-                d_3 = Lib_Card.Configure.Parameter.Other_WashStirTime / 65536;
-                int i_d_33 = Lib_Card.Configure.Parameter.Other_WashStirTime % 65536;
-
-                int d_4 = 0;
-                d_4 = Lib_Card.Configure.Parameter.Other_StirTime / 65536;
-                int i_d_44 = Lib_Card.Configure.Parameter.Other_StirTime % 65536;
-
-                int d_5 = 0;
-                d_5 = Lib_Card.Configure.Parameter.Other_AspirationTime / 65536;
-                int i_d_55 = Lib_Card.Configure.Parameter.Other_AspirationTime % 65536;
-
-                int[] ia_array = new int[] { i_d_11, d_1, i_d_22, d_2, i_d_33, d_3 };
-                if (Convert.ToInt32(_cup.NO) == 1)
-                    FADM_Object.Communal._tcpModBusAbs.Write(1010, ia_array);
-                else
-                    FADM_Object.Communal._tcpModBusAbs.Write(1060, ia_array);
-
-                if (Convert.ToInt32(_cup.NO) == 1)
-                    FADM_Object.Communal._tcpModBusAbs.Write(800, values);
-                else
-                    FADM_Object.Communal._tcpModBusAbs.Write(810, values);
-
                 string s_sql = "UPDATE abs_cup_details SET Statues='洗杯',IsUsing = 1,Type=0  WHERE CupNum = " + _cup.NO + " ;";
                 FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
+
+                SmartDyeing.FADM_Auto.MyAbsorbance.Generate(2, Convert.ToInt32(_cup.NO));
+                SmartDyeing.FADM_Auto.MyAbsorbance.SendData(Convert.ToInt32(_cup.NO));
+
+
+
+                
             });
             thread.Start();
             
@@ -131,6 +113,66 @@ namespace SmartDyeing.FADM_Control
         {
             string s_sql1 = "update abs_cup_details set Enable=1,IsUsing = 0,Statues = '待机',Cooperate=0  where CupNum = " + _cup.NO + " ; ";
             FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql1);
+
+            s_sql1 = "Delete from Abs_details  where CupNum = " + _cup.NO + " ; ";
+            FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql1);
+        }
+
+        private void tsm_Wash_Click(object sender, EventArgs e)
+        {
+            string s_sql1 = "SELECT *  FROM abs_cup_details where CupNum = " + _cup.NO + ";";
+
+            DataTable dt_temp = FADM_Object.Communal._fadmSqlserver.GetData(s_sql1);
+            if (dt_temp.Rows.Count > 0)
+            {
+                //if (dt_temp.Rows[0]["Statues"].ToString() == "加水" || dt_temp.Rows[0]["Statues"].ToString() == "加药")
+                //FADM_Object.Communal._b_stop = true;
+            }
+
+            if (FADM_Object.Communal._b_absErr)
+                return;
+
+            Thread thread = new Thread(() =>
+            {
+                //等待没有交互时再发送停止
+                //while (true)
+                //{
+                //    if (MyAbsorbance._abs_Temps[Convert.ToInt32(_cup.NO) - 1]._s_request == "0")
+                //    {
+                //        break;
+                //    }
+                //}
+
+                //先发一个停止，再发一个洗杯
+                int[] values1 = new int[1];
+                values1[0] = 2;
+                if (Convert.ToInt32(_cup.NO) == 1)
+                    FADM_Object.Communal._tcpModBusAbs.Write(13088, values1);
+                else if (Convert.ToInt32(_cup.NO) == 2)
+                    FADM_Object.Communal._tcpModBusAbs.Write(13098, values1);
+                else if (Convert.ToInt32(_cup.NO) == 3)
+                    FADM_Object.Communal._tcpModBusAbs.Write(13108, values1);
+                else if (Convert.ToInt32(_cup.NO) == 4)
+                    FADM_Object.Communal._tcpModBusAbs.Write(13118, values1);
+
+                //判断待机后再发洗杯
+                while (true)
+                {
+                    if (MyAbsorbance._abs_Temps[Convert.ToInt32(_cup.NO) - 1]._s_currentState == "1")
+                        break;
+                }
+
+                string s_sql = "UPDATE abs_cup_details SET Statues='溶解剂洗杯',IsUsing = 1,Type=0  WHERE CupNum = " + _cup.NO + " ;";
+                FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
+
+                SmartDyeing.FADM_Auto.MyAbsorbance.Generate(4, Convert.ToInt32(_cup.NO));
+                SmartDyeing.FADM_Auto.MyAbsorbance.SendData(Convert.ToInt32(_cup.NO));
+
+
+
+
+            });
+            thread.Start();
         }
     }
 }

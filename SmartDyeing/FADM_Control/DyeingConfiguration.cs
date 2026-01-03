@@ -35,7 +35,7 @@ namespace SmartDyeing.FADM_Control
         /// <returns>0:正常;-1:异常</returns>
         private int DyeCodeShow(string s_dyeCode)
         {
-            string s_sql = "SELECT Code  FROM dyeing_process where Type = 1 group by Code ;";
+            string s_sql = "SELECT Code  FROM dyeing_process where Type = 1 group by Code  Order By Code;";
             DataTable dt_dyeingcode = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
 
             //捆绑

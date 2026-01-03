@@ -202,6 +202,12 @@
   <data name="MiOperator.Text" xml:space="preserve">
     <value>操作人员基本资料</value>
   </data>
+  <data name="MiABSProcess.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 26</value>
+  </data>
+  <data name="MiABSProcess.Text" xml:space="preserve">
+    <value>ABS流程</value>
+  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="toolStripSplitButton1.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -267,22 +273,28 @@
     <value>6, 28</value>
   </data>
   <data name="MiDebug.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 26</value>
+    <value>174, 26</value>
   </data>
   <data name="MiDebug.Text" xml:space="preserve">
     <value>调试页面</value>
   </data>
   <data name="MiRun.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 26</value>
+    <value>174, 26</value>
   </data>
   <data name="MiRun.Text" xml:space="preserve">
     <value>运行页面</value>
   </data>
   <data name="MiAlarm.Size" type="System.Drawing.Size, System.Drawing">
-    <value>144, 26</value>
+    <value>174, 26</value>
   </data>
   <data name="MiAlarm.Text" xml:space="preserve">
     <value>报警页面</value>
+  </data>
+  <data name="MiAbsDebug.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 26</value>
+  </data>
+  <data name="MiAbsDebug.Text" xml:space="preserve">
+    <value>ABS调试页面</value>
   </data>
   <data name="toolStripSplitButton2.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -862,6 +874,12 @@
   <data name="&gt;&gt;MiAlarm.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;MiAbsDebug.Name" xml:space="preserve">
+    <value>MiAbsDebug</value>
+  </data>
+  <data name="&gt;&gt;MiAbsDebug.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;toolStripSeparator3.Name" xml:space="preserve">
     <value>toolStripSeparator3</value>
   </data>
@@ -1065,6 +1083,12 @@
   </data>
   <data name="&gt;&gt;timer_Update.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MiABSProcess.Name" xml:space="preserve">
+    <value>MiABSProcess</value>
+  </data>
+  <data name="&gt;&gt;MiABSProcess.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Main</value>
