@@ -128,6 +128,7 @@ namespace SmartDyeing.FADM_Control
             this.BtnOutPut_Y_Power = new System.Windows.Forms.Button();
             this.BtnOutPut_X_Power = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.RdoWater = new System.Windows.Forms.RadioButton();
             this.RdoPHTest = new System.Windows.Forms.RadioButton();
             this.RdoWashBottle = new System.Windows.Forms.RadioButton();
             this.RdoSysFinish = new System.Windows.Forms.RadioButton();
@@ -156,16 +157,18 @@ namespace SmartDyeing.FADM_Control
             this.TxtNum = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.Tmr = new System.Windows.Forms.Timer(this.components);
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.grp_move.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.grp_in.SuspendLayout();
             this.grp_out.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // grp_move
             // 
-            resources.ApplyResources(this.grp_move, "grp_move");
             this.grp_move.Controls.Add(this.BtnStop);
             this.grp_move.Controls.Add(this.TxtRPosY);
             this.grp_move.Controls.Add(this.TxtRPosX);
@@ -197,6 +200,7 @@ namespace SmartDyeing.FADM_Control
             this.grp_move.Controls.Add(this.label3);
             this.grp_move.Controls.Add(this.label2);
             this.grp_move.Controls.Add(this.label1);
+            resources.ApplyResources(this.grp_move, "grp_move");
             this.grp_move.Name = "grp_move";
             this.grp_move.TabStop = false;
             // 
@@ -369,9 +373,9 @@ namespace SmartDyeing.FADM_Control
             // 
             // groupBox2
             // 
-            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Controls.Add(this.btn_reset_a);
             this.groupBox2.Controls.Add(this.LabBalanceValue);
+            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
             // 
@@ -389,7 +393,6 @@ namespace SmartDyeing.FADM_Control
             // 
             // grp_in
             // 
-            resources.ApplyResources(this.grp_in, "grp_in");
             this.grp_in.Controls.Add(this.ChkInPut_Dye_Stop);
             this.grp_in.Controls.Add(this.ChkInPut_Slow_Cylinder_Mid_3);
             this.grp_in.Controls.Add(this.ChkInPut_Slow_Cylinder_Mid_2);
@@ -425,6 +428,7 @@ namespace SmartDyeing.FADM_Control
             this.grp_in.Controls.Add(this.ChkInPut_X_Ready);
             this.grp_in.Controls.Add(this.ChkInPut_X_Reverse);
             this.grp_in.Controls.Add(this.ChkInPut_X_Corotation);
+            resources.ApplyResources(this.grp_in, "grp_in");
             this.grp_in.Name = "grp_in";
             this.grp_in.TabStop = false;
             // 
@@ -640,7 +644,6 @@ namespace SmartDyeing.FADM_Control
             // 
             // grp_out
             // 
-            resources.ApplyResources(this.grp_out, "grp_out");
             this.grp_out.Controls.Add(this.BtnOutPut_Slow_3);
             this.grp_out.Controls.Add(this.BtnOutPut_Slow_2);
             this.grp_out.Controls.Add(this.BtnOutPut_Dissolving);
@@ -663,6 +666,7 @@ namespace SmartDyeing.FADM_Control
             this.grp_out.Controls.Add(this.BtnOutPut_Tongs);
             this.grp_out.Controls.Add(this.BtnOutPut_Y_Power);
             this.grp_out.Controls.Add(this.BtnOutPut_X_Power);
+            resources.ApplyResources(this.grp_out, "grp_out");
             this.grp_out.Name = "grp_out";
             this.grp_out.TabStop = false;
             // 
@@ -822,7 +826,7 @@ namespace SmartDyeing.FADM_Control
             // 
             // groupBox5
             // 
-            resources.ApplyResources(this.groupBox5, "groupBox5");
+            this.groupBox5.Controls.Add(this.RdoWater);
             this.groupBox5.Controls.Add(this.RdoPHTest);
             this.groupBox5.Controls.Add(this.RdoWashBottle);
             this.groupBox5.Controls.Add(this.RdoSysFinish);
@@ -850,8 +854,16 @@ namespace SmartDyeing.FADM_Control
             this.groupBox5.Controls.Add(this.BtnStartMove);
             this.groupBox5.Controls.Add(this.TxtNum);
             this.groupBox5.Controls.Add(this.label12);
+            resources.ApplyResources(this.groupBox5, "groupBox5");
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.TabStop = false;
+            // 
+            // RdoWater
+            // 
+            resources.ApplyResources(this.RdoWater, "RdoWater");
+            this.RdoWater.Name = "RdoWater";
+            this.RdoWater.TabStop = true;
+            this.RdoWater.UseVisualStyleBackColor = true;
             // 
             // RdoPHTest
             // 
@@ -1043,10 +1055,23 @@ namespace SmartDyeing.FADM_Control
             this.Tmr.Enabled = true;
             this.Tmr.Tick += new System.EventHandler(this.Tmr_Tick);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label8);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.TabStop = false;
+            // 
+            // label8
+            // 
+            resources.ApplyResources(this.label8, "label8");
+            this.label8.Name = "label8";
+            // 
             // Debug
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.grp_out);
             this.Controls.Add(this.grp_in);
@@ -1063,6 +1088,7 @@ namespace SmartDyeing.FADM_Control
             this.grp_out.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1193,5 +1219,8 @@ namespace SmartDyeing.FADM_Control
         private RadioButton RdoSysFinish;
         private RadioButton RdoWashBottle;
         private RadioButton RdoPHTest;
+        private RadioButton RdoWater;
+        private GroupBox groupBox1;
+        private Label label8;
     }
 }

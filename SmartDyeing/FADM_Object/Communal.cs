@@ -5,6 +5,7 @@ using CHNSpec.Device.Models;
 using CHNSpec.Device.Models.Enums;
 using Lib_DataBank.MySQL;
 using SmartDyeing.FADM_Auto;
+using SmartDyeing.FADM_Control;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -31,6 +32,8 @@ namespace SmartDyeing.FADM_Object
         public static SerialPortHelper _Comhelper = new SerialPortHelper();
 
         private static readonly ReaderWriterLockSlim _rwLock = new ReaderWriterLockSlim();
+
+        private static readonly ReaderWriterLockSlim _rwWaterLock = new ReaderWriterLockSlim();
 
         /// <summary>
         /// 全自动滴液机数据库对象
@@ -495,6 +498,36 @@ namespace SmartDyeing.FADM_Object
             finally
             {
                 _rwLock.ExitWriteLock();
+            }
+        }
+
+        /// <summary>
+        /// 自动开料加水线程
+        /// </summary>
+        private static Thread WaterThread = null;
+        public static Thread ReadWaterThread()
+        {
+            _rwWaterLock.EnterReadLock();
+            try
+            {
+                return WaterThread;
+            }
+            finally
+            {
+                _rwWaterLock.ExitReadLock();
+            }
+        }
+
+        public static void WriteWaterThread(Thread value)
+        {
+            _rwWaterLock.EnterWriteLock();
+            try
+            {
+                WaterThread = value;
+            }
+            finally
+            {
+                _rwWaterLock.ExitWriteLock();
             }
         }
 
@@ -1173,9 +1206,10 @@ namespace SmartDyeing.FADM_Object
         public static bool _b_isUpdateNewData = false;
 
         /// <summary>
-        /// 调试页面下900-928地址数据
+        /// 调试页面下900-949地址数据
         /// </summary>
-        public static int[] _ia_d900 = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0 };
+        public static int[] _ia_d900 = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0};
 
         /// <summary>
         /// 调试页面吸光度数据13188-13227地址数据
@@ -1234,6 +1268,67 @@ namespace SmartDyeing.FADM_Object
         /// 开料机版本号
         /// </summary>
         public static string _s_brewVersion = "";
+
+        /// <summary>
+        /// 是否批量开料模式
+        /// </summary>
+        public static bool _b_isBatBrew = true ;
+
+        /// <summary>
+        /// 是否需要冷却
+        /// </summary>
+        public static bool _b_isNeedCool = false;
+
+        /// <summary>
+        /// 开始批量开料模式
+        /// </summary>
+        public static bool _b_isStartBatBrew = false;
+
+        /// <summary>
+        /// 开料批次搬移
+        /// </summary>
+        public static bool _b_isMoveing = false;
+
+        /// <summary>
+        /// 开料机状态(0待机 1:补水前状态 2:加粉完成到出瓶前 3:出瓶中 4:开料完成重新放针)
+        /// </summary>
+        public static int _i_BrewStatus = 0;
+
+
+        /// <summary>
+        /// 母液区第一个瓶号
+        /// </summary>
+        public static int _i_MotherBottleNum = 61;
+
+        /// <summary>
+        /// 粉筒与母液瓶是否分区域
+        /// </summary>
+        public static bool _b_isPartition = false;
+
+        /// <summary>
+        /// 自动开料是否需要搬运针筒
+        /// </summary>
+        public static bool _b_isNeedMoveSy = true;
+
+        /// <summary>
+        /// 当前一轮自动开料总步数
+        /// </summary>
+        public static int _i_BrewTotalStep = 0;
+
+        /// <summary>
+        /// 对应开料机数量
+        /// </summary>
+        public static int _i_TotalBrewMac = 1;
+
+        /// <summary>
+        /// 当前开料机编号
+        /// </summary>
+        public static int _i_CurrentBrewNum = 1;
+
+        /// <summary>
+        /// 使用原针筒开稀
+        /// </summary>
+        public static bool _b_OriginalSyBrew = false;
 
 
 
@@ -1319,6 +1414,8 @@ namespace SmartDyeing.FADM_Object
             public Dictionary<int, int> _dic_step;//  _dic_pulse：配液杯对应步号
 
             public int _i_AddType;// _i_Type：吸光度加药类型 1是母液 2 是溶解剂
+
+            public int _i_stationnum;// _i_stationnum：自动开料工位号
         }
 
         /// <summary>
@@ -4557,7 +4654,7 @@ namespace SmartDyeing.FADM_Object
             Dictionary<int, int> dic_pulse = o._dic_pulse;
             Dictionary<int, double> dic_water = o._dic_water;
             Dictionary<int, int> dic_step = o._dic_step;
-
+            int i_stationnum= o._i_stationnum;
             Thread thread = null;
 
             //记录初始天平读数
@@ -4576,6 +4673,173 @@ namespace SmartDyeing.FADM_Object
                 }
             }
             FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平读数：" + d_blBalanceValue3);
+
+            int i_xStart = 0;
+            int i_yStart = 0;
+            int i_mRes3;
+
+            if (!FADM_Object.Communal._b_OriginalSyBrew)
+            {
+                //把原有针筒先移走
+                if (FADM_Object.Communal._b_isNeedMoveSy)
+                {
+                    //计算针筒位置
+                    MyModbusFun.CalTarget(0, i_minBottleNo, ref i_xStart, ref i_yStart);
+
+
+                lab1:
+                    try
+                    {
+                        i_mRes3 = MyModbusFun.GetSyringes(i_xStart, i_yStart);
+                        if (-2 == i_mRes3)
+                            throw new Exception("收到退出消息");
+                    }
+                    catch (Exception ex)
+                    {
+                        if ("未发现针筒" == ex.Message || "未发现抓手" == ex.Message)
+                        {
+                            FADM_Object.MyAlarm myAlarm;
+                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                                myAlarm = new FADM_Object.MyAlarm(i_minBottleNo + "号母液瓶未发现针筒，请确认无误后点确定", "BrewAdd", 2, 2, 100);
+                            else
+                                myAlarm = new FADM_Object.MyAlarm("No syringe was found in the" + i_minBottleNo + "  mother liquor bottle. Please confirm if there are no errors and click OK", "BrewAdd", 2, 2, 100);
+
+                            while (true)
+                            {
+                                if (myAlarm._i_alarm_Choose != 0)
+                                    break;
+                                Thread.Sleep(1);
+                            }
+
+                            goto lab1;
+                        }
+                        else if ("取针筒时抓手关失败" == ex.Message)
+                        {
+                            FADM_Object.MyAlarm myAlarm;
+                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                                myAlarm = new FADM_Object.MyAlarm(i_minBottleNo + "号母液瓶取针筒时抓手关失败，请确认无误后点确定", "BrewAdd", 2, 2, 100);
+                            else
+                                myAlarm = new FADM_Object.MyAlarm("No syringe was found in the" + i_minBottleNo + "  mother liquor bottle. Please confirm if there are no errors and click OK", "BrewAdd", 2, 2, 100);
+
+                            while (true)
+                            {
+                                if (myAlarm._i_alarm_Choose != 0)
+                                    break;
+                                Thread.Sleep(1);
+                            }
+                            goto lab1;
+
+                        }
+                        else if ("取针筒时气缸下失败" == ex.Message)
+                        {
+                            FADM_Object.MyAlarm myAlarm;
+                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                                myAlarm = new FADM_Object.MyAlarm(i_minBottleNo + "号母液瓶取针筒时气缸下失败，请确认无误后点确定", "BrewAdd", 2, 2, 100);
+                            else
+                                myAlarm = new FADM_Object.MyAlarm("No syringe was found in the" + i_minBottleNo + "  mother liquor bottle. Please confirm if there are no errors and click OK", "BrewAdd", 2, 2, 100);
+
+                            while (true)
+                            {
+                                if (myAlarm._i_alarm_Choose != 0)
+                                    break;
+                                Thread.Sleep(1);
+                            }
+                            goto lab1;
+
+                        }
+                        else
+                            throw;
+                    }
+
+
+                    i_mRes3 = MyModbusFun.TargetMove(19, 11, 1);
+                    if (-2 == i_mRes3)
+                        throw new Exception("收到退出消息");
+
+                    //放针
+                    i_mRes3 = MyModbusFun.Put(0);
+                    if (-2 == i_mRes3)
+                        throw new Exception("收到退出消息");
+                }
+
+
+            //抓取抽液针筒
+            lab2:
+                //if (!Communal._b_isGetSyringes)
+                {
+                    FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "拿针筒启动");
+                    //int i_xStart = 0;
+                    //int i_yStart = 0;
+                    //计算针筒位置
+                    MyModbusFun.CalTarget(11, 0, ref i_xStart, ref i_yStart);
+                    try
+                    {
+                        i_mRes3 = MyModbusFun.GetSyringes(i_xStart, i_yStart);
+                        if (-2 == i_mRes3)
+                            throw new Exception("收到退出消息");
+                    }
+                    catch (Exception ex)
+                    {
+                        if ("未发现针筒" == ex.Message || "未发现抓手" == ex.Message)
+                        {
+                            FADM_Object.MyAlarm myAlarm;
+                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                                myAlarm = new FADM_Object.MyAlarm("抽液针筒取针筒时未发现针筒，请确认无误后点确定", "BrewAdd", 2, 2, 100);
+
+                            else
+                                myAlarm = new FADM_Object.MyAlarm("No syringe was found in the" + i_minBottleNo + "  mother liquor bottle. Please confirm if there are no errors and click OK", "BrewAdd", 2, 2, 100);
+
+                            while (true)
+                            {
+                                if (myAlarm._i_alarm_Choose != 0)
+                                    break;
+                                Thread.Sleep(1);
+                            }
+
+                            goto lab2;
+                        }
+                        else if ("取针筒时抓手关失败" == ex.Message)
+                        {
+                            FADM_Object.MyAlarm myAlarm;
+                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                                myAlarm = new FADM_Object.MyAlarm("抽液针筒取针筒时抓手关失败，请确认无误后点确定", "BrewAdd", 2, 2, 100);
+                            else
+                                myAlarm = new FADM_Object.MyAlarm("No syringe was found in the" + i_minBottleNo + "  mother liquor bottle. Please confirm if there are no errors and click OK", "BrewAdd", 2, 2, 100);
+
+                            while (true)
+                            {
+                                if (myAlarm._i_alarm_Choose != 0)
+                                    break;
+                                Thread.Sleep(1);
+                            }
+                            goto lab2;
+
+                        }
+                        else if ("取针筒时气缸下失败" == ex.Message)
+                        {
+                            FADM_Object.MyAlarm myAlarm;
+                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                                myAlarm = new FADM_Object.MyAlarm("抽液针筒取针筒时气缸下失败，请确认无误后点确定", "BrewAdd", 2, 2, 100);
+                            else
+                                myAlarm = new FADM_Object.MyAlarm("No syringe was found in the" + i_minBottleNo + "  mother liquor bottle. Please confirm if there are no errors and click OK", "BrewAdd", 2, 2, 100);
+
+                            while (true)
+                            {
+                                if (myAlarm._i_alarm_Choose != 0)
+                                    break;
+                                Thread.Sleep(1);
+                            }
+                            goto lab2;
+
+                        }
+                        else
+                            throw;
+                    }
+                    FADM_Object.Communal._b_isGetSyringes = false;
+
+                    FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "拿针筒完成");
+                }
+            }
 
         label9:
 
@@ -4932,7 +5196,7 @@ namespace SmartDyeing.FADM_Object
 
                 FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "注液启动(" + iInfusionPulse + ")");
 
-                i_mRes = MyModbusFun.AbsShove(iInfusionPulse, 0);
+                i_mRes = MyModbusFun.BrewShove(iInfusionPulse, 0);
 
                 if (-2 == i_mRes)
                     throw new Exception("收到退出消息");
@@ -4960,7 +5224,7 @@ namespace SmartDyeing.FADM_Object
 
                 FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "注液启动(" + iInfusionPulse + ")");
 
-                i_mRes = MyModbusFun.AbsShove(iInfusionPulse, 1);
+                i_mRes = MyModbusFun.BrewShove(iInfusionPulse, 1);
 
                 if (-2 == i_mRes)
                     throw new Exception("收到退出消息");
@@ -4982,34 +5246,146 @@ namespace SmartDyeing.FADM_Object
             sArg._d_blBalanceValue3 = d_blBalanceValue3;
             sArg._s_syringeType = s_syringeType;
             sArg._s_unitOfAccount = s_unitOfAccount;
+            sArg._i_stationNum = i_stationnum;
             thread = new Thread(GetBalance);
             thread.Start(sArg);
 
 
-            FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找" + i_minBottleNo + "号母液瓶");
-            FADM_Object.Communal._i_optBottleNum = i_minBottleNo;
-            i_mRes = MyModbusFun.TargetMove(0, i_minBottleNo, 0);
-            if (-2 == i_mRes)
-                throw new Exception("收到退出消息");
-            FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达" + i_minBottleNo + "号母液瓶");
-
-
-
-            FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", i_minBottleNo + "号母液瓶放针启动");
-
-            if ("小针筒" == s_syringeType || "Little Syringe" == s_syringeType)
+            if (FADM_Object.Communal._b_OriginalSyBrew)
             {
-                i_mRes = MyModbusFun.Put(0);
+
+                FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找" + i_minBottleNo + "号母液瓶");
+                FADM_Object.Communal._i_optBottleNum = i_minBottleNo;
+                i_mRes = MyModbusFun.TargetMove(0, i_minBottleNo, 0);
                 if (-2 == i_mRes)
                     throw new Exception("收到退出消息");
+                FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达" + i_minBottleNo + "号母液瓶");
+
+
+
+                FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", i_minBottleNo + "号母液瓶放针启动");
+
+                if ("小针筒" == s_syringeType || "Little Syringe" == s_syringeType)
+                {
+                    i_mRes = MyModbusFun.Put(0);
+                    if (-2 == i_mRes)
+                        throw new Exception("收到退出消息");
+                }
+                else
+                {
+                    i_mRes = MyModbusFun.Put(1);
+                    if (-2 == i_mRes)
+                        throw new Exception("收到退出消息");
+                }
+                FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", i_minBottleNo + "号母液瓶放针完成");
             }
             else
             {
-                i_mRes = MyModbusFun.Put(1);
+                //清洗抽液针筒
+
+                i_mRes = MyModbusFun.TargetMove(12, 0, 1);
                 if (-2 == i_mRes)
                     throw new Exception("收到退出消息");
+
+                MyModbusFun.WashSyringes(1);
+
+                //放回抽液针筒
+                FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找抽液针筒位置");
+                i_mRes = MyModbusFun.TargetMove(11, 0, 0);
+                if (-2 == i_mRes)
+                    throw new Exception("收到退出消息");
+
+                FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "抵达抽液针筒位置");
+
+                int iMRes_1 = MyModbusFun.Put(1);
+                if (-2 == iMRes_1)
+                    throw new Exception("收到退出消息");
+
+                Communal._b_isGetSyringes = false;
+
+                if (FADM_Object.Communal._b_isNeedMoveSy)
+                {
+                    //移回原来针筒
+                    //计算针筒位置
+
+
+                    MyModbusFun.CalTarget(19, 11, ref i_xStart, ref i_yStart);
+                lab3:
+                    try
+                    {
+                        i_mRes3 = MyModbusFun.GetSyringes(i_xStart, i_yStart);
+                        if (-2 == i_mRes3)
+                            throw new Exception("收到退出消息");
+                    }
+                    catch (Exception ex)
+                    {
+                        if ("未发现针筒" == ex.Message || "未发现抓手" == ex.Message)
+                        {
+                            FADM_Object.MyAlarm myAlarm;
+                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                                myAlarm = new FADM_Object.MyAlarm(i_minBottleNo + "号母液瓶放针位未发现针筒，请确认无误后点确定", "BrewAdd", 2, 2, 100);
+                            else
+                                myAlarm = new FADM_Object.MyAlarm("No syringe was found in the" + i_minBottleNo + "  mother liquor bottle. Please confirm if there are no errors and click OK", "BrewAdd", 2, 2, 100);
+
+                            while (true)
+                            {
+                                if (myAlarm._i_alarm_Choose != 0)
+                                    break;
+                                Thread.Sleep(1);
+                            }
+
+                            goto lab3;
+                        }
+                        else if ("取针筒时抓手关失败" == ex.Message)
+                        {
+                            FADM_Object.MyAlarm myAlarm;
+                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                                myAlarm = new FADM_Object.MyAlarm(i_minBottleNo + "号母液瓶放针位取针筒时抓手关失败，请确认无误后点确定", "BrewAdd", 2, 2, 100);
+                            else
+                                myAlarm = new FADM_Object.MyAlarm("No syringe was found in the" + i_minBottleNo + "  mother liquor bottle. Please confirm if there are no errors and click OK", "BrewAdd", 2, 2, 100);
+
+                            while (true)
+                            {
+                                if (myAlarm._i_alarm_Choose != 0)
+                                    break;
+                                Thread.Sleep(1);
+                            }
+                            goto lab3;
+
+                        }
+                        else if ("取针筒时气缸下失败" == ex.Message)
+                        {
+                            FADM_Object.MyAlarm myAlarm;
+                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                                myAlarm = new FADM_Object.MyAlarm(i_minBottleNo + "号母液瓶放针位取针筒时气缸下失败，请确认无误后点确定", "BrewAdd", 2, 2, 100);
+                            else
+                                myAlarm = new FADM_Object.MyAlarm("No syringe was found in the" + i_minBottleNo + "  mother liquor bottle. Please confirm if there are no errors and click OK", "BrewAdd", 2, 2, 100);
+
+                            while (true)
+                            {
+                                if (myAlarm._i_alarm_Choose != 0)
+                                    break;
+                                Thread.Sleep(1);
+                            }
+                            goto lab3;
+
+                        }
+                        else
+                            throw;
+                    }
+                    FADM_Object.Communal._b_isGetSyringes = false;
+
+                    i_mRes3 = MyModbusFun.TargetMove(0, i_minBottleNo, 1);
+                    if (-2 == i_mRes3)
+                        throw new Exception("收到退出消息");
+
+                    //放针
+                    i_mRes3 = MyModbusFun.Put(0);
+                    if (-2 == i_mRes3)
+                        throw new Exception("收到退出消息");
+                }
             }
-            FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", i_minBottleNo + "号母液瓶放针完成");
+
 
             //读取加药量
             for (int i = 0; i < lis_data.Count; i++)
@@ -5017,12 +5393,13 @@ namespace SmartDyeing.FADM_Object
                 //对应值复称值写入
                 directoryReturn.Add(lis_data[i], _d_reviewBalance);
             }
-
+            thread.Join();
             return 0;
         }
 
         /// <summary>
         /// 移动母液瓶 1母液区到洗瓶位  2洗瓶位到开料工位 3开料工位到洗瓶位 4开料工位到母液区 5废液桶到校正工位 6校正工位到废液桶
+        /// 7洗瓶位到母液区 8母液区到开料工位
         /// </summary>
         public static void MoveBottle(int i_cupNo, int i_type)
         {
@@ -5047,6 +5424,8 @@ namespace SmartDyeing.FADM_Object
                         break;
                     //其他状态下直接等待完成后再进行
 
+                    if (i_type == 5 || i_type == 6)
+                        break;
 
                     Thread.Sleep(1);
                 }
@@ -5143,50 +5522,14 @@ namespace SmartDyeing.FADM_Object
                     {
                         FADM_Object.MyAlarm myAlarm;
 
-                        if (i_type == 1)
-                        {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                      "UPDATE brew_station_details SET  Cooperate = 11 WHERE  Station = " + 6 + " ;");
-                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
-                                myAlarm = new FADM_Object.MyAlarm(i_cupNo + "号开料工位取瓶未发现抓手，是否继续执行?(继续执行请点是)", "MoveBottle", i_cupNo, 2, 51, true);
-                            else
-                                myAlarm = new FADM_Object.MyAlarm(i_cupNo + " Station did not find a tongs, do you want to continue? " +
-                                    "( Continue to perform please click Yes)", "MoveBottle", i_cupNo, 2, 51, true);
-                        }
-                        else if (i_type == 2)
-                        {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                      "UPDATE brew_station_details SET  Cooperate = 0 WHERE  Station = " + i_cupNo + " ;");
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                      "UPDATE brew_station_details SET  Cooperate = 11 WHERE  Station = " + 6 + " ;");
-                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
-                                myAlarm = new FADM_Object.MyAlarm("洗瓶工位取瓶未发现抓手，是否继续执行?(继续执行请点是)", "MoveBottle", i_cupNo, 2, 54, true);
-                            else
-                                myAlarm = new FADM_Object.MyAlarm("Wash Bottle Station did not find a tongs, do you want to continue? " +
-                                    "( Continue to perform please click Yes)", "MoveBottle", i_cupNo, 2, 54, true);
-                        }
-                        else if (i_type == 3)
-                        {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                      "UPDATE brew_station_details SET  Cooperate = 0 WHERE  Station = " + i_cupNo + " ;");
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                      "UPDATE brew_station_details SET  Cooperate = 11 WHERE  Station = " + 6 + " ;");
-                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
-                                myAlarm = new FADM_Object.MyAlarm("洗瓶工位取瓶未发现抓手，是否继续执行?(继续执行请点是)", "MoveBottle", i_cupNo, 2, 55, true);
-                            else
-                                myAlarm = new FADM_Object.MyAlarm("Wash Bottle Station did not find a tongs, do you want to continue? " +
-                                    "( Continue to perform please click Yes)", "MoveBottle", i_cupNo, 2, 55, true);
-                        }
-                        else if (i_type == 4)
-                        {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                      "UPDATE brew_station_details SET  Cooperate = 11 WHERE  Station = " + i_cupNo + " ;");
-                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
-                                myAlarm = new FADM_Object.MyAlarm(i_cupNo + "号开料工位取瓶未发现抓手，是否继续执行?(继续执行请点是)", "MoveBottle", i_cupNo, 2, 56, true);
-                            else
-                                myAlarm = new FADM_Object.MyAlarm(i_cupNo + " Station did not find a tongs, do you want to continue? " +
-                                    "( Continue to perform please click Yes)", "MoveBottle", i_cupNo, 2, 56, true);
-                        }
+                            //FADM_Object.Communal._fadmSqlserver.ReviseData(
+                            //          "UPDATE brew_station_details SET  Cooperate = 11 WHERE  Station = " + i_cupNo + " ;");
+                            //if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                            //    myAlarm = new FADM_Object.MyAlarm("洗瓶工位取瓶未发现抓手，是否继续执行?(继续执行请点是)", "MoveBottle", i_cupNo, 2, 54, true);
+                            //else
+                            //    myAlarm = new FADM_Object.MyAlarm("Wash Bottle Station did not find a tongs, do you want to continue? " +
+                            //        "( Continue to perform please click Yes)", "MoveBottle", i_cupNo, 2, 54, true);
+                       
 
                         throw new Exception("-97");
                         return;
@@ -5194,104 +5537,33 @@ namespace SmartDyeing.FADM_Object
                     else if ("取布夹具时抓手关失败" == ex.Message)
                     {
                         FADM_Object.MyAlarm myAlarm;
-                        if (i_type == 1)
-                        {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                              "UPDATE brew_station_details SET  Cooperate = 11 WHERE  Station = " + 6 + " ;");
-                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
-                                myAlarm = new FADM_Object.MyAlarm(i_cupNo + "号开料工位取夹具时抓手关失败，是否继续执行?(继续执行请点是)", "MoveBottle", i_cupNo, 2, 51, true);
-                            else
-                                myAlarm = new FADM_Object.MyAlarm(i_cupNo + " Station The gripper failed to close when taking the fabric fixture, do you want to continue? " +
-                                    "( Continue to perform please click Yes)", "MoveBottle", i_cupNo, 2, 51, true);
-                        }
-                        else if (i_type == 2)
-                        {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                      "UPDATE brew_station_details SET  Cooperate = 0 WHERE  Station = " + i_cupNo + " ;");
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                      "UPDATE brew_station_details SET  Cooperate = 11 WHERE  Station = " + 6 + " ;");
-                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
-                                myAlarm = new FADM_Object.MyAlarm("洗瓶工位取夹具时抓手关失败，是否继续执行?(继续执行请点是)", "MoveBottle", i_cupNo, 2, 54, true);
-                            else
-                                myAlarm = new FADM_Object.MyAlarm("Wash Bottle Station The gripper failed to close when taking the fabric fixture, do you want to continue? " +
-                                    "( Continue to perform please click Yes)", "MoveBottle", i_cupNo, 2, 54, true);
-                        }
+                       
+                            //FADM_Object.Communal._fadmSqlserver.ReviseData(
+                            //          "UPDATE brew_station_details SET  Cooperate = 11 WHERE  Station = " + i_cupNo + " ;");
+                            //if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                            //    myAlarm = new FADM_Object.MyAlarm("洗瓶工位取夹具时抓手关失败，是否继续执行?(继续执行请点是)", "MoveBottle", i_cupNo, 2, 54, true);
+                            //else
+                            //    myAlarm = new FADM_Object.MyAlarm("Wash Bottle Station The gripper failed to close when taking the fabric fixture, do you want to continue? " +
+                            //        "( Continue to perform please click Yes)", "MoveBottle", i_cupNo, 2, 54, true);
+                        
 
-                        else if (i_type == 3)
-                        {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                      "UPDATE brew_station_details SET  Cooperate = 0 WHERE  Station = " + i_cupNo + " ;");
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                      "UPDATE brew_station_details SET  Cooperate = 11 WHERE  Station = " + 6 + " ;");
-                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
-                                myAlarm = new FADM_Object.MyAlarm("洗瓶工位取夹具时抓手关失败，是否继续执行?(继续执行请点是)", "MoveBottle", i_cupNo, 2, 55, true);
-                            else
-                                myAlarm = new FADM_Object.MyAlarm("Wash Bottle Station The gripper failed to close when taking the fabric fixture, do you want to continue? " +
-                                    "( Continue to perform please click Yes)", "MoveBottle", i_cupNo, 2, 55, true);
-                        }
-                        else if (i_type == 4)
-                        {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                              "UPDATE brew_station_details SET  Cooperate = 11 WHERE  Station = " + i_cupNo + " ;");
-                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
-                                myAlarm = new FADM_Object.MyAlarm(i_cupNo + "号开料工位取夹具时抓手关失败，是否继续执行?(继续执行请点是)", "MoveBottle", i_cupNo, 2, 56, true);
-                            else
-                                myAlarm = new FADM_Object.MyAlarm(i_cupNo + " Station The gripper failed to close when taking the fabric fixture, do you want to continue? " +
-                                    "( Continue to perform please click Yes)", "MoveBottle", i_cupNo, 2, 56, true);
-                        }
-
-                        throw new Exception("-97");
+                        throw new Exception("-98");
                         return;
                     }
                     else if ("取布夹具时气缸下失败" == ex.Message)
                     {
                         FADM_Object.MyAlarm myAlarm;
-                        if (i_type == 1)
-                        {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                              "UPDATE brew_station_details SET  Cooperate = 11 WHERE  Station = " + 6 + " ;");
-                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
-                                myAlarm = new FADM_Object.MyAlarm(i_cupNo + "号开料工位取夹具时气缸下失败，是否继续执行?(继续执行请点是)", "MoveBottle", i_cupNo, 2, 51, true);
-                            else
-                                myAlarm = new FADM_Object.MyAlarm(i_cupNo + " Station The cylinder failed to drop when taking the fabric fixture, do you want to continue? " +
-                                    "( Continue to perform please click Yes)", "MoveBottle", i_cupNo, 2, 51, true);
-                        }
-                        else if (i_type == 2)
-                        {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                      "UPDATE brew_station_details SET  Cooperate = 0 WHERE  Station = " + i_cupNo + " ;");
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                      "UPDATE brew_station_details SET  Cooperate = 11 WHERE  Station = " + 6 + " ;");
-                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
-                                myAlarm = new FADM_Object.MyAlarm("洗瓶工位取夹具时气缸下失败，是否继续执行?(继续执行请点是)", "MoveBottle", i_cupNo, 2, 54, true);
-                            else
-                                myAlarm = new FADM_Object.MyAlarm("Wash Bottle Station The cylinder failed to drop when taking the fabric fixture, do you want to continue? " +
-                                    "( Continue to perform please click Yes)", "MoveBottle", i_cupNo, 2, 54, true);
-                        }
-                        else if (i_type == 3)
-                        {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                      "UPDATE brew_station_details SET  Cooperate = 0 WHERE  Station = " + i_cupNo + " ;");
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                      "UPDATE brew_station_details SET  Cooperate = 11 WHERE  Station = " + 6 + " ;");
-                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
-                                myAlarm = new FADM_Object.MyAlarm("洗瓶工位取夹具时气缸下失败，是否继续执行?(继续执行请点是)", "MoveBottle", i_cupNo, 2, 55, true);
-                            else
-                                myAlarm = new FADM_Object.MyAlarm("Wash Bottle Station The cylinder failed to drop when taking the fabric fixture, do you want to continue? " +
-                                    "( Continue to perform please click Yes)", "MoveBottle", i_cupNo, 2, 55, true);
-                        }
-                        else if (i_type == 4)
-                        {
-                            FADM_Object.Communal._fadmSqlserver.ReviseData(
-                              "UPDATE brew_station_details SET  Cooperate = 11 WHERE  Station = " + i_cupNo + " ;");
-                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
-                                myAlarm = new FADM_Object.MyAlarm(i_cupNo + "号开料工位取夹具时气缸下失败，是否继续执行?(继续执行请点是)", "MoveBottle", i_cupNo, 2, 56, true);
-                            else
-                                myAlarm = new FADM_Object.MyAlarm(i_cupNo + " Station The cylinder failed to drop when taking the fabric fixture, do you want to continue? " +
-                                    "( Continue to perform please click Yes)", "MoveBottle", i_cupNo, 2, 56, true);
-                        }
+                        
+                            //FADM_Object.Communal._fadmSqlserver.ReviseData(
+                            //          "UPDATE brew_station_details SET  Cooperate = 11 WHERE  Station = " + i_cupNo + " ;");
+                            //if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                            //    myAlarm = new FADM_Object.MyAlarm("洗瓶工位取夹具时气缸下失败，是否继续执行?(继续执行请点是)", "MoveBottle", i_cupNo, 2, 54, true);
+                            //else
+                            //    myAlarm = new FADM_Object.MyAlarm("Wash Bottle Station The cylinder failed to drop when taking the fabric fixture, do you want to continue? " +
+                            //        "( Continue to perform please click Yes)", "MoveBottle", i_cupNo, 2, 54, true);
+                        
 
-                        throw new Exception("-97");
+                        throw new Exception("-99");
                         return;
                     }
                     else if ("发现杯盖或针筒" == ex.Message)
@@ -5367,25 +5639,25 @@ namespace SmartDyeing.FADM_Object
 
                         //计算目标位置
                         MyModbusFun.CalTarget(15, 0, ref i_xStart, ref i_yStart);
-                        MyModbusFun.CalTarget(16, AutoBrew._cup_Temps[i_cupNo - 1]._i_position, ref i_xEnd, ref i_yEnd);
-                        //拿不到转盘实际位置，发异常重新交互
-                        if (AutoBrew._cup_Temps[i_cupNo - 1]._i_position == 0)
-                        {
-                            throw new Exception("-97");
-                        }
+                        MyModbusFun.CalTarget(2, 0, ref i_xEnd, ref i_yEnd);
+                        ////拿不到转盘实际位置，发异常重新交互
+                        //if (AutoBrew._cup_Temps[i_cupNo - 1]._i_position == 0)
+                        //{
+                        //    throw new Exception("-97");
+                        //}
                     }
                     else if (i_type == 3)
                     {
 
 
                         //计算目标位置
-                        MyModbusFun.CalTarget(16, AutoBrew._cup_Temps[i_cupNo - 1]._i_position, ref i_xStart, ref i_yStart);
+                        MyModbusFun.CalTarget(2, 0, ref i_xStart, ref i_yStart);
                         MyModbusFun.CalTarget(15, 0, ref i_xEnd, ref i_yEnd);
                         //拿不到转盘实际位置，发异常重新交互
-                        if (AutoBrew._cup_Temps[i_cupNo - 1]._i_position == 0)
-                        {
-                            throw new Exception("-97");
-                        }
+                        //if (AutoBrew._cup_Temps[i_cupNo - 1]._i_position == 0)
+                        //{
+                        //    throw new Exception("-97");
+                        //}
                     }
                     else if (i_type == 4)
                     {
@@ -5405,11 +5677,26 @@ namespace SmartDyeing.FADM_Object
                         MyModbusFun.CalTarget(21, 0, ref i_xEnd, ref i_yEnd);
                         
                     }
-                    else if (i_type == 5)
+                    else if (i_type == 6)
                     {
                         //计算目标位置
                         MyModbusFun.CalTarget(21, 0, ref i_xStart, ref i_yStart);
                         MyModbusFun.CalTarget(16, 6, ref i_xEnd, ref i_yEnd);
+
+                    }
+                    else if (i_type == 7)
+                    {
+                        //计算目标位置
+                        MyModbusFun.CalTarget(15, 0, ref i_xStart, ref i_yStart);
+                        MyModbusFun.CalTarget(0, Convert.ToInt32(dt_cupordye_details.Rows[0]["BottleNum"].ToString()), ref i_xEnd, ref i_yEnd);
+
+                    }
+
+                    else if (i_type == 8)
+                    {
+                        //计算目标位置
+                        MyModbusFun.CalTarget(0, Convert.ToInt32(dt_cupordye_details.Rows[0]["BottleNum"].ToString()), ref i_xStart, ref i_yStart);
+                        MyModbusFun.CalTarget(2, 0, ref i_xEnd, ref i_yEnd);
 
                     }
 
@@ -5607,6 +5894,8 @@ namespace SmartDyeing.FADM_Object
             public int _i_minBottleNo;//母液瓶号
             public double _d_blBalanceValue3;//天平初始读数
             public string _s_unitOfAccount;//单位
+
+            public int _i_stationNum;//工位号
         }
 
         private static void WaitBalance(object o)
@@ -5658,6 +5947,7 @@ namespace SmartDyeing.FADM_Object
             int i_minBottleNo = sArg._i_minBottleNo;
             string s_syringeType = sArg._s_syringeType;
             string s_unitOfAccount = sArg._s_unitOfAccount;
+            int i_stationnum = sArg._i_stationNum;
             FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "天平稳定读数启动");
             double d_w = SteBalance();
             //if (Math.Abs(d_w - d_temp) > 20)
@@ -5681,7 +5971,43 @@ namespace SmartDyeing.FADM_Object
                 FADM_Object.Communal._fadmSqlserver.ReviseData(
                     "UPDATE bottle_details SET CurrentWeight = CurrentWeight - " + d_blWeight  +
                     " WHERE BottleNum = '" + i_minBottleNo + "';");
-           
+
+            int i_c = (int)(_d_reviewBalance * 1000);
+            int i_d0 = 0, i_d1 = 0, i_d2 = 0;
+            i_d0 = i_c;
+            i_d2 = i_d0 / 65536;
+            if (i_d0 < 0) //负数脉冲
+            {
+                if (i_d2 == 0)
+                {
+                    i_d2 = -1;
+                }
+                else
+                {
+                    if (Math.Abs(i_d0) > 65536)
+                    {
+                        i_d2 = i_d2 + -1;
+                    }
+                }
+            }
+            else
+            {  //正数脉冲
+                i_d2 = i_d0 / 65536;
+            }
+            i_d1 = i_d0 % 65536;
+
+
+            int[] ia_zero = new int[2];
+
+            ia_zero[0] = i_d1;
+            ia_zero[1] = i_d2;
+            Dye.BrewAndWashHMIWrite(22326 + 40 * (i_stationnum - 1), ia_zero);
+
+            //加粉完成
+            ia_zero = new int[1];
+            ia_zero[0] = 2;
+            Dye.BrewAndWashHMIWrite(22289 + 40 * (i_stationnum - 1), ia_zero);
+
         }
 
         //天平稳定数据

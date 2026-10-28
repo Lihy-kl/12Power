@@ -2139,6 +2139,7 @@ namespace SmartDyeing.FADM_Auto
                 FADM_Object.Communal.WriteMachineStatus(0);
                 _i_dripType = 0;
 
+                FADM_Object.Communal._b_isBatBrew = true;
                 //Lib_SerialPort.Balance.METTLER.bReSetSign = true;
 
                 _b_dripStop = false;

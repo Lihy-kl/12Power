@@ -225,8 +225,9 @@ namespace SmartDyeing.FADM_Control
                         //    if (!Communal._b_isWriting)
                         //        break;
                         //}
-                        //tcp读取900到928
-                        int[] ia_array = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                        //tcp读取900到949
+                        int[] ia_array = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0};
                         int i_state = 0;
                         if (!FADM_Object.Communal.ReadTcpStatus())
                         {
@@ -240,7 +241,7 @@ namespace SmartDyeing.FADM_Control
                         }
                         else
                         {
-                            i_state = FADM_Object.Communal._tcpModBus.Read(900, 29, ref ia_array);
+                            i_state = FADM_Object.Communal._tcpModBus.Read(900, 50, ref ia_array);
 
                             if (Lib_Card.Configure.Parameter.Other_UseAbs == 1)
                             {
@@ -330,6 +331,9 @@ namespace SmartDyeing.FADM_Control
 
                             int a23 = ia_array[23]; //
                             int a25 = ia_array[25]; //
+
+                            int a48 = ia_array[47]; //气缸高度
+                            int a49 = ia_array[48]; //气缸高度
 
                             double d_b = 0.0;
                             if (a2 < 0)
@@ -555,7 +559,7 @@ namespace SmartDyeing.FADM_Control
                                 this.BtnOutPut_Water.ForeColor = ca_cc[ca_cc.Length - 8].Equals('1') ? Color.Red : Color.Black; //加水
                                 this.BtnOutPut_Tray.ForeColor = ca_cc[ca_cc.Length - 9].Equals('1') ? Color.Red : Color.Black; //接液盘
                                 this.BtnOutPut_Tongs.ForeColor = ca_cc[ca_cc.Length - 10].Equals('1') ? Color.Red : Color.Black; //抓手
-                                this.BtnOutPut_Cylinder_Down.ForeColor = ca_cc[ca_cc.Length - 11].Equals('1') ? Color.Red : Color.Black; //气缸下
+                                this.BtnOutPut_Cylinder_Down.ForeColor = ca_cc[ca_cc.Length - 12].Equals('1') ? Color.Red : Color.Black; //气缸下
                                 this.BtnOutPut_Decompression.ForeColor = ca_cc[ca_cc.Length - 14].Equals('1') ? Color.Red : Color.Black; //泄压下
                                 this.BtnOutPut_Block_Out.ForeColor = ca_cc[ca_cc.Length - 15].Equals('1') ? Color.Red : Color.Black; //阻挡出
 
@@ -663,6 +667,17 @@ namespace SmartDyeing.FADM_Control
                                     Communal._b_isBSendClose = true;
                                 }
                             }
+
+                            d_b = 0.0;
+                            if (a48 < 0)
+                            {
+                                d_b = ((a49 + 1) * 65536 + a48) / 100.0;
+                            }
+                            else
+                            {
+                                d_b = (a49 * 65536 + a48) / 100.0;
+                            }
+                            label8.Text = Convert.ToString(d_b);
 
 
                         }
@@ -854,11 +869,11 @@ namespace SmartDyeing.FADM_Control
                     _b_istrue = true;
                     if (this.BtnOutPut_Cylinder_Down.ForeColor == Color.Red)
                     {
-                        _ia_array[0] = 5;
+                        _ia_array[0] = 6;
                     }
                     else
                     {
-                        _ia_array[0] = 6;
+                        _ia_array[0] = 5;
                     }
                     int i_state = FADM_Object.Communal._tcpModBus.Write(811, _ia_array);
 
@@ -1552,6 +1567,12 @@ namespace SmartDyeing.FADM_Control
                 {
                     FADM_Object.Communal.WriteMachineStatus(4);
                     Thread thread = new Thread(WashBottleMove);
+                    thread.Start();
+                }
+                else if (RdoWater.Checked)
+                {
+                    FADM_Object.Communal.WriteMachineStatus(4);
+                    Thread thread = new Thread(WaterMove);
                     thread.Start();
                 }
                 else if (RdoBrew.Checked)
@@ -3193,6 +3214,86 @@ namespace SmartDyeing.FADM_Control
             }
         }
 
+        private void WaterMove()
+        {
+            try
+            {
+                if (0 != MyModbusFun.TargetMove(21, 0, 0))
+                    throw new Exception("驱动异常");
+                FADM_Object.Communal.WriteMachineStatus(0);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Equals("-2"))
+                {
+                    FADM_Object.Communal.WriteMachineStatus(8);
+                    int[] ia_errArray = new int[100];
+                    MyModbusFun.GetErrMsgNew(ref ia_errArray);
+                    List<string> lis_err = new List<string>();
+                    for (int i = 0; i < ia_errArray.Length; i++)
+                    {
+                        if (ia_errArray[i] != 0)
+                        {
+                            if (SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew.ContainsKey(ia_errArray[i]))
+                            {
+                                string s_err = SmartDyeing.FADM_Object.Communal._dic_errModbusNoNew[ia_errArray[i]];
+                                string s_sql = "INSERT INTO alarm_table" +
+                                 "(MyDate,MyTime,AlarmHead,AlarmDetails)" +
+                                 " VALUES( '" +
+                                 String.Format("{0:d}", DateTime.Now) + "','" +
+                                 String.Format("{0:T}", DateTime.Now) + "','" +
+                                 "Debug" + "','" +
+                                 s_err + "(Test)');";
+                                FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
+
+                                string s_insert = CardObject.InsertD(s_err, " myMachineReset");
+                                if (!lis_err.Contains(s_insert))
+                                    lis_err.Add(s_insert);
+                                //while (true)
+                                //{
+                                //    Thread.Sleep(1);
+                                //    if (Lib_Card.CardObject.keyValuePairs[s_insert].Choose != 0)
+                                //        break;
+
+                                //}
+
+                                //int _i_alarm_Choose = Lib_Card.CardObject.keyValuePairs[s_insert].Choose;
+                                //CardObject.DeleteD(s_insert);
+
+                            }
+
+                        }
+                    }
+
+                    while (true)
+                    {
+                        for (int p = lis_err.Count - 1; p >= 0; p--)
+                        {
+                            if (Lib_Card.CardObject.keyValuePairs[lis_err[p]].Choose != 0)
+                            {
+                                CardObject.DeleteD(lis_err[p]);
+                                lis_err.Remove(lis_err[p]);
+                            }
+                        }
+                        if (lis_err.Count == 0)
+                        {
+                            break;
+                        }
+                        Thread.Sleep(1);
+                    }
+
+                }
+                else
+                {
+                    FADM_Object.Communal.WriteMachineStatus(8);
+                    if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                        FADM_Form.CustomMessageBox.Show(ex.Message, "定点移动", MessageBoxButtons.OK, true);
+                    else
+                        FADM_Form.CustomMessageBox.Show(ex.Message, "Fixed-point movement", MessageBoxButtons.OK, true);
+                }
+            }
+        }
+
         private void PowerMove()
         {
             try
@@ -3364,7 +3465,7 @@ namespace SmartDyeing.FADM_Control
         {
             try
             {
-                if (0 >= Convert.ToInt32(TxtNum.Text) || Convert.ToInt32(TxtNum.Text) > 6)
+                if (0 >= Convert.ToInt32(TxtNum.Text) || Convert.ToInt32(TxtNum.Text) > 11)
                 {
                     MessageBox.Show("杯号输入错误");
                     FADM_Object.Communal.WriteDripWait(false);
@@ -4000,7 +4101,7 @@ namespace SmartDyeing.FADM_Control
 
             if (Lib_Card.Configure.Parameter.Other_UseAbs == 0)
             {
-                RdoExtraction.Visible = false;
+                //RdoExtraction.Visible = false;
                 RdoAbs.Visible = false;
             }
 
@@ -4010,6 +4111,7 @@ namespace SmartDyeing.FADM_Control
                 RdoSysFinish.Visible = false;
                 RdoWashBottle.Visible = false;
                 RdoBrew.Visible = false;
+                RdoWater.Visible = false;
             }
             if (!FADM_Object.Communal._b_isUsePH)
             {
@@ -5138,59 +5240,176 @@ namespace SmartDyeing.FADM_Control
                 }
                 else
                 {
-                    //母液瓶首瓶才能写入
-                    if(Convert.ToInt32(TxtNum.Text) == 1)
+                    if (FADM_Object.Communal._b_isPartition)
                     {
-                        if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                        //母液瓶首瓶才能写入
+                        if (Convert.ToInt32(TxtNum.Text) == 1)
                         {
-                            DialogResult dialogResult = FADM_Form.CustomMessageBox.Show("确定写入?", "温馨提示", MessageBoxButtons.YesNo, true);
+                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                            {
+                                DialogResult dialogResult = FADM_Form.CustomMessageBox.Show("确定写入?", "温馨提示", MessageBoxButtons.YesNo, true);
 
-                            if (dialogResult == DialogResult.No)
-                            {
-                                return;
-                            }
-                            else
-                            {
-                                if (string.IsNullOrEmpty(TxtRPosX.Text) || string.IsNullOrEmpty(TxtRPosY.Text))
+                                if (dialogResult == DialogResult.No)
                                 {
                                     return;
                                 }
+                                else
+                                {
+                                    if (string.IsNullOrEmpty(TxtRPosX.Text) || string.IsNullOrEmpty(TxtRPosY.Text))
+                                    {
+                                        return;
+                                    }
 
-                                //读取保存上次坐标到历史
-                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_X", Lib_Card.Configure.Parameter.Coordinate_Bottle_X.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
-                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_Y", Lib_Card.Configure.Parameter.Coordinate_Bottle_Y.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                                    //读取保存上次坐标到历史
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_X", Lib_Card.Configure.Parameter.Coordinate_Bottle_X.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_Y", Lib_Card.Configure.Parameter.Coordinate_Bottle_Y.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
 
-                                //读取当前坐标写入
-                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_X", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
-                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_Y", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
-                                Lib_Card.Configure.Parameter.Coordinate_Bottle_X = Convert.ToInt32(TxtRPosX.Text);
-                                Lib_Card.Configure.Parameter.Coordinate_Bottle_Y = Convert.ToInt32(TxtRPosY.Text);
+                                    //读取当前坐标写入
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_X", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_Y", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                    Lib_Card.Configure.Parameter.Coordinate_Bottle_X = Convert.ToInt32(TxtRPosX.Text);
+                                    Lib_Card.Configure.Parameter.Coordinate_Bottle_Y = Convert.ToInt32(TxtRPosY.Text);
+                                }
+                            }
+                            else
+                            {
+                                DialogResult dialogResult = FADM_Form.CustomMessageBox.Show("Definite write?", "Tips", MessageBoxButtons.YesNo, true);
+
+                                if (dialogResult == DialogResult.No)
+                                {
+                                    return;
+                                }
+                                else
+                                {
+                                    if (string.IsNullOrEmpty(TxtRPosX.Text) || string.IsNullOrEmpty(TxtRPosY.Text))
+                                    {
+                                        return;
+                                    }
+
+                                    //读取保存上次坐标到历史
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_X", Lib_Card.Configure.Parameter.Coordinate_Bottle_X.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_Y", Lib_Card.Configure.Parameter.Coordinate_Bottle_Y.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+
+                                    //读取当前坐标写入
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_X", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_Y", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                    Lib_Card.Configure.Parameter.Coordinate_Bottle_X = Convert.ToInt32(TxtRPosX.Text);
+                                    Lib_Card.Configure.Parameter.Coordinate_Bottle_Y = Convert.ToInt32(TxtRPosY.Text);
+                                }
                             }
                         }
-                        else
+                        else if (Convert.ToInt32(TxtNum.Text) == FADM_Object.Communal._i_MotherBottleNum)
                         {
-                            DialogResult dialogResult = FADM_Form.CustomMessageBox.Show("Definite write?", "Tips", MessageBoxButtons.YesNo, true);
+                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                            {
+                                DialogResult dialogResult = FADM_Form.CustomMessageBox.Show("确定写入?", "温馨提示", MessageBoxButtons.YesNo, true);
 
-                            if (dialogResult == DialogResult.No)
-                            {
-                                return;
-                            }
-                            else
-                            {
-                                if (string.IsNullOrEmpty(TxtRPosX.Text) || string.IsNullOrEmpty(TxtRPosY.Text))
+                                if (dialogResult == DialogResult.No)
                                 {
                                     return;
                                 }
+                                else
+                                {
+                                    if (string.IsNullOrEmpty(TxtRPosX.Text) || string.IsNullOrEmpty(TxtRPosY.Text))
+                                    {
+                                        return;
+                                    }
 
-                                //读取保存上次坐标到历史
-                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_X", Lib_Card.Configure.Parameter.Coordinate_Bottle_X.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
-                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_Y", Lib_Card.Configure.Parameter.Coordinate_Bottle_Y.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                                    //读取保存上次坐标到历史
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_MotherBottle_X", Lib_Card.Configure.Parameter.Coordinate_MotherBottle_X.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_MotherBottle_Y", Lib_Card.Configure.Parameter.Coordinate_MotherBottle_Y.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
 
-                                //读取当前坐标写入
-                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_X", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
-                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_Y", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
-                                Lib_Card.Configure.Parameter.Coordinate_Bottle_X = Convert.ToInt32(TxtRPosX.Text);
-                                Lib_Card.Configure.Parameter.Coordinate_Bottle_Y = Convert.ToInt32(TxtRPosY.Text);
+                                    //读取当前坐标写入
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_MotherBottle_X", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_MotherBottle_Y", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                    Lib_Card.Configure.Parameter.Coordinate_MotherBottle_X = Convert.ToInt32(TxtRPosX.Text);
+                                    Lib_Card.Configure.Parameter.Coordinate_MotherBottle_Y = Convert.ToInt32(TxtRPosY.Text);
+                                }
+                            }
+                            else
+                            {
+                                DialogResult dialogResult = FADM_Form.CustomMessageBox.Show("Definite write?", "Tips", MessageBoxButtons.YesNo, true);
+
+                                if (dialogResult == DialogResult.No)
+                                {
+                                    return;
+                                }
+                                else
+                                {
+                                    if (string.IsNullOrEmpty(TxtRPosX.Text) || string.IsNullOrEmpty(TxtRPosY.Text))
+                                    {
+                                        return;
+                                    }
+
+                                    //读取保存上次坐标到历史
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_MotherBottle_X", Lib_Card.Configure.Parameter.Coordinate_MotherBottle_X.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_MotherBottle_Y", Lib_Card.Configure.Parameter.Coordinate_MotherBottle_Y.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+
+                                    //读取当前坐标写入
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_MotherBottle_X", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_MotherBottle_Y", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                    Lib_Card.Configure.Parameter.Coordinate_MotherBottle_X = Convert.ToInt32(TxtRPosX.Text);
+                                    Lib_Card.Configure.Parameter.Coordinate_MotherBottle_Y = Convert.ToInt32(TxtRPosY.Text);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //母液瓶首瓶才能写入
+                        if (Convert.ToInt32(TxtNum.Text) == 1)
+                        {
+                            if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                            {
+                                DialogResult dialogResult = FADM_Form.CustomMessageBox.Show("确定写入?", "温馨提示", MessageBoxButtons.YesNo, true);
+
+                                if (dialogResult == DialogResult.No)
+                                {
+                                    return;
+                                }
+                                else
+                                {
+                                    if (string.IsNullOrEmpty(TxtRPosX.Text) || string.IsNullOrEmpty(TxtRPosY.Text))
+                                    {
+                                        return;
+                                    }
+
+                                    //读取保存上次坐标到历史
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_X", Lib_Card.Configure.Parameter.Coordinate_Bottle_X.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_Y", Lib_Card.Configure.Parameter.Coordinate_Bottle_Y.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+
+                                    //读取当前坐标写入
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_X", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_Y", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                    Lib_Card.Configure.Parameter.Coordinate_Bottle_X = Convert.ToInt32(TxtRPosX.Text);
+                                    Lib_Card.Configure.Parameter.Coordinate_Bottle_Y = Convert.ToInt32(TxtRPosY.Text);
+                                }
+                            }
+                            else
+                            {
+                                DialogResult dialogResult = FADM_Form.CustomMessageBox.Show("Definite write?", "Tips", MessageBoxButtons.YesNo, true);
+
+                                if (dialogResult == DialogResult.No)
+                                {
+                                    return;
+                                }
+                                else
+                                {
+                                    if (string.IsNullOrEmpty(TxtRPosX.Text) || string.IsNullOrEmpty(TxtRPosY.Text))
+                                    {
+                                        return;
+                                    }
+
+                                    //读取保存上次坐标到历史
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_X", Lib_Card.Configure.Parameter.Coordinate_Bottle_X.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_Y", Lib_Card.Configure.Parameter.Coordinate_Bottle_Y.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+
+                                    //读取当前坐标写入
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_X", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                    Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Bottle_Y", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                    Lib_Card.Configure.Parameter.Coordinate_Bottle_X = Convert.ToInt32(TxtRPosX.Text);
+                                    Lib_Card.Configure.Parameter.Coordinate_Bottle_Y = Convert.ToInt32(TxtRPosY.Text);
+                                }
                             }
                         }
                     }
@@ -5547,6 +5766,15 @@ namespace SmartDyeing.FADM_Control
                         Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Balance_Y", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
                         Lib_Card.Configure.Parameter.Coordinate_Balance_X = Convert.ToInt32(TxtRPosX.Text);
                         Lib_Card.Configure.Parameter.Coordinate_Balance_Y = Convert.ToInt32(TxtRPosY.Text);
+
+                        Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Brew6_IntervalX", Lib_Card.Configure.Parameter.Coordinate_Brew6_IntervalX.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                        Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Brew6_IntervalY", Lib_Card.Configure.Parameter.Coordinate_Brew6_IntervalY.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+
+                        //读取当前坐标写入
+                        Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Brew6_IntervalX", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                        Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Brew6_IntervalY", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                        Lib_Card.Configure.Parameter.Coordinate_Brew6_IntervalX = Convert.ToInt32(TxtRPosX.Text);
+                        Lib_Card.Configure.Parameter.Coordinate_Brew6_IntervalY = Convert.ToInt32(TxtRPosY.Text);
                     }
                 }
                 else
@@ -5572,6 +5800,15 @@ namespace SmartDyeing.FADM_Control
                         Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Balance_Y", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
                         Lib_Card.Configure.Parameter.Coordinate_Balance_X = Convert.ToInt32(TxtRPosX.Text);
                         Lib_Card.Configure.Parameter.Coordinate_Balance_Y = Convert.ToInt32(TxtRPosY.Text);
+
+                        Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Brew6_IntervalX", Lib_Card.Configure.Parameter.Coordinate_Brew6_IntervalX.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                        Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Brew6_IntervalY", Lib_Card.Configure.Parameter.Coordinate_Brew6_IntervalY.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+
+                        //读取当前坐标写入
+                        Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Brew6_IntervalX", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                        Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Brew6_IntervalY", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                        Lib_Card.Configure.Parameter.Coordinate_Brew6_IntervalX = Convert.ToInt32(TxtRPosX.Text);
+                        Lib_Card.Configure.Parameter.Coordinate_Brew6_IntervalY = Convert.ToInt32(TxtRPosY.Text);
                     }
                 }
             }
@@ -6234,6 +6471,15 @@ namespace SmartDyeing.FADM_Control
                                 Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Brew6_IntervalY", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
                                 Lib_Card.Configure.Parameter.Coordinate_Brew6_IntervalX = Convert.ToInt32(TxtRPosX.Text);
                                 Lib_Card.Configure.Parameter.Coordinate_Brew6_IntervalY = Convert.ToInt32(TxtRPosY.Text);
+
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Balance_X", Lib_Card.Configure.Parameter.Coordinate_Balance_X.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Balance_Y", Lib_Card.Configure.Parameter.Coordinate_Balance_Y.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+
+                                //读取当前坐标写入
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Balance_X", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Balance_Y", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_Card.Configure.Parameter.Coordinate_Balance_X = Convert.ToInt32(TxtRPosX.Text);
+                                Lib_Card.Configure.Parameter.Coordinate_Balance_Y = Convert.ToInt32(TxtRPosY.Text);
                             }
                         }
                     }
@@ -6317,6 +6563,15 @@ namespace SmartDyeing.FADM_Control
                                 Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Brew6_IntervalY", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
                                 Lib_Card.Configure.Parameter.Coordinate_Brew6_IntervalX = Convert.ToInt32(TxtRPosX.Text);
                                 Lib_Card.Configure.Parameter.Coordinate_Brew6_IntervalY = Convert.ToInt32(TxtRPosY.Text);
+
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Balance_X", Lib_Card.Configure.Parameter.Coordinate_Balance_X.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Balance_Y", Lib_Card.Configure.Parameter.Coordinate_Balance_Y.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+
+                                //读取当前坐标写入
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Balance_X", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_Balance_Y", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_Card.Configure.Parameter.Coordinate_Balance_X = Convert.ToInt32(TxtRPosX.Text);
+                                Lib_Card.Configure.Parameter.Coordinate_Balance_Y = Convert.ToInt32(TxtRPosY.Text);
                             }
                         }
                     }
@@ -6324,7 +6579,7 @@ namespace SmartDyeing.FADM_Control
             }
             else if (RdoSysFinish.Checked)
             {
-                if (Convert.ToInt32(TxtNum.Text) >= 1 && Convert.ToInt32(TxtNum.Text) <= 6)
+                if (Convert.ToInt32(TxtNum.Text) >= 1 && Convert.ToInt32(TxtNum.Text) <= 11)
                 {
                     if (Lib_Card.Configure.Parameter.Other_Language == 0)
                     {
@@ -6405,6 +6660,65 @@ namespace SmartDyeing.FADM_Control
                                 Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes6_IntervalY", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
                                 Lib_Card.Configure.Parameter.Coordinate_PutSyringes6_IntervalX = Convert.ToInt32(TxtRPosX.Text);
                                 Lib_Card.Configure.Parameter.Coordinate_PutSyringes6_IntervalY = Convert.ToInt32(TxtRPosY.Text);
+                            }
+                            else if (Convert.ToInt32(TxtNum.Text) == 7)
+                            {
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes7_IntervalX", Lib_Card.Configure.Parameter.Coordinate_PutSyringes7_IntervalX.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes7_IntervalY", Lib_Card.Configure.Parameter.Coordinate_PutSyringes7_IntervalY.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+
+                                //读取当前坐标写入
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes7_IntervalX", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes7_IntervalY", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_Card.Configure.Parameter.Coordinate_PutSyringes7_IntervalX = Convert.ToInt32(TxtRPosX.Text);
+                                Lib_Card.Configure.Parameter.Coordinate_PutSyringes7_IntervalY = Convert.ToInt32(TxtRPosY.Text);
+                            }
+
+                            else if (Convert.ToInt32(TxtNum.Text) == 8)
+                            {
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes8_IntervalX", Lib_Card.Configure.Parameter.Coordinate_PutSyringes8_IntervalX.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes8_IntervalY", Lib_Card.Configure.Parameter.Coordinate_PutSyringes8_IntervalY.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+
+                                //读取当前坐标写入
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes8_IntervalX", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes8_IntervalY", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_Card.Configure.Parameter.Coordinate_PutSyringes8_IntervalX = Convert.ToInt32(TxtRPosX.Text);
+                                Lib_Card.Configure.Parameter.Coordinate_PutSyringes8_IntervalY = Convert.ToInt32(TxtRPosY.Text);
+                            }
+
+                            else if (Convert.ToInt32(TxtNum.Text) == 9)
+                            {
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes9_IntervalX", Lib_Card.Configure.Parameter.Coordinate_PutSyringes9_IntervalX.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes9_IntervalY", Lib_Card.Configure.Parameter.Coordinate_PutSyringes9_IntervalY.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+
+                                //读取当前坐标写入
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes9_IntervalX", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes9_IntervalY", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_Card.Configure.Parameter.Coordinate_PutSyringes9_IntervalX = Convert.ToInt32(TxtRPosX.Text);
+                                Lib_Card.Configure.Parameter.Coordinate_PutSyringes9_IntervalY = Convert.ToInt32(TxtRPosY.Text);
+                            }
+
+                            else if (Convert.ToInt32(TxtNum.Text) == 10)
+                            {
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes10_IntervalX", Lib_Card.Configure.Parameter.Coordinate_PutSyringes10_IntervalX.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes10_IntervalY", Lib_Card.Configure.Parameter.Coordinate_PutSyringes10_IntervalY.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+
+                                //读取当前坐标写入
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes10_IntervalX", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes10_IntervalY", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_Card.Configure.Parameter.Coordinate_PutSyringes10_IntervalX = Convert.ToInt32(TxtRPosX.Text);
+                                Lib_Card.Configure.Parameter.Coordinate_PutSyringes10_IntervalY = Convert.ToInt32(TxtRPosY.Text);
+                            }
+
+                            else if (Convert.ToInt32(TxtNum.Text) == 11)
+                            {
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes11_IntervalX", Lib_Card.Configure.Parameter.Coordinate_PutSyringes11_IntervalX.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes11_IntervalY", Lib_Card.Configure.Parameter.Coordinate_PutSyringes11_IntervalY.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+
+                                //读取当前坐标写入
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes11_IntervalX", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes11_IntervalY", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_Card.Configure.Parameter.Coordinate_PutSyringes11_IntervalX = Convert.ToInt32(TxtRPosX.Text);
+                                Lib_Card.Configure.Parameter.Coordinate_PutSyringes11_IntervalY = Convert.ToInt32(TxtRPosY.Text);
                             }
                         }
                     }
@@ -6488,6 +6802,65 @@ namespace SmartDyeing.FADM_Control
                                 Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes6_IntervalY", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
                                 Lib_Card.Configure.Parameter.Coordinate_PutSyringes6_IntervalX = Convert.ToInt32(TxtRPosX.Text);
                                 Lib_Card.Configure.Parameter.Coordinate_PutSyringes6_IntervalY = Convert.ToInt32(TxtRPosY.Text);
+                            }
+                            else if (Convert.ToInt32(TxtNum.Text) == 7)
+                            {
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes7_IntervalX", Lib_Card.Configure.Parameter.Coordinate_PutSyringes7_IntervalX.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes7_IntervalY", Lib_Card.Configure.Parameter.Coordinate_PutSyringes7_IntervalY.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+
+                                //读取当前坐标写入
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes7_IntervalX", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes7_IntervalY", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_Card.Configure.Parameter.Coordinate_PutSyringes7_IntervalX = Convert.ToInt32(TxtRPosX.Text);
+                                Lib_Card.Configure.Parameter.Coordinate_PutSyringes7_IntervalY = Convert.ToInt32(TxtRPosY.Text);
+                            }
+
+                            else if (Convert.ToInt32(TxtNum.Text) == 8)
+                            {
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes8_IntervalX", Lib_Card.Configure.Parameter.Coordinate_PutSyringes8_IntervalX.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes8_IntervalY", Lib_Card.Configure.Parameter.Coordinate_PutSyringes8_IntervalY.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+
+                                //读取当前坐标写入
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes8_IntervalX", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes8_IntervalY", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_Card.Configure.Parameter.Coordinate_PutSyringes8_IntervalX = Convert.ToInt32(TxtRPosX.Text);
+                                Lib_Card.Configure.Parameter.Coordinate_PutSyringes8_IntervalY = Convert.ToInt32(TxtRPosY.Text);
+                            }
+
+                            else if (Convert.ToInt32(TxtNum.Text) == 9)
+                            {
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes9_IntervalX", Lib_Card.Configure.Parameter.Coordinate_PutSyringes9_IntervalX.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes9_IntervalY", Lib_Card.Configure.Parameter.Coordinate_PutSyringes9_IntervalY.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+
+                                //读取当前坐标写入
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes9_IntervalX", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes9_IntervalY", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_Card.Configure.Parameter.Coordinate_PutSyringes9_IntervalX = Convert.ToInt32(TxtRPosX.Text);
+                                Lib_Card.Configure.Parameter.Coordinate_PutSyringes9_IntervalY = Convert.ToInt32(TxtRPosY.Text);
+                            }
+
+                            else if (Convert.ToInt32(TxtNum.Text) == 10)
+                            {
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes10_IntervalX", Lib_Card.Configure.Parameter.Coordinate_PutSyringes10_IntervalX.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes10_IntervalY", Lib_Card.Configure.Parameter.Coordinate_PutSyringes10_IntervalY.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+
+                                //读取当前坐标写入
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes10_IntervalX", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes10_IntervalY", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_Card.Configure.Parameter.Coordinate_PutSyringes10_IntervalX = Convert.ToInt32(TxtRPosX.Text);
+                                Lib_Card.Configure.Parameter.Coordinate_PutSyringes10_IntervalY = Convert.ToInt32(TxtRPosY.Text);
+                            }
+
+                            else if (Convert.ToInt32(TxtNum.Text) == 11)
+                            {
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes11_IntervalX", Lib_Card.Configure.Parameter.Coordinate_PutSyringes11_IntervalX.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes11_IntervalY", Lib_Card.Configure.Parameter.Coordinate_PutSyringes11_IntervalY.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+
+                                //读取当前坐标写入
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes11_IntervalX", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_File.Ini.WriteIni("Coordinate", "Coordinate_PutSyringes11_IntervalY", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                                Lib_Card.Configure.Parameter.Coordinate_PutSyringes11_IntervalX = Convert.ToInt32(TxtRPosX.Text);
+                                Lib_Card.Configure.Parameter.Coordinate_PutSyringes11_IntervalY = Convert.ToInt32(TxtRPosY.Text);
                             }
                         }
                     }
@@ -6745,6 +7118,51 @@ namespace SmartDyeing.FADM_Control
                         Lib_File.Ini.WriteIni("Coordinate", "Coordinate_WashBottle_Y", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
                         Lib_Card.Configure.Parameter.Coordinate_WashBottle_X = Convert.ToInt32(TxtRPosX.Text);
                         Lib_Card.Configure.Parameter.Coordinate_WashBottle_Y = Convert.ToInt32(TxtRPosY.Text);
+                    }
+                }
+            }
+            else if (RdoWater.Checked)
+            {
+                if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                {
+                    DialogResult dialogResult = FADM_Form.CustomMessageBox.Show("确定写入?", "温馨提示", MessageBoxButtons.YesNo, true);
+
+                    if (dialogResult == DialogResult.No)
+                    {
+                        return;
+                    }
+                    else
+                    {
+
+                        Lib_File.Ini.WriteIni("Coordinate", "Coordinate_AddWaterCorrecting_IntervalX", Lib_Card.Configure.Parameter.Coordinate_AddWaterCorrecting_IntervalX.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                        Lib_File.Ini.WriteIni("Coordinate", "Coordinate_AddWaterCorrecting_IntervalY", Lib_Card.Configure.Parameter.Coordinate_AddWaterCorrecting_IntervalY.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+
+                        //读取当前坐标写入
+                        Lib_File.Ini.WriteIni("Coordinate", "Coordinate_AddWaterCorrecting_IntervalX", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                        Lib_File.Ini.WriteIni("Coordinate", "Coordinate_AddWaterCorrecting_IntervalY", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                        Lib_Card.Configure.Parameter.Coordinate_AddWaterCorrecting_IntervalX = Convert.ToInt32(TxtRPosX.Text);
+                        Lib_Card.Configure.Parameter.Coordinate_AddWaterCorrecting_IntervalY = Convert.ToInt32(TxtRPosY.Text);
+                    }
+                }
+                else
+                {
+                    DialogResult dialogResult = FADM_Form.CustomMessageBox.Show("Definite write?", "Tips", MessageBoxButtons.YesNo, true);
+
+                    if (dialogResult == DialogResult.No)
+                    {
+                        return;
+                    }
+                    else
+                    {
+
+                        Lib_File.Ini.WriteIni("Coordinate", "Coordinate_AddWaterCorrecting_IntervalX", Lib_Card.Configure.Parameter.Coordinate_AddWaterCorrecting_IntervalX.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+                        Lib_File.Ini.WriteIni("Coordinate", "Coordinate_AddWaterCorrecting_IntervalY", Lib_Card.Configure.Parameter.Coordinate_AddWaterCorrecting_IntervalY.ToString(), Environment.CurrentDirectory + "\\Config\\Config.ini");
+
+                        //读取当前坐标写入
+                        Lib_File.Ini.WriteIni("Coordinate", "Coordinate_AddWaterCorrecting_IntervalX", TxtRPosX.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                        Lib_File.Ini.WriteIni("Coordinate", "Coordinate_AddWaterCorrecting_IntervalY", TxtRPosY.Text, Environment.CurrentDirectory + "\\Config\\parameter.ini");
+                        Lib_Card.Configure.Parameter.Coordinate_AddWaterCorrecting_IntervalX = Convert.ToInt32(TxtRPosX.Text);
+                        Lib_Card.Configure.Parameter.Coordinate_AddWaterCorrecting_IntervalY = Convert.ToInt32(TxtRPosY.Text);
                     }
                 }
             }

@@ -543,10 +543,242 @@ namespace SmartDyeing.FADM_Control
                                 txt_ClothWeight.Text = dt_abs_history_head.Rows[0]["ClothWeight"].ToString();
                                 txt_BathRatio.Text = dt_abs_history_head.Rows[0]["BathRatio"].ToString();
                                 txt_TotalWeight.Text = dt_abs_history_head.Rows[0]["TotalWeight"].ToString();
+                                txt_CupNum.Text = dt_abs_history_head.Rows[0]["CupNum"].ToString();
                                 chk_AddWaterChoose.Checked = (dt_abs_history_head.Rows[0]["AddWaterChoose"].ToString() == "False" || dt_abs_history_head.Rows[0]["AddWaterChoose"].ToString() == "0" ? false : true);
                             }
 
                             s_sql = "SELECT *  FROM abs_history_details WHERE BatchName = '" + dt_history_abs.Rows[0]["BatchName"].ToString() + "' And CupNum=" + dt_history_abs.Rows[0]["DripNum"].ToString() + " And FormulaCode = '" + dt_history_abs.Rows[0]["FormulaCode"].ToString() + "' order by IndexNum;";
+                            DataTable dt_abs_history_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                            if (dt_abs_history_details.Rows.Count > 0)
+                            {
+
+                                //显示详细信息
+                                for (int j = 0; j < dt_abs_history_details.Rows.Count; j++)
+                                {
+                                    dgv_FormulaData.Rows.Add(dt_abs_history_details.Rows[j]["IndexNum"].ToString(),
+                                                             dt_abs_history_details.Rows[j]["AssistantCode"].ToString(),
+                                                             dt_abs_history_details.Rows[j]["AssistantName"].ToString(),
+                                                             dt_abs_history_details.Rows[j]["FormulaDosage"].ToString(),
+                                                             dt_abs_history_details.Rows[j]["UnitOfAccount"].ToString(),
+                                                             null,
+                                                             dt_abs_history_details.Rows[j]["SettingConcentration"].ToString(),
+                                                             dt_abs_history_details.Rows[j]["RealConcentration"].ToString(),
+                                                             dt_abs_history_details.Rows[j]["ObjectDropWeight"].ToString(),
+                                                             dt_abs_history_details.Rows[j]["RealDropWeight"].ToString(), "0.00");
+
+                                    //显示瓶号
+                                    s_sql = "SELECT BottleNum,SettingConcentration,RealConcentration,DropMinWeight" +
+                                                " FROM bottle_details WHERE" +
+                                                " AssistantCode = '" + dgv_FormulaData[1, j].Value.ToString() + "'" +
+                                                " AND RealConcentration != 0 Order BY BottleNum ;";
+                                    DataTable dt_bottlenum = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+
+                                    DataGridViewComboBoxCell dd = (DataGridViewComboBoxCell)dgv_FormulaData[5, j];
+                                    List<string> lis_bottleNum = new List<string>();
+
+                                    bool b_exist = false;
+                                    foreach (DataRow mdr in dt_bottlenum.Rows)
+                                    {
+                                        string s_num = mdr[0].ToString();
+
+                                        lis_bottleNum.Add(s_num);
+
+                                        if ((dt_abs_history_details.Rows[j]["BottleNum"]).ToString() == s_num)
+                                        {
+                                            b_exist = true;
+                                        }
+
+                                    }
+
+                                    dd.Value = null;
+                                    dd.DataSource = lis_bottleNum;
+
+                                    if (b_exist)
+                                    {
+                                        dd.Value = (dt_abs_history_details.Rows[j]["BottleNum"]).ToString();
+                                    }
+                                    else
+                                    {
+                                        if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                                            FADM_Form.CustomMessageBox.Show((dt_abs_history_details.Rows[j]["BottleNum"]).ToString() +
+                                                         "号母液瓶不存在", "温馨提示", MessageBoxButtons.OK, false);
+                                        else
+                                            FADM_Form.CustomMessageBox.Show((dt_abs_history_details.Rows[j]["BottleNum"]).ToString() +
+                                                         " Mother liquor bottle number does not exist", "Tips", MessageBoxButtons.OK, false);
+                                    }
+
+
+                                    //显示是否手动选瓶
+                                    DataGridViewCheckBoxCell dc = (DataGridViewCheckBoxCell)dgv_FormulaData[11, j];
+                                    dc.Value = dt_abs_history_details.Rows[j]["BottleSelection"].ToString() == "0" ? 0 : 1;
+
+                                    //dgv_FormulaData.Enabled = true;
+                                    //dgv_FormulaData.CurrentCell = dgv_FormulaData[1, 0];
+                                    //dgv_FormulaData.Focus();
+                                    //return;
+                                }
+
+                                //for (int i = 0; i < dt_abs_history_details.Rows.Count; i++)
+                                //{
+                                //    dgv_FormulaData.Rows.Add();
+                                //    dgv_FormulaData.Rows[i].Cells[0].Value = dt_abs_history_details.Rows[i]["IndexNum"];
+                                //    dgv_FormulaData.Rows[i].Cells[1].Value = dt_abs_history_details.Rows[i]["AssistantCode"];
+                                //    dgv_FormulaData.Rows[i].Cells[2].Value = dt_abs_history_details.Rows[i]["AssistantName"];
+                                //    dgv_FormulaData.Rows[i].Cells[3].Value = dt_abs_history_details.Rows[i]["FormulaDosage"];
+                                //    dgv_FormulaData.Rows[i].Cells[4].Value = dt_abs_history_details.Rows[i]["UnitOfAccount"];
+                                //   // dgv_FormulaData.Rows[i].Cells[5].Value = dt_abs_history_details.Rows[i]["BottleNum"];
+                                //    dgv_FormulaData.Rows[i].Cells[6].Value = dt_abs_history_details.Rows[i]["SettingConcentration"];
+                                //    dgv_FormulaData.Rows[i].Cells[7].Value = dt_abs_history_details.Rows[i]["RealConcentration"];
+                                //    dgv_FormulaData.Rows[i].Cells[8].Value = dt_abs_history_details.Rows[i]["ObjectDropWeight"];
+                                //    dgv_FormulaData.Rows[i].Cells[9].Value = dt_abs_history_details.Rows[i]["RealDropWeight"];
+                                //    //dgv_FormulaData.Rows[i].Cells[10].Value = dt_abs_history_details.Rows[i]["IndexNum"];
+                                //    //dgv_FormulaData.Rows[i].Cells[11].Value = dt_abs_history_details.Rows[i]["AssistantCode"];
+                                //    //dgv_FormulaData.Rows[i].Cells[11].Value = dt_abs_history_details.Rows[i]["AssistantCode"];
+                                //    //  dgv_FormulaData.Rows.Add(
+                                //    //  dt_abs_history_details.Rows[i]["IndexNum"] is DBNull ? "" : dt_abs_history_details.Rows[i]["IndexNum"].ToString(),
+                                //    //  dt_abs_history_details.Rows[i]["AssistantCode"] is DBNull ? "" : dt_abs_history_details.Rows[i]["AssistantCode"].ToString(),
+                                //    //  dt_abs_history_details.Rows[i]["AssistantName"] is DBNull ? "" : dt_abs_history_details.Rows[i]["AssistantName"].ToString(),
+                                //    //  dt_abs_history_details.Rows[i]["FormulaDosage"] is DBNull ? "" : dt_abs_history_details.Rows[i]["FormulaDosage"].ToString(),
+                                //    //  dt_abs_history_details.Rows[i]["UnitOfAccount"] is DBNull ? "" : dt_abs_history_details.Rows[i]["UnitOfAccount"].ToString(),
+                                //    //  dt_abs_history_details.Rows[i]["BottleNum"] is DBNull ? "" : dt_abs_history_details.Rows[i]["BottleNum"].ToString(),
+                                //    //  dt_abs_history_details.Rows[i]["SettingConcentration"] is DBNull ? "" : dt_abs_history_details.Rows[i]["SettingConcentration"].ToString(),
+                                //    //  dt_abs_history_details.Rows[i]["RealConcentration"] is DBNull ? "" : dt_abs_history_details.Rows[i]["RealConcentration"].ToString(),
+                                //    //  dt_abs_history_details.Rows[i]["ObjectDropWeight"] is DBNull ? "" : dt_abs_history_details.Rows[i]["ObjectDropWeight"].ToString(),
+                                //    //  dt_abs_history_details.Rows[i]["RealDropWeight"] is DBNull ? "" : dt_abs_history_details.Rows[i]["RealDropWeight"].ToString(),
+                                //    //// dt_abs_history_details.Rows[i]["RealDropWeight"] is DBNull ? "" : dt_abs_history_details.Rows[i]["RealDropWeight"].ToString(),
+                                //    //  //dt_abs_history_details.Rows[i]["BottleSelection"] is DBNull ?  false:  dt_abs_history_details.Rows[i]["BottleSelection"].ToString(),
+                                //    // dt_abs_history_details.Rows[i]["BottleSelection"].ToString() == "0" ? 0 : 1,
+                                //    //  dt_abs_history_details.Rows[i]["BrewingData"] is DBNull ? "" : dt_abs_history_details.Rows[i]["BrewingData"].ToString());
+
+                                //    DataGridViewCheckBoxCell dc = (DataGridViewCheckBoxCell)dgv_FormulaData[11, i];
+                                //    dc.Value = dt_abs_history_details.Rows[i]["BottleSelection"].ToString() == "0" ? 0 : 1;
+
+
+                                //}
+                            }
+                            //先查询标准吸光度
+                            s_sql = "SELECT *  FROM history_abs WHERE FormulaCode = '" + dt_history_abs.Rows[0]["FormulaCode"].ToString() + "' And Stand=1;";
+                            DataTable dt_stand_history_abs = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                            if (dt_stand_history_abs.Rows.Count > 0)
+                            {
+
+                                txt_BottleNum.Text = dt_history_abs.Rows[0]["BottleNum"].ToString();
+                                txt_BrewingData.Text = dt_history_abs.Rows[0]["BrewingData"].ToString();
+                                txt_RealConcentration.Text = "";
+
+
+                                label20.Text = "";
+                                textBox4.Text = "";
+                                txt_BaseData.Text = "";
+
+                                string s_data1;
+                                s_data1 = dt_stand_history_abs.Rows[0]["Abs"] is DBNull ? "" : dt_stand_history_abs.Rows[0]["Abs"].ToString();
+
+                                if (s_data1 != "")
+                                {
+                                    string s_L = dt_history_abs.Rows[0]["L"] is DBNull ? "" : dt_history_abs.Rows[0]["L"].ToString();
+                                    if (!(dt_history_abs.Rows[0]["L"] is DBNull) && !(dt_stand_history_abs.Rows[0]["L"] is DBNull))
+                                    {
+                                        double db_dL = Convert.ToDouble(dt_history_abs.Rows[0]["L"].ToString()) - Convert.ToDouble(dt_stand_history_abs.Rows[0]["L"].ToString());
+                                        txt_dL.Text = db_dL.ToString("f2");
+
+                                    }
+
+                                    string s_A = dt_history_abs.Rows[0]["A"] is DBNull ? "" : dt_history_abs.Rows[0]["A"].ToString();
+                                    if (!(dt_history_abs.Rows[0]["A"] is DBNull) && !(dt_stand_history_abs.Rows[0]["A"] is DBNull))
+                                        txt_dA.Text = (Convert.ToDouble(dt_history_abs.Rows[0]["A"].ToString()) - Convert.ToDouble(dt_stand_history_abs.Rows[0]["A"].ToString())).ToString("f2");
+                                    string s_B = dt_history_abs.Rows[0]["B"] is DBNull ? "" : dt_history_abs.Rows[0]["B"].ToString();
+                                    if (!(dt_history_abs.Rows[0]["B"] is DBNull) && !(dt_stand_history_abs.Rows[0]["B"] is DBNull))
+                                        txt_dB.Text = (Convert.ToDouble(dt_history_abs.Rows[0]["B"].ToString()) - Convert.ToDouble(dt_stand_history_abs.Rows[0]["B"].ToString())).ToString("f2");
+                                    if (!(dt_history_abs.Rows[0]["L"] is DBNull) && !(dt_stand_history_abs.Rows[0]["L"] is DBNull)
+                                        && !(dt_history_abs.Rows[0]["A"] is DBNull) && !(dt_stand_history_abs.Rows[0]["A"] is DBNull)
+                                        && !(dt_history_abs.Rows[0]["B"] is DBNull) && !(dt_stand_history_abs.Rows[0]["B"] is DBNull))
+                                    {
+                                        double d_cmc = MyAbsorbance.CalculateCMC(Convert.ToDouble(dt_stand_history_abs.Rows[0]["L"].ToString()), Convert.ToDouble(dt_stand_history_abs.Rows[0]["A"].ToString()), Convert.ToDouble(dt_stand_history_abs.Rows[0]["B"].ToString()), Convert.ToDouble(dt_history_abs.Rows[0]["L"].ToString()), Convert.ToDouble(dt_history_abs.Rows[0]["A"].ToString()), Convert.ToDouble(dt_history_abs.Rows[0]["B"].ToString()), 2, 1);
+                                        txt_dE.Text = d_cmc.ToString("f2");
+
+                                    }
+
+
+                                    s_data1 = s_data1.Substring(0, s_data1.Length - 2);
+
+
+                                }
+                                string[] sa_arr1 = s_data1.Split('/');
+
+                                //当标样数据不存在时，只显示试样
+                                if (sa_arr1.Count() == 0 || s_data1 == "")
+                                {
+
+                                }
+                                else
+                                {
+                                    //当数据相等时，一起显示
+                                    if (sa_arr1.Count() == sa_arr.Count())
+                                    {
+
+                                    }
+                                    //当数据不一致时，直接返回，曲线也不显示
+                                    else
+                                    {
+                                        FADM_Form.CustomMessageBox.Show("标样采集点与试样采集点不一致", "温馨提示", MessageBoxButtons.OK, true);
+                                        return;
+                                    }
+                                }
+                                s_stand = dt_stand_history_abs.Rows[0]["Abs"] is DBNull ? "" : dt_stand_history_abs.Rows[0]["Abs"].ToString();
+
+                                int i_index = 0;
+                                for (int i = 0; i < sa_arr.Count(); i++)
+                                {
+                                    if (Convert.ToInt32(dt_history_abs.Rows[0]["StartWave"]) + i * Convert.ToInt32(dt_history_abs.Rows[0]["IntWave"]) >= 400)
+                                    {
+                                        i_index = i;
+                                        break;
+                                    }
+                                }
+                                if (sa_arr1.Count() == 0 || s_data1 == "")
+                                {
+
+                                }
+                                else
+                                {
+                                    double[] doublesS = new double[sa_arr.Count() - i_index];
+                                    double[] doublesT = new double[sa_arr.Count() - i_index];
+                                    for (int i = 0; i < sa_arr.Count() - i_index; i++)
+                                    {
+                                        doublesS[i] = Convert.ToDouble(sa_arr[i + i_index]);
+                                    }
+                                    for (int i = 0; i < sa_arr1.Count() - i_index; i++)
+                                    {
+                                        doublesT[i] = Convert.ToDouble(sa_arr1[i + i_index]);
+                                    }
+                                    //textBox5.Text = MyAbsorbance.SWL(doublesS, doublesT).ToString("F2") + "%";
+                                    textBox6.Text = MyAbsorbance.SUM(doublesS, doublesT, i_start, i_end, Convert.ToInt32(dt_history_abs.Rows[0]["IntWave"])).ToString("F2") + "%";
+                                    //textBox7.Text = MyAbsorbance.WSUM(doublesS, doublesT, i_start, i_end, Convert.ToInt32(dt_history_abs.Rows[0]["IntWave"]), 10).ToString("F2") + "%";
+                                    //textBox8.Text = MyAbsorbance.SUM1(doublesS, doublesT, i_start, i_end, Convert.ToInt32(dt_history_abs.Rows[0]["IntWave"])).ToString("F2") + "%";
+                                    //textBox9.Text = MyAbsorbance.WSUM1(doublesS, doublesT, i_start, i_end, Convert.ToInt32(dt_history_abs.Rows[0]["IntWave"]), 10).ToString("F2") + "%";
+
+                                }
+                            }
+                        }
+                        else if (Convert.ToInt32(dt_history_abs.Rows[0]["BottleNum"].ToString()) == 666 || Convert.ToInt32(dt_history_abs.Rows[0]["BottleNum"].ToString()) == 777)
+                        {
+                            //显示滴液配方记录
+                            s_sql = "SELECT *  FROM history_head WHERE BatchName = '" + dt_history_abs.Rows[0]["BatchName"].ToString() + "' And CupNum=" + dt_history_abs.Rows[0]["DripNum"].ToString() + " And FormulaCode = '" + dt_history_abs.Rows[0]["FormulaCode"].ToString() + "';";
+                            DataTable dt_abs_history_head = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+
+                            if (dt_abs_history_head.Rows.Count > 0)
+                            {
+                                txt_FormulaCode.Text = dt_abs_history_head.Rows[0]["FormulaCode"].ToString();
+                                txt_VersionNum.Text = dt_abs_history_head.Rows[0]["VersionNum"].ToString();
+                                txt_ClothWeight.Text = dt_abs_history_head.Rows[0]["ClothWeight"].ToString();
+                                txt_BathRatio.Text = dt_abs_history_head.Rows[0]["BathRatio"].ToString();
+                                txt_TotalWeight.Text = dt_abs_history_head.Rows[0]["TotalWeight"].ToString();
+                                txt_CupNum.Text = dt_abs_history_head.Rows[0]["CupNum"].ToString();
+                                chk_AddWaterChoose.Checked = (dt_abs_history_head.Rows[0]["AddWaterChoose"].ToString() == "False" || dt_abs_history_head.Rows[0]["AddWaterChoose"].ToString() == "0" ? false : true);
+                            }
+
+                            s_sql = "SELECT *  FROM history_details WHERE BatchName = '" + dt_history_abs.Rows[0]["BatchName"].ToString() + "' And CupNum=" + dt_history_abs.Rows[0]["DripNum"].ToString() + " And FormulaCode = '" + dt_history_abs.Rows[0]["FormulaCode"].ToString() + "' order by IndexNum;";
                             DataTable dt_abs_history_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
                             if (dt_abs_history_details.Rows.Count > 0)
                             {

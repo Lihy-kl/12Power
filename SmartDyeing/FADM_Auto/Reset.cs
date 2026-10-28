@@ -420,7 +420,7 @@ namespace SmartDyeing.FADM_Auto
 
                             FADM_Object.Communal._fadmSqlserver.ReviseData(
                            "UPDATE cup_details SET FormulaCode = null, " +
-                           "DyeingCode = null, IsUsing = 1, Statues = '待机', " +
+                           "DyeingCode = null, IsUsing = 0, Statues = '待机', " +
                            "StartTime = null, SetTemp = null, StepNum = null, TotalWeight = null, " +
                            "TotalStep = null, TechnologyName = null, StepStartTime = null, SetTime = null,RecordIndex = 0 WHERE CupNum = " +
                            dataRow["CupNum"].ToString() + "  ;");

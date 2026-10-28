@@ -1339,6 +1339,51 @@ namespace SmartDyeing.FADM_Form
                     int i_d206_206 = 0;
                     this.ComParment(i_other_PowerPluse, ref i_d206, ref i_d206_206);
 
+                    int i_other_CylinderHeightDeviationPulse = Convert.ToInt32(Lib_Card.Configure.Parameter.Other_CylinderHeightDeviationPulse);//高度偏差脉冲
+                    int i_d236 = 0;
+                    int i_d236_236 = 0;
+                    this.ComParment(i_other_CylinderHeightDeviationPulse, ref i_d236, ref i_d236_236);
+
+                    int i_other_PositionInCylinder = Convert.ToInt32(Lib_Card.Configure.Parameter.Other_PositionInCylinder);//气缸中位置 
+                    int i_d238 = 0;
+                    int i_d238_238 = 0;
+                    this.ComParment(i_other_PositionInCylinder, ref i_d238, ref i_d238_238);
+
+                    int i_other_PositionInCylinderSlow1 = Convert.ToInt32(Lib_Card.Configure.Parameter.Other_PositionInCylinderSlow1);//气缸慢速中1位置
+                    int i_d240 = 0;
+                    int i_d240_240= 0;
+                    this.ComParment(i_other_PositionInCylinderSlow1, ref i_d240, ref i_d240_240);
+
+                    int i_other_PositionInCylinderSlow2 = Convert.ToInt32(Lib_Card.Configure.Parameter.Other_PositionInCylinderSlow2);//气缸慢速中2位置
+                    int i_d242 = 0;
+                    int i_d242_242 = 0;
+                    this.ComParment(i_other_PositionInCylinderSlow2, ref i_d242, ref i_d242_242);
+
+                    int i_other_PositionInCylinderSlow3 = Convert.ToInt32(Lib_Card.Configure.Parameter.Other_PositionInCylinderSlow3);//气缸慢速中3位置
+                    int i_d244 = 0;
+                    int i_d244_244 = 0;
+                    this.ComParment(i_other_PositionInCylinderSlow3, ref i_d244, ref i_d244_244);
+
+                    int i_other_CylinderStopPosition = Convert.ToInt32(Lib_Card.Configure.Parameter.Other_CylinderStopPosition);//气缸到阻挡位位置
+                    int i_d246 = 0;
+                    int i_d246_246 = 0;
+                    this.ComParment(i_other_CylinderStopPosition, ref i_d246, ref i_d246_246);
+
+                    int i_other_CylinderDownPosition = Convert.ToInt32(Lib_Card.Configure.Parameter.Other_CylinderDownPosition);//气缸下位置
+                    int i_d248 = 0;
+                    int i_d248_248 = 0;
+                    this.ComParment(i_other_CylinderDownPosition, ref i_d248, ref i_d248_248);
+
+                    int i_other_CylinderPositioningRange = Convert.ToInt32(Lib_Card.Configure.Parameter.Other_CylinderPositioningRange);//气缸定位范围
+                    int i_d250 = 0;
+                    int i_d250_250 = 0;
+                    this.ComParment(i_other_CylinderPositioningRange, ref i_d250, ref i_d250_250);
+
+                    int i_other_UseCylinderPositioningEncoder = Convert.ToInt32(Lib_Card.Configure.Parameter.Other_UseCylinderPositioningEncoder);//是否使用拉线编码器
+                    int i_d252 = 0;
+                    int i_d252_252 = 0;
+                    this.ComParment(i_other_UseCylinderPositioningEncoder, ref i_d252, ref i_d252_252);
+
                     if (Convert.ToInt32(Lib_Card.Configure.Parameter.Correcting_B_Pulse) < 0)
                     {
                         FADM_Form.CustomMessageBox.Show("大针筒校正脉冲错误!", "设备", MessageBoxButtons.OK, false);
@@ -1422,6 +1467,16 @@ namespace SmartDyeing.FADM_Form
 
                         int i_c2 = FADM_Object.Communal._tcpModBus.Write(1148, ia_array2);
                         if (i_c2 == -1)
+                        {
+                            FADM_Form.CustomMessageBox.Show("写入参数失败!", "设备", MessageBoxButtons.OK, false);
+                            System.Diagnostics.Process.GetProcessById(System.Diagnostics.Process.GetCurrentProcess().Id).Kill();
+                        }
+
+                        int[] ia_array3 = { i_d236, i_d236_236, i_d238, i_d238_238, i_d240, i_d240_240, i_d242, i_d242_242, i_d244, i_d244_244, i_d246
+                                , i_d246_246, i_d248, i_d248_248, i_d250, i_d250_250,i_d252,i_d252_252};
+
+                        int i_c3 = FADM_Object.Communal._tcpModBus.Write(1236, ia_array3);
+                        if (i_c3 == -1)
                         {
                             FADM_Form.CustomMessageBox.Show("写入参数失败!", "设备", MessageBoxButtons.OK, false);
                             System.Diagnostics.Process.GetProcessById(System.Diagnostics.Process.GetCurrentProcess().Id).Kill();
@@ -2166,7 +2221,6 @@ namespace SmartDyeing.FADM_Form
 
         private void BtnLogOn_Click(object sender, EventArgs e)
         {
-
             //FADM_Object.Communal._fadmSqlserver.ReviseData(
             //            "INSERT INTO abs_wait_list(BottleNum, InsertDate) VALUES('" + 1 + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "');");
             //string s_sql_QQ = "SELECT top 1 * FROM abs_wait_list  order by InsertDate;";
@@ -3011,6 +3065,20 @@ namespace SmartDyeing.FADM_Form
                 if (dt_head.Rows.Count == 0)
                 {
                     Communal._fadmSqlserver.ReviseData("ALTER TABLE wait_list ADD ClothNum int null ");
+                }
+
+                dt_head = Communal._fadmSqlserver.GetData("SELECT *FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'bottle_details' AND COLUMN_NAME = 'MachineID'");
+                if (dt_head.Rows.Count == 0)
+                {
+                    Communal._fadmSqlserver.ReviseData("ALTER TABLE bottle_details ADD MachineID int null ");
+                    Communal._fadmSqlserver.ReviseData("Update bottle_details Set MachineID=1");
+                }
+
+                dt_head = Communal._fadmSqlserver.GetData("SELECT *FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'bottle_details' AND COLUMN_NAME = 'Flowability'");
+                if (dt_head.Rows.Count == 0)
+                {
+                    Communal._fadmSqlserver.ReviseData("ALTER TABLE bottle_details ADD Flowability nvarchar(50) null ");
+                    Communal._fadmSqlserver.ReviseData("Update bottle_details set Flowability = '中' ");
                 }
 
             }

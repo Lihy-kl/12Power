@@ -90,8 +90,8 @@ namespace SmartDyeing.FADM_Control
                                    "bottle_details.AssistantCode," +
                                    "assistant_details.AssistantName," +
                                    "bottle_details.SettingConcentration " +
-                                   "FROM bottle_details  LEFT JOIN assistant_details ON assistant_details.AssistantCode=bottle_details.AssistantCode " +
-                                   "ORDER BY bottle_details.BottleNum;";
+                                   "FROM bottle_details  LEFT JOIN assistant_details ON assistant_details.AssistantCode=bottle_details.AssistantCode where bottle_details.MachineID=" + FADM_Object.Communal._i_CurrentBrewNum + 
+                                   " ORDER BY bottle_details.BottleNum;";
                 DataTable dt_bottlehead = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
 
                 //捆绑
@@ -174,7 +174,7 @@ namespace SmartDyeing.FADM_Control
                 _b_insert = false;
                 //获取当前母液瓶的资料
                 string s_sql = "SELECT *  FROM bottle_details" +
-                                   " WHERE BottleNum = " + Convert.ToInt16(dgv_Bottle.CurrentRow.Cells[0].Value.ToString()) + " ; ";
+                                   " WHERE BottleNum = " + Convert.ToInt16(dgv_Bottle.CurrentRow.Cells[0].Value.ToString()) + "  And MachineID = "+ FADM_Object.Communal._i_CurrentBrewNum+"; ";
                 DataTable dt_bottledetails = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
 
                 foreach (DataColumn mDc in dt_bottledetails.Columns)
@@ -248,6 +248,23 @@ namespace SmartDyeing.FADM_Control
                                     else
                                         cbo_DripReserveFirst.Text = "No";
                                 }
+                            }
+                            break;
+                        case "txt_Flowability":
+                            if (dt_bottledetails.Rows[0][mDc] is DBNull)
+                            {
+                                if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                                {
+                                    cbo_Flowability.Text = "中";
+                                }
+                                else
+                                {
+                                    cbo_Flowability.Text = "中";
+                                }
+                            }
+                            else
+                            {
+                                cbo_Flowability.Text = dt_bottledetails.Rows[0][mDc].ToString();
                             }
                             break;
                         case "txt_WashSyringeSpan":
@@ -333,7 +350,7 @@ namespace SmartDyeing.FADM_Control
             }
 
             string s_sql = "SELECT * FROM bottle_details WHERE AssistantCode = '" + cbo_AssistantCode.Text + "'" +
-                               " AND SettingConcentration = '" + txt_SettingConcentration.Text + "';";
+                               " AND SettingConcentration = '" + txt_SettingConcentration.Text + "' And MachineID = "+ FADM_Object.Communal._i_CurrentBrewNum+";";
             DataTable dt_temp = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
             if (dt_temp.Rows.Count > 0 && Convert.ToInt16(dt_temp.Rows[0]["BottleNum"]) != Convert.ToInt16(txt_BottleNum.Text))
             {
@@ -357,7 +374,8 @@ namespace SmartDyeing.FADM_Control
             if(lis_ass.Contains(cbo_AssistantCode.Text))
             {
                 //查询此助剂是否存在母液瓶
-                string s_sql_bottle = "SELECT * FROM bottle_details WHERE AssistantCode = '"+ cbo_AssistantCode.Text+"' ;";
+                string s_sql_bottle = "SELECT * FROM bottle_details WHERE AssistantCode = '"+ cbo_AssistantCode.Text+ "' And MachineID =  " + FADM_Object.Communal._i_CurrentBrewNum + ";";
+                
                 DataTable dt_temp_bottle = FADM_Object.Communal._fadmSqlserver.GetData(s_sql_bottle);
                 if(dt_temp_bottle.Rows.Count >0)
                 {
@@ -428,7 +446,7 @@ namespace SmartDyeing.FADM_Control
                 }
                 else
                 {
-                    s_sql = "SELECT * FROM  bottle_details WHERE BottleNum ='" + lis_data[0] + "' ;";
+                    s_sql = "SELECT * FROM  bottle_details WHERE BottleNum ='" + lis_data[0]  +"' And MachineID =  " + FADM_Object.Communal._i_CurrentBrewNum + ";";
                     DataTable dt_bottle = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
                     string s_real = Convert.ToString(dt_bottle.Rows[0]["RealConcentration"]);
                     if (rdo_4.Checked)
@@ -452,6 +470,8 @@ namespace SmartDyeing.FADM_Control
                 lis_data.Add("0");
             }
             lis_data.Add(txt_WashSyringeSpan.Text);
+            lis_data.Add(FADM_Object.Communal._i_CurrentBrewNum.ToString());
+            lis_data.Add(cbo_Flowability.Text);
             if (_b_insert)
             {
                 //如果是新增
@@ -459,12 +479,12 @@ namespace SmartDyeing.FADM_Control
                             " BottleNum, AssistantCode, SettingConcentration," +
                             " CurrentWeight, SyringeType, DropMinWeight," +
                             " BrewingCode, OriginalBottleNum, AllowMaxWeight," +
-                            " BrewingData, RealConcentration,DripReserveFirst,WashSyringeSpan) VALUES( '" + lis_data[0] + "'," +
+                            " BrewingData, RealConcentration,DripReserveFirst,WashSyringeSpan,MachineID,Flowability) VALUES( '" + lis_data[0] + "'," +
                             " '" + lis_data[1] + "','" + lis_data[2] + "'," +
                             " '" + lis_data[3] + "','" + lis_data[4] + "'," +
                             " '" + lis_data[5] + "','" + lis_data[6] + "'," +
                             " '" + lis_data[7] + "','" + lis_data[8] + "'," +
-                            "'" + lis_data[9] + "','" + lis_data[10] + "','" + lis_data[11] + "','" + lis_data[12] + "');";
+                            "'" + lis_data[9] + "','" + lis_data[10] + "','" + lis_data[11] + "','" + lis_data[12] + "','" + lis_data[13] + "','" + lis_data[14] + "');";
                 FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
 
 
@@ -479,7 +499,7 @@ namespace SmartDyeing.FADM_Control
                 //如果是修改
 
                 //先判断设定浓度有没有改变
-                s_sql = "SELECT * FROM bottle_details WHERE BottleNum ='" + lis_data[0] + "' ;";
+                s_sql = "SELECT * FROM bottle_details WHERE BottleNum ='" + lis_data[0] + "' And MachineID =  " + FADM_Object.Communal._i_CurrentBrewNum + ";";
 
                 DataTable dt_bottle = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
                 string s_setcon = Convert.ToString(dt_bottle.Rows[0]["SettingConcentration"]);
@@ -508,6 +528,7 @@ namespace SmartDyeing.FADM_Control
                                 " BrewingData = '" + lis_data[9] + "'," +
                                 " DripReserveFirst = '" + lis_data[11] + "'," +
                                 " WashSyringeSpan = '" + lis_data[12] + "'," +
+                                " Flowability = '" + lis_data[14] + "'," +
                                 " AdjustSuccess = 0" +
                                 " WHERE BottleNum ='" + lis_data[0] + "' ;";
                 }
@@ -526,8 +547,9 @@ namespace SmartDyeing.FADM_Control
                                 " RealConcentration = '" + lis_data[10] + "'," +
                                 " DripReserveFirst = '" + lis_data[11] + "'," +
                                 " WashSyringeSpan = '" + lis_data[12] + "'," +
+                                " Flowability = '" + lis_data[14] + "'," +
                                 " AdjustSuccess = 0" +
-                                " WHERE BottleNum ='" + lis_data[0] + "' ;";
+                                " WHERE BottleNum ='" + lis_data[0] + "' And MachineID =  " + FADM_Object.Communal._i_CurrentBrewNum + ";";
                 }
                 FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
 
@@ -545,7 +567,7 @@ namespace SmartDyeing.FADM_Control
         private void btn_Delete_Click(object sender, EventArgs e)
         {
             string s_sql = "DELETE FROM bottle_details" +
-                               " WHERE BottleNum = '" + txt_BottleNum.Text + "' ;";
+                               " WHERE BottleNum = '" + txt_BottleNum.Text + "' And MachineID =  " + FADM_Object.Communal._i_CurrentBrewNum + ";";
             FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
             FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "删除"+ txt_BottleNum.Text+"母液资料");
             try
@@ -759,7 +781,7 @@ namespace SmartDyeing.FADM_Control
             {
                 string s_sql = "SELECT BottleNum FROM bottle_details WHERE" +
                                    " AssistantCode = '" + cbo_AssistantCode.Text + "' AND" +
-                                   " SettingConcentration = '" + Convert.ToDouble(txt_SettingConcentration.Text) + "'" +
+                                   " SettingConcentration = '" + Convert.ToDouble(txt_SettingConcentration.Text) + "' And MachineID = "+ FADM_Object.Communal._i_CurrentBrewNum +
                                    " GROUP BY BottleNum ;";
 
                 DataTable dt_settingconcentration = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
@@ -898,7 +920,7 @@ namespace SmartDyeing.FADM_Control
             {
                 string s_sql = "SELECT BottleNum FROM bottle_details WHERE" +
                                    " AssistantCode = '" + cbo_AssistantCode.Text + "' AND" +
-                                   " SettingConcentration > '" + Convert.ToDouble(txt_SettingConcentration.Text) + "'" +
+                                   " SettingConcentration > '" + Convert.ToDouble(txt_SettingConcentration.Text) + "' And MachineID = " + FADM_Object.Communal._i_CurrentBrewNum +
                                    " GROUP BY BottleNum ;";
                 DataTable dt_originalbottlenum = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
 
@@ -924,7 +946,10 @@ namespace SmartDyeing.FADM_Control
                     {
                         if (cbo_DripReserveFirst.Text != null && cbo_DripReserveFirst.Text != "")
                         {
-                            btn_Save.Focus();
+                            if (!cbo_Flowability.Visible)
+                                btn_Save.Focus();
+                            else
+                                cbo_Flowability.Focus();
                         }
                         else
                         {
@@ -960,6 +985,74 @@ namespace SmartDyeing.FADM_Control
 
                     break;
                 default: break;
+            }
+        }
+
+        private void cbo_Flowability_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Enter:
+                    try
+                    {
+                        if (cbo_Flowability.Text != null && cbo_Flowability.Text != "")
+                        {
+                            btn_Save.Focus();
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    catch
+                    { }
+
+                    break;
+                default: break;
+            }
+        }
+
+        private void cbo_SyringeType_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cbo_SyringeType.Text == "粉桶")
+                {
+                    lab_Flowability.Visible = true;
+                    cbo_Flowability.Visible = true;
+                }
+                else
+                {
+                    lab_Flowability.Visible = false;
+                    cbo_Flowability.Visible = false;
+                    cbo_Flowability.Text = "中";
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void cbo_SyringeType_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if(cbo_SyringeType.Text == "粉桶")
+                {
+                    lab_Flowability.Visible = true;
+                    cbo_Flowability.Visible = true;
+                }
+                else
+                {
+                    lab_Flowability.Visible = false;
+                    cbo_Flowability.Visible = false;
+                    cbo_Flowability.Text = "中";
+                }
+            }
+            catch
+            {
+                
             }
         }
     }

@@ -82,6 +82,8 @@ namespace SmartDyeing.FADM_Control
             this.lab_AssistantType = new System.Windows.Forms.Label();
             this.txt_AssistantName = new System.Windows.Forms.TextBox();
             this.lab_AssistantName = new System.Windows.Forms.Label();
+            this.cbo_Flowability = new System.Windows.Forms.ComboBox();
+            this.lab_Flowability = new System.Windows.Forms.Label();
             this.grp_Browse.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Bottle)).BeginInit();
             this.grp_BottleDetails.SuspendLayout();
@@ -114,6 +116,8 @@ namespace SmartDyeing.FADM_Control
             // 
             // grp_BottleDetails
             // 
+            this.grp_BottleDetails.Controls.Add(this.cbo_Flowability);
+            this.grp_BottleDetails.Controls.Add(this.lab_Flowability);
             this.grp_BottleDetails.Controls.Add(this.txt_WashSyringeSpan);
             this.grp_BottleDetails.Controls.Add(this.label1);
             this.grp_BottleDetails.Controls.Add(this.cbo_DripReserveFirst);
@@ -212,7 +216,9 @@ namespace SmartDyeing.FADM_Control
             resources.GetString("cbo_SyringeType.Items2"),
             resources.GetString("cbo_SyringeType.Items3")});
             this.cbo_SyringeType.Name = "cbo_SyringeType";
+            this.cbo_SyringeType.TextChanged += new System.EventHandler(this.cbo_SyringeType_TextChanged);
             this.cbo_SyringeType.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cbo_SyringeType_KeyDown);
+            this.cbo_SyringeType.Leave += new System.EventHandler(this.cbo_SyringeType_Leave);
             // 
             // txt_SettingConcentration
             // 
@@ -453,6 +459,23 @@ namespace SmartDyeing.FADM_Control
             resources.ApplyResources(this.lab_AssistantName, "lab_AssistantName");
             this.lab_AssistantName.Name = "lab_AssistantName";
             // 
+            // cbo_Flowability
+            // 
+            this.cbo_Flowability.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            resources.ApplyResources(this.cbo_Flowability, "cbo_Flowability");
+            this.cbo_Flowability.FormattingEnabled = true;
+            this.cbo_Flowability.Items.AddRange(new object[] {
+            resources.GetString("cbo_Flowability.Items"),
+            resources.GetString("cbo_Flowability.Items1"),
+            resources.GetString("cbo_Flowability.Items2")});
+            this.cbo_Flowability.Name = "cbo_Flowability";
+            this.cbo_Flowability.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cbo_Flowability_KeyDown);
+            // 
+            // lab_Flowability
+            // 
+            resources.ApplyResources(this.lab_Flowability, "lab_Flowability");
+            this.lab_Flowability.Name = "lab_Flowability";
+            // 
             // BottleDefin
             // 
             resources.ApplyResources(this, "$this");
@@ -523,5 +546,7 @@ namespace SmartDyeing.FADM_Control
         private Label lab_DripReserveFirst;
         private TextBox txt_WashSyringeSpan;
         private Label label1;
+        private ComboBox cbo_Flowability;
+        private Label lab_Flowability;
     }
 }

@@ -6031,7 +6031,34 @@ namespace SmartDyeing.FADM_Control
             {
                 return;
             }
+            if (FADM_Object.Communal._b_isBatBrew)
+            {
+                string s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And Station != 6 ;";
+                DataTable dt_newcup = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                if (dt_newcup.Rows.Count > 0)
+                {
+                    if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                        FADM_Form.CustomMessageBox.Show("正在批量开料，不能加入！", "温馨提示", MessageBoxButtons.OK, false);
+                    else
+                        FADM_Form.CustomMessageBox.Show("There is an empty formula in the current batch, please manually delete it before dripping！", "Tips", MessageBoxButtons.OK, false);
 
+                    return;
+                }
+
+
+                s_sql = "SELECT * FROM Brew_wait_list  ;";
+                dt_newcup = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                if (dt_newcup.Rows.Count > 0)
+                {
+                    if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                        FADM_Form.CustomMessageBox.Show("正在批量开料，不能加入！", "温馨提示", MessageBoxButtons.OK, false);
+                    else
+                        FADM_Form.CustomMessageBox.Show("There is an empty formula in the current batch, please manually delete it before dripping！", "Tips", MessageBoxButtons.OK, false);
+
+                    return;
+                }
+            }
+            
             //如果配方列表选中，就把选择配方加入批次
             if (dgv_FormulaBrowse.SelectedRows.Count > 0) //dgv_FormulaBrowse.SelectedRows.Count > 0 //false
             {
@@ -6080,6 +6107,8 @@ namespace SmartDyeing.FADM_Control
                                                 //插入到排队列表
                                                 FADM_Object.Communal._fadmSqlserver.ReviseData(
                                    "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + i_minBottleNo + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+
+                                                FADM_Object.Communal._b_isBatBrew = false;
                                             }
 
                                         }
@@ -6100,6 +6129,8 @@ namespace SmartDyeing.FADM_Control
                                                 //插入到排队列表
                                                 FADM_Object.Communal._fadmSqlserver.ReviseData(
                                    "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + i_minBottleNo + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+
+                                                FADM_Object.Communal._b_isBatBrew = false;
                                             }
 
                                         }
@@ -6931,6 +6962,8 @@ namespace SmartDyeing.FADM_Control
                                         //插入到排队列表
                                         FADM_Object.Communal._fadmSqlserver.ReviseData(
                            "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + i_minBottleNo + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+
+                                        FADM_Object.Communal._b_isBatBrew = false;
                                     }
 
                                 }
@@ -6951,6 +6984,8 @@ namespace SmartDyeing.FADM_Control
                                         //插入到排队列表
                                         FADM_Object.Communal._fadmSqlserver.ReviseData(
                            "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + i_minBottleNo + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+
+                                        FADM_Object.Communal._b_isBatBrew = false;
                                     }
 
                                 }
@@ -10385,6 +10420,32 @@ namespace SmartDyeing.FADM_Control
                     FADM_Object.Communal._b_isDripping = false;
                     return;
                 }
+                if (FADM_Object.Communal._b_isBatBrew)
+                {
+                    s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And Station != 6 ;";
+                    dt_newcup = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                    if (dt_newcup.Rows.Count > 0)
+                    {
+                        if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                            FADM_Form.CustomMessageBox.Show("正在批量开料，不能开始滴液！", "温馨提示", MessageBoxButtons.OK, false);
+                        else
+                            FADM_Form.CustomMessageBox.Show("There is an empty formula in the current batch, please manually delete it before dripping！", "Tips", MessageBoxButtons.OK, false);
+                        FADM_Object.Communal._b_isDripping = false;
+                        return;
+                    }
+
+                    s_sql = "SELECT * FROM Brew_wait_list  ;";
+                    dt_newcup = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                    if (dt_newcup.Rows.Count > 0)
+                    {
+                        if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                            FADM_Form.CustomMessageBox.Show("正在批量开料，不能开始滴液！", "温馨提示", MessageBoxButtons.OK, false);
+                        else
+                            FADM_Form.CustomMessageBox.Show("There is an empty formula in the current batch, please manually delete it before dripping！", "Tips", MessageBoxButtons.OK, false);
+                        FADM_Object.Communal._b_isDripping = false;
+                        return;
+                    }
+                }
 
                 //判断是否过期；
                 int i_state = FADM_Object.MyRegister.overdue();
@@ -11088,6 +11149,8 @@ namespace SmartDyeing.FADM_Control
                     P_thd_drop.IsBackground = true;
                     P_thd_drop.Start(s_batchNum);
 
+                    FADM_Object.Communal._b_isBatBrew = false;
+
                     FADM_Object.Communal._b_isDripping = false;
 
                     ////跳转主界面
@@ -11144,6 +11207,8 @@ namespace SmartDyeing.FADM_Control
                             {
                                 thread = new Thread(DropStop);
                                 thread.Start();
+
+                                FADM_Object.Communal._b_isBatBrew = true;
                             }
                             else
                             {
@@ -11165,6 +11230,7 @@ namespace SmartDyeing.FADM_Control
                             {
                                 thread = new Thread(DropStop);
                                 thread.Start();
+                                FADM_Object.Communal._b_isBatBrew = true;
                             }
                             else
                             {
@@ -11189,6 +11255,8 @@ namespace SmartDyeing.FADM_Control
                             "SELECT BatchName FROM enabled_set WHERE MyID = 1;");
                             FADM_Auto.Reset.MoveData(dataTable1.Rows[0]["BatchName"].ToString());
                             P_bl_update = true;
+
+                            FADM_Object.Communal._b_isBatBrew = true;
                         }
                     }
                     else
@@ -11201,6 +11269,8 @@ namespace SmartDyeing.FADM_Control
                             "SELECT BatchName FROM enabled_set WHERE MyID = 1;");
                             FADM_Auto.Reset.MoveData(dataTable1.Rows[0]["BatchName"].ToString());
                             P_bl_update = true;
+
+                            FADM_Object.Communal._b_isBatBrew = true;
                         }
                     }
 

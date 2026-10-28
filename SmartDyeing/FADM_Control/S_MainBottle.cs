@@ -1931,6 +1931,8 @@ namespace SmartDyeing.FADM_Control
         private void Bottle_low()
         {
             //
+            if (FADM_Object.Communal._i_CurrentBrewNum > 1)
+                return;
             string s_sql = "select drop_details.BottleNum  from drop_details left join bottle_details on drop_details.BottleNum = bottle_details.BottleNum " +
                 "where bottle_details.CurrentWeight <='" + this._i_bottleAlarmWeight + "' and drop_details.BatchName !='0' group by drop_details.BottleNum order by drop_details.BottleNum;";
             DataTable P_dt_data = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
@@ -2054,7 +2056,8 @@ namespace SmartDyeing.FADM_Control
             try
             {
                 string s_sql = "SELECT bottle_details.*,AssistantName,UnitOfAccount,TermOfValidity,AllowMinColoringConcentration, AllowMaxColoringConcentration " +
-                    "FROM bottle_details left join assistant_details on bottle_details.AssistantCode = assistant_details.AssistantCode ORDER BY BottleNum ;";
+                    "FROM bottle_details left join assistant_details on bottle_details.AssistantCode = assistant_details.AssistantCode where bottle_details.MachineID="
+                    + FADM_Object.Communal._i_CurrentBrewNum + " ORDER BY BottleNum ;";
 
                 DataTable dt_bottledetails = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
 
@@ -4885,6 +4888,12 @@ namespace SmartDyeing.FADM_Control
 
         private void tsm_Brew_Click(object sender, EventArgs e)
         {
+            if (FADM_Object.Communal.ReadMachineStatus() == 7)
+            {
+                FADM_Form.CustomMessageBox.Show("正在滴液，不能加入", "InsertAbs",
+                MessageBoxButtons.OK, false);
+                return;
+            }
             //查询是否已存在
             string s_sql = "SELECT * FROM Brew_wait_list where  BottleNum  = " + _i_nBottleNum + ";";
             DataTable dt_bottledetails = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);

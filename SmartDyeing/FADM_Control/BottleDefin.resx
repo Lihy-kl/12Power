@@ -117,15 +117,54 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="&gt;&gt;dgv_Bottle.Name" xml:space="preserve">
+    <value>dgv_Bottle</value>
+  </data>
+  <data name="&gt;&gt;dgv_Bottle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dgv_Bottle.Parent" xml:space="preserve">
+    <value>grp_Browse</value>
+  </data>
+  <data name="&gt;&gt;dgv_Bottle.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="grp_Browse.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 10.5pt</value>
+  </data>
+  <data name="grp_Browse.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="grp_Browse.Size" type="System.Drawing.Size, System.Drawing">
+    <value>673, 976</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="grp_Browse.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="grp_Browse.Text" xml:space="preserve">
+    <value>浏览</value>
+  </data>
+  <data name="&gt;&gt;grp_Browse.Name" xml:space="preserve">
+    <value>grp_Browse</value>
+  </data>
+  <data name="&gt;&gt;grp_Browse.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;grp_Browse.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;grp_Browse.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="dgv_Bottle.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="dgv_Bottle.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 19</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="dgv_Bottle.RowHeadersWidth" type="System.Int32, mscorlib">
     <value>62</value>
   </data>
@@ -150,32 +189,74 @@
   <data name="&gt;&gt;dgv_Bottle.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="grp_Browse.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 10.5pt</value>
+  <data name="cbo_Flowability.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Popup</value>
   </data>
-  <data name="grp_Browse.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="cbo_Flowability.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
   </data>
-  <data name="grp_Browse.Size" type="System.Drawing.Size, System.Drawing">
-    <value>673, 976</value>
+  <data name="cbo_Flowability.Items" xml:space="preserve">
+    <value>慢</value>
   </data>
-  <data name="grp_Browse.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="cbo_Flowability.Items1" xml:space="preserve">
+    <value>中</value>
   </data>
-  <data name="grp_Browse.Text" xml:space="preserve">
-    <value>浏览</value>
+  <data name="cbo_Flowability.Items2" xml:space="preserve">
+    <value>快</value>
   </data>
-  <data name="&gt;&gt;grp_Browse.Name" xml:space="preserve">
-    <value>grp_Browse</value>
+  <data name="cbo_Flowability.Location" type="System.Drawing.Point, System.Drawing">
+    <value>211, 863</value>
   </data>
-  <data name="&gt;&gt;grp_Browse.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="cbo_Flowability.Size" type="System.Drawing.Size, System.Drawing">
+    <value>310, 27</value>
   </data>
-  <data name="&gt;&gt;grp_Browse.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="cbo_Flowability.TabIndex" type="System.Int32, mscorlib">
+    <value>36</value>
   </data>
-  <data name="&gt;&gt;grp_Browse.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="&gt;&gt;cbo_Flowability.Name" xml:space="preserve">
+    <value>cbo_Flowability</value>
+  </data>
+  <data name="&gt;&gt;cbo_Flowability.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbo_Flowability.Parent" xml:space="preserve">
+    <value>grp_BottleDetails</value>
+  </data>
+  <data name="&gt;&gt;cbo_Flowability.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lab_Flowability.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 14.25pt</value>
+  </data>
+  <data name="lab_Flowability.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lab_Flowability.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 865</value>
+  </data>
+  <data name="lab_Flowability.Size" type="System.Drawing.Size, System.Drawing">
+    <value>181, 23</value>
+  </data>
+  <data name="lab_Flowability.TabIndex" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
+  <data name="lab_Flowability.Text" xml:space="preserve">
+    <value>粉流动性:</value>
+  </data>
+  <data name="lab_Flowability.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;lab_Flowability.Name" xml:space="preserve">
+    <value>lab_Flowability</value>
+  </data>
+  <data name="&gt;&gt;lab_Flowability.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_Flowability.Parent" xml:space="preserve">
+    <value>grp_BottleDetails</value>
+  </data>
+  <data name="&gt;&gt;lab_Flowability.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="txt_WashSyringeSpan.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -199,7 +280,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;txt_WashSyringeSpan.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -232,7 +313,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="cbo_DripReserveFirst.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Popup</value>
@@ -247,7 +328,7 @@
     <value>否</value>
   </data>
   <data name="cbo_DripReserveFirst.Location" type="System.Drawing.Point, System.Drawing">
-    <value>209, 852</value>
+    <value>209, 819</value>
   </data>
   <data name="cbo_DripReserveFirst.Size" type="System.Drawing.Size, System.Drawing">
     <value>310, 27</value>
@@ -265,7 +346,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;cbo_DripReserveFirst.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="lab_DripReserveFirst.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -274,7 +355,7 @@
     <value>NoControl</value>
   </data>
   <data name="lab_DripReserveFirst.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 854</value>
+    <value>4, 821</value>
   </data>
   <data name="lab_DripReserveFirst.Size" type="System.Drawing.Size, System.Drawing">
     <value>181, 23</value>
@@ -298,7 +379,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;lab_DripReserveFirst.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="cbo_OriginalBottleNum.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Popup</value>
@@ -325,7 +406,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;cbo_OriginalBottleNum.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="dtp_BrewingData.CalendarFont" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -340,7 +421,7 @@
     <value>宋体, 14.25pt</value>
   </data>
   <data name="dtp_BrewingData.Location" type="System.Drawing.Point, System.Drawing">
-    <value>209, 776</value>
+    <value>209, 760</value>
   </data>
   <data name="dtp_BrewingData.Size" type="System.Drawing.Size, System.Drawing">
     <value>310, 29</value>
@@ -358,7 +439,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;dtp_BrewingData.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="cbo_BrewingCode.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Popup</value>
@@ -385,7 +466,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;cbo_BrewingCode.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="lab_SyringeType.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -415,7 +496,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;lab_SyringeType.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="cbo_SyringeType.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Popup</value>
@@ -454,7 +535,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;cbo_SyringeType.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="txt_SettingConcentration.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -478,7 +559,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;txt_SettingConcentration.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>11</value>
   </data>
   <data name="cbo_AssistantCode.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -502,7 +583,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;cbo_AssistantCode.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>12</value>
   </data>
   <data name="txt_CurrentWeight.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -526,7 +607,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;txt_CurrentWeight.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>13</value>
   </data>
   <data name="txt_DropMinWeight.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -550,7 +631,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;txt_DropMinWeight.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>14</value>
   </data>
   <data name="txt_AllowMaxWeight.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -577,7 +658,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;txt_AllowMaxWeight.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>15</value>
   </data>
   <data name="txt_BottleNum.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -607,7 +688,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;txt_BottleNum.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>16</value>
   </data>
   <data name="lab_OriginalBottleNum.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -637,7 +718,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;lab_OriginalBottleNum.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>17</value>
   </data>
   <data name="btn_Delete.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -664,7 +745,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;btn_Delete.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>18</value>
   </data>
   <data name="btn_Insert.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -691,7 +772,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;btn_Insert.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>19</value>
   </data>
   <data name="btn_Save.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -718,7 +799,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;btn_Save.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>20</value>
   </data>
   <data name="lab_AllowMaxWeight.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -748,13 +829,13 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;lab_AllowMaxWeight.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>21</value>
   </data>
   <data name="lab_BrewingData.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
   </data>
   <data name="lab_BrewingData.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 773</value>
+    <value>4, 757</value>
   </data>
   <data name="lab_BrewingData.Size" type="System.Drawing.Size, System.Drawing">
     <value>181, 33</value>
@@ -778,7 +859,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;lab_BrewingData.ZOrder" xml:space="preserve">
-    <value>20</value>
+    <value>22</value>
   </data>
   <data name="lab_BrewingCode.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -808,7 +889,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;lab_BrewingCode.ZOrder" xml:space="preserve">
-    <value>21</value>
+    <value>23</value>
   </data>
   <data name="lab_CurrentWeight.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -838,7 +919,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;lab_CurrentWeight.ZOrder" xml:space="preserve">
-    <value>22</value>
+    <value>24</value>
   </data>
   <data name="lab_SettingConcentration.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -868,7 +949,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;lab_SettingConcentration.ZOrder" xml:space="preserve">
-    <value>23</value>
+    <value>25</value>
   </data>
   <data name="lab_DropMinWeight.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -898,7 +979,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;lab_DropMinWeight.ZOrder" xml:space="preserve">
-    <value>24</value>
+    <value>26</value>
   </data>
   <data name="lab_AssistantCode.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -928,7 +1009,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;lab_AssistantCode.ZOrder" xml:space="preserve">
-    <value>25</value>
+    <value>27</value>
   </data>
   <data name="lab_BottleNum.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 14.25pt</value>
@@ -958,7 +1039,7 @@
     <value>grp_BottleDetails</value>
   </data>
   <data name="&gt;&gt;lab_BottleNum.ZOrder" xml:space="preserve">
-    <value>26</value>
+    <value>28</value>
   </data>
   <data name="grp_BottleDetails.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 10.5pt</value>
@@ -986,6 +1067,261 @@
   </data>
   <data name="&gt;&gt;grp_BottleDetails.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="&gt;&gt;rdo_3.Name" xml:space="preserve">
+    <value>rdo_3</value>
+  </data>
+  <data name="&gt;&gt;rdo_3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rdo_3.Parent" xml:space="preserve">
+    <value>grp_AssistantDetails</value>
+  </data>
+  <data name="&gt;&gt;rdo_3.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;rdo_4.Name" xml:space="preserve">
+    <value>rdo_4</value>
+  </data>
+  <data name="&gt;&gt;rdo_4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rdo_4.Parent" xml:space="preserve">
+    <value>grp_AssistantDetails</value>
+  </data>
+  <data name="&gt;&gt;rdo_4.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;rdo_2.Name" xml:space="preserve">
+    <value>rdo_2</value>
+  </data>
+  <data name="&gt;&gt;rdo_2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rdo_2.Parent" xml:space="preserve">
+    <value>grp_AssistantDetails</value>
+  </data>
+  <data name="&gt;&gt;rdo_2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;rdo_1.Name" xml:space="preserve">
+    <value>rdo_1</value>
+  </data>
+  <data name="&gt;&gt;rdo_1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rdo_1.Parent" xml:space="preserve">
+    <value>grp_AssistantDetails</value>
+  </data>
+  <data name="&gt;&gt;rdo_1.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;txt_AllowMaxColoringConcentration.Name" xml:space="preserve">
+    <value>txt_AllowMaxColoringConcentration</value>
+  </data>
+  <data name="&gt;&gt;txt_AllowMaxColoringConcentration.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_AllowMaxColoringConcentration.Parent" xml:space="preserve">
+    <value>grp_AssistantDetails</value>
+  </data>
+  <data name="&gt;&gt;txt_AllowMaxColoringConcentration.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;lab_Cost.Name" xml:space="preserve">
+    <value>lab_Cost</value>
+  </data>
+  <data name="&gt;&gt;lab_Cost.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_Cost.Parent" xml:space="preserve">
+    <value>grp_AssistantDetails</value>
+  </data>
+  <data name="&gt;&gt;lab_Cost.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;txt_AllowMinColoringConcentration.Name" xml:space="preserve">
+    <value>txt_AllowMinColoringConcentration</value>
+  </data>
+  <data name="&gt;&gt;txt_AllowMinColoringConcentration.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_AllowMinColoringConcentration.Parent" xml:space="preserve">
+    <value>grp_AssistantDetails</value>
+  </data>
+  <data name="&gt;&gt;txt_AllowMinColoringConcentration.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;lab_Intensity.Name" xml:space="preserve">
+    <value>lab_Intensity</value>
+  </data>
+  <data name="&gt;&gt;lab_Intensity.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_Intensity.Parent" xml:space="preserve">
+    <value>grp_AssistantDetails</value>
+  </data>
+  <data name="&gt;&gt;lab_Intensity.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;txt_Cost.Name" xml:space="preserve">
+    <value>txt_Cost</value>
+  </data>
+  <data name="&gt;&gt;txt_Cost.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_Cost.Parent" xml:space="preserve">
+    <value>grp_AssistantDetails</value>
+  </data>
+  <data name="&gt;&gt;txt_Cost.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;lab_TermOfValidity.Name" xml:space="preserve">
+    <value>lab_TermOfValidity</value>
+  </data>
+  <data name="&gt;&gt;lab_TermOfValidity.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_TermOfValidity.Parent" xml:space="preserve">
+    <value>grp_AssistantDetails</value>
+  </data>
+  <data name="&gt;&gt;lab_TermOfValidity.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;txt_Intensity.Name" xml:space="preserve">
+    <value>txt_Intensity</value>
+  </data>
+  <data name="&gt;&gt;txt_Intensity.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_Intensity.Parent" xml:space="preserve">
+    <value>grp_AssistantDetails</value>
+  </data>
+  <data name="&gt;&gt;txt_Intensity.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;lab_AllowMaxColoringConcentration.Name" xml:space="preserve">
+    <value>lab_AllowMaxColoringConcentration</value>
+  </data>
+  <data name="&gt;&gt;lab_AllowMaxColoringConcentration.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_AllowMaxColoringConcentration.Parent" xml:space="preserve">
+    <value>grp_AssistantDetails</value>
+  </data>
+  <data name="&gt;&gt;lab_AllowMaxColoringConcentration.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;txt_TermOfValidity.Name" xml:space="preserve">
+    <value>txt_TermOfValidity</value>
+  </data>
+  <data name="&gt;&gt;txt_TermOfValidity.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_TermOfValidity.Parent" xml:space="preserve">
+    <value>grp_AssistantDetails</value>
+  </data>
+  <data name="&gt;&gt;txt_TermOfValidity.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;lab_AllowMinColoringConcentration.Name" xml:space="preserve">
+    <value>lab_AllowMinColoringConcentration</value>
+  </data>
+  <data name="&gt;&gt;lab_AllowMinColoringConcentration.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_AllowMinColoringConcentration.Parent" xml:space="preserve">
+    <value>grp_AssistantDetails</value>
+  </data>
+  <data name="&gt;&gt;lab_AllowMinColoringConcentration.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;lab_UnitOfAccount.Name" xml:space="preserve">
+    <value>lab_UnitOfAccount</value>
+  </data>
+  <data name="&gt;&gt;lab_UnitOfAccount.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_UnitOfAccount.Parent" xml:space="preserve">
+    <value>grp_AssistantDetails</value>
+  </data>
+  <data name="&gt;&gt;lab_UnitOfAccount.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;txt_AssistantType.Name" xml:space="preserve">
+    <value>txt_AssistantType</value>
+  </data>
+  <data name="&gt;&gt;txt_AssistantType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_AssistantType.Parent" xml:space="preserve">
+    <value>grp_AssistantDetails</value>
+  </data>
+  <data name="&gt;&gt;txt_AssistantType.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;lab_AssistantType.Name" xml:space="preserve">
+    <value>lab_AssistantType</value>
+  </data>
+  <data name="&gt;&gt;lab_AssistantType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_AssistantType.Parent" xml:space="preserve">
+    <value>grp_AssistantDetails</value>
+  </data>
+  <data name="&gt;&gt;lab_AssistantType.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;txt_AssistantName.Name" xml:space="preserve">
+    <value>txt_AssistantName</value>
+  </data>
+  <data name="&gt;&gt;txt_AssistantName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_AssistantName.Parent" xml:space="preserve">
+    <value>grp_AssistantDetails</value>
+  </data>
+  <data name="&gt;&gt;txt_AssistantName.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;lab_AssistantName.Name" xml:space="preserve">
+    <value>lab_AssistantName</value>
+  </data>
+  <data name="&gt;&gt;lab_AssistantName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lab_AssistantName.Parent" xml:space="preserve">
+    <value>grp_AssistantDetails</value>
+  </data>
+  <data name="&gt;&gt;lab_AssistantName.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="grp_AssistantDetails.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 10.5pt</value>
+  </data>
+  <data name="grp_AssistantDetails.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1229, 8</value>
+  </data>
+  <data name="grp_AssistantDetails.Size" type="System.Drawing.Size, System.Drawing">
+    <value>671, 964</value>
+  </data>
+  <data name="grp_AssistantDetails.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="grp_AssistantDetails.Text" xml:space="preserve">
+    <value>染助剂资料</value>
+  </data>
+  <data name="&gt;&gt;grp_AssistantDetails.Name" xml:space="preserve">
+    <value>grp_AssistantDetails</value>
+  </data>
+  <data name="&gt;&gt;grp_AssistantDetails.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;grp_AssistantDetails.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;grp_AssistantDetails.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="rdo_3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1571,33 +1907,6 @@
   </data>
   <data name="&gt;&gt;lab_AssistantName.ZOrder" xml:space="preserve">
     <value>18</value>
-  </data>
-  <data name="grp_AssistantDetails.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 10.5pt</value>
-  </data>
-  <data name="grp_AssistantDetails.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1229, 8</value>
-  </data>
-  <data name="grp_AssistantDetails.Size" type="System.Drawing.Size, System.Drawing">
-    <value>671, 964</value>
-  </data>
-  <data name="grp_AssistantDetails.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="grp_AssistantDetails.Text" xml:space="preserve">
-    <value>染助剂资料</value>
-  </data>
-  <data name="&gt;&gt;grp_AssistantDetails.Name" xml:space="preserve">
-    <value>grp_AssistantDetails</value>
-  </data>
-  <data name="&gt;&gt;grp_AssistantDetails.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;grp_AssistantDetails.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;grp_AssistantDetails.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

@@ -81,6 +81,7 @@ namespace SmartDyeing.FADM_Auto
                     {
                         _cup_Temps[i]._i_statues = Communal._ia_d22688[0 + 15 * i];
                         _cup_Temps[i]._i_reques = Communal._ia_d22688[1 + 15 * i];
+                        _cup_Temps[i]._i_history = Communal._ia_d22688[2 + 15 * i];
                         _cup_Temps[i]._i_bottleNum = Communal._ia_d22688[5 + 15 * i];
 
                         //真实浓度
@@ -132,7 +133,7 @@ namespace SmartDyeing.FADM_Auto
                             else
                                 _cup_Temps[i]._i_markreques = 0;
                         }
-                        else if (_cup_Temps[i]._i_reques == 2|| _cup_Temps[i]._i_reques == 3|| _cup_Temps[i]._i_reques == 4|| _cup_Temps[i]._i_reques == 5 || _cup_Temps[i]._i_reques == 6)
+                        else if (_cup_Temps[i]._i_reques == 2|| _cup_Temps[i]._i_reques == 3|| _cup_Temps[i]._i_reques == 4|| _cup_Temps[i]._i_reques == 5 || _cup_Temps[i]._i_reques == 6 || _cup_Temps[i]._i_reques == 7)
                         {
                             if (_cup_Temps[i]._i_reques != _cup_Temps[i]._i_markreques)
                             {
@@ -265,10 +266,13 @@ namespace SmartDyeing.FADM_Auto
                                     s_alarm += "洗瓶上翻超时,";
                                 }
                             }
-                            s_alarm = s_alarm.Remove(s_alarm.Length - 1, 1);
+                            if (s_alarm != "")
+                            {
+                                s_alarm = s_alarm.Remove(s_alarm.Length - 1, 1);
 
 
-                            FADM_Object.Communal._s_AlarmAutoBrew1 = Lib_Card.CardObject.InsertD(s_alarm, "AutoBrew");
+                                FADM_Object.Communal._s_AlarmAutoBrew1 = Lib_Card.CardObject.InsertD(s_alarm, "AutoBrew");
+                            }
                         }
                         //原来有报警
                         else
@@ -346,9 +350,12 @@ namespace SmartDyeing.FADM_Auto
                                         s_alarm += "洗瓶上翻超时,";
                                     }
                                 }
-                                s_alarm = s_alarm.Remove(s_alarm.Length - 1, 1);
+                                if (s_alarm != "")
+                                {
+                                    s_alarm = s_alarm.Remove(s_alarm.Length - 1, 1);
 
-                                FADM_Object.Communal._s_AlarmAutoBrew1 = Lib_Card.CardObject.InsertD(s_alarm, "AutoBrew");
+                                    FADM_Object.Communal._s_AlarmAutoBrew1 = Lib_Card.CardObject.InsertD(s_alarm, "AutoBrew");
+                                }
                             }
                         }
                     }
@@ -401,12 +408,34 @@ namespace SmartDyeing.FADM_Auto
                                 {
                                     s_alarm += "洗瓶工位发现母液瓶,";
                                 }
+                                if ((i_warm_temp2 & 0x200) > 0)
+                                {
+                                    s_alarm += "工位1没有搅拌子,";
+                                }
+                                if ((i_warm_temp2 & 0x400) > 0)
+                                {
+                                    s_alarm += "工位2没有搅拌子,";
+                                }
+                                if ((i_warm_temp2 & 0x800) > 0)
+                                {
+                                    s_alarm += "工位3没有搅拌子,";
+                                }
+                                if ((i_warm_temp2 & 0x1000) > 0)
+                                {
+                                    s_alarm += "工位4没有搅拌子,";
+                                }
+                                if ((i_warm_temp2 & 0x2000) > 0)
+                                {
+                                    s_alarm += "工位5没有搅拌子,";
+                                }
                             }
-                            
-                            s_alarm = s_alarm.Remove(s_alarm.Length - 1, 1);
+                            if (s_alarm != "")
+                            {
+                                s_alarm = s_alarm.Remove(s_alarm.Length - 1, 1);
 
 
-                            FADM_Object.Communal._s_AlarmAutoBrew2 = Lib_Card.CardObject.InsertD(s_alarm, "AutoBrew");
+                                FADM_Object.Communal._s_AlarmAutoBrew2 = Lib_Card.CardObject.InsertD(s_alarm, "AutoBrew");
+                            }
                         }
                         //原来有报警
                         else
@@ -457,10 +486,12 @@ namespace SmartDyeing.FADM_Auto
                                         s_alarm += "洗瓶工位发现母液瓶,";
                                     }
                                 }
-                                
-                                s_alarm = s_alarm.Remove(s_alarm.Length - 1, 1);
+                                if (s_alarm != "")
+                                {
+                                    s_alarm = s_alarm.Remove(s_alarm.Length - 1, 1);
 
-                                FADM_Object.Communal._s_AlarmAutoBrew2 = Lib_Card.CardObject.InsertD(s_alarm, "AutoBrew");
+                                    FADM_Object.Communal._s_AlarmAutoBrew2 = Lib_Card.CardObject.InsertD(s_alarm, "AutoBrew");
+                                }
                             }
                         }
                     }
@@ -519,7 +550,7 @@ namespace SmartDyeing.FADM_Auto
         {
             int[] ia_array = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             //根据瓶号搜索对应资料
-            string s_sql = "SELECT * FROM bottle_details WHERE BottleNum = " + i_BottleNum + ";";
+            string s_sql = "SELECT * FROM bottle_details WHERE BottleNum = " + i_BottleNum + " And MachineID = "+ FADM_Object.Communal._i_CurrentBrewNum+";";
             DataTable dt_bottle_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
 
             if (dt_bottle_details.Rows.Count == 0)
@@ -547,13 +578,16 @@ namespace SmartDyeing.FADM_Auto
             //开稀原瓶号
             int i_oribottle = Convert.ToInt32(dt_bottle_details.Rows[0][dt_bottle_details.Columns["OriginalBottleNum"]]);
 
+            //粉流动性
+            string s_Flowability = "";
+
 
             //根据原瓶号找到原浓度
             int i_oricon = 0;
             int i_oriWeight = 0;
             if (i_oribottle != 0)
             {
-                s_sql = "SELECT RealConcentration,CurrentWeight FROM bottle_details WHERE BottleNum = " + i_oribottle + ";";
+                s_sql = "SELECT RealConcentration,CurrentWeight,Flowability FROM bottle_details WHERE BottleNum = " + i_oribottle + " And MachineID = " + FADM_Object.Communal._i_CurrentBrewNum + ";";
                 dt_bottle_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
                 if (dt_bottle_details.Rows.Count == 0)
                 {
@@ -566,7 +600,23 @@ namespace SmartDyeing.FADM_Auto
                 }
                 i_oricon = Convert.ToInt32(Convert.ToDouble(dt_bottle_details.Rows[0][dt_bottle_details.Columns["RealConcentration"]]) * 1000000.00);
                 i_oriWeight = Convert.ToInt32(Convert.ToDouble(dt_bottle_details.Rows[0][dt_bottle_details.Columns["CurrentWeight"]]));
-
+            }
+            else
+            {
+                //查询是否有自动开料粉体
+                s_sql = "SELECT  * FROM bottle_details  where AssistantCode ='" + dt_bottle_details.Rows[0]["AssistantCode"].ToString()
+                    + "' And SyringeType = '粉桶' And BottleNum <" + Lib_Card.Configure.Parameter.Machine_Bottle_Total
+                     + " And MachineID = " + FADM_Object.Communal._i_CurrentBrewNum; ;
+                DataTable dt_data_bottle_details_1 = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                if (dt_data_bottle_details_1.Rows.Count > 0)
+                {
+                    //粉流动性
+                    s_Flowability = Convert.ToString(dt_data_bottle_details_1.Rows[0][dt_data_bottle_details_1.Columns["Flowability"]]);
+                }
+                else
+                {
+                    return;
+                }
             }
 
             /*
@@ -586,7 +636,7 @@ namespace SmartDyeing.FADM_Auto
             dt_bottle_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
             if (dt_bottle_details.Rows.Count == 0)
             {
-                
+
                 return;
             }
             int i_unitOfAccount = 0;
@@ -686,7 +736,12 @@ namespace SmartDyeing.FADM_Auto
                     case "手动加染助剂":
                     case "Add dyeing auxiliaries manually":
                         //
-                        ia_array[j + 8] = 2;
+                        if(s_Flowability =="慢")
+                            ia_array[j + 8] = 10;
+                        else if (s_Flowability == "快")
+                            ia_array[j + 8] = 11;
+                        else
+                            ia_array[j + 8] = 2;
                         ia_array[j + 18] = i_data;
                         ia_array[j + 28] = i_ratio;
 
@@ -721,9 +776,10 @@ namespace SmartDyeing.FADM_Auto
                         break;
                 }
             }
-
-            ia_array[0] = 1;
-            ia_array[1] = 0;
+            if (Communal._b_isBatBrew)
+                ia_array[0] = 11;
+            else
+                ia_array[0] = 1;
             ia_array[2] = i_BottleNum;
 
             int d_1 = 0;
@@ -753,6 +809,8 @@ namespace SmartDyeing.FADM_Auto
             ia_array[dt_bottle_details.Rows.Count + 1 + 28] = 0;
 
             FADM_Object.Communal._tcpModBus.Write(22288 + 40 * (i_PositionNum-1), ia_array);
+            //更新总步数
+            FADM_Object.Communal._i_BrewTotalStep = dt_bottle_details.Rows.Count + 2;
         }
     }
 }

@@ -35,12 +35,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.cup1 = new SmartDyeing.FADM_Control.Cup();
-            this.cup2 = new SmartDyeing.FADM_Control.Cup();
-            this.cup3 = new SmartDyeing.FADM_Control.Cup();
-            this.cup4 = new SmartDyeing.FADM_Control.Cup();
-            this.cup5 = new SmartDyeing.FADM_Control.Cup();
-            this.cup6 = new SmartDyeing.FADM_Control.Cup();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsm_Online = new System.Windows.Forms.ToolStripMenuItem();
             this.tsm_Offline = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,8 +47,21 @@
             this.BtnBottleCheckStart = new System.Windows.Forms.Button();
             this.TxtCheckBottleNo = new System.Windows.Forms.TextBox();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.cup1 = new SmartDyeing.FADM_Control.Cup();
+            this.cup2 = new SmartDyeing.FADM_Control.Cup();
+            this.cup3 = new SmartDyeing.FADM_Control.Cup();
+            this.cup4 = new SmartDyeing.FADM_Control.Cup();
+            this.cup5 = new SmartDyeing.FADM_Control.Cup();
+            this.cup6 = new SmartDyeing.FADM_Control.Cup();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_DropRecord)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -128,6 +135,188 @@
             this.label6.Size = new System.Drawing.Size(109, 25);
             this.label6.TabIndex = 127;
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsm_Online,
+            this.tsm_Offline,
+            this.tsm_Stop});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(101, 70);
+            // 
+            // tsm_Online
+            // 
+            this.tsm_Online.Name = "tsm_Online";
+            this.tsm_Online.Size = new System.Drawing.Size(100, 22);
+            this.tsm_Online.Text = "上线";
+            this.tsm_Online.Click += new System.EventHandler(this.tsm_Online_Click);
+            // 
+            // tsm_Offline
+            // 
+            this.tsm_Offline.Name = "tsm_Offline";
+            this.tsm_Offline.Size = new System.Drawing.Size(100, 22);
+            this.tsm_Offline.Text = "下线";
+            this.tsm_Offline.Click += new System.EventHandler(this.tsm_Offline_Click);
+            // 
+            // tsm_Stop
+            // 
+            this.tsm_Stop.Name = "tsm_Stop";
+            this.tsm_Stop.Size = new System.Drawing.Size(100, 22);
+            this.tsm_Stop.Text = "停止";
+            this.tsm_Stop.Click += new System.EventHandler(this.tsm_Stop_Click);
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("宋体", 14.25F);
+            this.button1.Location = new System.Drawing.Point(796, 198);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(153, 35);
+            this.button1.TabIndex = 133;
+            this.button1.Text = "刷新";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // dgv_DropRecord
+            // 
+            this.dgv_DropRecord.AllowUserToAddRows = false;
+            this.dgv_DropRecord.AllowUserToDeleteRows = false;
+            this.dgv_DropRecord.AllowUserToResizeColumns = false;
+            this.dgv_DropRecord.AllowUserToResizeRows = false;
+            this.dgv_DropRecord.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgv_DropRecord.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_DropRecord.Location = new System.Drawing.Point(1033, 3);
+            this.dgv_DropRecord.MultiSelect = false;
+            this.dgv_DropRecord.Name = "dgv_DropRecord";
+            this.dgv_DropRecord.ReadOnly = true;
+            this.dgv_DropRecord.RowHeadersVisible = false;
+            this.dgv_DropRecord.RowHeadersWidth = 72;
+            this.dgv_DropRecord.RowTemplate.Height = 23;
+            this.dgv_DropRecord.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dgv_DropRecord.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv_DropRecord.Size = new System.Drawing.Size(424, 684);
+            this.dgv_DropRecord.TabIndex = 132;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("宋体", 14.25F);
+            this.label7.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label7.Location = new System.Drawing.Point(848, 18);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(66, 19);
+            this.label7.TabIndex = 131;
+            this.label7.Text = "瓶号：";
+            // 
+            // BtnBottleCheckPause
+            // 
+            this.BtnBottleCheckPause.Font = new System.Drawing.Font("宋体", 14.25F);
+            this.BtnBottleCheckPause.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.BtnBottleCheckPause.Location = new System.Drawing.Point(796, 147);
+            this.BtnBottleCheckPause.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BtnBottleCheckPause.Name = "BtnBottleCheckPause";
+            this.BtnBottleCheckPause.Size = new System.Drawing.Size(153, 35);
+            this.BtnBottleCheckPause.TabIndex = 130;
+            this.BtnBottleCheckPause.Text = "删除";
+            this.BtnBottleCheckPause.UseVisualStyleBackColor = true;
+            this.BtnBottleCheckPause.Click += new System.EventHandler(this.BtnBottleCheckPause_Click);
+            // 
+            // BtnBottleCheckStart
+            // 
+            this.BtnBottleCheckStart.Font = new System.Drawing.Font("宋体", 14.25F);
+            this.BtnBottleCheckStart.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.BtnBottleCheckStart.Location = new System.Drawing.Point(796, 96);
+            this.BtnBottleCheckStart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BtnBottleCheckStart.Name = "BtnBottleCheckStart";
+            this.BtnBottleCheckStart.Size = new System.Drawing.Size(153, 35);
+            this.BtnBottleCheckStart.TabIndex = 129;
+            this.BtnBottleCheckStart.Text = "加入批次";
+            this.BtnBottleCheckStart.UseVisualStyleBackColor = true;
+            this.BtnBottleCheckStart.Click += new System.EventHandler(this.BtnBottleCheckStart_Click);
+            // 
+            // TxtCheckBottleNo
+            // 
+            this.TxtCheckBottleNo.Font = new System.Drawing.Font("宋体", 14.25F);
+            this.TxtCheckBottleNo.Location = new System.Drawing.Point(771, 52);
+            this.TxtCheckBottleNo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TxtCheckBottleNo.Name = "TxtCheckBottleNo";
+            this.TxtCheckBottleNo.Size = new System.Drawing.Size(220, 29);
+            this.TxtCheckBottleNo.TabIndex = 128;
+            // 
+            // timer2
+            // 
+            this.timer2.Enabled = true;
+            this.timer2.Interval = 60000;
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("宋体", 14.25F);
+            this.button2.Location = new System.Drawing.Point(796, 254);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(153, 35);
+            this.button2.TabIndex = 134;
+            this.button2.Text = "测试洗瓶";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.Font = new System.Drawing.Font("宋体", 14.25F);
+            this.button3.Location = new System.Drawing.Point(796, 298);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(153, 35);
+            this.button3.TabIndex = 135;
+            this.button3.Text = "重置所有放针位";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Font = new System.Drawing.Font("宋体", 14.25F);
+            this.button4.Location = new System.Drawing.Point(796, 348);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(153, 35);
+            this.button4.TabIndex = 136;
+            this.button4.Text = "重置第二轮工位";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.dataGridView1);
+            this.groupBox1.Location = new System.Drawing.Point(24, 302);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(731, 391);
+            this.groupBox1.TabIndex = 137;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "工位数据";
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToResizeColumns = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(6, 18);
+            this.dataGridView1.MultiSelect = false;
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.RowHeadersWidth = 72;
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(719, 367);
+            this.dataGridView1.TabIndex = 133;
             // 
             // cup1
             // 
@@ -267,130 +456,15 @@
             0,
             0});
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsm_Online,
-            this.tsm_Offline,
-            this.tsm_Stop});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(101, 70);
-            // 
-            // tsm_Online
-            // 
-            this.tsm_Online.Name = "tsm_Online";
-            this.tsm_Online.Size = new System.Drawing.Size(100, 22);
-            this.tsm_Online.Text = "上线";
-            this.tsm_Online.Click += new System.EventHandler(this.tsm_Online_Click);
-            // 
-            // tsm_Offline
-            // 
-            this.tsm_Offline.Name = "tsm_Offline";
-            this.tsm_Offline.Size = new System.Drawing.Size(100, 22);
-            this.tsm_Offline.Text = "下线";
-            this.tsm_Offline.Click += new System.EventHandler(this.tsm_Offline_Click);
-            // 
-            // tsm_Stop
-            // 
-            this.tsm_Stop.Name = "tsm_Stop";
-            this.tsm_Stop.Size = new System.Drawing.Size(100, 22);
-            this.tsm_Stop.Text = "停止";
-            this.tsm_Stop.Click += new System.EventHandler(this.tsm_Stop_Click);
-            // 
-            // timer1
-            // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("宋体", 14.25F);
-            this.button1.Location = new System.Drawing.Point(754, 278);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(153, 35);
-            this.button1.TabIndex = 133;
-            this.button1.Text = "刷新";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // dgv_DropRecord
-            // 
-            this.dgv_DropRecord.AllowUserToAddRows = false;
-            this.dgv_DropRecord.AllowUserToDeleteRows = false;
-            this.dgv_DropRecord.AllowUserToResizeColumns = false;
-            this.dgv_DropRecord.AllowUserToResizeRows = false;
-            this.dgv_DropRecord.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dgv_DropRecord.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_DropRecord.Location = new System.Drawing.Point(1033, 3);
-            this.dgv_DropRecord.MultiSelect = false;
-            this.dgv_DropRecord.Name = "dgv_DropRecord";
-            this.dgv_DropRecord.ReadOnly = true;
-            this.dgv_DropRecord.RowHeadersVisible = false;
-            this.dgv_DropRecord.RowHeadersWidth = 72;
-            this.dgv_DropRecord.RowTemplate.Height = 23;
-            this.dgv_DropRecord.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dgv_DropRecord.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_DropRecord.Size = new System.Drawing.Size(424, 399);
-            this.dgv_DropRecord.TabIndex = 132;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("宋体", 14.25F);
-            this.label7.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label7.Location = new System.Drawing.Point(806, 98);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(66, 19);
-            this.label7.TabIndex = 131;
-            this.label7.Text = "瓶号：";
-            // 
-            // BtnBottleCheckPause
-            // 
-            this.BtnBottleCheckPause.Font = new System.Drawing.Font("宋体", 14.25F);
-            this.BtnBottleCheckPause.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.BtnBottleCheckPause.Location = new System.Drawing.Point(754, 227);
-            this.BtnBottleCheckPause.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.BtnBottleCheckPause.Name = "BtnBottleCheckPause";
-            this.BtnBottleCheckPause.Size = new System.Drawing.Size(153, 35);
-            this.BtnBottleCheckPause.TabIndex = 130;
-            this.BtnBottleCheckPause.Text = "删除";
-            this.BtnBottleCheckPause.UseVisualStyleBackColor = true;
-            this.BtnBottleCheckPause.Click += new System.EventHandler(this.BtnBottleCheckPause_Click);
-            // 
-            // BtnBottleCheckStart
-            // 
-            this.BtnBottleCheckStart.Font = new System.Drawing.Font("宋体", 14.25F);
-            this.BtnBottleCheckStart.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.BtnBottleCheckStart.Location = new System.Drawing.Point(754, 176);
-            this.BtnBottleCheckStart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.BtnBottleCheckStart.Name = "BtnBottleCheckStart";
-            this.BtnBottleCheckStart.Size = new System.Drawing.Size(153, 35);
-            this.BtnBottleCheckStart.TabIndex = 129;
-            this.BtnBottleCheckStart.Text = "加入批次";
-            this.BtnBottleCheckStart.UseVisualStyleBackColor = true;
-            this.BtnBottleCheckStart.Click += new System.EventHandler(this.BtnBottleCheckStart_Click);
-            // 
-            // TxtCheckBottleNo
-            // 
-            this.TxtCheckBottleNo.Font = new System.Drawing.Font("宋体", 14.25F);
-            this.TxtCheckBottleNo.Location = new System.Drawing.Point(729, 132);
-            this.TxtCheckBottleNo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.TxtCheckBottleNo.Name = "TxtCheckBottleNo";
-            this.TxtCheckBottleNo.Size = new System.Drawing.Size(220, 29);
-            this.TxtCheckBottleNo.TabIndex = 128;
-            // 
-            // timer2
-            // 
-            this.timer2.Enabled = true;
-            this.timer2.Interval = 60000;
-            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
-            // 
             // AutoBrewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1469, 426);
+            this.ClientSize = new System.Drawing.Size(1469, 705);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dgv_DropRecord);
             this.Controls.Add(this.label7);
@@ -413,6 +487,8 @@
             this.Text = "自动开料洗瓶";
             this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_DropRecord)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -444,5 +520,10 @@
         private System.Windows.Forms.Button BtnBottleCheckStart;
         private System.Windows.Forms.TextBox TxtCheckBottleNo;
         private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

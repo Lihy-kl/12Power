@@ -48,6 +48,7 @@ namespace SmartDyeing.FADM_Form
             this.MiLimitSet = new System.Windows.Forms.ToolStripMenuItem();
             this.MiFormulaGroup = new System.Windows.Forms.ToolStripMenuItem();
             this.MiOperator = new System.Windows.Forms.ToolStripMenuItem();
+            this.MiABSProcess = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSplitButton6 = new System.Windows.Forms.ToolStripSplitButton();
             this.MiOut1 = new System.Windows.Forms.ToolStripMenuItem();
             this.MiLow1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,7 +96,8 @@ namespace SmartDyeing.FADM_Form
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timerNeedToDo = new System.Windows.Forms.Timer(this.components);
             this.timer_Update = new System.Windows.Forms.Timer(this.components);
-            this.MiABSProcess = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSplitButton7 = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -110,6 +112,8 @@ namespace SmartDyeing.FADM_Form
             this.toolStripSeparator2,
             this.toolStripSplitButton2,
             this.toolStripSeparator3,
+            this.toolStripSplitButton7,
+            this.toolStripSeparator12,
             this.BtnMain,
             this.toolStripSeparator4,
             this.CupStatus,
@@ -230,6 +234,12 @@ namespace SmartDyeing.FADM_Form
             this.MiOperator.Name = "MiOperator";
             resources.ApplyResources(this.MiOperator, "MiOperator");
             this.MiOperator.Click += new System.EventHandler(this.MiOperator_Click);
+            // 
+            // MiABSProcess
+            // 
+            this.MiABSProcess.Name = "MiABSProcess";
+            resources.ApplyResources(this.MiABSProcess, "MiABSProcess");
+            this.MiABSProcess.Click += new System.EventHandler(this.MiABSProcess_Click);
             // 
             // toolStripSplitButton6
             // 
@@ -531,11 +541,18 @@ namespace SmartDyeing.FADM_Form
             this.timer_Update.Interval = 1000;
             this.timer_Update.Tick += new System.EventHandler(this.timer_Update_Tick);
             // 
-            // MiABSProcess
+            // toolStripSeparator12
             // 
-            this.MiABSProcess.Name = "MiABSProcess";
-            resources.ApplyResources(this.MiABSProcess, "MiABSProcess");
-            this.MiABSProcess.Click += new System.EventHandler(this.MiABSProcess_Click);
+            this.toolStripSeparator12.Name = "toolStripSeparator12";
+            resources.ApplyResources(this.toolStripSeparator12, "toolStripSeparator12");
+            // 
+            // toolStripSplitButton7
+            // 
+            this.toolStripSplitButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.toolStripSplitButton7, "toolStripSplitButton7");
+            this.toolStripSplitButton7.Name = "toolStripSplitButton7";
+            this.toolStripSplitButton7.DropDownOpening += new System.EventHandler(this.toolStripSplitButton7_DropDownOpening);
+            this.toolStripSplitButton7.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStripSplitButton7_DropDownItemClicked);
             // 
             // Main
             // 
@@ -620,5 +637,7 @@ namespace SmartDyeing.FADM_Form
         private ToolStripButton CupStatus;
         private ToolStripMenuItem MiAbsDebug;
         private ToolStripMenuItem MiABSProcess;
+        private ToolStripSeparator toolStripSeparator12;
+        private ToolStripSplitButton toolStripSplitButton7;
     }
 }

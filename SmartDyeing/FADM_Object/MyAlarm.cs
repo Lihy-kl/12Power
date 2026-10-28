@@ -394,6 +394,21 @@ namespace SmartDyeing.FADM_Object
                                 FADM_Object.Communal._fadmSqlserver.ReviseData(
                                          "UPDATE brew_station_details SET Cooperate = 13,WashSyringesFinish=0  WHERE Station = " + i_cupNum + ";");
                             }
+                            else if (i_type == 71)
+                            {
+                                //人工确定洗瓶工位有瓶
+                                //发送执行完成
+                                int[] ia_zero = new int[1];
+                                ia_zero[0] = 8;
+                                //开料工位取瓶完成
+                                Dye.BrewAndWashHMIWrite(22289 + 40 * (i_cupNum - 1), ia_zero);
+                                //修改开料工位申请
+                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                         "UPDATE brew_station_details SET Cooperate = 0  WHERE Station = " + i_cupNum + ";");
+                            }
+                            else if (i_type == 100)
+                            {
+                            }
                             else
                             {
                                 FADM_Auto.Dye._cup_Temps[i_cupNum - 1]._i_cover = 0;
@@ -565,6 +580,28 @@ namespace SmartDyeing.FADM_Object
                                     //修改开料工位申请
                                     FADM_Object.Communal._fadmSqlserver.ReviseData(
                                              "UPDATE brew_station_details SET Cooperate = 13,WashSyringesFinish=0  WHERE Station = " + i_cupNum + ";");
+                                }
+                                else if (i_type == 68)
+                                {
+                                    //清空对应放针位
+                                    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                       "UPDATE PutSyringes SET  Status = 0,IsUsing = 0 WHERE  PutSyringesNum = " + i_cupNum + "  and Status = 2;");
+
+                                }
+                                else if (i_type == 71)
+                                {
+                                    //人工确定洗瓶工位有瓶
+                                    //发送执行完成
+                                    int[] ia_zero = new int[1];
+                                    ia_zero[0] = 8;
+                                    //开料工位取瓶完成
+                                    Dye.BrewAndWashHMIWrite(22289 + 40 * (i_cupNum - 1), ia_zero);
+                                    //修改开料工位申请
+                                    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                             "UPDATE brew_station_details SET Cooperate = 0  WHERE Station = " + i_cupNum + ";");
+                                }
+                                else if (i_type == 100)
+                                {
                                 }
                                 else
                                 {
@@ -744,6 +781,28 @@ namespace SmartDyeing.FADM_Object
                                     //修改开料工位申请
                                     FADM_Object.Communal._fadmSqlserver.ReviseData(
                                              "UPDATE brew_station_details SET Cooperate = 13,WashSyringesFinish=0  WHERE Station = " + i_cupNum + ";");
+                                }
+                                else if (i_type == 68)
+                                {
+                                    //清空对应放针位
+                                    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                       "UPDATE PutSyringes SET  Status = 0,IsUsing = 0 WHERE  PutSyringesNum = " + i_cupNum + "  and Status = 2;");
+
+                                }
+                                else if (i_type == 71)
+                                {
+                                    //人工确定洗瓶工位有瓶
+                                    //发送执行完成
+                                    int[] ia_zero = new int[1];
+                                    ia_zero[0] = 8;
+                                    //开料工位取瓶完成
+                                    Dye.BrewAndWashHMIWrite(22289 + 40 * (i_cupNum - 1), ia_zero);
+                                    //修改开料工位申请
+                                    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                             "UPDATE brew_station_details SET Cooperate = 0  WHERE Station = " + i_cupNum + ";");
+                                }
+                                else if (i_type == 100)
+                                {
                                 }
                                 //7滴液过程加水在外边处理
 
@@ -988,6 +1047,44 @@ namespace SmartDyeing.FADM_Object
                                 _i_alarm_Repeat = 1;
                                 return;
                             }
+                            else if (i_type == 67)
+                            {
+                                //修改为重新移动针筒
+                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                   "UPDATE PutSyringes SET  Status = 4 WHERE  PutSyringesNum = " + i_cupNum + "  and Status = 5;");
+
+                                _i_alarm_Repeat = 1;
+                                return;
+                            }
+                            else if (i_type == 70)
+                            {
+                                //修改为开料工位放瓶
+                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                   "UPDATE brew_station_details SET  Cooperate = 15 WHERE  Station = " + i_cupNum + "  and Cooperate = 11;");
+
+                                _i_alarm_Repeat = 1;
+                                return;
+                            }
+
+
+                            else if (i_type == 71)
+                            {
+                                //修改为重新移动针筒
+                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                   "UPDATE PutSyringes SET  Status = 4 WHERE   PutSyringesNum =    " + i_cupNum + "  and Status = 5;");
+
+                                _i_alarm_Repeat = 1;
+                                return;
+                            }
+                            //else if (i_type == 68)
+                            //{
+                            //    //清空对应放针位
+                            //    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                            //       "UPDATE PutSyringes SET  Status = 0,IsUsing = 0 WHERE  PutSyringesNum = " + i_cupNum + "  and Status = 2;");
+
+                            //    _i_alarm_Repeat = 1;
+                            //    return;
+                            //}
                             else
                             {
                                 FADM_Auto.Dye._cup_Temps[i_cupNum - 1]._i_cover = 0;
@@ -1193,6 +1290,34 @@ namespace SmartDyeing.FADM_Object
                                     //修改为洗瓶工位取瓶
                                     FADM_Object.Communal._fadmSqlserver.ReviseData(
                                        "UPDATE brew_station_details SET  Cooperate = 3 WHERE  Station = 6  and Cooperate = 11;");
+
+                                }
+                                else if (i_type == 67)
+                                {
+                                    //修改为重新移动针筒
+                                    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                       "UPDATE PutSyringes SET  Status = 4 WHERE  PutSyringesNum = " + i_cupNum + "  and Status = 5;");
+
+                                }
+                                else if (i_type == 68)
+                                {
+                                    //清空对应放针位
+                                    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                       "UPDATE PutSyringes SET  Status = 0,IsUsing = 0 WHERE  PutSyringesNum = " + i_cupNum + "  and Status = 2;");
+
+                                }
+                                else if (i_type == 70)
+                                {
+                                    //修改为开料工位放瓶
+                                    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                       "UPDATE brew_station_details SET  Cooperate = 15 WHERE  Station = " + i_cupNum + "  and Cooperate = 11;");
+
+                                }
+                                else if (i_type == 71)
+                                {
+                                    //修改为重新移动针筒
+                                    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                       "UPDATE PutSyringes SET  Status = 4 WHERE   PutSyringesNum =    " + i_cupNum + "  and Status = 5;");
 
                                 }
                                 else
@@ -1406,6 +1531,34 @@ namespace SmartDyeing.FADM_Object
                                     //修改为洗瓶工位取瓶
                                     FADM_Object.Communal._fadmSqlserver.ReviseData(
                                        "UPDATE brew_station_details SET  Cooperate = 3 WHERE  Station = 6  and Cooperate = 11;");
+
+                                }
+                                else if (i_type == 67)
+                                {
+                                    //修改为重新移动针筒
+                                    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                       "UPDATE PutSyringes SET  Status = 4 WHERE  PutSyringesNum = " + i_cupNum + "  and Status = 5;");
+
+                                }
+                                else if (i_type == 68)
+                                {
+                                    //清空对应放针位
+                                    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                       "UPDATE PutSyringes SET  Status = 0,IsUsing = 0 WHERE  PutSyringesNum = " + i_cupNum + "  and Status = 2;");
+
+                                }
+                                else if (i_type == 70)
+                                {
+                                    //修改为开料工位放瓶
+                                    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                       "UPDATE brew_station_details SET  Cooperate = 15 WHERE  Station = " + i_cupNum + "  and Cooperate = 11;");
+
+                                }
+                                else if (i_type == 71)
+                                {
+                                    //修改为重新移动针筒
+                                    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                       "UPDATE PutSyringes SET  Status = 4 WHERE   PutSyringesNum =    " + i_cupNum + "  and Status = 5;");
 
                                 }
                                 //7滴液过程加水在外边处理

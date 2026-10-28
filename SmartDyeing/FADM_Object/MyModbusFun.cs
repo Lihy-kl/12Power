@@ -565,10 +565,32 @@ namespace SmartDyeing.FADM_Object
                             {
                                 if (FADM_Object.Communal._b_isNewSet)
                                 {
-                                    i_xPules = Lib_Card.Configure.Parameter.Coordinate_Bottle_X - (i_no - 1) %
-                                    Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
-                                    i_yPules = Lib_Card.Configure.Parameter.Coordinate_Bottle_Y + (i_no - 1) /
-                                        Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
+                                    //如果分区域
+                                    if (FADM_Object.Communal._b_isPartition)
+                                    {
+                                        //如果是母液坐标
+                                        if (i_no >= FADM_Object.Communal._i_MotherBottleNum)
+                                        {
+                                            i_xPules = Lib_Card.Configure.Parameter.Coordinate_MotherBottle_X - (i_no - FADM_Object.Communal._i_MotherBottleNum) %
+                                            Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
+                                            i_yPules = Lib_Card.Configure.Parameter.Coordinate_MotherBottle_Y + (i_no - FADM_Object.Communal._i_MotherBottleNum) /
+                                                Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
+                                        }
+                                        else
+                                        {
+                                            i_xPules = Lib_Card.Configure.Parameter.Coordinate_Bottle_X - (i_no - 1) %
+                                            Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
+                                            i_yPules = Lib_Card.Configure.Parameter.Coordinate_Bottle_Y + (i_no - 1) /
+                                                Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        i_xPules = Lib_Card.Configure.Parameter.Coordinate_Bottle_X - (i_no - 1) %
+                                            Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
+                                        i_yPules = Lib_Card.Configure.Parameter.Coordinate_Bottle_Y + (i_no - 1) /
+                                            Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
+                                    }
                                 }
                                 else
                                 {
@@ -2145,6 +2167,31 @@ namespace SmartDyeing.FADM_Object
                             i_xPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes6_IntervalX;
                             i_yPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes6_IntervalY;
                         }
+                        else if (i_no == 7)
+                        {
+                            i_xPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes7_IntervalX;
+                            i_yPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes7_IntervalY;
+                        }
+                        else if (i_no == 8)
+                        {
+                            i_xPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes8_IntervalX;
+                            i_yPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes8_IntervalY;
+                        }
+                        else if (i_no == 9)
+                        {
+                            i_xPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes9_IntervalX;
+                            i_yPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes9_IntervalY;
+                        }
+                        else if (i_no == 10)
+                        {
+                            i_xPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes10_IntervalX;
+                            i_yPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes10_IntervalY;
+                        }
+                        else if (i_no == 11)
+                        {
+                            i_xPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes11_IntervalX;
+                            i_yPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes11_IntervalY;
+                        }
                         break;
                     case 20:
                         if (i_no >= Lib_Card.Configure.Parameter.Machine_TestPH1_CupMin && i_no <= Lib_Card.Configure.Parameter.Machine_TestPH1_CupMax)
@@ -2284,10 +2331,32 @@ namespace SmartDyeing.FADM_Object
                             {
                                 if (FADM_Object.Communal._b_isNewSet)
                                 {
-                                    i_xPules = Lib_Card.Configure.Parameter.Coordinate_Bottle_X - (i_no - 1) %
-                                    Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
-                                    i_yPules = Lib_Card.Configure.Parameter.Coordinate_Bottle_Y + (i_no - 1) /
-                                        Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
+                                    //如果分区域
+                                    if (FADM_Object.Communal._b_isPartition)
+                                    {
+                                        //如果是母液坐标
+                                        if (i_no >= FADM_Object.Communal._i_MotherBottleNum)
+                                        {
+                                            i_xPules = Lib_Card.Configure.Parameter.Coordinate_MotherBottle_X - (i_no - FADM_Object.Communal._i_MotherBottleNum) %
+                                            Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
+                                            i_yPules = Lib_Card.Configure.Parameter.Coordinate_MotherBottle_Y + (i_no - FADM_Object.Communal._i_MotherBottleNum) /
+                                                Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
+                                        }
+                                        else
+                                        {
+                                            i_xPules = Lib_Card.Configure.Parameter.Coordinate_Bottle_X - (i_no - 1) %
+                                            Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
+                                            i_yPules = Lib_Card.Configure.Parameter.Coordinate_Bottle_Y + (i_no - 1) /
+                                                Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        i_xPules = Lib_Card.Configure.Parameter.Coordinate_Bottle_X - (i_no - 1) %
+                                            Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
+                                        i_yPules = Lib_Card.Configure.Parameter.Coordinate_Bottle_Y + (i_no - 1) /
+                                            Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
+                                    }
                                 }
                                 else
                                 {
@@ -3857,6 +3926,31 @@ namespace SmartDyeing.FADM_Object
                             i_xPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes6_IntervalX;
                             i_yPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes6_IntervalY;
                         }
+                        else if (i_no == 7)
+                        {
+                            i_xPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes7_IntervalX;
+                            i_yPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes7_IntervalY;
+                        }
+                        else if (i_no == 8)
+                        {
+                            i_xPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes8_IntervalX;
+                            i_yPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes8_IntervalY;
+                        }
+                        else if (i_no == 9)
+                        {
+                            i_xPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes9_IntervalX;
+                            i_yPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes9_IntervalY;
+                        }
+                        else if (i_no == 10)
+                        {
+                            i_xPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes10_IntervalX;
+                            i_yPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes10_IntervalY;
+                        }
+                        else if (i_no == 11)
+                        {
+                            i_xPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes11_IntervalX;
+                            i_yPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes11_IntervalY;
+                        }
                         break;
                     case 20:
                         if (i_no >= Lib_Card.Configure.Parameter.Machine_TestPH1_CupMin && i_no <= Lib_Card.Configure.Parameter.Machine_TestPH1_CupMax)
@@ -3973,10 +4067,32 @@ namespace SmartDyeing.FADM_Object
                                 {
                                     if (FADM_Object.Communal._b_isNewSet)
                                     {
-                                        i_xPules = Lib_Card.Configure.Parameter.Coordinate_Bottle_X - (i_no - 1) %
-                                        Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
-                                        i_yPules = Lib_Card.Configure.Parameter.Coordinate_Bottle_Y + (i_no - 1) /
-                                            Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
+                                        //如果分区域
+                                        if (FADM_Object.Communal._b_isPartition)
+                                        {
+                                            //如果是母液坐标
+                                            if (i_no >= FADM_Object.Communal._i_MotherBottleNum)
+                                            {
+                                                i_xPules = Lib_Card.Configure.Parameter.Coordinate_MotherBottle_X - (i_no - FADM_Object.Communal._i_MotherBottleNum) %
+                                                Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
+                                                i_yPules = Lib_Card.Configure.Parameter.Coordinate_MotherBottle_Y + (i_no - FADM_Object.Communal._i_MotherBottleNum) /
+                                                    Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
+                                            }
+                                            else
+                                            {
+                                                i_xPules = Lib_Card.Configure.Parameter.Coordinate_Bottle_X - (i_no - 1) %
+                                                Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
+                                                i_yPules = Lib_Card.Configure.Parameter.Coordinate_Bottle_Y + (i_no - 1) /
+                                                    Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            i_xPules = Lib_Card.Configure.Parameter.Coordinate_Bottle_X - (i_no - 1) %
+                                                Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
+                                            i_yPules = Lib_Card.Configure.Parameter.Coordinate_Bottle_Y + (i_no - 1) /
+                                                Lib_Card.Configure.Parameter.Machine_Bottle_Column * Lib_Card.Configure.Parameter.Coordinate_Bottle_Interval;
+                                        }
                                     }
                                     else
                                     {
@@ -5550,6 +5666,31 @@ namespace SmartDyeing.FADM_Object
                                 i_xPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes6_IntervalX;
                                 i_yPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes6_IntervalY;
                             }
+                            else if (i_no == 7)
+                            {
+                                i_xPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes7_IntervalX;
+                                i_yPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes7_IntervalY;
+                            }
+                            else if (i_no == 8)
+                            {
+                                i_xPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes8_IntervalX;
+                                i_yPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes8_IntervalY;
+                            }
+                            else if (i_no == 9)
+                            {
+                                i_xPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes9_IntervalX;
+                                i_yPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes9_IntervalY;
+                            }
+                            else if (i_no == 10)
+                            {
+                                i_xPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes10_IntervalX;
+                                i_yPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes10_IntervalY;
+                            }
+                            else if (i_no == 11)
+                            {
+                                i_xPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes11_IntervalX;
+                                i_yPules = Lib_Card.Configure.Parameter.Coordinate_PutSyringes11_IntervalY;
+                            }
                             break;
                         case 20:
                             if (i_no >= Lib_Card.Configure.Parameter.Machine_TestPH1_CupMin && i_no <= Lib_Card.Configure.Parameter.Machine_TestPH1_CupMax)
@@ -6273,6 +6414,114 @@ namespace SmartDyeing.FADM_Object
                     {
                         Lib_Log.Log.writeLogException("写入Abs注液编号返回失败,继续写入");
                         Console.WriteLine("写入Abs注液编号返回失败,继续写入");
+                        if (b_istrue)
+                        {
+                            b_istrue = false;
+                            FADM_Object.Communal._tcpModBus.ReConnect();
+                            goto lableTop;
+                        }
+                        b_istrue = true;
+                        goto lableTop;
+                        //throw new Exception("8");
+                    }
+                    return 0;
+                }
+                catch (Exception e)
+                {
+                    FADM_Object.Communal.WriteTcpStatus(true); //恢复
+                    if (e.Message.Equals("-2") || e.Message.Equals("8"))
+                    {
+                        throw e;
+                    }
+                    else
+                    {
+                        throw new Exception("-1");
+                    }
+                }
+                finally
+                {
+                    FADM_Object.Communal.WriteTcpStatus(true); //恢复
+                }
+            }
+        }
+
+        /// <summary>
+        /// 开稀注液
+        /// </summary>
+        /// <param name="i_extract_Pulse">脉冲数</param>
+        /// <param name="i_syringeType">大小针筒 0 小针筒 1 大针筒</param>
+        /// <returns></returns>
+        public static int BrewShove(int i_extract_Pulse, int i_syringeType)
+        {
+            if (Lib_Card.Configure.Parameter.Machine_Type == 0)
+            {
+                OpenOrCloseBear();
+                Lib_Card.ADT8940A1.Module.Infusion.Infusion infusion;
+                infusion = new Lib_Card.ADT8940A1.Module.Infusion.Infusion_Up();
+                int iMRes = infusion.LiquidInfusion(i_syringeType, i_extract_Pulse);
+                if (-1 == iMRes)
+                    throw new Exception("驱动异常");
+                else if (-2 == iMRes)
+                    throw new Exception("收到退出消息");
+
+                return 0;
+            }
+            else
+            {
+                try
+                {
+                Label1:
+                    if (!FADM_Object.Communal._b_auto)
+                    {//在手动页面 等待手动页面退出
+                        goto Label1;
+                    }
+                    Lib_Log.Log.writeLogException("执行注液方法Extract_Pulse=" + i_extract_Pulse.ToString());
+
+                    bool b_istrue = false;
+                    FADM_Object.Communal.WriteTcpStatus(false); //天平先不要轮询
+                    ClearSuccessState();//先清除标志位
+                    Lib_Log.Log.writeLogException("清除标志位结束");
+
+                lableTop:
+                    int d_1 = 0;
+                    d_1 = i_extract_Pulse / 65536;
+                    if (i_extract_Pulse < 0) //负数脉冲
+                    {
+                        if (d_1 == 0)
+                        {
+                            d_1 = -1;
+                        }
+                        else
+                        {
+                            if (Math.Abs(i_extract_Pulse) > 65536)
+                            {
+                                d_1 = d_1 + -1;
+                            }
+                        }
+                    }
+                    else
+                    {  //正数脉冲
+                        d_1 = i_extract_Pulse / 65536;
+                    }
+
+                    int[] ia_array = { 4, 0, 0, 0, 0, i_extract_Pulse, d_1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3 };
+                    int i_state = FADM_Object.Communal._tcpModBus.Write(800, ia_array);
+                    if (i_state != -1)
+                    {
+                        //判断错误返回值
+                        if (GetReturn(1) == -2)
+                        {
+                            return -2;
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                    else
+                    {
+                        Lib_Log.Log.writeLogException("写入开稀注液编号返回失败,继续写入");
+                        Console.WriteLine("写入开稀注液编号返回失败,继续写入");
                         if (b_istrue)
                         {
                             b_istrue = false;
@@ -7859,7 +8108,13 @@ namespace SmartDyeing.FADM_Object
                         i_yStartPules = i_yStartPules % 65536;
                     }
 
-                    int[] ia_array = { 14, i_xStartPules, d_1, i_yStartPules, d_2, 0, 0, 0, 0, 0, 1,0, (i_type == 4 ? 1 : 0), (i_type == 5 ?2:0)};
+                    int d_3 = 0;
+                    if (i_type == 5)
+                        d_3 = 2;
+                    else if (i_type == 3)
+                        d_3 = 3;
+
+                    int[] ia_array = { 14, i_xStartPules, d_1, i_yStartPules, d_2, 0, 0, 0, 0, 0, 1, 0, (i_type == 4 ? 1 : 0), d_3 };
                     int i_state = FADM_Object.Communal._tcpModBus.Write(800, ia_array);
                     if (i_state != -1)
                     {
@@ -8145,7 +8400,7 @@ namespace SmartDyeing.FADM_Object
                         d_2 = i_yStartPules / 65536;
                         i_yStartPules = i_yStartPules % 65536;
                     }
-                    int[] ia_array = { 15, i_xStartPules, d_1, i_yStartPules, d_2, 0, 0, 0, 0, 0, 1 };
+                    int[] ia_array = { 15, i_xStartPules, d_1, i_yStartPules, d_2, 0, 0, 0, 0, 0, 1,0,0, FADM_Object.Communal._b_isGetPowerClamp?3:0 };
                     int i_state = FADM_Object.Communal._tcpModBus.Write(800, ia_array);
                     if (i_state != -1)
                     {
@@ -8478,7 +8733,8 @@ namespace SmartDyeing.FADM_Object
         public static int[] AwaitSuccess()
         {
             bool b_istrue = false;
-            int[] ia_array = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0 };
+            int[] ia_array = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0};
             int i_state = 0;
 
         Label1:
@@ -8526,7 +8782,7 @@ namespace SmartDyeing.FADM_Object
             }
 
 
-            i_state = FADM_Object.Communal._tcpModBus.Read(900, 29, ref ia_array);
+            i_state = FADM_Object.Communal._tcpModBus.Read(900, 50, ref ia_array);
 
             if (i_state != -1)
             {
@@ -8644,7 +8900,8 @@ namespace SmartDyeing.FADM_Object
         public static int[] AwaitSuccess( bool b_lock)
         {
             bool b_istrue = false;
-            int[] ia_array = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            int[] ia_array = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0};
             int i_state = 0;
 
         Label1:
@@ -8665,7 +8922,7 @@ namespace SmartDyeing.FADM_Object
                 }
             }
 
-            i_state = FADM_Object.Communal._tcpModBus.Read(900, 29, ref ia_array);
+            i_state = FADM_Object.Communal._tcpModBus.Read(900, 50, ref ia_array);
 
             if (i_state != -1)
             {
@@ -9766,7 +10023,7 @@ namespace SmartDyeing.FADM_Object
                         i_yStartPules = i_yStartPules % 65536;
                     }
 
-                    int[] ia_array = { 14, i_xStartPules, d_1, i_yStartPules, d_2, 0, 0, 0, 0, 0, 1, 0, 0 };
+                    int[] ia_array = { 14, i_xStartPules, d_1, i_yStartPules, d_2, 0, 0, 0, 0, 0, 1, 0, 1 };
                     int i_state = FADM_Object.Communal._tcpModBus.Write(800, ia_array);
                     if (i_state != -1)
                     {
@@ -10215,7 +10472,7 @@ namespace SmartDyeing.FADM_Object
                     if (i_state != -1)
                     {
                         //判断错误返回值
-                        if (GetReturn(1, true) == -2)
+                        if (GetReturn(1) == -2)
                         {
                             return -2;
                         }

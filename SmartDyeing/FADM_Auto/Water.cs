@@ -205,7 +205,15 @@ namespace SmartDyeing.FADM_Auto
                     {
                         //计算脉冲系数
                         MyModbusFun.ReadFlow();
-                        d_blAdjust_Pulse = Convert.ToDouble(string.Format("{0:F3}", d_blWeightT / Communal.i_flowPulse));
+                        if (Communal.i_flowPulse == 0)
+                        {
+                            d_blAdjust_Pulse = 0.6;
+                        }
+                        else
+                        {
+                            d_blAdjust_Pulse = Convert.ToDouble(string.Format("{0:F3}", d_blWeightT / Communal.i_flowPulse));
+                        }
+                        //d_blAdjust_Pulse = Convert.ToDouble(string.Format("{0:F3}", d_blWeightT / Communal.i_flowPulse));
                         FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "脉冲：" + Communal.i_flowPulse + ",实际重量：" + d_blWeightT);
                     }
                     if (d_blAdjust <= 0.0 && i_count < 4)
@@ -367,7 +375,20 @@ namespace SmartDyeing.FADM_Auto
                             Lib_File.Ini.WriteIni("Correcting", "Correcting_FlowPulse_Value", string.Format("{0:F3}", d_blAdjust_Pulse), Environment.CurrentDirectory + "\\Config\\parameter.ini");
                         }
                     }
-                    
+
+                    if (Communal._b_isGetPowerClamp)
+                    {
+                        int i_xStart = 0, i_yStart = 0;
+                        //3.放夹子
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "放夹子启动");
+                        //int i_xStart = 0, i_yStart = 0;
+                        MyModbusFun.CalTarget(14, 0, ref i_xStart, ref i_yStart);
+                        int i_mRes1 = MyModbusFun.PutClamp(i_xStart, i_yStart);
+                        if (-2 == i_mRes1)
+                            throw new Exception("收到退出消息");
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "放夹子完成");
+                    }
+
 
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找待机位");
                     FADM_Object.Communal._i_OptCupNum = 0;
@@ -818,7 +839,20 @@ namespace SmartDyeing.FADM_Auto
                         Lib_File.Ini.WriteIni("Correcting", "Correcting_Water_FWeight", string.Format("{0:F3}", d_blWeightF), Environment.CurrentDirectory + "\\Config\\parameter.ini");
                         Lib_File.Ini.WriteIni("Correcting", "Correcting_Water_Value", string.Format("{0:F3}", d_blAdjust), Environment.CurrentDirectory + "\\Config\\parameter.ini");
                     }
-                    
+
+                    if (Communal._b_isGetPowerClamp)
+                    {
+                        int i_xStart = 0, i_yStart = 0;
+                        //3.放夹子
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "放夹子启动");
+                        //int i_xStart = 0, i_yStart = 0;
+                        MyModbusFun.CalTarget(14, 0, ref i_xStart, ref i_yStart);
+                        int i_mRes1 = MyModbusFun.PutClamp(i_xStart, i_yStart);
+                        if (-2 == i_mRes1)
+                            throw new Exception("收到退出消息");
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "放夹子完成");
+                    }
+
                     FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找待机位");
                     FADM_Object.Communal._i_OptCupNum = 0;
                     FADM_Object.Communal._i_optBottleNum = 0;
@@ -851,6 +885,19 @@ namespace SmartDyeing.FADM_Auto
             {
                 //解锁6工位
                 MyModbusFun.UnLockSix();
+
+                if (Communal._b_isGetPowerClamp)
+                {
+                    int i_xStart = 0, i_yStart = 0;
+                    //3.放夹子
+                    FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "放夹子启动");
+                    //int i_xStart = 0, i_yStart = 0;
+                    MyModbusFun.CalTarget(14, 0, ref i_xStart, ref i_yStart);
+                    int i_mRes1 = MyModbusFun.PutClamp(i_xStart, i_yStart);
+                    if (-2 == i_mRes1)
+                        throw new Exception("收到退出消息");
+                    FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "放夹子完成");
+                }
                 // FADM_Object.Communal.WriteMachineStatus(8);
                 //if (Lib_Card.Configure.Parameter.Other_Language == 0)
                 //    FADM_Form.CustomMessageBox.Show(ex.Message, "水校正", MessageBoxButtons.OK, true);
@@ -1316,7 +1363,18 @@ namespace SmartDyeing.FADM_Auto
                         }
                         FADM_Object.Communal._fadmSqlserver.InsertRun("Machine", "滴液水校正完成");
                     }
-                    
+                    if (Communal._b_isGetPowerClamp)
+                    {
+                        int i_xStart = 0, i_yStart = 0;
+                        //3.放夹子
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "放夹子启动");
+                        //int i_xStart = 0, i_yStart = 0;
+                        MyModbusFun.CalTarget(14, 0, ref i_xStart, ref i_yStart);
+                        int i_mRes1 = MyModbusFun.PutClamp(i_xStart, i_yStart);
+                        if (-2 == i_mRes1)
+                            throw new Exception("收到退出消息");
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "放夹子完成");
+                    }
 
                     //FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找待机位");
                     //FADM_Object.Communal._i_OptCupNum = 0;
@@ -1752,7 +1810,20 @@ namespace SmartDyeing.FADM_Auto
                         Lib_File.Ini.WriteIni("Correcting", "Correcting_Water_Value", string.Format("{0:F3}", d_blAdjust), Environment.CurrentDirectory + "\\Config\\parameter.ini");
                         FADM_Object.Communal._fadmSqlserver.InsertRun("Machine", "滴液水校正完成");
                     }
-                    
+
+                    if (Communal._b_isGetPowerClamp)
+                    {
+                        int i_xStart = 0, i_yStart = 0;
+                        //3.放夹子
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "放夹子启动");
+                        //int i_xStart = 0, i_yStart = 0;
+                        MyModbusFun.CalTarget(14, 0, ref i_xStart, ref i_yStart);
+                        int i_mRes1 = MyModbusFun.PutClamp(i_xStart, i_yStart);
+                        if (-2 == i_mRes1)
+                            throw new Exception("收到退出消息");
+                        FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "放夹子完成");
+                    }
+
                     //FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找待机位");
                     //FADM_Object.Communal._i_OptCupNum = 0;
                     //FADM_Object.Communal._i_optBottleNum = 0;
@@ -1785,6 +1856,19 @@ namespace SmartDyeing.FADM_Auto
             {
                 //解锁6工位
                 MyModbusFun.UnLockSix();
+
+                if (Communal._b_isGetPowerClamp)
+                {
+                    int i_xStart = 0, i_yStart = 0;
+                    //3.放夹子
+                    FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "放夹子启动");
+                    //int i_xStart = 0, i_yStart = 0;
+                    MyModbusFun.CalTarget(14, 0, ref i_xStart, ref i_yStart);
+                    int i_mRes1 = MyModbusFun.PutClamp(i_xStart, i_yStart);
+                    if (-2 == i_mRes1)
+                        throw new Exception("收到退出消息");
+                    FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "放夹子完成");
+                }
                 // FADM_Object.Communal.WriteMachineStatus(8);
                 //if (Lib_Card.Configure.Parameter.Other_Language == 0)
                 //    FADM_Form.CustomMessageBox.Show(ex.Message, "水校正", MessageBoxButtons.OK, true);
@@ -2086,6 +2170,19 @@ namespace SmartDyeing.FADM_Auto
 
                 }
 
+                if (Communal._b_isGetPowerClamp)
+                {
+                    int i_xStart=0, i_yStart=0;
+                    //3.放夹子
+                    FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "放夹子启动");
+                    //int i_xStart = 0, i_yStart = 0;
+                    MyModbusFun.CalTarget(14, 0, ref i_xStart, ref i_yStart);
+                    int i_mRes1 = MyModbusFun.PutClamp(i_xStart, i_yStart);
+                    if (-2 == i_mRes1)
+                        throw new Exception("收到退出消息");
+                    FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "放夹子完成");
+                }
+
                 FADM_Object.Communal._fadmSqlserver.InsertRun("RobotHand", "寻找待机位");
                 FADM_Object.Communal._i_OptCupNum = 0;
                 FADM_Object.Communal._i_optBottleNum = 0;
@@ -2127,6 +2224,19 @@ namespace SmartDyeing.FADM_Auto
             {
                 //解锁6工位
                 MyModbusFun.UnLockSix();
+
+                if (Communal._b_isGetPowerClamp)
+                {
+                    int i_xStart = 0, i_yStart = 0;
+                    //3.放夹子
+                    FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "放夹子启动");
+                    //int i_xStart = 0, i_yStart = 0;
+                    MyModbusFun.CalTarget(14, 0, ref i_xStart, ref i_yStart);
+                    int i_mRes1 = MyModbusFun.PutClamp(i_xStart, i_yStart);
+                    if (-2 == i_mRes1)
+                        throw new Exception("收到退出消息");
+                    FADM_Object.Communal._fadmSqlserver.InsertRun("Dail", "放夹子完成");
+                }
                 // FADM_Object.Communal.WriteMachineStatus(8);
                 //if (Lib_Card.Configure.Parameter.Other_Language == 0)
                 //    FADM_Form.CustomMessageBox.Show(ex.Message, "水校正", MessageBoxButtons.OK, true);

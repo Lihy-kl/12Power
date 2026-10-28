@@ -113,6 +113,17 @@ namespace SmartDyeing.FADM_Control
             this.Tsm_Insert = new System.Windows.Forms.ToolStripMenuItem();
             this.Tsm_Reset = new System.Windows.Forms.ToolStripMenuItem();
             this.myDataGridView1 = new SmartDyeing.FADM_Object.MyDataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgv_FormulaData = new SmartDyeing.FADM_Object.MyDataGridView();
             this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -127,17 +138,8 @@ namespace SmartDyeing.FADM_Control
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewCheckBoxColumn2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txt_CupNum = new System.Windows.Forms.TextBox();
             this.grp_DropRecord.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_DropRecord)).BeginInit();
@@ -315,6 +317,8 @@ namespace SmartDyeing.FADM_Control
             // 
             // grp_FormulaData
             // 
+            this.grp_FormulaData.Controls.Add(this.label11);
+            this.grp_FormulaData.Controls.Add(this.txt_CupNum);
             this.grp_FormulaData.Controls.Add(this.myDataGridView1);
             this.grp_FormulaData.Controls.Add(this.panel3);
             this.grp_FormulaData.Controls.Add(this.dgv_FormulaData);
@@ -670,6 +674,65 @@ namespace SmartDyeing.FADM_Control
             this.myDataGridView1.RowTemplate.Height = 30;
             this.myDataGridView1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.FillWeight = 32.65508F;
+            resources.ApplyResources(this.dataGridViewTextBoxColumn1, "dataGridViewTextBoxColumn1");
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.FillWeight = 44.48533F;
+            resources.ApplyResources(this.dataGridViewTextBoxColumn2, "dataGridViewTextBoxColumn2");
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Column1
+            // 
+            resources.ApplyResources(this.Column1, "Column1");
+            this.Column1.Name = "Column1";
+            // 
+            // Column2
+            // 
+            resources.ApplyResources(this.Column2, "Column2");
+            this.Column2.Name = "Column2";
+            // 
+            // Column8
+            // 
+            resources.ApplyResources(this.Column8, "Column8");
+            this.Column8.Name = "Column8";
+            // 
+            // Column10
+            // 
+            resources.ApplyResources(this.Column10, "Column10");
+            this.Column10.Name = "Column10";
+            // 
+            // Column9
+            // 
+            resources.ApplyResources(this.Column9, "Column9");
+            this.Column9.Name = "Column9";
+            // 
+            // Column11
+            // 
+            resources.ApplyResources(this.Column11, "Column11");
+            this.Column11.Name = "Column11";
+            // 
+            // Column3
+            // 
+            resources.ApplyResources(this.Column3, "Column3");
+            this.Column3.Name = "Column3";
+            // 
+            // Column4
+            // 
+            resources.ApplyResources(this.Column4, "Column4");
+            this.Column4.Name = "Column4";
+            // 
+            // Column5
+            // 
+            resources.ApplyResources(this.Column5, "Column5");
+            this.Column5.Name = "Column5";
+            // 
             // dgv_FormulaData
             // 
             this.dgv_FormulaData.AllowUserToDeleteRows = false;
@@ -810,64 +873,16 @@ namespace SmartDyeing.FADM_Control
             resources.ApplyResources(this.Column7, "Column7");
             this.Column7.Name = "Column7";
             // 
-            // dataGridViewTextBoxColumn1
+            // label11
             // 
-            this.dataGridViewTextBoxColumn1.FillWeight = 32.65508F;
-            resources.ApplyResources(this.dataGridViewTextBoxColumn1, "dataGridViewTextBoxColumn1");
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            resources.ApplyResources(this.label11, "label11");
+            this.label11.Name = "label11";
             // 
-            // dataGridViewTextBoxColumn2
+            // txt_CupNum
             // 
-            this.dataGridViewTextBoxColumn2.FillWeight = 44.48533F;
-            resources.ApplyResources(this.dataGridViewTextBoxColumn2, "dataGridViewTextBoxColumn2");
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Column1
-            // 
-            resources.ApplyResources(this.Column1, "Column1");
-            this.Column1.Name = "Column1";
-            // 
-            // Column2
-            // 
-            resources.ApplyResources(this.Column2, "Column2");
-            this.Column2.Name = "Column2";
-            // 
-            // Column8
-            // 
-            resources.ApplyResources(this.Column8, "Column8");
-            this.Column8.Name = "Column8";
-            // 
-            // Column10
-            // 
-            resources.ApplyResources(this.Column10, "Column10");
-            this.Column10.Name = "Column10";
-            // 
-            // Column9
-            // 
-            resources.ApplyResources(this.Column9, "Column9");
-            this.Column9.Name = "Column9";
-            // 
-            // Column11
-            // 
-            resources.ApplyResources(this.Column11, "Column11");
-            this.Column11.Name = "Column11";
-            // 
-            // Column3
-            // 
-            resources.ApplyResources(this.Column3, "Column3");
-            this.Column3.Name = "Column3";
-            // 
-            // Column4
-            // 
-            resources.ApplyResources(this.Column4, "Column4");
-            this.Column4.Name = "Column4";
-            // 
-            // Column5
-            // 
-            resources.ApplyResources(this.Column5, "Column5");
-            this.Column5.Name = "Column5";
+            resources.ApplyResources(this.txt_CupNum, "txt_CupNum");
+            this.txt_CupNum.Name = "txt_CupNum";
+            this.txt_CupNum.ReadOnly = true;
             // 
             // HistoryAbsData
             // 
@@ -991,5 +1006,7 @@ namespace SmartDyeing.FADM_Control
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox txt_CupNum;
     }
 }

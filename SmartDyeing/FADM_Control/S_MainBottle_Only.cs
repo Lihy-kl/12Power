@@ -2559,6 +2559,12 @@ namespace SmartDyeing.FADM_Control
 
         private void tsm_Brew_Click(object sender, EventArgs e)
         {
+            if (FADM_Object.Communal.ReadMachineStatus() == 7)
+            {
+                FADM_Form.CustomMessageBox.Show("正在滴液，不能加入", "InsertAbs",
+                MessageBoxButtons.OK, false);
+                return;
+            }
             //查询是否已存在
             string s_sql = "SELECT * FROM Brew_wait_list where  BottleNum  = " + _i_nBottleNum + ";";
             DataTable dt_bottledetails = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);

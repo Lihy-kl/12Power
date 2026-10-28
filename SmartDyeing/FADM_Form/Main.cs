@@ -162,6 +162,24 @@ namespace SmartDyeing.FADM_Form
                 FADM_Object.Communal._b_isAutoWashSys = false;
             }
 
+            string s_TotalBrewMac = Lib_File.Ini.GetIni("Setting", "TotalBrewMac", "1", s_path);
+            FADM_Object.Communal._i_TotalBrewMac = Convert.ToInt32(s_TotalBrewMac);
+
+            if(FADM_Object.Communal._i_TotalBrewMac == 1)
+            {
+                FADM_Object.Communal._i_CurrentBrewNum = 1;
+            }
+            else
+            {
+                string s_CurrentBrewNum = Lib_File.Ini.GetIni("Setting", "CurrentBrewNum", "1", s_path);
+                FADM_Object.Communal._i_CurrentBrewNum = Convert.ToInt32(s_CurrentBrewNum);
+            }
+
+            string s_isOriginalSyBrew = Lib_File.Ini.GetIni("Setting", "IsOriginalSyBrew", "0", s_path);
+            if (s_isOriginalSyBrew == "1")
+            {
+                FADM_Object.Communal._b_OriginalSyBrew = true;
+            }
 
 
             BtnMain_Click(sender, e);
@@ -238,9 +256,29 @@ namespace SmartDyeing.FADM_Form
                 Thread P_thd4 = new Thread(InsertBrew);
                 P_thd4.IsBackground = true;
                 P_thd4.Start();
+
+                //加入一个清空放针位提醒
+                if (Communal._b_isBatBrew)
+                {
+                    DataTable dt_PutSyringes = FADM_Object.Communal._fadmSqlserver.GetData(
+                "SELECT  * FROM PutSyringes WHERE  IsUsing=1 And  Status = 2");
+                    foreach(DataRow dr in dt_PutSyringes.Rows)
+                    {
+                        //插入待办事项
+                        FADM_Object.MyAlarm myAlarm;
+                        if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                            myAlarm = new FADM_Object.MyAlarm(dr["PutSyringesNum"].ToString() + "号放针工位存放"
+                                + dr["BottleNum"].ToString() + "号母液瓶针筒，请拿走针筒后点继续", "Stop",
+                                Convert.ToInt32(dr["PutSyringesNum"].ToString()), 2, 68, true);
+                        else
+                            myAlarm = new FADM_Object.MyAlarm(dr["PutSyringesNum"].ToString() + "号放针工位存放"
+                               + dr["BottleNum"].ToString() + "号母液瓶针筒，请拿走针筒后点继续", "Stop",
+                               Convert.ToInt32(dr["PutSyringesNum"].ToString()), 2, 68, true);
+                    }
+                }
             }
 
-            if(!FADM_Object.Communal._b_isCupAreaOnly)
+            if (!FADM_Object.Communal._b_isCupAreaOnly)
             {
                 CupStatus.Visible = false;
                 toolStripSeparator11.Visible = false;
@@ -271,6 +309,12 @@ namespace SmartDyeing.FADM_Form
                 P_thd2.Start();
 
                 
+            }
+
+            //如果只有1个机台，就不显示机台选择
+            if (FADM_Object.Communal._i_TotalBrewMac == 1)
+            {
+                toolStripSplitButton7.Visible = false;
             }
 
             //设置分光仪信息
@@ -847,6 +891,21 @@ namespace SmartDyeing.FADM_Form
             if (s_isAssOrderByCode == "1")
             {
                 FADM_Object.Communal._b_isAssOrderByCode = true;
+            }
+
+            string s_isPartition = Lib_File.Ini.GetIni("Setting", "IsPartition", "0", s_path);
+            if (s_isPartition == "1")
+            {
+                FADM_Object.Communal._b_isPartition = true;
+            }
+
+            string s_MotherBottleNum = Lib_File.Ini.GetIni("Setting", "MotherBottleNum", "61", s_path);
+            FADM_Object.Communal._i_MotherBottleNum = Convert.ToInt32(s_MotherBottleNum);
+
+            string s_isNeedMoveSy = Lib_File.Ini.GetIni("Setting", "IsNeedMoveSy", "1", s_path);
+            if (s_isNeedMoveSy == "0")
+            {
+                FADM_Object.Communal._b_isNeedMoveSy = false;
             }
         }
 
@@ -2153,7 +2212,7 @@ namespace SmartDyeing.FADM_Form
                     }
                 //
                 lab_end:
-                    Thread.Sleep(30000);
+                    Thread.Sleep(1000);
                 }
                 catch
                 { }
@@ -2165,161 +2224,1623 @@ namespace SmartDyeing.FADM_Form
         {
             while (true)
             {
-                try
+                if (Communal._b_isBatBrew)
                 {
-                lab_again:
-                    //查询是否有等待数据
-                    string s_sql = "SELECT top 1 * FROM Brew_wait_list where Type = 0 order by InsertDate;";
-                    DataTable dt_data = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
-                    if (dt_data.Rows.Count > 0)
+                    if (Communal._b_isMoveing)
+                        Thread.Sleep(10000);
+                    else
                     {
-                    lab_select:
-                        //判断是否有空闲开料工位
-                        s_sql = "SELECT top 1 * FROM brew_station_details  where IsUsing = 0 and Statues = '待机' and Station < 6 order by Station;";
-                        DataTable dt_data_station = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
-                        if (dt_data_station.Rows.Count > 0)
+                        if (Communal._b_isNeedCool)
                         {
-                            //判断工位实际plc状态是否待机
-                            if(AutoBrew._cup_Temps[Convert.ToInt32( dt_data_station.Rows[0]["Station"].ToString())-1]._i_statues == 1)
+                            try
                             {
-                                //查找开料开稀瓶号
-                                s_sql = "SELECT  * FROM bottle_details  where BottleNum =" + dt_data.Rows[0]["BottleNum"].ToString();
-                                DataTable dt_data_bottle_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
-                                if(dt_data_bottle_details.Rows.Count>0)
+                            lab_again:
+                                //查询是否有等待数据
+                                string s_sql = "SELECT top 1 * FROM Brew_wait_list where Type = 0 order by InsertDate;";
+                                DataTable dt_data = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                if (dt_data.Rows.Count > 0)
                                 {
-                                    if (dt_data_bottle_details.Rows[0]["SyringeType"].ToString() == "粉桶")
-                                    {
-                                        //先删除，不做
-                                        FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
-                                        goto lab_again;
-                                    }
-                                    //开稀
-                                    else if (Convert.ToInt32(dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString())>0)
-                                    {
-                                        ////先删除，不做
-                                        //FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
-                                        //goto lab_again;
+                                lab_select:
+                                    //判断第二轮是否已经有数据（Station>6的工位在使用）
+                                    s_sql = "SELECT  * FROM brew_station_details  where  Station > 6 order by Station;";
+                                    DataTable dt_data_station_sec = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
 
-                                        //判断原瓶号是否符合开料标准
-                                        s_sql = "SELECT  * FROM bottle_details  where BottleNum =" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString();
-                                        DataTable dt_data_bottle_details_O = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
-                                        if(dt_data_bottle_details_O.Rows.Count >0)
+                                    bool b_hav_sec = false;
+
+                                    foreach (DataRow dr in dt_data_station_sec.Rows)
+                                    {
+                                        if (Convert.ToInt32(dr["IsUsing"].ToString()) == 1)
                                         {
-                                            //查询判断是否超期
-                                            s_sql = "SELECT * FROM assistant_details WHERE AssistantCode = '" + dt_data_bottle_details_O.Rows[0]["AssistantCode"].ToString() + "';";
-                                            DataTable dt_assistant_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
-
-                                            DateTime timeA = Convert.ToDateTime(dt_data_bottle_details_O.Rows[0]["BrewingData"].ToString());
-                                            DateTime timeB = DateTime.Now; //获取当前时间
-                                            TimeSpan ts = timeB - timeA; //计算时间差
-                                            string s_time = ts.TotalHours.ToString(); //将时间差转换为小时
-                                            //判断是否过期或者液量低
-                                            if (Convert.ToDouble(dt_data_bottle_details_O.Rows[0]["CurrentWeight"].ToString()) < Lib_Card.Configure.Parameter.Other_Bottle_AlarmWeight && FADM_Object.Communal._b_isLowDrip)
+                                            b_hav_sec = true;
+                                            break;
+                                        }
+                                    }
+                                    //插入到第二轮列表
+                                    if (b_hav_sec)
+                                    {
+                                        if (Communal._i_BrewStatus != 3)
+                                        {
+                                            DataTable dt_cupordye_details_sec = FADM_Object.Communal._fadmSqlserver.GetData(
+                         "SELECT  * FROM brew_station_details  where  Station < 6 And IsUsing = 1;");
+                                            if (dt_cupordye_details_sec.Rows.Count == 0)
                                             {
-                                                //将当前瓶改为待开，将原瓶加入开料
-                                                DateTime time = Convert.ToDateTime(dt_data.Rows[0]["InsertDate"].ToString());
-                                                time = time.AddSeconds(-1);
-                                                //判断是否已经正在开料
-                                                s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "';";
-                                                DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
-                                                if (dt_brew_station_details_s.Rows.Count == 0)
-                                                    //插入到排队列表
-                                                    FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                       "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "','" + time.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+                                                //判断开料工位是否没有运行，所有都没运行就可以搬运下一轮数据
+                                                dt_cupordye_details_sec = FADM_Object.Communal._fadmSqlserver.GetData(
+                                 "SELECT  * FROM brew_station_details  Order By Station ;");
+                                                int i_index = 7;
+                                                foreach (DataRow dataRow in dt_cupordye_details_sec.Rows)
+                                                {
+                                                    if (Convert.ToInt32(dataRow["Station"].ToString()) == 6)
+                                                    {
+                                                        break;
+                                                    }
+                                                    if (dataRow["Statues"].ToString() == "待机" && Convert.ToInt32(dataRow["IsUsing"].ToString()) == 0)
+                                                    {
+                                                        if (i_index <= dt_cupordye_details_sec.Rows.Count)
+                                                        {
+                                                            if (Convert.ToInt32(dt_cupordye_details_sec.Rows[i_index - 1]["IsUsing"].ToString()) == 1)
+                                                            {
+                                                                //把第一个数值赋值上去
+                                                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                                            "UPDATE brew_station_details SET Cooperate = " + dt_cupordye_details_sec.Rows[i_index - 1]["Cooperate"].ToString()
+                                                            + ",BottleNum = " + dt_cupordye_details_sec.Rows[i_index - 1]["BottleNum"].ToString()
+                                                            + ",PowderNum = " + dt_cupordye_details_sec.Rows[i_index - 1]["PowderNum"].ToString()
+                                                            + ",IsUsing = 1 "
+                                                            + "  WHERE Station = " + dataRow["Station"].ToString() + ";");
 
-                                                FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                                //把第二轮对应工位置为空闲
+                                                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                                            "UPDATE brew_station_details SET Cooperate = 0,IsUsing = 0,Statues='待机' "
+                                                            + "  WHERE Station = " + dt_cupordye_details_sec.Rows[i_index - 1]["Station"].ToString() + ";");
+
+                                                                //将洗瓶工位对应开料工位更新
+                                                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                                            "UPDATE brew_station_details SET BrewNum = " + dataRow["Station"].ToString()
+                                                            + "  WHERE Station = 6 And BrewNum = " + i_index + ";");
+                                                                i_index++;
+                                                            }
+                                                            //没有排队第二轮数据
+                                                            else
+                                                            {
+                                                                break;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                //将第二轮后边的往上排(有可能部分开料工位下线导致第二轮数量比开料工位大)
+                                                int i_secindex = 7;
+                                                foreach (DataRow dataRow in dt_cupordye_details_sec.Rows)
+                                                {
+                                                    if (i_index == 12)
+                                                        break;
+                                                    if (Convert.ToInt32(dt_cupordye_details_sec.Rows[i_index - 1]["IsUsing"].ToString()) == 1)
+                                                    {
+                                                        //把第一个数值赋值上去
+                                                        FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                                    "UPDATE brew_station_details SET Cooperate = " + dt_cupordye_details_sec.Rows[i_index - 1]["Cooperate"].ToString()
+                                                    + ",BottleNum = " + dt_cupordye_details_sec.Rows[i_index - 1]["BottleNum"].ToString()
+                                                    + ",PowderNum = " + dt_cupordye_details_sec.Rows[i_index - 1]["PowderNum"].ToString()
+                                                    + ",IsUsing = 1 "
+                                                    + "  WHERE Station = " + dt_cupordye_details_sec.Rows[i_secindex - 1]["Station"].ToString() + ";");
+
+                                                        //把第二轮对应工位置为空闲
+                                                        FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                                    "UPDATE brew_station_details SET Cooperate = 0,IsUsing = 0,Statues='待机' "
+                                                    + "  WHERE Station = " + dt_cupordye_details_sec.Rows[i_index - 1]["Station"].ToString() + ";");
+
+                                                        i_index++;
+                                                        i_secindex++;
+                                                    }
+
+                                                }
                                                 goto lab_again;
-
                                             }
-                                            else if (Convert.ToDouble(s_time) > Convert.ToDouble(dt_assistant_details.Rows[0]["TermOfValidity"].ToString()) && FADM_Object.Communal._b_isOutDrip)
-                                            {
-                                                //将当前瓶改为待开，将原瓶加入开料
-                                                DateTime time = Convert.ToDateTime(dt_data.Rows[0]["InsertDate"].ToString());
-                                                time = time.AddSeconds(-1);
-                                                //判断是否已经正在开料
-                                                s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "';";
-                                                DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
-                                                if (dt_brew_station_details_s.Rows.Count == 0)
-                                                    //插入到排队列表
-                                                    FADM_Object.Communal._fadmSqlserver.ReviseData(
-                                   "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "','" + time.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+                                        }
 
-                                                FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
-                                                goto lab_again;
+
+                                        //查找第二轮空闲位置
+                                        int i_Station = 0;
+                                        foreach (DataRow dr in dt_data_station_sec.Rows)
+                                        {
+                                            if (Convert.ToInt32(dr["IsUsing"].ToString()) == 0)
+                                            {
+                                                i_Station = Convert.ToInt32(dr["Station"].ToString());
+                                                break;
+                                            }
+                                        }
+                                        if (i_Station > 0)
+                                        {
+                                            //查找开料开稀瓶号
+                                            s_sql = "SELECT  * FROM bottle_details  where BottleNum =" + dt_data.Rows[0]["BottleNum"].ToString()
+                                                + " And MachineID = "+ FADM_Object.Communal._i_CurrentBrewNum;
+                                            DataTable dt_data_bottle_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                            if (dt_data_bottle_details.Rows.Count > 0)
+                                            {
+                                                if (dt_data_bottle_details.Rows[0]["SyringeType"].ToString() == "粉桶")
+                                                {
+                                                    //先删除，不做
+                                                    FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                    goto lab_again;
+                                                }
+                                                //开稀
+                                                else if (Convert.ToInt32(dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString()) > 0)
+                                                {
+                                                    ////先删除，不做
+                                                    //FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                    //goto lab_again;
+
+                                                    //判断原瓶号是否符合开料标准
+                                                    s_sql = "SELECT  * FROM bottle_details  where BottleNum =" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() 
+                                                        + " And MachineID = " + FADM_Object.Communal._i_CurrentBrewNum; ;
+                                                    DataTable dt_data_bottle_details_O = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                    if (dt_data_bottle_details_O.Rows.Count > 0)
+                                                    {
+                                                        //查询判断是否超期
+                                                        s_sql = "SELECT * FROM assistant_details WHERE AssistantCode = '" + dt_data_bottle_details_O.Rows[0]["AssistantCode"].ToString() + "';";
+                                                        DataTable dt_assistant_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+
+                                                        DateTime timeA = Convert.ToDateTime(dt_data_bottle_details_O.Rows[0]["BrewingData"].ToString());
+                                                        DateTime timeB = DateTime.Now; //获取当前时间
+                                                        TimeSpan ts = timeB - timeA; //计算时间差
+                                                        string s_time = ts.TotalHours.ToString(); //将时间差转换为小时
+                                                                                                  //判断是否过期或者液量低
+                                                        if (Convert.ToDouble(dt_data_bottle_details_O.Rows[0]["CurrentWeight"].ToString()) < Lib_Card.Configure.Parameter.Other_Bottle_AlarmWeight && FADM_Object.Communal._b_isLowDrip)
+                                                        {
+                                                            //将当前瓶改为待开，将原瓶加入开料
+                                                            DateTime time = Convert.ToDateTime(dt_data.Rows[0]["InsertDate"].ToString());
+                                                            time = time.AddSeconds(-1);
+                                                            //判断是否已经正在开料
+                                                            s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "' And Station < 6;";
+                                                            DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            if (dt_brew_station_details_s.Rows.Count == 0)
+                                                                //插入到排队列表
+                                                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                                   "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "','" + time.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+
+                                                            FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                            goto lab_again;
+
+                                                        }
+                                                        else if (Convert.ToDouble(s_time) > Convert.ToDouble(dt_assistant_details.Rows[0]["TermOfValidity"].ToString()) && FADM_Object.Communal._b_isOutDrip)
+                                                        {
+                                                            //将当前瓶改为待开，将原瓶加入开料
+                                                            DateTime time = Convert.ToDateTime(dt_data.Rows[0]["InsertDate"].ToString());
+                                                            time = time.AddSeconds(-1);
+                                                            //判断是否已经正在开料
+                                                            s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "'  And Station < 6;";
+                                                            DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            if (dt_brew_station_details_s.Rows.Count == 0)
+                                                                //插入到排队列表
+                                                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                               "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "','" + time.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+
+                                                            FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                            goto lab_again;
+                                                        }
+                                                        else
+                                                        {
+                                                            //判断是否已经正在开料
+                                                            s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "'  And Station != 6;";
+                                                            DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            s_sql = "SELECT * FROM Brew_wait_list WHERE  BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "';";
+                                                            DataTable dt_Brew_wait_list = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            //等待列表和正在开料都没有，才能插入开料工位
+                                                            if (dt_brew_station_details_s.Rows.Count == 0 && dt_Brew_wait_list.Rows.Count == 0)
+                                                            {
+                                                                s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["BottleNum"].ToString() + "'  And Station != 6;";
+                                                                DataTable dt_brew_station_details_s2 = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                                //判断自己是否存在正在开料
+                                                                if (dt_brew_station_details_s2.Rows.Count == 0)
+                                                                {
+                                                                    //插入开料工位
+                                                                    FADM_Object.Communal._fadmSqlserver.ReviseData("Update brew_station_details  set BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString()
+                                                                    + ",IsUsing=1,PowderNum = " + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + ",Cooperate = 13,ReceptionTime =  '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")
+                                                                    + "' where Station = " + i_Station + ";");
+                                                                }
+                                                                FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                            }
+                                                            //存在原瓶号正在开料，改为等待
+                                                            else
+                                                            {
+                                                                FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                            }
+                                                            goto lab_again;
+                                                        }
+                                                    }
+                                                }
+                                                //开料
+                                                else
+                                                {
+                                                    //查询是否有自动开料粉体
+                                                    s_sql = "SELECT  * FROM bottle_details  where AssistantCode ='" + dt_data_bottle_details.Rows[0]["AssistantCode"].ToString() 
+                                                        + "' And SyringeType = '粉桶' And BottleNum <" + Lib_Card.Configure.Parameter.Machine_Bottle_Total + " And MachineID = " + FADM_Object.Communal._i_CurrentBrewNum; ;
+                                                    DataTable dt_data_bottle_details_1 = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                    if (dt_data_bottle_details_1.Rows.Count > 0)
+                                                    {
+                                                        //判断是否已经正在开料
+                                                        s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "'  And Station != 6;";
+                                                        DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                        if (dt_brew_station_details_s.Rows.Count == 0)
+                                                            //插入开料工位
+                                                            FADM_Object.Communal._fadmSqlserver.ReviseData("Update brew_station_details  set BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString()
+                                                            + ",IsUsing=1,PowderNum = " + dt_data_bottle_details_1.Rows[0]["BottleNum"].ToString() + ",Cooperate = 13,ReceptionTime =  '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")
+                                                            + "' where Station = " + i_Station + ";");
+                                                        FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                        goto lab_again;
+                                                    }
+                                                    else
+                                                    {
+                                                        // 删除等待列表数据，不进行开料
+                                                        //FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+
+                                                        FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                        goto lab_again;
+                                                    }
+                                                }
                                             }
                                             else
                                             {
+                                                //删除等待列表数据，不进行开料
+                                                FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                goto lab_again;
+
+                                            }
+                                        }
+                                        else
+                                        {
+                                            //没有空闲位置
+                                            goto lab_end;
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        //判断是否有空闲开料工位
+                                        s_sql = "SELECT top 1 * FROM brew_station_details  where IsUsing = 0 and Statues = '待机' and Station < 6 order by Station;";
+                                        DataTable dt_data_station = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                        if (dt_data_station.Rows.Count > 0)
+                                        {
+                                            //判断工位实际plc状态是否待机
+                                            if (AutoBrew._cup_Temps[Convert.ToInt32(dt_data_station.Rows[0]["Station"].ToString()) - 1]._i_statues == 1)
+                                            {
+                                                //查找开料开稀瓶号
+                                                s_sql = "SELECT  * FROM bottle_details  where BottleNum =" + dt_data.Rows[0]["BottleNum"].ToString() 
+                                                    + " And MachineID = " + FADM_Object.Communal._i_CurrentBrewNum; ;
+                                                DataTable dt_data_bottle_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                if (dt_data_bottle_details.Rows.Count > 0)
+                                                {
+                                                    if (dt_data_bottle_details.Rows[0]["SyringeType"].ToString() == "粉桶")
+                                                    {
+                                                        //先删除，不做
+                                                        FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                        goto lab_again;
+                                                    }
+                                                    //开稀
+                                                    else if (Convert.ToInt32(dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString()) > 0)
+                                                    {
+                                                        ////先删除，不做
+                                                        //FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                        //goto lab_again;
+
+                                                        //判断原瓶号是否符合开料标准
+                                                        s_sql = "SELECT  * FROM bottle_details  where BottleNum =" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() 
+                                                            + " And MachineID = " + FADM_Object.Communal._i_CurrentBrewNum; ;
+                                                        DataTable dt_data_bottle_details_O = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                        if (dt_data_bottle_details_O.Rows.Count > 0)
+                                                        {
+                                                            //查询判断是否超期
+                                                            s_sql = "SELECT * FROM assistant_details WHERE AssistantCode = '" + dt_data_bottle_details_O.Rows[0]["AssistantCode"].ToString() + "';";
+                                                            DataTable dt_assistant_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+
+                                                            DateTime timeA = Convert.ToDateTime(dt_data_bottle_details_O.Rows[0]["BrewingData"].ToString());
+                                                            DateTime timeB = DateTime.Now; //获取当前时间
+                                                            TimeSpan ts = timeB - timeA; //计算时间差
+                                                            string s_time = ts.TotalHours.ToString(); //将时间差转换为小时
+                                                                                                      //判断是否过期或者液量低
+                                                            if (Convert.ToDouble(dt_data_bottle_details_O.Rows[0]["CurrentWeight"].ToString()) < Lib_Card.Configure.Parameter.Other_Bottle_AlarmWeight && FADM_Object.Communal._b_isLowDrip)
+                                                            {
+                                                                //将当前瓶改为待开，将原瓶加入开料
+                                                                DateTime time = Convert.ToDateTime(dt_data.Rows[0]["InsertDate"].ToString());
+                                                                time = time.AddSeconds(-1);
+                                                                //判断是否已经正在开料
+                                                                s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "' And Station < 6;";
+                                                                DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                                if (dt_brew_station_details_s.Rows.Count == 0)
+                                                                    //插入到排队列表
+                                                                    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                                       "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "','" + time.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+
+                                                                FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                                goto lab_again;
+
+                                                            }
+                                                            else if (Convert.ToDouble(s_time) > Convert.ToDouble(dt_assistant_details.Rows[0]["TermOfValidity"].ToString()) && FADM_Object.Communal._b_isOutDrip)
+                                                            {
+                                                                //将当前瓶改为待开，将原瓶加入开料
+                                                                DateTime time = Convert.ToDateTime(dt_data.Rows[0]["InsertDate"].ToString());
+                                                                time = time.AddSeconds(-1);
+                                                                //判断是否已经正在开料
+                                                                s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "'  And Station < 6;";
+                                                                DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                                if (dt_brew_station_details_s.Rows.Count == 0)
+                                                                    //插入到排队列表
+                                                                    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                                   "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "','" + time.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+
+                                                                FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                                goto lab_again;
+                                                            }
+                                                            else
+                                                            {
+                                                                //判断是否已经正在开料
+                                                                s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "'  And Station != 6;";
+                                                                DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                                s_sql = "SELECT * FROM Brew_wait_list WHERE  BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "';";
+                                                                DataTable dt_Brew_wait_list = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                                s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["BottleNum"].ToString() + "'  And Station != 6;";
+                                                                DataTable dt_brew_station_details_s2 = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+
+                                                                //等待列表和正在开料都没有,自己也没在开料，才能插入开料工位
+                                                                if (dt_brew_station_details_s.Rows.Count == 0 && dt_Brew_wait_list.Rows.Count == 0/*&& dt_brew_station_details_s2.Rows.Count ==0*/)
+                                                                {
+                                                                    //判断能不能插入开料工位
+                                                                    s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1   And Station < 6 order by Station;";
+                                                                    DataTable dt_brew_station_details_now = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+
+                                                                    bool b_insert = false;
+                                                                    List<int> list_station = new List<int>();
+                                                                    //判断是否已经有进入补水阶段，如果是，直接加入到第二轮次
+                                                                    foreach (DataRow dr in dt_brew_station_details_now.Rows)
+                                                                    {
+                                                                        //移动针筒到放针区或者等待洗瓶
+                                                                        if (Convert.ToInt16(dr["Cooperate"].ToString()) == 12 || Convert.ToInt16(dr["Cooperate"].ToString()) == 13)
+                                                                        {
+                                                                            list_station.Add(Convert.ToInt32(dr["Station"].ToString()));
+                                                                        }
+                                                                    }
+                                                                    //前面工位判断
+                                                                    bool b_fornt = false;
+                                                                    //后面工位判断
+                                                                    bool b_rear = false;
+                                                                    int i_s = Convert.ToInt32(dt_data_station.Rows[0]["Station"].ToString());
+                                                                    for (int j = 0; j < list_station.Count; j++)
+                                                                    {
+                                                                        if (i_s > list_station[j])
+                                                                        {
+                                                                            b_fornt = true;
+                                                                            break;
+                                                                        }
+                                                                    }
+                                                                    for (int j = 0; j < list_station.Count; j++)
+                                                                    {
+                                                                        if (i_s < list_station[j])
+                                                                        {
+                                                                            b_rear = true;
+                                                                            break;
+                                                                        }
+                                                                    }
+                                                                    if (b_fornt)
+                                                                    {
+                                                                        b_insert = true;
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        //判断是否第一个使用
+                                                                        if (dt_brew_station_details_now.Rows.Count == 0)
+                                                                            b_insert = true;
+                                                                        else
+                                                                        {
+                                                                            //如果其他已经开始加粉了，就不再插入
+                                                                            if (list_station.Count > 0)
+                                                                            {
+                                                                                if (!b_rear)
+                                                                                    b_insert = true;
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                //判断是否已经存在工位加粉完成，如果有就不能加入
+                                                                                bool b_fail = false;
+                                                                                //判断是否已有加粉完成
+                                                                                foreach (DataRow dr in dt_brew_station_details_now.Rows)
+                                                                                {
+                                                                                    //判断是否已有加粉完成
+                                                                                    if (AutoBrew._cup_Temps[Convert.ToInt32(dr["Station"].ToString()) - 1]._i_stepNum > 2)
+                                                                                    {
+                                                                                        b_fail = true;
+                                                                                        break;
+                                                                                    }
+                                                                                    //判断是否已有等待放瓶
+                                                                                    if (AutoBrew._cup_Temps[Convert.ToInt32(dr["Station"].ToString()) - 1]._i_stepNum < 2)
+                                                                                    {
+                                                                                        break;
+                                                                                    }
+                                                                                }
+                                                                                if (!b_fail)
+                                                                                    b_insert = true;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    //判断自己没有在开料
+                                                                    if (dt_brew_station_details_s2.Rows.Count == 0)
+                                                                    {
+                                                                        if (b_insert)
+                                                                        {
+                                                                            //插入开料工位
+                                                                            FADM_Object.Communal._fadmSqlserver.ReviseData("Update brew_station_details  set BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString()
+                                                                        + ",IsUsing=1,PowderNum = " + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + ",Cooperate = 13,ReceptionTime =  '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")
+                                                                        + "' where Station = " + dt_data_station.Rows[0]["Station"].ToString() + ";");
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            //插入第二轮第一工位
+                                                                            FADM_Object.Communal._fadmSqlserver.ReviseData("Update brew_station_details  set BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString()
+                                                                        + ",IsUsing=1,PowderNum = " + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + ",Cooperate = 13,ReceptionTime =  '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")
+                                                                        + "' where Station = 7;");
+                                                                        }
+                                                                    }
+                                                                    FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                                }
+                                                                //存在原瓶号正在开料，改为等待
+                                                                else
+                                                                {
+                                                                    FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                                }
+                                                                goto lab_again;
+                                                            }
+                                                        }
+                                                    }
+                                                    //开料
+                                                    else
+                                                    {
+                                                        //查询是否有自动开料粉体
+                                                        s_sql = "SELECT  * FROM bottle_details  where AssistantCode ='" + dt_data_bottle_details.Rows[0]["AssistantCode"].ToString() 
+                                                            + "' And SyringeType = '粉桶' And BottleNum <" + Lib_Card.Configure.Parameter.Machine_Bottle_Total
+                                                             + " And MachineID = " + FADM_Object.Communal._i_CurrentBrewNum; ;
+                                                        DataTable dt_data_bottle_details_1 = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                        if (dt_data_bottle_details_1.Rows.Count > 0)
+                                                        {
+                                                            //判断是否已经正在开料
+                                                            s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["BottleNum"].ToString() + "'  And Station != 6;";
+                                                            DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            if (dt_brew_station_details_s.Rows.Count == 0)
+                                                            {
+                                                                //判断能不能插入开料工位
+                                                                s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1   And Station < 6 order by Station;";
+                                                                DataTable dt_brew_station_details_now = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+
+                                                                bool b_insert = false;
+                                                                List<int> list_station = new List<int>();
+                                                                //判断是否已经有进入补水阶段，如果是，直接加入到第二轮次
+                                                                foreach (DataRow dr in dt_brew_station_details_now.Rows)
+                                                                {
+                                                                    //移动针筒到放针区或者等待洗瓶
+                                                                    if (Convert.ToInt16(dr["Cooperate"].ToString()) == 12 || Convert.ToInt16(dr["Cooperate"].ToString()) == 13)
+                                                                    {
+                                                                        list_station.Add(Convert.ToInt32(dr["Station"].ToString()));
+                                                                    }
+                                                                }
+                                                                //前面工位判断
+                                                                bool b_fornt = false;
+                                                                //后面工位判断
+                                                                bool b_rear = false;
+                                                                int i_s = Convert.ToInt32(dt_data_station.Rows[0]["Station"].ToString());
+                                                                for (int j = 0; j < list_station.Count; j++)
+                                                                {
+                                                                    if (i_s > list_station[j])
+                                                                    {
+                                                                        b_fornt = true;
+                                                                        break;
+                                                                    }
+                                                                }
+                                                                for (int j = 0; j < list_station.Count; j++)
+                                                                {
+                                                                    if (i_s < list_station[j])
+                                                                    {
+                                                                        b_rear = true;
+                                                                        break;
+                                                                    }
+                                                                }
+                                                                if (b_fornt)
+                                                                {
+                                                                    b_insert = true;
+                                                                }
+                                                                else
+                                                                {
+                                                                    //判断是否第一个使用
+                                                                    if (dt_brew_station_details_now.Rows.Count == 0)
+                                                                        b_insert = true;
+                                                                    else
+                                                                    {
+                                                                        //如果其他已经开始加粉了，就不再插入
+                                                                        if (list_station.Count > 0)
+                                                                        {
+                                                                            if (!b_rear)
+                                                                                b_insert = true;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            //判断是否已经存在工位加粉完成，如果有就不能加入
+                                                                            bool b_fail = false;
+                                                                            //判断是否已有加粉完成
+                                                                            foreach (DataRow dr in dt_brew_station_details_now.Rows)
+                                                                            {
+                                                                                //判断是否已有加粉完成
+                                                                                if (AutoBrew._cup_Temps[Convert.ToInt32(dr["Station"].ToString()) - 1]._i_stepNum > 2)
+                                                                                {
+                                                                                    b_fail = true;
+                                                                                    break;
+                                                                                }
+                                                                                //判断是否已有等待放瓶
+                                                                                if (AutoBrew._cup_Temps[Convert.ToInt32(dr["Station"].ToString()) - 1]._i_stepNum < 2)
+                                                                                {
+                                                                                    break;
+                                                                                }
+                                                                            }
+                                                                            if (!b_fail)
+                                                                                b_insert = true;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                if (b_insert)
+                                                                {
+                                                                    //插入开料工位
+                                                                    FADM_Object.Communal._fadmSqlserver.ReviseData("Update brew_station_details  set BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString()
+                                                                + ",IsUsing=1,PowderNum = " + dt_data_bottle_details_1.Rows[0]["BottleNum"].ToString() + ",Cooperate = 13,ReceptionTime =  '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")
+                                                                + "' where Station = " + dt_data_station.Rows[0]["Station"].ToString() + ";");
+                                                                }
+                                                                else
+                                                                {
+                                                                    //插入第二轮第一工位
+                                                                    FADM_Object.Communal._fadmSqlserver.ReviseData("Update brew_station_details  set BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString()
+                                                                + ",IsUsing=1,PowderNum = " + dt_data_bottle_details_1.Rows[0]["BottleNum"].ToString() + ",Cooperate = 13,ReceptionTime =  '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")
+                                                                + "' where Station = 7;");
+                                                                }
+                                                            }
+                                                            FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                            goto lab_again;
+                                                        }
+                                                        else
+                                                        {
+                                                            // 删除等待列表数据，不进行开料
+                                                            //FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+
+                                                            FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                            goto lab_again;
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    //删除等待列表数据，不进行开料
+                                                    FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                    goto lab_again;
+
+                                                }
+                                            }
+                                            //置为正在使用,重新选择工位
+                                            else
+                                            {
+                                                if (AutoBrew._cup_Temps[Convert.ToInt32(dt_data_station.Rows[0]["Station"].ToString()) - 1]._i_statues != 0&& AutoBrew._cup_Temps[Convert.ToInt32(dt_data_station.Rows[0]["Station"].ToString()) - 1]._i_statues != 1)
+                                                    FADM_Object.Communal._fadmSqlserver.ReviseData("Update brew_station_details set IsUsing = 1 where Station = " + dt_data_station.Rows[0]["Station"].ToString());
+                                                goto lab_select;
+                                            }
+                                        }
+                                        //没有可以使用工位,插入第二轮等待
+                                        else
+                                        {
+                                            //查找开料开稀瓶号
+                                            s_sql = "SELECT  * FROM bottle_details  where BottleNum =" + dt_data.Rows[0]["BottleNum"].ToString() + " And MachineID = " + FADM_Object.Communal._i_CurrentBrewNum; ;
+                                            DataTable dt_data_bottle_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                            if (dt_data_bottle_details.Rows.Count > 0)
+                                            {
+                                                if (dt_data_bottle_details.Rows[0]["SyringeType"].ToString() == "粉桶")
+                                                {
+                                                    //先删除，不做
+                                                    FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                    goto lab_again;
+                                                }
+                                                //开稀
+                                                else if (Convert.ToInt32(dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString()) > 0)
+                                                {
+                                                    ////先删除，不做
+                                                    //FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                    //goto lab_again;
+
+                                                    //判断原瓶号是否符合开料标准
+                                                    s_sql = "SELECT  * FROM bottle_details  where BottleNum =" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + " And MachineID = " + FADM_Object.Communal._i_CurrentBrewNum; ;
+                                                    DataTable dt_data_bottle_details_O = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                    if (dt_data_bottle_details_O.Rows.Count > 0)
+                                                    {
+                                                        //查询判断是否超期
+                                                        s_sql = "SELECT * FROM assistant_details WHERE AssistantCode = '" + dt_data_bottle_details_O.Rows[0]["AssistantCode"].ToString() + "';";
+                                                        DataTable dt_assistant_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+
+                                                        DateTime timeA = Convert.ToDateTime(dt_data_bottle_details_O.Rows[0]["BrewingData"].ToString());
+                                                        DateTime timeB = DateTime.Now; //获取当前时间
+                                                        TimeSpan ts = timeB - timeA; //计算时间差
+                                                        string s_time = ts.TotalHours.ToString(); //将时间差转换为小时
+                                                                                                  //判断是否过期或者液量低
+                                                        if (Convert.ToDouble(dt_data_bottle_details_O.Rows[0]["CurrentWeight"].ToString()) < Lib_Card.Configure.Parameter.Other_Bottle_AlarmWeight && FADM_Object.Communal._b_isLowDrip)
+                                                        {
+                                                            //将当前瓶改为待开，将原瓶加入开料
+                                                            DateTime time = Convert.ToDateTime(dt_data.Rows[0]["InsertDate"].ToString());
+                                                            time = time.AddSeconds(-1);
+                                                            //判断是否已经正在开料
+                                                            s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "' And Station < 6;";
+                                                            DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            if (dt_brew_station_details_s.Rows.Count == 0)
+                                                                //插入到排队列表
+                                                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                                   "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "','" + time.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+
+                                                            FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                            goto lab_again;
+
+                                                        }
+                                                        else if (Convert.ToDouble(s_time) > Convert.ToDouble(dt_assistant_details.Rows[0]["TermOfValidity"].ToString()) && FADM_Object.Communal._b_isOutDrip)
+                                                        {
+                                                            //将当前瓶改为待开，将原瓶加入开料
+                                                            DateTime time = Convert.ToDateTime(dt_data.Rows[0]["InsertDate"].ToString());
+                                                            time = time.AddSeconds(-1);
+                                                            //判断是否已经正在开料
+                                                            s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "'  And Station < 6;";
+                                                            DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            if (dt_brew_station_details_s.Rows.Count == 0)
+                                                                //插入到排队列表
+                                                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                               "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "','" + time.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+
+                                                            FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                            goto lab_again;
+                                                        }
+                                                        else
+                                                        {
+                                                            //判断是否已经正在开料
+                                                            s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "'  And Station != 6;";
+                                                            DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["BottleNum"].ToString() + "'  And Station != 6;";
+                                                            DataTable dt_brew_station_details_s2 = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            s_sql = "SELECT * FROM Brew_wait_list WHERE  BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "';";
+                                                            DataTable dt_Brew_wait_list = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            //等待列表和正在开料都没有，才能插入开料工位
+                                                            if (dt_brew_station_details_s.Rows.Count == 0 && dt_Brew_wait_list.Rows.Count == 0 /*&& dt_brew_station_details_s2.Rows.Count == 0*/)
+                                                            {
+                                                                if (dt_brew_station_details_s2.Rows.Count == 0)
+                                                                {
+                                                                    //插入开料工位
+                                                                    FADM_Object.Communal._fadmSqlserver.ReviseData("Update brew_station_details  set BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString()
+                                                                    + ",IsUsing=1,PowderNum = " + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + ",Cooperate = 13,ReceptionTime =  '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")
+                                                                    + "' where Station = 7;");
+                                                                }
+                                                                FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                            }
+                                                            //存在原瓶号正在开料，改为等待
+                                                            else
+                                                            {
+                                                                FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                            }
+                                                            goto lab_again;
+                                                        }
+                                                    }
+                                                }
+                                                //开料
+                                                else
+                                                {
+                                                    //查询是否有自动开料粉体
+                                                    s_sql = "SELECT  * FROM bottle_details  where AssistantCode ='" + dt_data_bottle_details.Rows[0]["AssistantCode"].ToString() 
+                                                        + "' And SyringeType = '粉桶' And BottleNum <" + Lib_Card.Configure.Parameter.Machine_Bottle_Total
+                                                         + " And MachineID = " + FADM_Object.Communal._i_CurrentBrewNum; ;
+                                                    DataTable dt_data_bottle_details_1 = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                    if (dt_data_bottle_details_1.Rows.Count > 0)
+                                                    {
+                                                        //判断是否已经正在开料
+                                                        s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["BottleNum"].ToString() + "'  And Station != 6;";
+                                                        DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                        if (dt_brew_station_details_s.Rows.Count == 0)
+                                                            //插入开料工位
+                                                            FADM_Object.Communal._fadmSqlserver.ReviseData("Update brew_station_details  set BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString()
+                                                            + ",IsUsing=1,PowderNum = " + dt_data_bottle_details_1.Rows[0]["BottleNum"].ToString() + ",Cooperate = 13,ReceptionTime =  '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")
+                                                            + "' where Station = 7;");
+                                                        FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                        goto lab_again;
+                                                    }
+                                                    else
+                                                    {
+                                                        // 删除等待列表数据，不进行开料
+                                                        //FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+
+                                                        FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                        goto lab_again;
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                //删除等待列表数据，不进行开料
+                                                FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                goto lab_again;
+
+                                            }
+                                            goto lab_again;
+                                        }
+                                    }
+                                }
+                            //
+                            lab_end:
+                                Thread.Sleep(10000);
+                            }
+                            catch
+                            { }
+                        }
+                        else
+                        {
+                            try
+                            {
+                            lab_again:
+                                Dictionary<int, string> _dic_BottleNum_Code = new Dictionary<int, string>();
+                                //查询是否有等待数据
+                                string s_sql = "SELECT  * FROM Brew_wait_list where Type = 0 order by InsertDate;";
+                                DataTable dt_data = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                if (dt_data.Rows.Count == 0)
+                                    goto lab_end;
+                                //记录所有母液瓶和对应的开料流程
+                                s_sql = "SELECT  * FROM bottle_details  where   MachineID = "+ FADM_Object.Communal._i_CurrentBrewNum+" order by BottleNum;";
+                                DataTable dt_data_bottle = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                foreach(DataRow data in dt_data_bottle.Rows)
+                                {
+                                    _dic_BottleNum_Code.Add(Convert.ToInt32(data["BottleNum"].ToString()), data["BrewingCode"].ToString());
+                                }
+                                int i_stationnum = 0;
+                            lab_select:
+                                //先判断1-5工位是否存在开料的
+                                //判断是否有空闲开料工位
+                                s_sql = "SELECT top 1 * FROM brew_station_details  where IsUsing = 0 and Statues = '待机' and Station < 6 order by Station;";
+                                DataTable dt_data_station = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+
+                                //判断是否没有在开料工位
+                                if (dt_data_station.Rows.Count == 5)
+                                {
+                                    //查询第二轮数据是否存在
+                                    s_sql = "SELECT top 1 * FROM brew_station_details  where IsUsing = 1  and Station > 6 order by Station;";
+                                    DataTable dt_data_station_ss = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                    if(dt_data_station_ss.Rows.Count>0)
+                                    {
+                                        DataTable dt_cupordye_details_sec = FADM_Object.Communal._fadmSqlserver.GetData(
+                         "SELECT  * FROM brew_station_details  Order By Station ;");
+                                        int i_index = 7;
+                                        foreach (DataRow dataRow in dt_cupordye_details_sec.Rows)
+                                        {
+                                            if (Convert.ToInt32(dataRow["Station"].ToString()) == 6)
+                                            {
+                                                break;
+                                            }
+                                            if (dataRow["Statues"].ToString() == "待机" && Convert.ToInt32(dataRow["IsUsing"].ToString()) == 0)
+                                            {
+                                                if (i_index <= dt_cupordye_details_sec.Rows.Count)
+                                                {
+                                                    if (Convert.ToInt32(dt_cupordye_details_sec.Rows[i_index - 1]["IsUsing"].ToString()) == 1)
+                                                    {
+                                                        //把第一个数值赋值上去
+                                                        FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                                    "UPDATE brew_station_details SET Cooperate = " + dt_cupordye_details_sec.Rows[i_index - 1]["Cooperate"].ToString()
+                                                    + ",BottleNum = " + dt_cupordye_details_sec.Rows[i_index - 1]["BottleNum"].ToString()
+                                                    + ",PowderNum = " + dt_cupordye_details_sec.Rows[i_index - 1]["PowderNum"].ToString()
+                                                    + ",IsUsing = 1 "
+                                                    + "  WHERE Station = " + dataRow["Station"].ToString() + ";");
+
+                                                        //把第二轮对应工位置为空闲
+                                                        FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                                    "UPDATE brew_station_details SET Cooperate = 0,IsUsing = 0,Statues='待机' "
+                                                    + "  WHERE Station = " + dt_cupordye_details_sec.Rows[i_index - 1]["Station"].ToString() + ";");
+
+                                                        //将洗瓶工位对应开料工位更新
+                                                        FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                                    "UPDATE brew_station_details SET BrewNum = " + dataRow["Station"].ToString()
+                                                    + "  WHERE Station = 6 And BrewNum = " + i_index + ";");
+                                                        i_index++;
+                                                    }
+                                                    //没有排队第二轮数据
+                                                    else
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        //将第二轮后边的往上排(有可能部分开料工位下线导致第二轮数量比开料工位大)
+                                        int i_secindex = 7;
+                                        foreach (DataRow dataRow in dt_cupordye_details_sec.Rows)
+                                        {
+                                            if (i_index == 12)
+                                                break;
+                                            if (Convert.ToInt32(dt_cupordye_details_sec.Rows[i_index - 1]["IsUsing"].ToString()) == 1)
+                                            {
+                                                //把第一个数值赋值上去
+                                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                            "UPDATE brew_station_details SET Cooperate = " + dt_cupordye_details_sec.Rows[i_index - 1]["Cooperate"].ToString()
+                                            + ",BottleNum = " + dt_cupordye_details_sec.Rows[i_index - 1]["BottleNum"].ToString()
+                                            + ",PowderNum = " + dt_cupordye_details_sec.Rows[i_index - 1]["PowderNum"].ToString()
+                                            + ",IsUsing = 1 "
+                                            + "  WHERE Station = " + dt_cupordye_details_sec.Rows[i_secindex - 1]["Station"].ToString() + ";");
+
+                                                //把第二轮对应工位置为空闲
+                                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                            "UPDATE brew_station_details SET Cooperate = 0,IsUsing = 0,Statues='待机' "
+                                            + "  WHERE Station = " + dt_cupordye_details_sec.Rows[i_index - 1]["Station"].ToString() + ";");
+
+                                                i_index++;
+                                                i_secindex++;
+                                            }
+
+                                        }
+
+                                        goto lab_select;
+                                    }
+                                }
+
+                                if (dt_data_station.Rows.Count > 0)
+                                {
+                                    //判断工位实际plc状态是否待机
+                                    if (AutoBrew._cup_Temps[Convert.ToInt32(dt_data_station.Rows[0]["Station"].ToString()) - 1]._i_statues == 1)
+                                    {
+                                        //查找到空闲工位
+                                        i_stationnum = Convert.ToInt32(dt_data_station.Rows[0]["Station"].ToString());
+                                    }
+                                    else
+                                    {
+                                        if (AutoBrew._cup_Temps[Convert.ToInt32(dt_data_station.Rows[0]["Station"].ToString()) - 1]._i_statues != 0 && AutoBrew._cup_Temps[Convert.ToInt32(dt_data_station.Rows[0]["Station"].ToString()) - 1]._i_statues != 1)
+                                            FADM_Object.Communal._fadmSqlserver.ReviseData("Update brew_station_details set IsUsing = 1 where Station = " + dt_data_station.Rows[0]["Station"].ToString());
+                                        goto lab_select;
+                                    }
+                                    //开料工位空闲
+                                    if (i_stationnum > 0)
+                                    {
+                                        //查看1-5工位正在使用的
+                                        s_sql = "SELECT top 1 * FROM brew_station_details  where IsUsing = 1  and Station < 6 order by Station;";
+                                        dt_data_station = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                        string s_brewcode = "";
+                                        if (dt_data_station.Rows.Count > 0)
+                                        {
+                                            //获取开料流程代码
+                                            s_brewcode = _dic_BottleNum_Code[Convert.ToInt32(dt_data_station.Rows[0]["BottleNum"].ToString())];
+                                        }
+                                        //没有正在开料，选择第一个等待列表符合的插入工位
+                                        foreach (DataRow dr_Num in dt_data.Rows)
+                                        {
+                                            //如果开料流程不一致，跳进下一个母液瓶
+                                            if (s_brewcode != "" && s_brewcode != _dic_BottleNum_Code[Convert.ToInt32(dr_Num["BottleNum"].ToString())])
+                                                continue;
+                                            s_sql = "SELECT  * FROM bottle_details  where BottleNum =" + dr_Num["BottleNum"].ToString() + " And MachineID = " + FADM_Object.Communal._i_CurrentBrewNum; ;
+                                            DataTable dt_data_bottle_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                            if (dt_data_bottle_details.Rows.Count > 0)
+                                            {
+                                                if (dt_data_bottle_details.Rows[0]["SyringeType"].ToString() == "粉桶")
+                                                {
+                                                    //先删除，不做
+                                                    FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dr_Num["BottleNum"].ToString());
+                                                    continue;
+                                                }
+                                                //开稀
+                                                else if (Convert.ToInt32(dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString()) > 0)
+                                                {
+                                                    ////先删除，不做
+                                                    //FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                    //goto lab_again;
+
+                                                    //判断原瓶号是否符合开料标准
+                                                    s_sql = "SELECT  * FROM bottle_details  where BottleNum =" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() 
+                                                        + " And MachineID = " + FADM_Object.Communal._i_CurrentBrewNum; ;
+                                                    DataTable dt_data_bottle_details_O = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                    if (dt_data_bottle_details_O.Rows.Count > 0)
+                                                    {
+                                                        //查询判断是否超期
+                                                        s_sql = "SELECT * FROM assistant_details WHERE AssistantCode = '" + dt_data_bottle_details_O.Rows[0]["AssistantCode"].ToString() + "';";
+                                                        DataTable dt_assistant_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+
+                                                        DateTime timeA = Convert.ToDateTime(dt_data_bottle_details_O.Rows[0]["BrewingData"].ToString());
+                                                        DateTime timeB = DateTime.Now; //获取当前时间
+                                                        TimeSpan ts = timeB - timeA; //计算时间差
+                                                        string s_time = ts.TotalHours.ToString(); //将时间差转换为小时
+                                                                                                  //判断是否过期或者液量低
+                                                        if (Convert.ToDouble(dt_data_bottle_details_O.Rows[0]["CurrentWeight"].ToString()) < Lib_Card.Configure.Parameter.Other_Bottle_AlarmWeight && FADM_Object.Communal._b_isLowDrip)
+                                                        {
+                                                            //将当前瓶改为待开，将原瓶加入开料
+                                                            DateTime time = Convert.ToDateTime(dr_Num["InsertDate"].ToString());
+                                                            time = time.AddSeconds(-1);
+                                                            //判断是否已经正在开料
+                                                            s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "' And Station < 6;";
+                                                            DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            s_sql = "SELECT * FROM Brew_wait_list WHERE  BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "' ;";
+                                                            DataTable dt_Brew_wait_list_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            if (dt_brew_station_details_s.Rows.Count == 0  && dt_Brew_wait_list_s.Rows.Count == 0)
+                                                                //插入到排队列表
+                                                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                                   "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "','" + time.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+
+                                                            FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dr_Num["BottleNum"].ToString());
+                                                            goto lab_again;
+
+                                                        }
+                                                        else if (Convert.ToDouble(s_time) > Convert.ToDouble(dt_assistant_details.Rows[0]["TermOfValidity"].ToString()) && FADM_Object.Communal._b_isOutDrip)
+                                                        {
+                                                            //将当前瓶改为待开，将原瓶加入开料
+                                                            DateTime time = Convert.ToDateTime(dr_Num["InsertDate"].ToString());
+                                                            time = time.AddSeconds(-1);
+                                                            //判断是否已经正在开料
+                                                            s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "'  And Station < 6;";
+                                                            DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            s_sql = "SELECT * FROM Brew_wait_list WHERE  BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "' ;";
+                                                            DataTable dt_Brew_wait_list_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            if (dt_brew_station_details_s.Rows.Count == 0 && dt_Brew_wait_list_s.Rows.Count == 0)
+                                                                //插入到排队列表
+                                                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                               "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "','" + time.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+
+                                                            FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dr_Num["BottleNum"].ToString());
+                                                            goto lab_again;
+                                                        }
+                                                        else
+                                                        {
+                                                            //判断是否已经正在开料
+                                                            s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "'  And Station != 6;";
+                                                            DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            s_sql = "SELECT * FROM Brew_wait_list WHERE  BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "';";
+                                                            DataTable dt_Brew_wait_list = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["BottleNum"].ToString() + "'  And Station != 6;";
+                                                            DataTable dt_brew_station_details_s2 = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+
+                                                            //等待列表和正在开料都没有,自己也没在开料，才能插入开料工位
+                                                            if (dt_brew_station_details_s.Rows.Count == 0 && dt_Brew_wait_list.Rows.Count == 0/*&& dt_brew_station_details_s2.Rows.Count ==0*/)
+                                                            {
+                                                                //判断能不能插入开料工位
+                                                                s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1   And Station < 6 order by Station;";
+                                                                DataTable dt_brew_station_details_now = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+
+                                                                bool b_insert = false;
+                                                                List<int> list_station = new List<int>();
+                                                                //判断是否已经有进入补水阶段，如果是，直接加入到第二轮次
+                                                                foreach (DataRow dr in dt_brew_station_details_now.Rows)
+                                                                {
+                                                                    //移动针筒到放针区或者等待洗瓶
+                                                                    if (Convert.ToInt16(dr["Cooperate"].ToString()) == 12 || Convert.ToInt16(dr["Cooperate"].ToString()) == 13)
+                                                                    {
+                                                                        list_station.Add(Convert.ToInt32(dr["Station"].ToString()));
+                                                                    }
+                                                                }
+                                                                //前面工位判断
+                                                                bool b_fornt = false;
+                                                                //后面工位判断
+                                                                bool b_rear = false;
+                                                                int i_s = Convert.ToInt32(i_stationnum);
+                                                                for (int j = 0; j < list_station.Count; j++)
+                                                                {
+                                                                    if (i_s > list_station[j])
+                                                                    {
+                                                                        b_fornt = true;
+                                                                        break;
+                                                                    }
+                                                                }
+                                                                for (int j = 0; j < list_station.Count; j++)
+                                                                {
+                                                                    if (i_s < list_station[j])
+                                                                    {
+                                                                        b_rear = true;
+                                                                        break;
+                                                                    }
+                                                                }
+                                                                if (b_fornt)
+                                                                {
+                                                                    b_insert = true;
+                                                                }
+                                                                else
+                                                                {
+                                                                    //判断是否第一个使用
+                                                                    if (dt_brew_station_details_now.Rows.Count == 0)
+                                                                        b_insert = true;
+                                                                    else
+                                                                    {
+                                                                        //如果其他已经开始加粉了，就不再插入
+                                                                        if (list_station.Count > 0)
+                                                                        {
+                                                                            if (!b_rear)
+                                                                                b_insert = true;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            //判断是否已经存在工位加粉完成，如果有就不能加入
+                                                                            bool b_fail = false;
+                                                                            //判断是否已有加粉完成
+                                                                            foreach (DataRow dr in dt_brew_station_details_now.Rows)
+                                                                            {
+                                                                                //判断是否已有加粉完成
+                                                                                if (AutoBrew._cup_Temps[Convert.ToInt32(dr["Station"].ToString()) - 1]._i_stepNum > 2)
+                                                                                {
+                                                                                    b_fail = true;
+                                                                                    break;
+                                                                                }
+                                                                                //判断是否已有等待放瓶
+                                                                                if (AutoBrew._cup_Temps[Convert.ToInt32(dr["Station"].ToString()) - 1]._i_stepNum < 2)
+                                                                                {
+                                                                                    break;
+                                                                                }
+                                                                            }
+                                                                            if (!b_fail)
+                                                                                b_insert = true;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                //判断自己没有在开料
+                                                                if (dt_brew_station_details_s2.Rows.Count == 0)
+                                                                {
+                                                                    //如果正在搬瓶先不操作
+                                                                    if (Communal._b_isMoveing)
+                                                                        goto lab_end;
+                                                                    if (b_insert)
+                                                                    {
+                                                                        //插入开料工位
+                                                                        FADM_Object.Communal._fadmSqlserver.ReviseData("Update brew_station_details  set BottleNum = " + dr_Num["BottleNum"].ToString()
+                                                                    + ",IsUsing=1,PowderNum = " + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + ",Cooperate = 13,ReceptionTime =  '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")
+                                                                    + "' where Station = " + i_stationnum + ";");
+
+                                                                        FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dr_Num["BottleNum"].ToString());
+
+                                                                        goto lab_again;
+                                                                    }
+                                                                }
+
+                                                            }
+                                                            //存在原瓶号正在开料，改为等待
+                                                            else
+                                                            {
+                                                                FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dr_Num["BottleNum"].ToString());
+                                                            }
+                                                            continue;
+
+                                                        }
+                                                    }
+                                                }
+                                                //开料
+                                                else
+                                                {
+                                                    //查询是否有自动开料粉体
+                                                    s_sql = "SELECT  * FROM bottle_details  where AssistantCode ='" + dt_data_bottle_details.Rows[0]["AssistantCode"].ToString() 
+                                                        + "' And SyringeType = '粉桶' And BottleNum <" + Lib_Card.Configure.Parameter.Machine_Bottle_Total
+                                                         + " And MachineID = " + FADM_Object.Communal._i_CurrentBrewNum; ;
+                                                    DataTable dt_data_bottle_details_1 = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                    if (dt_data_bottle_details_1.Rows.Count > 0)
+                                                    {
+                                                        //判断是否已经正在开料
+                                                        s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["BottleNum"].ToString() + "'  And Station != 6;";
+                                                        DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                        if (dt_brew_station_details_s.Rows.Count == 0)
+                                                        {
+                                                            //判断能不能插入开料工位
+                                                            s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1   And Station < 6 order by Station;";
+                                                            DataTable dt_brew_station_details_now = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+
+                                                            bool b_insert = false;
+                                                            List<int> list_station = new List<int>();
+                                                            //判断是否已经有进入补水阶段，如果是，直接加入到第二轮次
+                                                            foreach (DataRow dr in dt_brew_station_details_now.Rows)
+                                                            {
+                                                                //移动针筒到放针区或者等待洗瓶
+                                                                if (Convert.ToInt16(dr["Cooperate"].ToString()) == 12 || Convert.ToInt16(dr["Cooperate"].ToString()) == 13)
+                                                                {
+                                                                    list_station.Add(Convert.ToInt32(dr["Station"].ToString()));
+                                                                }
+                                                            }
+                                                            //前面工位判断
+                                                            bool b_fornt = false;
+                                                            //后面工位判断
+                                                            bool b_rear = false;
+                                                            int i_s = Convert.ToInt32(i_stationnum);
+                                                            for (int j = 0; j < list_station.Count; j++)
+                                                            {
+                                                                if (i_s > list_station[j])
+                                                                {
+                                                                    b_fornt = true;
+                                                                    break;
+                                                                }
+                                                            }
+                                                            for (int j = 0; j < list_station.Count; j++)
+                                                            {
+                                                                if (i_s < list_station[j])
+                                                                {
+                                                                    b_rear = true;
+                                                                    break;
+                                                                }
+                                                            }
+                                                            if (b_fornt)
+                                                            {
+                                                                b_insert = true;
+                                                            }
+                                                            else
+                                                            {
+                                                                //判断是否第一个使用
+                                                                if (dt_brew_station_details_now.Rows.Count == 0)
+                                                                    b_insert = true;
+                                                                else
+                                                                {
+                                                                    //如果其他已经开始加粉了，就不再插入
+                                                                    if (list_station.Count > 0)
+                                                                    {
+                                                                        if (!b_rear)
+                                                                            b_insert = true;
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        //判断是否已经存在工位加粉完成，如果有就不能加入
+                                                                        bool b_fail = false;
+                                                                        //判断是否已有加粉完成
+                                                                        foreach (DataRow dr in dt_brew_station_details_now.Rows)
+                                                                        {
+                                                                            //判断是否已有加粉完成
+                                                                            if (AutoBrew._cup_Temps[Convert.ToInt32(dr["Station"].ToString()) - 1]._i_stepNum > 2)
+                                                                            {
+                                                                                b_fail = true;
+                                                                                break;
+                                                                            }
+                                                                            //判断是否已有等待放瓶
+                                                                            if (AutoBrew._cup_Temps[Convert.ToInt32(dr["Station"].ToString()) - 1]._i_stepNum < 2)
+                                                                            {
+                                                                                break;
+                                                                            }
+                                                                        }
+                                                                        if (!b_fail)
+                                                                            b_insert = true;
+                                                                    }
+                                                                }
+                                                            }
+                                                            //如果正在搬瓶先不操作
+                                                            if (Communal._b_isMoveing)
+                                                                goto lab_end;
+                                                            if (b_insert)
+                                                            {
+                                                                //插入开料工位
+                                                                FADM_Object.Communal._fadmSqlserver.ReviseData("Update brew_station_details  set BottleNum = " + dr_Num["BottleNum"].ToString()
+                                                            + ",IsUsing=1,PowderNum = " + dt_data_bottle_details_1.Rows[0]["BottleNum"].ToString() + ",Cooperate = 13,ReceptionTime =  '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")
+                                                            + "' where Station = " + i_stationnum + ";");
+
+                                                                FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dr_Num["BottleNum"].ToString());
+                                                            }
+                                                            
+                                                            goto lab_again;
+                                                        }
+                                                        continue;
+                                                    }
+                                                    else
+                                                    {
+                                                        // 删除等待列表数据，不进行开料
+                                                        //FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+
+                                                        FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dr_Num["BottleNum"].ToString());
+                                                        continue;
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                //删除等待列表数据，不进行开料
+                                                FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dr_Num["BottleNum"].ToString());
+                                                continue;
+
+                                            }
+                                        }
+
+                                    }
+                                }
+
+                                s_sql = "SELECT  * FROM Brew_wait_list where Type = 0 order by InsertDate;";
+                                dt_data = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                if (dt_data.Rows.Count > 0)
+                                {
+                                    //先判断7-11第二轮工位状态
+                                    s_sql = "SELECT  * FROM brew_station_details  where  Station > 6 order by Station;";
+                                    dt_data_station = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                    string s_brewcode_sec = "";
+                                    string s_stationnum = "";
+                                    foreach (DataRow dr_Num in dt_data_station.Rows)
+                                    {
+                                        if (dr_Num["IsUsing"].ToString() == "1")
+                                        {
+                                            s_brewcode_sec = _dic_BottleNum_Code[Convert.ToInt32(dr_Num["BottleNum"].ToString())];
+                                        }
+                                    }
+                                    foreach (DataRow dr_Num in dt_data_station.Rows)
+                                    {
+                                        if (dr_Num["IsUsing"].ToString() == "0")
+                                        {
+                                            s_stationnum = dr_Num["Station"].ToString();
+                                            break;
+                                        }
+                                    }
+                                    //存在空闲工位
+                                    if(s_stationnum !="")
+                                    {
+                                        foreach (DataRow dr_Num in dt_data.Rows)
+                                        {
+                                            //如果开料流程不一致，跳进下一个母液瓶
+                                            if (s_brewcode_sec != "" && s_brewcode_sec != _dic_BottleNum_Code[Convert.ToInt32(dr_Num["BottleNum"].ToString())])
+                                                continue;
+                                            s_sql = "SELECT  * FROM bottle_details  where BottleNum =" + dr_Num["BottleNum"].ToString() + " And MachineID = " + FADM_Object.Communal._i_CurrentBrewNum; ;
+                                            DataTable dt_data_bottle_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                            if (dt_data_bottle_details.Rows.Count > 0)
+                                            {
+                                                if (dt_data_bottle_details.Rows[0]["SyringeType"].ToString() == "粉桶")
+                                                {
+                                                    //先删除，不做
+                                                    FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dr_Num["BottleNum"].ToString());
+                                                    continue;
+                                                }
+                                                //开稀
+                                                else if (Convert.ToInt32(dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString()) > 0)
+                                                {
+                                                    ////先删除，不做
+                                                    //FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                    //goto lab_again;
+
+                                                    //判断原瓶号是否符合开料标准
+                                                    s_sql = "SELECT  * FROM bottle_details  where BottleNum =" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() 
+                                                        + " And MachineID = " + FADM_Object.Communal._i_CurrentBrewNum; ;
+                                                    DataTable dt_data_bottle_details_O = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                    if (dt_data_bottle_details_O.Rows.Count > 0)
+                                                    {
+                                                        //查询判断是否超期
+                                                        s_sql = "SELECT * FROM assistant_details WHERE AssistantCode = '" + dt_data_bottle_details_O.Rows[0]["AssistantCode"].ToString() + "';";
+                                                        DataTable dt_assistant_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+
+                                                        DateTime timeA = Convert.ToDateTime(dt_data_bottle_details_O.Rows[0]["BrewingData"].ToString());
+                                                        DateTime timeB = DateTime.Now; //获取当前时间
+                                                        TimeSpan ts = timeB - timeA; //计算时间差
+                                                        string s_time = ts.TotalHours.ToString(); //将时间差转换为小时
+                                                                                                  //判断是否过期或者液量低
+                                                        if (Convert.ToDouble(dt_data_bottle_details_O.Rows[0]["CurrentWeight"].ToString()) < Lib_Card.Configure.Parameter.Other_Bottle_AlarmWeight && FADM_Object.Communal._b_isLowDrip)
+                                                        {
+                                                            //将当前瓶改为待开，将原瓶加入开料
+                                                            DateTime time = Convert.ToDateTime(dr_Num["InsertDate"].ToString());
+                                                            time = time.AddSeconds(-1);
+                                                            //判断是否已经正在开料
+                                                            s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "' And Station < 6;";
+                                                            DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            s_sql = "SELECT * FROM Brew_wait_list WHERE  BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "';";
+                                                            DataTable dt_Brew_wait_list_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            if (dt_brew_station_details_s.Rows.Count == 0 && dt_Brew_wait_list_s.Rows.Count == 0)
+                                                                //插入到排队列表
+                                                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                                   "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "','" + time.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+
+                                                            FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dr_Num["BottleNum"].ToString());
+                                                            goto lab_again;
+
+                                                        }
+                                                        else if (Convert.ToDouble(s_time) > Convert.ToDouble(dt_assistant_details.Rows[0]["TermOfValidity"].ToString()) && FADM_Object.Communal._b_isOutDrip)
+                                                        {
+                                                            //将当前瓶改为待开，将原瓶加入开料
+                                                            DateTime time = Convert.ToDateTime(dr_Num["InsertDate"].ToString());
+                                                            time = time.AddSeconds(-1);
+                                                            //判断是否已经正在开料
+                                                            s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "'  And Station < 6;";
+                                                            DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            s_sql = "SELECT * FROM Brew_wait_list WHERE  BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "';";
+                                                            DataTable dt_Brew_wait_list_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            if (dt_brew_station_details_s.Rows.Count == 0 && dt_Brew_wait_list_s.Rows.Count == 0)
+                                                                //插入到排队列表
+                                                                FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                               "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "','" + time.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+
+                                                            FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dr_Num["BottleNum"].ToString());
+                                                            goto lab_again;
+                                                        }
+                                                        else
+                                                        {
+                                                            //判断是否已经正在开料
+                                                            s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "'  And Station != 6;";
+                                                            DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            s_sql = "SELECT * FROM Brew_wait_list WHERE  BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "';";
+                                                            DataTable dt_Brew_wait_list = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                            s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["BottleNum"].ToString() + "'  And Station != 6;";
+                                                            DataTable dt_brew_station_details_s2 = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+
+                                                            //等待列表和正在开料都没有,自己也没在开料，才能插入开料工位
+                                                            if (dt_brew_station_details_s.Rows.Count == 0 && dt_Brew_wait_list.Rows.Count == 0/*&& dt_brew_station_details_s2.Rows.Count ==0*/)
+                                                            {
+                                                                
+                                                                //判断自己没有在开料
+                                                                if (dt_brew_station_details_s2.Rows.Count == 0)
+                                                                {
+                                                                    //如果正在搬瓶先不操作
+                                                                    if (Communal._b_isMoveing)
+                                                                        goto lab_end;
+                                                                    {
+                                                                        //插入开料工位
+                                                                        FADM_Object.Communal._fadmSqlserver.ReviseData("Update brew_station_details  set BottleNum = " + dr_Num["BottleNum"].ToString()
+                                                                    + ",IsUsing=1,PowderNum = " + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + ",Cooperate = 13,ReceptionTime =  '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")
+                                                                    + "' where Station = " + s_stationnum + ";");
+
+                                                                        FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dr_Num["BottleNum"].ToString());
+
+                                                                        goto lab_again;
+                                                                    }
+                                                                }
+
+                                                            }
+                                                            //存在原瓶号正在开料，改为等待
+                                                            else
+                                                            {
+                                                                FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dr_Num["BottleNum"].ToString());
+                                                            }
+                                                            continue;
+
+                                                        }
+                                                    }
+                                                }
+                                                //开料
+                                                else
+                                                {
+                                                    //查询是否有自动开料粉体
+                                                    s_sql = "SELECT  * FROM bottle_details  where AssistantCode ='" + dt_data_bottle_details.Rows[0]["AssistantCode"].ToString() 
+                                                        + "' And SyringeType = '粉桶' And BottleNum <" + Lib_Card.Configure.Parameter.Machine_Bottle_Total
+                                                         + " And MachineID = " + FADM_Object.Communal._i_CurrentBrewNum; ;
+                                                    DataTable dt_data_bottle_details_1 = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                    if (dt_data_bottle_details_1.Rows.Count > 0)
+                                                    {
+                                                        //判断是否已经正在开料
+                                                        s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["BottleNum"].ToString() + "'  And Station != 6;";
+                                                        DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                        if (dt_brew_station_details_s.Rows.Count == 0)
+                                                        {
+                                                            //如果正在搬瓶先不操作
+                                                            if (Communal._b_isMoveing)
+                                                                goto lab_end;
+
+                                                            //插入开料工位
+                                                            FADM_Object.Communal._fadmSqlserver.ReviseData("Update brew_station_details  set BottleNum = " + dr_Num["BottleNum"].ToString()
+                                                            + ",IsUsing=1,PowderNum = " + dt_data_bottle_details_1.Rows[0]["BottleNum"].ToString() + ",Cooperate = 13,ReceptionTime =  '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")
+                                                            + "' where Station = " + s_stationnum + ";");
+
+                                                            FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dr_Num["BottleNum"].ToString());
+                                                            goto lab_again;
+                                                        }
+                                                        continue;
+                                                    }
+                                                    else
+                                                    {
+                                                        // 删除等待列表数据，不进行开料
+                                                        //FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+
+                                                        FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dr_Num["BottleNum"].ToString());
+                                                        continue;
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                //删除等待列表数据，不进行开料
+                                                FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dr_Num["BottleNum"].ToString());
+                                                continue;
+
+                                            }
+                                        }
+                                    }
+                                }
+                                //
+                                lab_end:
+                                Thread.Sleep(10000);
+                            }
+                            catch
+                            { }
+                        }
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                    lab_again:
+                        //查询是否有等待数据
+                        string s_sql = "SELECT top 1 * FROM Brew_wait_list where Type = 3 order by InsertDate;";
+                        DataTable dt_data = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                        if (dt_data.Rows.Count > 0)
+                        {
+                        lab_select:
+                            //判断是否有空闲开料工位
+                            s_sql = "SELECT top 1 * FROM brew_station_details  where IsUsing = 0 and Statues = '待机' and Station < 6 order by Station;";
+                            DataTable dt_data_station = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                            if (dt_data_station.Rows.Count > 0)
+                            {
+                                //判断工位实际plc状态是否待机
+                                if (AutoBrew._cup_Temps[Convert.ToInt32(dt_data_station.Rows[0]["Station"].ToString()) - 1]._i_statues == 1)
+                                {
+                                    //插入开料工位
+                                    FADM_Object.Communal._fadmSqlserver.ReviseData("Update brew_station_details  set BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString()
+                                    + ",IsUsing=1,PowderNum = 0,Cooperate = 12,ReceptionTime =  '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")
+                                    + "' where Station = " + dt_data_station.Rows[0]["Station"].ToString() + ";");
+                                    FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                    goto lab_again;
+                                }
+                                //置为正在使用,重新选择工位
+                                else
+                                {
+                                    if (AutoBrew._cup_Temps[Convert.ToInt32(dt_data_station.Rows[0]["Station"].ToString()) - 1]._i_statues != 0 && AutoBrew._cup_Temps[Convert.ToInt32(dt_data_station.Rows[0]["Station"].ToString()) - 1]._i_statues != 1)
+                                        FADM_Object.Communal._fadmSqlserver.ReviseData("Update brew_station_details set IsUsing = 1 where Station = " + dt_data_station.Rows[0]["Station"].ToString());
+                                    goto lab_select;
+                                }
+                            }
+                            //没有可以使用工位
+                            else
+                            {
+                                goto lab_end;
+                            }
+                        }
+                        //查询是否有等待数据
+                        s_sql = "SELECT top 1 * FROM Brew_wait_list where Type = 0 order by InsertDate;";
+                        dt_data = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                        if (dt_data.Rows.Count > 0)
+                        {
+                        lab_select:
+                            //判断是否有空闲开料工位
+                            s_sql = "SELECT top 1 * FROM brew_station_details  where IsUsing = 0 and Statues = '待机' and Station < 6 order by Station;";
+                            DataTable dt_data_station = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                            if (dt_data_station.Rows.Count > 0)
+                            {
+                                //判断工位实际plc状态是否待机
+                                if (AutoBrew._cup_Temps[Convert.ToInt32(dt_data_station.Rows[0]["Station"].ToString()) - 1]._i_statues == 1)
+                                {
+                                    //查找开料开稀瓶号
+                                    s_sql = "SELECT  * FROM bottle_details  where BottleNum =" + dt_data.Rows[0]["BottleNum"].ToString() + " And MachineID = " + FADM_Object.Communal._i_CurrentBrewNum; ;
+                                    DataTable dt_data_bottle_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                    if (dt_data_bottle_details.Rows.Count > 0)
+                                    {
+                                        if (dt_data_bottle_details.Rows[0]["SyringeType"].ToString() == "粉桶")
+                                        {
+                                            //先删除，不做
+                                            FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                            goto lab_again;
+                                        }
+                                        //开稀
+                                        else if (Convert.ToInt32(dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString()) > 0)
+                                        {
+                                            ////先删除，不做
+                                            //FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                            //goto lab_again;
+
+                                            //判断原瓶号是否符合开料标准
+                                            s_sql = "SELECT  * FROM bottle_details  where BottleNum =" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() 
+                                                + " And MachineID = " + FADM_Object.Communal._i_CurrentBrewNum; ;
+                                            DataTable dt_data_bottle_details_O = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                            if (dt_data_bottle_details_O.Rows.Count > 0)
+                                            {
+                                                //查询判断是否超期
+                                                s_sql = "SELECT * FROM assistant_details WHERE AssistantCode = '" + dt_data_bottle_details_O.Rows[0]["AssistantCode"].ToString() + "';";
+                                                DataTable dt_assistant_details = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+
+                                                DateTime timeA = Convert.ToDateTime(dt_data_bottle_details_O.Rows[0]["BrewingData"].ToString());
+                                                DateTime timeB = DateTime.Now; //获取当前时间
+                                                TimeSpan ts = timeB - timeA; //计算时间差
+                                                string s_time = ts.TotalHours.ToString(); //将时间差转换为小时
+                                                                                          //判断是否过期或者液量低
+                                                if (Convert.ToDouble(dt_data_bottle_details_O.Rows[0]["CurrentWeight"].ToString()) < Lib_Card.Configure.Parameter.Other_Bottle_AlarmWeight && FADM_Object.Communal._b_isLowDrip)
+                                                {
+                                                    //将当前瓶改为待开，将原瓶加入开料
+                                                    DateTime time = Convert.ToDateTime(dt_data.Rows[0]["InsertDate"].ToString());
+                                                    time = time.AddSeconds(-1);
+                                                    //判断是否已经正在开料
+                                                    s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "' And Station < 6;";
+                                                    DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                    if (dt_brew_station_details_s.Rows.Count == 0)
+                                                        //插入到排队列表
+                                                        FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                           "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "','" + time.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+
+                                                    FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                    goto lab_again;
+
+                                                }
+                                                else if (Convert.ToDouble(s_time) > Convert.ToDouble(dt_assistant_details.Rows[0]["TermOfValidity"].ToString()) && FADM_Object.Communal._b_isOutDrip)
+                                                {
+                                                    //将当前瓶改为待开，将原瓶加入开料
+                                                    DateTime time = Convert.ToDateTime(dt_data.Rows[0]["InsertDate"].ToString());
+                                                    time = time.AddSeconds(-1);
+                                                    //判断是否已经正在开料
+                                                    s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "'  And Station < 6;";
+                                                    DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                    if (dt_brew_station_details_s.Rows.Count == 0)
+                                                        //插入到排队列表
+                                                        FADM_Object.Communal._fadmSqlserver.ReviseData(
+                                       "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "','" + time.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',0);");
+
+                                                    FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                    goto lab_again;
+                                                }
+                                                else
+                                                {
+                                                    //判断是否已经正在开料
+                                                    s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "'  And Station < 6;";
+                                                    DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                    s_sql = "SELECT * FROM Brew_wait_list WHERE  BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "';";
+                                                    DataTable dt_Brew_wait_list = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                                    //等待列表和正在开料都没有，才能插入开料工位
+                                                    if (dt_brew_station_details_s.Rows.Count == 0 && dt_Brew_wait_list.Rows.Count == 0)
+                                                    {
+                                                        //插入开料工位
+                                                        FADM_Object.Communal._fadmSqlserver.ReviseData("Update brew_station_details  set BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString()
+                                                        + ",IsUsing=1,PowderNum = " + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + ",Cooperate = 13,ReceptionTime =  '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")
+                                                        + "' where Station = " + dt_data_station.Rows[0]["Station"].ToString() + ";");
+                                                        FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                    }
+                                                    //存在原瓶号正在开料，改为等待
+                                                    else
+                                                    {
+                                                        FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                    }
+                                                    goto lab_again;
+                                                }
+                                            }
+                                        }
+                                        //开料
+                                        else
+                                        {
+                                            //查询是否有自动开料粉体
+                                            s_sql = "SELECT  * FROM bottle_details  where AssistantCode ='" + dt_data_bottle_details.Rows[0]["AssistantCode"].ToString() 
+                                                + "' And SyringeType = '粉桶' And BottleNum <" + Lib_Card.Configure.Parameter.Machine_Bottle_Total
+                                                 + " And MachineID = " + FADM_Object.Communal._i_CurrentBrewNum; ;
+                                            DataTable dt_data_bottle_details_1 = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+                                            if (dt_data_bottle_details_1.Rows.Count > 0)
+                                            {
                                                 //判断是否已经正在开料
-                                                s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "';";
+                                                s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "'  And Station < 6;";
                                                 DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
                                                 if (dt_brew_station_details_s.Rows.Count == 0)
                                                     //插入开料工位
                                                     FADM_Object.Communal._fadmSqlserver.ReviseData("Update brew_station_details  set BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString()
-                                                    + ",IsUsing=1,PowderNum = " + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + ",Cooperate = 13,ReceptionTime =  '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")
+                                                    + ",IsUsing=1,PowderNum = " + dt_data_bottle_details_1.Rows[0]["BottleNum"].ToString() + ",Cooperate = 13,ReceptionTime =  '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")
                                                     + "' where Station = " + dt_data_station.Rows[0]["Station"].ToString() + ";");
                                                 FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
                                                 goto lab_again;
                                             }
+                                            else
+                                            {
+                                                // 删除等待列表数据，不进行开料
+                                                //FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+
+                                                FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                                goto lab_again;
+                                            }
                                         }
                                     }
-                                    //开料
                                     else
                                     {
-                                        //查询是否有自动开料粉体
-                                        s_sql = "SELECT  * FROM bottle_details  where AssistantCode ='" + dt_data_bottle_details.Rows[0]["AssistantCode"].ToString() + "' And SyringeType = '粉桶' And BottleNum <"+ Lib_Card.Configure.Parameter.Machine_Bottle_Total; 
-                                        DataTable dt_data_bottle_details_1 = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
-                                        if(dt_data_bottle_details_1.Rows.Count >0)
-                                        {
-                                            //判断是否已经正在开料
-                                            s_sql = "SELECT * FROM brew_station_details WHERE IsUsing = 1 And BottleNum = '" + dt_data_bottle_details.Rows[0]["OriginalBottleNum"].ToString() + "';";
-                                            DataTable dt_brew_station_details_s = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
-                                            if (dt_brew_station_details_s.Rows.Count == 0)
-                                                //插入开料工位
-                                                FADM_Object.Communal._fadmSqlserver.ReviseData("Update brew_station_details  set BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString()
-                                                + ",IsUsing=1,PowderNum = " + dt_data_bottle_details_1.Rows[0]["BottleNum"].ToString() + ",Cooperate = 13,ReceptionTime =  '" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")
-                                                + "' where Station = " + dt_data_station.Rows[0]["Station"].ToString() + ";");
-                                            FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
-                                            goto lab_again;
-                                        }
-                                        else
-                                        {
-                                             // 删除等待列表数据，不进行开料
-                                            //FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                        //删除等待列表数据，不进行开料
+                                        FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
+                                        goto lab_again;
 
-                                            FADM_Object.Communal._fadmSqlserver.ReviseData("Update  Brew_wait_list set Type = 1 where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
-                                            goto lab_again;
-                                        }
                                     }
                                 }
+                                //置为正在使用,重新选择工位
                                 else
                                 {
-                                    //删除等待列表数据，不进行开料
-                                    FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list  where BottleNum = " + dt_data.Rows[0]["BottleNum"].ToString());
-                                    goto lab_again;
-
+                                    if (AutoBrew._cup_Temps[Convert.ToInt32(dt_data_station.Rows[0]["Station"].ToString()) - 1]._i_statues != 0 && AutoBrew._cup_Temps[Convert.ToInt32(dt_data_station.Rows[0]["Station"].ToString()) - 1]._i_statues != 1)
+                                        FADM_Object.Communal._fadmSqlserver.ReviseData("Update brew_station_details set IsUsing = 1 where Station = " + dt_data_station.Rows[0]["Station"].ToString());
+                                    goto lab_select;
                                 }
                             }
-                            //置为正在使用,重新选择工位
+                            //没有可以使用工位
                             else
                             {
-                                FADM_Object.Communal._fadmSqlserver.ReviseData("Update brew_station_details set IsUsing = 1 where Station = "+ dt_data_station.Rows[0]["Station"].ToString());
-                                goto lab_select;
+                                goto lab_end;
                             }
                         }
-                        //没有可以使用工位
-                        else
-                        {
-                            goto lab_end;
-                        }
+                    //
+                    lab_end:
+                        Thread.Sleep(10000);
                     }
-                //
-                lab_end:
-                    Thread.Sleep(10000);
+                    catch
+                    { }
                 }
-                catch
-                { }
             }
         }
+
+        
 
         private void ReadBalance()
         {
@@ -6844,6 +8365,79 @@ namespace SmartDyeing.FADM_Form
                 this.PnlMain.Controls.Add(absProcess);
                 absProcess.Focus();
             }
+            catch (Exception ex)
+            {
+                FADM_Form.CustomMessageBox.Show(ex.ToString(), "warm", MessageBoxButtons.OK, true);
+            }
+        }
+
+        private void toolStripSplitButton7_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            try
+            {
+                //判断是否待机
+                if(0 != FADM_Object.Communal.ReadMachineStatus())
+                {
+                    FADM_Form.CustomMessageBox.Show("请待机情况下才进行切换", "warm", MessageBoxButtons.OK, true);
+                    return;
+                }
+                //判断是否有等待开料的
+                DataTable dataTable = new DataTable();
+                dataTable= FADM_Object.Communal._fadmSqlserver.GetData("SELECT top 1 * FROM Brew_wait_list");
+                if(dataTable.Rows.Count >0)
+                {
+                    FADM_Form.CustomMessageBox.Show("等待列表还有开料数据，请清空或全部开料完毕再进行切换", "warm", MessageBoxButtons.OK, true);
+                    return;
+                }
+                //判断是否有正在开料的
+                dataTable = FADM_Object.Communal._fadmSqlserver.GetData("SELECT  * FROM brew_station_details  where  Station != 6 And IsUsing = 1");
+                if (dataTable.Rows.Count > 0)
+                {
+                    FADM_Form.CustomMessageBox.Show("存在正在开料数据，请清空或全部开料完毕再进行切换", "warm", MessageBoxButtons.OK, true);
+                    return;
+                }
+
+                FADM_Object.Communal._i_CurrentBrewNum = Convert.ToInt32(e.ClickedItem.ToString());
+                string s_path = Environment.CurrentDirectory + "\\Config\\Config.ini";
+                Lib_File.Ini.WriteIni("Setting", "CurrentBrewNum", FADM_Object.Communal._i_CurrentBrewNum.ToString(), s_path);
+
+                BtnMain_Click(null,null);
+            }
+
+            catch (Exception ex)
+            {
+                FADM_Form.CustomMessageBox.Show(ex.ToString(), "warm", MessageBoxButtons.OK, true);
+            }
+        }
+
+        private void toolStripSplitButton7_DropDownOpening(object sender, EventArgs e)
+        {
+            try
+            {
+                toolStripSplitButton7.DropDownItems.Clear();
+
+                for (int i = 1;i<= FADM_Object.Communal._i_TotalBrewMac;i++)
+                {
+                    toolStripSplitButton7.DropDownItems.Add(i.ToString());
+                }
+
+                foreach (ToolStripItem item in toolStripSplitButton7.DropDownItems)
+                {
+                    // 先强转成菜单项，排除分割线ToolStripSeparator
+                    if (item is ToolStripMenuItem menuItem)
+                    {
+                        if (Convert.ToInt32(item.Text) == FADM_Object.Communal._i_CurrentBrewNum)
+                        {
+                            menuItem.Checked = true;
+                        }
+                        else
+                        {
+                            menuItem.Checked = false;
+                        }
+                    }
+                }
+            }
+
             catch (Exception ex)
             {
                 FADM_Form.CustomMessageBox.Show(ex.ToString(), "warm", MessageBoxButtons.OK, true);

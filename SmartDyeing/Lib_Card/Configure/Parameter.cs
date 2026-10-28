@@ -917,6 +917,16 @@
         public static int Coordinate_Bottle_Y { get; set; }
 
         /// <summary>
+        /// 首母液瓶X轴坐标 (如果粉罐和母液区分两个区域，这个就是第一个母液瓶坐标) 
+        /// </summary>
+        public static int Coordinate_MotherBottle_X { get; set; }
+
+        /// <summary>
+        /// 首母液瓶Y轴坐标 (如果粉罐和母液区分两个区域，这个就是第一个母液瓶坐标) 
+        /// </summary>
+        public static int Coordinate_MotherBottle_Y { get; set; }
+
+        /// <summary>
         /// 母液瓶间隔坐标
         /// </summary>
         public static int Coordinate_Bottle_Interval { get; set; }
@@ -2522,6 +2532,56 @@
         public static int Coordinate_PutSyringes6_IntervalY { get; set; }
 
         /// <summary>
+        /// 7号放针位X坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes7_IntervalX { get; set; }
+
+        /// <summary>
+        /// 7号放针位Y坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes7_IntervalY { get; set; }
+
+        /// <summary>
+        /// 8号放针位X坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes8_IntervalX { get; set; }
+
+        /// <summary>
+        /// 8号放针位Y坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes8_IntervalY { get; set; }
+
+        /// <summary>
+        /// 9号放针位X坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes9_IntervalX { get; set; }
+
+        /// <summary>
+        /// 9号放针位Y坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes9_IntervalY { get; set; }
+
+        /// <summary>
+        /// 10号放针位X坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes10_IntervalX { get; set; }
+
+        /// <summary>
+        /// 10号放针位Y坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes10_IntervalY { get; set; }
+
+        /// <summary>
+        /// 11号放针位X坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes11_IntervalX { get; set; }
+
+        /// <summary>
+        /// 11号放针位Y坐标
+        /// </summary>
+        public static int Coordinate_PutSyringes11_IntervalY { get; set; }
+
+        /// <summary>
         /// PH计X坐标
         /// </summary>
         public static int Coordinate_PH_IntervalX { get; set; }
@@ -3069,6 +3129,51 @@
         /// 粉罐上抽脉冲
         /// </summary>
         public static int Other_PowerPluse { get; set; }
+
+        /// <summary>
+        /// 高度偏差脉冲
+        /// </summary>
+        public static int Other_CylinderHeightDeviationPulse { get; set; }
+
+        /// <summary>
+        /// 气缸中位置 |mm
+        /// </summary>
+        public static int Other_PositionInCylinder { get; set; }
+
+        /// <summary>
+        /// 气缸慢速中1位置 |mm
+        /// </summary>
+        public static int Other_PositionInCylinderSlow1 { get; set; }
+
+        /// <summary>
+        /// 气缸慢速中2位置 |mm
+        /// </summary>
+        public static int Other_PositionInCylinderSlow2 { get; set; }
+
+        /// <summary>
+        /// 气缸慢速中3位置 |mm
+        /// </summary>
+        public static int Other_PositionInCylinderSlow3 { get; set; }
+
+        /// <summary>
+        /// 气缸到阻挡位位置 |mm
+        /// </summary>
+        public static int Other_CylinderStopPosition { get; set; }
+
+        /// <summary>
+        /// 气缸下位置 |mm
+        /// </summary>
+        public static int Other_CylinderDownPosition { get; set; }
+
+        /// <summary>
+        /// 气缸定位范围 |mm
+        /// </summary>
+        public static int Other_CylinderPositioningRange { get; set; }
+
+        /// <summary>
+        /// 是否使用拉线编码器
+        /// </summary>
+        public static int Other_UseCylinderPositioningEncoder { get; set; }
 
     }
 }

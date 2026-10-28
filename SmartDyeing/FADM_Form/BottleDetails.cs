@@ -32,7 +32,7 @@ namespace SmartDyeing.FADM_Form
         {
             //获取母液瓶资料
             string s_sql = "SELECT *  FROM bottle_details" +
-                               " WHERE BottleNum = " + _i_bottleNum + " ; ";
+                               " WHERE BottleNum = " + _i_bottleNum + "  And MachineID = " + FADM_Object.Communal._i_CurrentBrewNum+"; ";
             DataTable dt_bottledetails = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
 
             //显示母液瓶资料

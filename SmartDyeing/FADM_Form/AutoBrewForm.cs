@@ -23,6 +23,7 @@ namespace SmartDyeing.FADM_Form
 
             ShowHeader();
             DropRecordHeadShow();
+            StationShow();
 
             cup1.MouseDown += Cup_MouseDown;
             cup1.ContextMenuStrip = this.contextMenuStrip1;
@@ -144,6 +145,25 @@ namespace SmartDyeing.FADM_Form
 
                             string s_sql1 = "UPDATE brew_station_details SET Statues='待机',IsUsing = 0,Cooperate=0  WHERE Station = " + dt_cupordye_details_sec.Rows[0]["BrewNum"].ToString() + " ;";
                             FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql1);
+
+                            //把放针工位置为停止
+                            FADM_Object.Communal._fadmSqlserver.ReviseData("Update PutSyringes set Status = 2 where IsUsing=1 And BottleNum = "+ dt_cupordye_details_sec.Rows[0]["BottleNum"].ToString());
+                            //不确定是否执行过放针，重新查找一次
+                            DataTable dt_PutSyringes = FADM_Object.Communal._fadmSqlserver.GetData(
+                 "SELECT  * FROM PutSyringes WHERE  IsUsing=1 And BottleNum = " + dt_cupordye_details_sec.Rows[0]["BottleNum"].ToString()+ " And Status = 2");
+                            if (dt_PutSyringes.Rows.Count > 0)
+                            {
+                                //插入待办事项
+                                FADM_Object.MyAlarm myAlarm;
+                                if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                                    myAlarm = new FADM_Object.MyAlarm(dt_PutSyringes.Rows[0]["PutSyringesNum"].ToString()+"号放针工位存放"
+                                        + dt_PutSyringes.Rows[0]["BottleNum"].ToString()+"号母液瓶针筒，请拿走针筒后点继续", "Stop", 
+                                        Convert.ToInt32(dt_PutSyringes.Rows[0]["PutSyringesNum"].ToString()), 2, 68, true);
+                                else
+                                    myAlarm = new FADM_Object.MyAlarm(dt_PutSyringes.Rows[0]["PutSyringesNum"].ToString() + "号放针工位存放"
+                                       + dt_PutSyringes.Rows[0]["BottleNum"].ToString() + "号母液瓶针筒，请拿走针筒后点继续", "Stop",
+                                       Convert.ToInt32(dt_PutSyringes.Rows[0]["PutSyringesNum"].ToString()), 2, 68, true);
+                            }
                         }
                     }
                     //判断是否正在运行，如果是，要把对应开料工位也要停止
@@ -158,8 +178,36 @@ namespace SmartDyeing.FADM_Form
                 }
                 else
                 {
+                    DataTable dt_cupordye_details_sec = FADM_Object.Communal._fadmSqlserver.GetData(
+                 "SELECT top 1 * FROM brew_station_details WHERE  Station = "+ _cup.NO);
+
                     string s_sql = "UPDATE brew_station_details SET Statues='待机',IsUsing = 0,Cooperate=0  WHERE Station = " + _cup.NO + " ;";
                     FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql);
+
+                    if (dt_cupordye_details_sec.Rows.Count > 0)
+                    {
+                        if (Convert.ToInt32(dt_cupordye_details_sec.Rows[0]["IsUsing"].ToString()) == 1)
+                        {
+                            //把放针工位置为停止
+                            FADM_Object.Communal._fadmSqlserver.ReviseData("Update PutSyringes set Status = 2 where IsUsing=1 And BottleNum = " + dt_cupordye_details_sec.Rows[0]["BottleNum"].ToString());
+                            //不确定是否执行过放针，重新查找一次
+                            DataTable dt_PutSyringes = FADM_Object.Communal._fadmSqlserver.GetData(
+                 "SELECT  * FROM PutSyringes WHERE   IsUsing=1 And BottleNum = " + dt_cupordye_details_sec.Rows[0]["BottleNum"].ToString() + " And Status = 2");
+                            if (dt_PutSyringes.Rows.Count > 0)
+                            {
+                                //插入待办事项
+                                FADM_Object.MyAlarm myAlarm;
+                                if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                                    myAlarm = new FADM_Object.MyAlarm(dt_PutSyringes.Rows[0]["PutSyringesNum"].ToString() + "号放针工位存放"
+                                        + dt_PutSyringes.Rows[0]["BottleNum"].ToString() + "号母液瓶针筒，请拿走针筒后点继续", "Stop",
+                                        Convert.ToInt32(dt_PutSyringes.Rows[0]["PutSyringesNum"].ToString()), 2, 68);
+                                else
+                                    myAlarm = new FADM_Object.MyAlarm(dt_PutSyringes.Rows[0]["PutSyringesNum"].ToString() + "号放针工位存放"
+                                       + dt_PutSyringes.Rows[0]["BottleNum"].ToString() + "号母液瓶针筒，请拿走针筒后点继续", "Stop",
+                                       Convert.ToInt32(dt_PutSyringes.Rows[0]["PutSyringesNum"].ToString()), 2, 68);
+                            }
+                        }
+                    }
                 }
             });
             thread.Start();
@@ -173,23 +221,83 @@ namespace SmartDyeing.FADM_Form
             {
                 if (dr1["Station"].ToString() == "1")
                 {
-                    label1.Text = dr1["Statues"].ToString();
+                    if(dr1["Statues"].ToString() == "待机")
+                    {
+                        if (dr1["IsUsing"].ToString() == "1")
+                        {
+                            label1.Text = dr1["BottleNum"].ToString()+"开料";
+                        }
+                        else
+                        {
+                            label1.Text = dr1["Statues"].ToString();
+                        }
+                    }
+                    else
+                        label1.Text = dr1["Statues"].ToString();
                 }
                 if (dr1["Station"].ToString() == "2")
                 {
-                    label2.Text = dr1["Statues"].ToString();
+                    if (dr1["Statues"].ToString() == "待机")
+                    {
+                        if (dr1["IsUsing"].ToString() == "1")
+                        {
+                            label2.Text = dr1["BottleNum"].ToString() + "开料";
+                        }
+                        else
+                        {
+                            label2.Text = dr1["Statues"].ToString();
+                        }
+                    }
+                    else
+                        label2.Text = dr1["Statues"].ToString();
                 }
                 if (dr1["Station"].ToString() == "3")
                 {
-                    label3.Text = dr1["Statues"].ToString();
+                    if (dr1["Statues"].ToString() == "待机")
+                    {
+                        if (dr1["IsUsing"].ToString() == "1")
+                        {
+                            label3.Text = dr1["BottleNum"].ToString() + "开料";
+                        }
+                        else
+                        {
+                            label3.Text = dr1["Statues"].ToString();
+                        }
+                    }
+                    else
+                        label3.Text = dr1["Statues"].ToString();
                 }
                 if (dr1["Station"].ToString() == "4")
                 {
-                    label4.Text = dr1["Statues"].ToString();
+                    if (dr1["Statues"].ToString() == "待机")
+                    {
+                        if (dr1["IsUsing"].ToString() == "1")
+                        {
+                            label4.Text = dr1["BottleNum"].ToString() + "开料";
+                        }
+                        else
+                        {
+                            label4.Text = dr1["Statues"].ToString();
+                        }
+                    }
+                    else
+                        label4.Text = dr1["Statues"].ToString();
                 }
                 if (dr1["Station"].ToString() == "5")
                 {
-                    label5.Text = dr1["Statues"].ToString();
+                    if (dr1["Statues"].ToString() == "待机")
+                    {
+                        if (dr1["IsUsing"].ToString() == "1")
+                        {
+                            label5.Text = dr1["BottleNum"].ToString() + "开料";
+                        }
+                        else
+                        {
+                            label5.Text = dr1["Statues"].ToString();
+                        }
+                    }
+                    else
+                        label5.Text = dr1["Statues"].ToString();
                 }
                 if (dr1["Station"].ToString() == "6")
                 {
@@ -233,6 +341,41 @@ namespace SmartDyeing.FADM_Form
             catch (Exception ex)
             {
                 FADM_Form.CustomMessageBox.Show(ex.Message, "DropRecordHeadShow", MessageBoxButtons.OK, true);
+            }
+        }
+
+        private void StationShow()
+        {
+            try
+            {
+                dataGridView1.Rows.Clear();
+
+                string s_sql = null;
+                DataTable dt_data = new DataTable();
+
+
+
+
+                s_sql = "SELECT Station,IsUsing,Statues,BottleNum,PowderNum,Cooperate FROM brew_station_details order by Station;";
+                dt_data = FADM_Object.Communal._fadmSqlserver.GetData(s_sql);
+
+
+                //捆绑
+                string s_r;
+                int i_success = 0;
+                int i_fails = 0;
+                for (int i = 0; i < dt_data.Rows.Count; i++)
+                {
+                    dataGridView1.Rows.Add(dt_data.Rows[i][0].ToString(), dt_data.Rows[i][1].ToString(), dt_data.Rows[i][2].ToString(), dt_data.Rows[i][3].ToString()
+                        , dt_data.Rows[i][4].ToString(), dt_data.Rows[i][5].ToString());
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                FADM_Form.CustomMessageBox.Show(ex.Message, "StationShow", MessageBoxButtons.OK, true);
             }
         }
 
@@ -288,17 +431,85 @@ namespace SmartDyeing.FADM_Form
 
             //设置行高
             dgv_DropRecord.RowTemplate.Height = 30;
+
+
+            dataGridView1.Columns.Add("", "");
+            dataGridView1.Columns.Add("", "");
+            dataGridView1.Columns.Add("", "");
+            dataGridView1.Columns.Add("", "");
+            dataGridView1.Columns.Add("", "");
+            dataGridView1.Columns.Add("", "");
+            //if (Lib_Card.Configure.Parameter.Other_Language == 0)
+            //{
+                //设置标题文字
+                dataGridView1.Columns[0].HeaderCell.Value = "工位号";
+                dataGridView1.Columns[1].HeaderCell.Value = "是否使用";
+                dataGridView1.Columns[2].HeaderCell.Value = "状态";
+                dataGridView1.Columns[3].HeaderCell.Value = "开料瓶号";
+                dataGridView1.Columns[4].HeaderCell.Value = "原瓶号";
+                dataGridView1.Columns[5].HeaderCell.Value = "操作";
+                //设置标题字体
+                dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("宋体", 14.25F);
+                //设置内容字体
+                dataGridView1.RowsDefaultCellStyle.Font = new Font("宋体", 12.5F);
+            //}
+            //else
+            //{
+            //    dataGridView1.Columns[0].HeaderCell.Value = "BottleNum";
+            //    dataGridView1.Columns[1].HeaderCell.Value = "Date";
+            //    //设置标题字体
+            //    dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("宋体", 7.5F);
+            //    //设置内容字体
+            //    dataGridView1.RowsDefaultCellStyle.Font = new Font("宋体", 10.5F);
+            //}
+
+
+            //设置标题宽度
+            dataGridView1.Columns[0].Width = 100;
+            dataGridView1.Columns[1].Width = 100;
+            dataGridView1.Columns[2].Width = 200;
+            dataGridView1.Columns[3].Width = 100;
+            dataGridView1.Columns[4].Width = 100;
+            dataGridView1.Columns[5].Width = 100;
+
+
+            //关闭自动排序功能
+            for (int i = 0; i < dataGridView1.Columns.Count; i++)
+            {
+                dataGridView1.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
+
+            //设置标题居中显示
+            dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+
+
+            //设置内容居中显示
+            dataGridView1.RowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+
+
+            //设置行高
+            dataGridView1.RowTemplate.Height = 30;
         }
 
         private void timer2_Tick(object sender, EventArgs e)
         {
             DropRecordHeadShow();
+            StationShow();
         }
 
         private void BtnBottleCheckStart_Click(object sender, EventArgs e)
         {
             try
             {
+                if(FADM_Object.Communal.ReadMachineStatus() == 7)
+                {
+                    FADM_Form.CustomMessageBox.Show("正在滴液，不能加入", "InsertAbs",
+                    MessageBoxButtons.OK, false);
+                    return;
+                }
                 //FADM_Object.Communal._fadmSqlserver.ReviseData("TRUNCATE TABLE abs_wait_list");
 
                 char[] ca_chars = { ',', '，' };
@@ -335,6 +546,7 @@ namespace SmartDyeing.FADM_Form
                     MessageBoxButtons.OK, false);
 
                 DropRecordHeadShow();
+                StationShow();
 
             }
             catch (Exception ex)
@@ -367,6 +579,7 @@ namespace SmartDyeing.FADM_Form
                         string s_Date = dgv_DropRecord.CurrentRow.Cells[1].Value.ToString();
                         FADM_Object.Communal._fadmSqlserver.ReviseData("Delete from Brew_wait_list where InsertDate = '" + s_Date + "'");
                         DropRecordHeadShow();
+                        StationShow();
                     }
                 }
             }
@@ -376,6 +589,82 @@ namespace SmartDyeing.FADM_Form
         private void button1_Click(object sender, EventArgs e)
         {
             DropRecordHeadShow();
+            StationShow();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //FADM_Object.Communal._fadmSqlserver.ReviseData("TRUNCATE TABLE abs_wait_list");
+
+                char[] ca_chars = { ',', '，' };
+                string[] sa_strings = TxtCheckBottleNo.Text.Split(ca_chars);
+
+                char[] ca_chars1 = { '-', '-' };
+                List<int> lis_ints = new List<int>();
+                foreach (string s in sa_strings)
+                {
+                    string[] sa_strings1 = s.Split(ca_chars1);
+                    if (1 == sa_strings1.Length)
+                        lis_ints.Add(Convert.ToInt16(s));
+                    else
+                        for (int i = Convert.ToInt16(sa_strings1[0]); i <= Convert.ToInt16(sa_strings1[1]); i++)
+                            lis_ints.Add(i);
+
+                }
+
+                lis_ints.Sort();
+                lis_ints = lis_ints.ToList();
+
+                foreach (int i in lis_ints)
+                {
+                    //DataTable dt_data = FADM_Object.Communal._fadmSqlserver.GetData(
+                    //    "SELECT * FROM bottle_details WHERE BottleNum = " + i + ";");
+                    if ( i > Lib_Card.Configure.Parameter.Machine_Bottle_Total)
+                        continue;
+                    FADM_Object.Communal._fadmSqlserver.ReviseData(
+                        "INSERT INTO Brew_wait_list(BottleNum, InsertDate,Type) VALUES('" + i + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "',3);");
+                    Thread.Sleep(10);
+                }
+
+                FADM_Form.CustomMessageBox.Show("启动成功", "InsertAbs",
+                    MessageBoxButtons.OK, false);
+
+                DropRecordHeadShow();
+                StationShow();
+
+            }
+            catch (Exception ex)
+            {
+                //if (Lib_Card.Configure.Parameter.Other_Language == 0)
+                //    FADM_Form.CustomMessageBox.Show(ex.Message, "BottleCheck",
+                //    MessageBoxButtons.OK, false);
+                //else
+                //{
+                //    string s_mes = ex.Message;
+                //    if (SmartDyeing.FADM_Object.Communal._dic_warning.ContainsKey(ex.Message))
+                //    {
+                //        //如果存在就替换英文
+                //        s_mes = SmartDyeing.FADM_Object.Communal._dic_warning[ex.Message];
+                //    }
+                //    FADM_Form.CustomMessageBox.Show(s_mes, "BottleCheck",
+                //    MessageBoxButtons.OK, false);
+                //}
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            FADM_Object.Communal._fadmSqlserver.ReviseData(
+                       "Update PutSyringes set IsUsing = 0 , Status = 0");
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string s_sql2 = "UPDATE brew_station_details SET Statues='待机',IsUsing = 0,Cooperate=0  WHERE Station > 6 ;";
+            FADM_Object.Communal._fadmSqlserver.ReviseData(s_sql2);
         }
     }
 }
